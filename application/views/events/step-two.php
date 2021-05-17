@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <form id="editTicketOptions" name="editTicketOptions" action="#"
                     onsubmit="return saveTicketOptions(event)" method="POST">
-                    <ul>
+                    <ul class="d-none">
                         <li>
                             <div class="custom-control custom-checkbox">
                                 <input class="custom-control-input" id="guestTicketCheck" type="checkbox"
@@ -43,7 +43,7 @@
                     -->
                     </ul>
 
-                    <hr class="w-100 mt-3 mb-3">
+                    <hr class="w-100 mt-3 mb-3 d-none">
                     <div style="flex-wrap: nowrap" class="row">
                         <div class="col-md-3 text-dark">
                             <h3 class="font-weight-bold text-dark">Ticketfee per ticket</h3>
@@ -87,7 +87,7 @@
                             <select id="voucherId" name="voucherId" style="height: 35px !important;padding-top: 6px;"
                                 class="form-control input-w">
                                 <option value="0">Select option</option>
-                                <?php if(count($vouchers) > 0): ?>
+                                <?php if(!empty($groups) && count($vouchers) > 0): ?>
                                 <?php foreach($vouchers as $voucher): ?>
                                 <option value="<?php echo $voucher['id']; ?>">
                                     <?php echo $voucher['template_name'] .' ('. $voucher['description'] . ')'; ?>
@@ -130,7 +130,7 @@
                         <div class="col-md-3">
                             <select id="previousFaseId" name="previousFaseId" style="height: 35px !important; padding: 0px !important;padding-left: 8px !important;" class="form-control input-w">
                                 <option value="0">Select option</option>
-                                <?php if(count($tickets) > 0): ?>
+                                <?php if(!empty($groups) && count($tickets) > 0): ?>
                                 <?php foreach($tickets as $ticket): ?>
                                 <option value="<?php echo $ticket['ticketId']; ?>">
                                     <?php echo $ticket['ticketDescription']; ?>
@@ -256,9 +256,9 @@
 
                     </div>
 
-                    <hr class="w-100 mt-3 mb-3">
-                    <h3 class="font-weight-bold text-dark">Mail per amount of ticket sold</h3>
-                    <div class="row mb-3">
+                    <hr class="w-100 mt-3 mb-3 d-none">
+                    <h3 class="font-weight-bold text-dark d-none">Mail per amount of ticket sold</h3>
+                    <div class="row mb-3 d-none">
                         <div class="col col-md-3">Get email per</div>
                         <div class="col col-md-3">
                             <input type="number" id="mailPerAmount" name="mailPerAmount" class="form-control inp-height"
@@ -341,7 +341,7 @@
                             <div class="col-md-6">
                                 <select id="ticketEmailTemplate" class="form-control input-w">
                                     <option selected disabled>Select option</option>
-                                    <?php if(count($emails) > 0): ?>
+                                    <?php if(!empty($groups) && count($emails) > 0): ?>
                                     <?php foreach($emails as $email): ?>
                                     <option value="<?php echo $email->id; ?>">
                                         <?php echo str_replace('ticketing_', '', $email->template_name); ?>
@@ -432,7 +432,7 @@
                             <div class="col-md-6">
                                 <select id="group" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
-                                    <?php if(count($groups) > 0): ?>
+                                    <?php if(!empty($groups) && count($groups) > 0): ?>
                                     <?php foreach($groups as $group): ?>
                                     <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>">
                                         <?php echo $group['groupname']; ?>
