@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="wrap-input100 validate-input m-b-18 d-none">
                                         <span class="label-input100">Age</span>
-                                        <input class="input100" type="text" id="age" name="age" placeholder="Age">
+                                        <input class="input100" type="date" id="age" name="age" placeholder="Age">
                                         <span class="focus-input100"></span>
                                     </div>
                                     <div id="mobileNumber" class="wrap-input100 validate-input m-b-18 d-none"
