@@ -54,7 +54,7 @@ class Vendors extends REST_Controller
 
         public function orders_get(): void
         {
-            // if (!$this->authentication()) return;
+            if (!$this->authentication()) return;
 
             $get = Utility_helper::sanitizeGet();
             $vendorId = intval($get['vendor']);
