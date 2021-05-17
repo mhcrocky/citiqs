@@ -45,7 +45,7 @@
 
             $order = $this->getOrder($mac);
             $vendorId = intval($order['vendorId']);
-            $bbUser = $this->shopvendorfod_model->isBBVendor($vendorId);
+            $fodUser = $this->shopvendorfod_model->isFodVendor($vendorId);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
             $printReceipts = $this->shopprinters_model->checkIsPrintReceipts();
             $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
@@ -58,7 +58,7 @@
                 echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
             } else {
                 if ($printReceipts) {
-                    $this->handlePrePostPaid($order, $bbUser);
+                    $this->handlePrePostPaid($order, $fodUser);
                     $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
                 }
                 Receiptprint_helper::printPrinterReceipt($order);
@@ -71,7 +71,7 @@
                 $this->shoporder_model->updatePrintedStatus();
             }
 
-            // $this->callOrderCopy($order, $bbUser);
+            // $this->callOrderCopy($order, $fodUser);
         }
 
         private function isCashpayment(array $order): bool
@@ -88,9 +88,9 @@
             return false;
         }
 
-        private function handlePrePostPaid(array $order, bool $bbUser): void
+        private function handlePrePostPaid(array $order, bool $fodUser): void
         {
-            if ($bbUser) {   
+            if ($fodUser) {   
                 return;
             }
             if ($this->isCashpayment($order)) {
@@ -150,11 +150,11 @@
             }
         }
 
-        private function callOrderCopy(array $order, bool $bbUser): void
+        private function callOrderCopy(array $order, bool $fodUser): void
         {
             if (
                 !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
-                && !$bbUser
+                && !$fodUser
             ) {
                 file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
             }
