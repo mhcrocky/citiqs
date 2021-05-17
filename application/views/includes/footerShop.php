@@ -156,7 +156,7 @@
                                             placeholder="Phone Number (Optional)">
                                         <span class="focus-input100"></span>
                                     </div>
-                                    <?php if(isset($inputs) && count($inputs) > 0): ?>
+                                    <?php if(isset($inputs) && !empty($inputs)): ?>
                                     <?php foreach($inputs as $input): ?>
                                     <div id="<?php echo $input['fieldLabel']; ?>" class="wrap-input100 validate-input m-b-18">
                                         <span class="label-input100"><?php echo ucwords($input['fieldLabel']); ?></span>
@@ -236,10 +236,10 @@
     shopsettings = JSON.parse(shopsettings);
     if(typeof shopsettings === 'object' && shopsettings !== null){
         if(shopsettings.showAddress == "1") { $('#address').closest('div').removeClass('d-none'); }
-        if(shopsettings.showCountry == 1) { $('#country').closest('div').removeClass('d-none'); }
-        if(shopsettings.showZipcode == 1) { $('#zipcode').closest('div').removeClass('d-none'); }
-        if(shopsettings.showMobileNumber == 1) { $('#mobileNumber').closest('div').removeClass('d-none'); }
-        if(shopsettings.showAge == 1) { $('#age').closest('div').removeClass('d-none'); }
+        if(shopsettings.showCountry == "1") { $('#country').closest('div').removeClass('d-none'); }
+        if(shopsettings.showZipcode == "1") { $('#zipcode').closest('div').removeClass('d-none'); }
+        if(shopsettings.showMobileNumber == "1") { $('#mobileNumber').closest('div').removeClass('d-none'); }
+        if(shopsettings.showAge == "1") { $('#age').closest('div').removeClass('d-none'); }
     }
 }());
 </script>
