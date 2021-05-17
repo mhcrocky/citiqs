@@ -609,9 +609,9 @@ class Events extends BaseControllerWeb
 	}
 
 
-    public function inputs($eventId){
+    public function inputs($eventId = false){
 		$this->global['pageTitle'] = 'TIQS: Event Inputs';
-		$data['eventId'] = $eventId;
+		$data['eventId'] = $eventId ? $eventId : '0';
 		$this->loadViews("events/inputs", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
 
