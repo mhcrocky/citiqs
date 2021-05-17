@@ -105,7 +105,7 @@ class Booking_events extends BaseControllerWeb
         $data['events'] = $events;
         $where = [
             'vendorId' => $customer->id,
-            'eventId' => ($eventId == '') ? '0' : $eventId
+            'eventId' => ($eventId == '') ? '0' : strval($eventId)
         ];
 		$this->global['inputs'] = $this->event_model->get_event_inputs($where);
         $this->global['orderRandomKey'] = $orderRandomKey;
