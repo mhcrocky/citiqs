@@ -65,4 +65,5 @@ function selectGraph() {
     let html = $('#'+val).html();
     $('#main-graph').html(html);
 }
+
 </script>
