@@ -427,18 +427,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row d-none">
                             <label for="group" class="col-md-4 col-form-label text-md-left">Ticket group</label>
                             <div class="col-md-6">
-                                <select id="group" class="form-control input-w" required>
+                                <select id="group" class="form-control input-w">
                                     <option selected disabled>Select option</option>
-                                    <?php if(!empty($groups) && count($groups) > 0): ?>
+                                    <?php /* if(!empty($groups) && count($groups) > 0): ?>
                                     <?php foreach($groups as $group): ?>
                                     <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>">
                                         <?php echo $group['groupname']; ?>
                                     </option>
                                     <?php endforeach; ?>
-                                    <?php endif; ?>
+                                    <?php endif;*/ ?>
                                 </select>
                                 <input type="hidden" id="ticketGroup" name="ticketGroupId">
                             </div>
@@ -803,13 +803,20 @@
 
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
-        <div class="input-group col-md-2">
+        <div class="input-group col-md-4">
             <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"
                 class="btn btn-success form-control mb-3 text-left" id="event-time2" name="event-time2"
                 data-toggle="modal" data-target="#addModal">
             <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
                 data-toggle="modal" data-target="#addModal">
                 <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
+                <a href="<?php echo base_url(); ?>events/inputs/<?php echo $eventId; ?>">
+            <input type="button" value="Set custom inputs"
+                style="background: #10b96d !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left ml-2" >
+            </a>
+            <a href="<?php echo base_url(); ?>events/inputs/<?php echo $eventId; ?>" style="background: #0a6635;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3" >
+                <i style="color: #fff;font-size: 18px;" class="fa fa-file-text-o"></i></a>
         </div>
 
         <p class="mt-2"><strong style="font-size: 16px;" class="ml-1">Tickets</strong></p>
