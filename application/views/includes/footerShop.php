@@ -156,6 +156,20 @@
                                             placeholder="Phone Number (Optional)">
                                         <span class="focus-input100"></span>
                                     </div>
+                                    <?php if(isset($inputs) && count($inputs) > 0): ?>
+                                    <?php foreach($inputs as $input): ?>
+                                    <div id="<?php echo $input['fieldLabel']; ?>" class="wrap-input100 validate-input m-b-18">
+                                        <span class="label-input100"><?php echo ucwords($input['fieldLabel']); ?></span>
+                                        <input class="input100" type="<?php echo $input['fieldType']; ?>" name="<?php echo lcfirst(str_replace(' ', '', $input['fieldLabel'])); ?>"
+                                            placeholder="<?php echo ucwords($input['fieldLabel']); ?>" 
+                                            <?php if($input['requiredField'] == 1){ ?>
+                                                required
+                                            <?php } ?>
+                                            >
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <?php endforeach; ?>
+                                    <?php endif; ?>
                                     <input type="hidden" name="orderRandomKey" value="<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>">
                                     <?php if(isset($shopsettings->termsofuseFile) && $shopsettings->termsofuseFile != ''): ?>
                                     <div class="form-group mt-4">
