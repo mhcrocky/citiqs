@@ -401,7 +401,7 @@ select.input100 {
 
   @media only screen and (min-width: 500px) {
     .login100-form {
-        padding: 43px 10px 100px 100px !important;
+        padding: 10px 1px 1px 100px !important;
     }
 }
 
