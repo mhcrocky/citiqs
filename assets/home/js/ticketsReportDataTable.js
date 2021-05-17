@@ -189,6 +189,10 @@ $(document).ready(function () {
         data: "numberofpersons",
       },
       {
+        title: "Tag ID",
+        data: "tag",
+      },
+      {
         title: "Date",
         data: "reservationtime",
       },
