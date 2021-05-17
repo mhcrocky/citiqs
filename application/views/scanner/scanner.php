@@ -15,11 +15,25 @@
 
 <script>
     document.getElementById('order').addEventListener('change', function(){
-        console.dir('change');
+        let message = 'change' + document.getElementById('order').value;
+        console.dir(message);
     });
 
     document.getElementById('order').addEventListener('input', function(){
-        console.dir('input');
+        let message = 'input' + document.getElementById('order').value;
+        console.dir(message);
     });
+    
+    var input = document.getElementById("order");
 
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+
+            alert(document.getElementById('order').value);
+        }
+    });
 </script>
