@@ -7,7 +7,7 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-    Class Shoporder_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+    Class Shoporder_model_statistics extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
         public $buyerId;
@@ -1366,11 +1366,8 @@
             $this->load->config('custom');
             $where = [
                 $this->table . '.paid' => '1',
-                $this->table . '.invoiceId' => null,
                 $this->table . '.createdOrder !=' => null,
-                'tbl_shop_printers.userId' => $vendorId,
                 'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos'),
-                'tbl_shop_payment_methods.vendorId' => $vendorId,
             ];
 
             if ($from) {
@@ -1380,9 +1377,9 @@
                 $where[$this->table . '.createdOrder<='] = $to;
             }
 
-            if ($sum) {
-                return $this->sumAllVendorOrders($where);
-            }
+//            if ($sum) {
+//                return $this->sumAllVendorOrders($where);
+//            }
             return $this->allVendorOrders($where);
 
 
@@ -1589,110 +1586,4 @@
             return intval($vendorId['userId']);
         }
 
-        public function emailReceipt(): void
-        {
-            if (!$this->checkIsAllowedToEmailReceipt()) return;
-
-            $email = $this->getOrderReceiptEmail();
-            $orderImageFullPath = $this->getOrderImagePath(' AND tbl_shop_orders.paid = "1" ');
-            $subject = "tiqs-Order : " . $this->id;
-
-            $this->load->helper('email_helper');
-
-            if ($email && $orderImageFullPath && Email_helper::sendOrderEmail($email, $subject, '', $orderImageFullPath)) {
-                $this->setProperty('receiptEmailed', '1')->update();
-            }
-
-            // we need to send here also a QRCode image with the order number...
-
-            return;
-        }
-
-        private function getOrderReceiptEmail(): ?string
-        {
-            $this->load->config('custom');
-
-            $data = $this->readImproved([
-                'what' => ['buyer.email AS buyerEmail, vendor.receiptEmail as receiptEmail'],
-                'where' => [
-                    $this->table . '.id' => $this->id,
-                    $this->table . '.paid' => $this->config->item('orderPaid'),
-                    $this->table . '.receiptEmailed' => '0',
-                ],
-                'joins' => [
-                    ['tbl_shop_spots', $this->table . '.spotId = tbl_shop_spots.id'],
-                    ['tbl_shop_printers', 'tbl_shop_spots.printerId = tbl_shop_printers.id'],
-                    [
-                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
-                        'vendor.id  = tbl_shop_printers.userId',
-                        'INNER'
-                    ],
-                    [
-                        '(SELECT * FROM tbl_user WHERE roleid = ' . $this->config->item('buyer') . ' OR roleid = ' . $this->config->item('owner') . ') buyer',
-                        'buyer.id  = ' .  $this->table  . '.buyerId',
-                        'INNER'
-                    ],
-                ]
-            ]);
-
-            if (is_null($data)) return null;
-
-            $data = reset($data);
-
-            if (strpos($data['buyerEmail'], 'anonymus_') !== false && strpos($data['buyerEmail'], '@tiqs.com') !== false) {
-                $email = $data['receiptEmail'];
-            } else {
-                $email = $data['buyerEmail'];
-            }
-
-            return $email;
-        }
-
-        private function checkIsAllowedToEmailReceipt(): bool
-        {
-            $vendorId = $this->getOrderVendorId();
-
-            // check does vendor requried send receipt with email
-            $this->load->model('shopvendor_model');
-            if (!$this->shopvendor_model->setProperty('vendorId', $vendorId)->sendEmailWithReceipt()) return false;
-			return true;
-
-            // chekc is vendor bbUser, if it is email will not be send
-			// this is a very bad check
-			// it checks if the vendor is in the table tbl_
-            $this->load->model('shopvendorfod_model');
-            return $this->shopvendorfod_model->isOnlyBBVendor($vendorId);
-        }
-
-        private function getOrderImagePath(string $filterString): ?string
-        {
-            $orderImageFullPath = FCPATH .  'receipts' . DIRECTORY_SEPARATOR . $this->id .'-email' . '.png';
-            if (!file_exists($orderImageFullPath)) {
-                $order = $this->fetchOrdersForPrintcopy($filterString);
-                if (is_null($order)) return null;
-                $order = reset($order);
-                $relativePath = Orderprint_helper::saveOrderImage($order);
-                return $relativePath ? FCPATH . $relativePath : null;
-            }
-            return $orderImageFullPath;
-        }
-
-        public function sendNotifcation(): void
-        {
-            $this->load->model('notification_model');
-
-            $order = $this->fetchOne();
-
-            if (is_null($order)) return;
-
-            $order = reset($order);
-            $vendorId = intval($order['vendorId']);
-            $buyerEmail = $order['buyerEmail'];
-            $vendorOneSignalId = $order['vendorOneSignalId'];
-
-            $this->notification_model->sendNotifictaion($vendorId, $buyerEmail, $this->id, $vendorOneSignalId);
-
-
-            return;
-        }
     }

@@ -683,6 +683,7 @@ class Bookingpay extends BaseControllerWeb
                             
                             $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
                             $qrlink = $SERVERFILEPATH . $file_name1;
+
 							if($mailtemplate) {
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
