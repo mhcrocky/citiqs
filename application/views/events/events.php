@@ -1,6 +1,6 @@
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
-        <div class="input-group col-md-4">
+        <div class="input-group col-md-6">
             <a href="<?php echo base_url(); ?>events/create">
                 <input type="button" value="Add Event"
                     style="background: #009933 !important;border-radius:0;height:45px;"
@@ -12,9 +12,16 @@
                 style="background: #10b981 !important;border-radius:0;height:45px;"
                 class="btn btn-primary form-control mb-3 text-left ml-2" data-toggle="modal"
                 data-target="#addShopSettings">
-            <a style="background: #0a6648;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+            <a style="background: #0a6648;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mr-2 mb-3"
                 data-toggle="modal" data-target="#addShopSettings">
                 <i style="color: #fff;font-size: 18px;" class="fa fa-cog"></i></a>
+            <a href="<?php echo base_url(); ?>events/inputs">
+            <input type="button" value="Set custom inputs"
+                style="background: #10b96d !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left ml-2" >
+            </a>
+            <a href="<?php echo base_url(); ?>events/inputs" style="background: #0a6635;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3" >
+                <i style="color: #fff;font-size: 18px;" class="fa fa-file-text-o"></i></a>
         </div>
         <div style="padding-right: 0px;" class="col-md-3 ml-auto mb-3">
             <select id="selectTime" style="height: 40px !important;"
