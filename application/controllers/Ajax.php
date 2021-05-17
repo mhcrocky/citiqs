@@ -1397,10 +1397,14 @@ class Ajax extends CI_Controller
     
     private function validateDeliveryDistance(array $user, array $vendor): bool
     {
-        $point = Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city']);;
-        $distance = Utility_helper::getDistance($point['lat'], $point['long'], $vendor['vendorLat'], $vendor['vendorLon']);
-    
-        return ($distance > $vendor['deliveryAirDistance']) ? false : true;
+        $point = Google_helper::getLatLong($user['address'], $user['zipcode'], $user['city']);
+
+        if ($point['lat'] && $point['long']) {
+            $distance = Utility_helper::getDistance($point['lat'], $point['long'], $vendor['vendorLat'], $vendor['vendorLon']);
+            return ($distance > $vendor['deliveryAirDistance']) ? false : true;
+        }
+
+        return false;
     }
 
     private function checkTermsAndConditions(array $vendor, array $order): bool
