@@ -517,6 +517,11 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_custom.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_theme.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_select2.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
     <style> 
     .header__checkout{
 		position: sticky;
@@ -534,6 +539,11 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_custom.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_theme.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_select2.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
     <style> 
     .header__checkout{
 		position: sticky;
@@ -550,6 +560,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     .text-center.yellow {
         font-size: 24px !important;
     }
+
 </style>
 <?php  } elseif ($this->view === 'events/pay') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
@@ -579,6 +590,11 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/css/card-style.css">
 <?php  } elseif ($this->view === 'new_bookings/index') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/agendaCalendar.css">
+    <style>
+        .legend {
+        display: none;
+    }
+    </style>
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <?php  } elseif ($this->view === 'appsettings/index') { ?>
