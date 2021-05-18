@@ -11,10 +11,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body sc">
 
                 <?php $total = 0; ?>
-                <div class="menu-list">
+                <div class="menu-list sc">
                     <div id="checkout-list" class="w-100">
                         <?php 
                         $ticketFee = 0;
@@ -76,7 +76,7 @@
                             <input type="hidden" id="ticketFee" value="<?php echo isset($ticketFee) ? $ticketFee : 0; ?>">
                         </div>
                     </div>
-                    <div id="payForm" style="display: none;"  class="limiter">
+                    <div id="payForm" style="display: none;"  class="limiter sc">
                         <div style="background: #fff !important;" class="container-login100">
                             <div style="background: #fff !important;" class="wrap-login100">
                                 <div style="background: #fff !important;">
