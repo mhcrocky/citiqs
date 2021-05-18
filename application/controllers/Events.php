@@ -179,7 +179,7 @@ class Events extends BaseControllerWeb
        $guestlist = [];
        $reservationIds = [];
        foreach($jsonData as $data){
-           
+        $transactionId = $this->generateTransactionId();
         $booking = [
 			'customer' => $this->vendor_id,
 			'eventId' => $data_post['ticketId'],
@@ -200,7 +200,7 @@ class Events extends BaseControllerWeb
         ];
 
         $this->event_model->save_guest_reservations($booking);
-        $transactionId = $this->generateTransactionId();
+        
            
            $guestlist[] = [
                'guestName' => $data->$guestName,
@@ -221,7 +221,7 @@ class Events extends BaseControllerWeb
         $transactionId = $this->input->post('transactionId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
-        Ticketingemail_helper::sendEmailReservation($reservations, false, true, $sendToSupport);
+        Ticketingemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport);
         return ;
     }
 
@@ -920,7 +920,7 @@ class Events extends BaseControllerWeb
         $reservationId = $this->input->post('reservationId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
-        Ticketingemail_helper::sendEmailReservation($reservations, false, true, $sendToSupport);
+        Ticketingemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport);
         return ;
 
     }
