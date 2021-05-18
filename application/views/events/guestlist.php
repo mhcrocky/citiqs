@@ -92,17 +92,17 @@
                                         <select id="guestTicketId" name="guestTicketId"
                                             class="form-control input-w border-50 field" required>
                                             <option value="">Select option</option>
-                                            <?php foreach($tickets as $ticket): ?>
-                                            <option value="<?php echo $ticket['ticketId']; ?>">
-                                                <?php echo $ticket['ticketDescription']; ?>
+                                            <?php #foreach($tickets as $ticket): ?>
+                                            <option value="<?php #echo $ticket['ticketId']; ?>">
+                                                <?php #echo $ticket['ticketDescription']; ?>
                                             </option>
-                                            <?php endforeach; ?>
+                                            <?php #endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
 
                                 <input type="hidden" id="guestTicketId">
-                                <input type="hidden" id="eventId" value="<?php echo $eventId; ?>">
+                                <input type="hidden" id="eventId" value="<?php #echo $eventId; ?>">
 
                                 <input type="reset" id="resetGuestForm" class="d-none" value="Reset">
                                 <input type="submit" class="d-none" id="submitGuestlist" value="Submit">
@@ -165,8 +165,8 @@
                                 </div>
                             </div>
                             <div class="form-group pb-2 px-3">
-                                <select id="guestTicketId" name="guestTicketId" class="form-control">
-                                    <option value="0">Select ticket</option>
+                                <select id="guestTicketId" name="guestTicketId" class="form-control" required>
+                                    <option value="">Select ticket</option>
                                     <?php foreach($tickets as $ticket): ?>
                                     <option value="<?php echo $ticket['ticketId']; ?>">
                                         <?php echo $ticket['ticketDescription']; ?>

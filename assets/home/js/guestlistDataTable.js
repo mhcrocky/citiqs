@@ -91,16 +91,14 @@ function addGuest(e){
 
   $('#submitGuestlist').prop('disabled', true);
 
-  $.post(globalVariables.baseUrl + "events/add_guest", data, function(data){
-    $("#guestlist").DataTable().ajax.reload();
+  $.post(globalVariables.baseUrl + "events/add_guest", data, function(response){
+      $("#guestlist").DataTable().ajax.reload();
       $('#submitGuestlist').prop('disabled', false);
       $('#resetGuestForm').click();
       $('#closeGuestModal').click();
       $('.form-control').addClass('input-clear');
-      alertify['success']('Guest is added successfully');
-
+      alertifyAjaxResponse(JSON.parse(response));
   });
-
 }
 
 function importExcelFile(){
