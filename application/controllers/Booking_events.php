@@ -282,16 +282,17 @@ class Booking_events extends BaseControllerWeb
 
     public function clear_tickets()
     {
+        
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : '';
         
-        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();;
 
         if(count($orderData) < 1){
             redirect(base_url());
         }
 
         $shortUrl = $orderData['shortUrl'];
-
+        
         $what = ['id'];
 		$where = ["randomKey" => $orderRandomKey];
 			
@@ -301,8 +302,10 @@ class Booking_events extends BaseControllerWeb
 
         if($this->shopsession_model->multipleDelete($ids, $where)){
             $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect(base_url() . 'events/shop/'. $shortUrl);
+            redirect('/events/shop/'. $shortUrl);
         }
+
+        return ;
         
         
         
@@ -421,17 +424,31 @@ class Booking_events extends BaseControllerWeb
             redirect(base_url());
         }
 
-        $this->global['pageTitle'] = 'TIQS: Select Payment';
+
         $customer = $orderData['vendorId'];
         $ticketingPayments = $this->event_model->get_payment_methods($customer);
-        $data['activePayments'] = $this->event_model->get_active_payment_methods($customer);
-        $data['idealPaymentType'] = $this->config->item('idealPaymentType');
-        $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
-        $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
-        $data['giroPaymentType'] = $this->config->item('giroPaymentType');
-        $data['payconiqPaymentType'] = $this->config->item('payconiqPaymentType');
-        $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
-        $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
+
+        $data = [
+            'activePayments'            => (array)$this->event_model->get_active_payment_methods($customer),
+            'idealPaymentType'          => $this->config->item('idealPaymentType'),
+            'creditCardPaymentType'     => $this->config->item('creditCardPaymentType'),
+            'bancontactPaymentType'     => $this->config->item('bancontactPaymentType'),
+            'giroPaymentType'           => $this->config->item('giroPaymentType'),
+            'payconiqPaymentType'       => $this->config->item('payconiqPaymentType'),
+            'myBankPaymentType'         => $this->config->item('myBankPaymentType'),
+            'vendorCost'                => $this->event_model->get_vendor_cost($customer),
+            'shortUrl'                  => $orderData['shortUrl'],
+            'idealPaymentText'          => $this->config->item('idealPayment'),
+            'creditCardPaymentText'     => $this->config->item('creditCardPayment'),
+            'bancontactPaymentText'     => $this->config->item('bancontactPayment'),
+            'giroPaymentText'           => $this->config->item('giroPayment'),
+            'payconiqPaymentText'       => $this->config->item('payconiqPayment'),
+            'voucherPaymentText'        => $this->config->item('voucherPayment'),
+            'pinMachinePaymentText'     => $this->config->item('pinMachinePayment'),
+            'myBankPaymentText'         => $this->config->item('myBankPayment'),
+        ];
+
+
         $amount = floatval($orderData['totalAmount']);
         $reservationIds = $orderData['reservationIds'];
 
@@ -454,12 +471,20 @@ class Booking_events extends BaseControllerWeb
             }
         }
 
-        $data['vendorCost'] = $this->event_model->get_vendor_cost($customer);
-        $this->global['vendor'] = (array) $this->event_model->get_shopsettings($customer);
-        $this->global['expTime'] = $orderData['expTime'];
-        $this->global['totalAmount'] = $orderData['totalAmount'];
-        $this->global['orderRandomKey'] = $orderRandomKey;
-        $this->global['logoUrl'] = $orderData['logoUrl'];
+
+        
+        
+        
+        $this->global = [
+            'pageTitle'      => 'TIQS: Select Payment',
+            'vendor'         => (array) $this->event_model->get_shopsettings($customer),
+            'expTime'        => $orderData['expTime'],
+            'totalAmount'    => $orderData['totalAmount'],
+            'orderRandomKey' => $orderRandomKey,
+            'logoUrl'        => $orderData['logoUrl']
+        ];
+
+        //$this->loadViews('events/selectpayment', $this->global, $data, null, 'headerWarehousePublic');
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
 
