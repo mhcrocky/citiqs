@@ -702,7 +702,7 @@ transition: all .5s ease-out;
 
 #checkout-modal .modal-body{
 	background-color: white;
-	
+	height: 100%;
 	padding-top: 0;
 }
 
@@ -711,7 +711,8 @@ transition: all .5s ease-out;
 	border-top-right-radius: 0;
 	overflow-y: scroll;
 	border-bottom-right-radius: 0;
-	height: 100vh;
+	height: 100%;
+	min-height: 100%;
 }
 
 #checkout-modal .modal-header{
