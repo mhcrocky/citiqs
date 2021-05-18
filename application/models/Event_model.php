@@ -877,8 +877,7 @@ class Event_model extends CI_Model {
 		$this->db->select('showAddress, showCountry, showZipcode, showMobileNumber, showAge, googleAnalyticsCode, googleAdwordsConversionId, googleAdwordsConversionLabel, googleTagManagerCode, facebookPixelId, termsofuseFile');
 		$this->db->where('vendorId', $vendorId);
 		$query = $this->db->get('tbl_event_shop');
-		return $query->first_row();
-		
+		return ($this->db->affected_rows()) ? $query->first_row() : null;
 	}
 
 	public function save_shopsettings($vendorId, $data)
