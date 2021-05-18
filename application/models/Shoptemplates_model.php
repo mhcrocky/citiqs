@@ -62,7 +62,7 @@
         private function setTemplateFolder(): void
         {
             $this->load->config('custom');
-            $this->templateFolder =  FCPATH . $this->config->item('emailTemplatesFolder') . DIRECTORY_SEPARATOR . $this->user_id . DIRECTORY_SEPARATOR;
+            $this->templateFolder =  FCPATH . $this->config->item('emailTemplatesFolder') .  $this->user_id . DIRECTORY_SEPARATOR;
             $this->makeTemplateFolder();
 
             return;

@@ -110,6 +110,15 @@ class Events extends BaseControllerWeb
        $dt = new DateTime( 'now');
        $bookdatetime = $dt->format('Y-m-d H:i:s');
        $ticket = $this->event_model->get_ticket_by_id($this->vendor_id, $data['ticketId']);
+       if (empty($ticket)) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Process failed']
+            ];
+            echo json_encode($response);
+            return;
+       }
+
        $ticketQuantity = intval($data['ticketQuantity']);
        $transactionId = $this->generateTransactionId();
        $booking = [
@@ -131,11 +140,30 @@ class Events extends BaseControllerWeb
             'TransactionID' => $transactionId
         ];
         
-        $this->event_model->save_guest_reservations($booking, $ticketQuantity);
+        if (empty($this->event_model->save_guest_reservations($booking, $ticketQuantity))) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Guest reservation(s) not saved']
+            ];
+            echo json_encode($response);
+            return;
+        };
         $data['transactionId'] = $transactionId;
-        $this->event_model->save_guest($data);
-        $this->emailReservation($transactionId);
+        if (!$this->event_model->save_guest($data)) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Guest not saved']
+            ];
+            echo json_encode($response);
+            return;
+        }
 
+        $this->emailReservation($transactionId);
+        $response = [
+            'status' => '1',
+            'messages' => ['Guest is added successfully']
+        ];
+        echo json_encode($response);
     }
 
     public function import_guestlist()
