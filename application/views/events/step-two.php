@@ -829,7 +829,7 @@
             <table style="background: none !important;" class="table">
                 <tr style="border-bottom: 3px solid #9333ea">
                     <td><?php echo $event->eventname; ?></td>
-                    <td><?php echo $event->eventdescript; ?></td>
+                    <td><?php echo character_limiter($event->eventdescript, 20); ?></td>
                     <td><?php echo $event->eventVenue; ?></td>
                     <td><?php echo $event->eventAddress; ?></td>
                     <td><?php echo $event->eventCity; ?></td>
