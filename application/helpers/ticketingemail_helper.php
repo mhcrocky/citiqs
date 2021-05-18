@@ -55,18 +55,19 @@
                         
                         $qrtext = $reservationId;
 
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-						}
+						// switch (strtolower($_SERVER['HTTP_HOST'])) {
+						// 	case 'tiqs.com':
+						// 		$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
+						// 		break;
+						// 	case '127.0.0.1':
+						// 		$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
+						// 		break;
+                        //     default:
+                        //         $file = FCPATH . 'uploads/qrcodes/';
+						// 		break;
+						// }
 
-						$SERVERFILEPATH = $file;
+						$SERVERFILEPATH = FCPATH . 'uploads/qrcodes/';
 						$text = $qrtext;
 						$folder = $SERVERFILEPATH;
 						$file_name1 = $qrtext . ".png";
