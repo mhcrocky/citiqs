@@ -76,7 +76,7 @@
                             <input type="hidden" id="ticketFee" value="<?php echo isset($ticketFee) ? $ticketFee : 0; ?>">
                         </div>
                     </div>
-                    <div id="payForm" style="display: none;"  class="limiter sc">
+                    <div id="payForm" style="display: none; margin-bottom: 350px;"  class="limiter sc">
                         <div style="background: #fff !important;" class="container-login100">
                             <div style="background: #fff !important;" class="wrap-login100">
                                 <div style="background: #fff !important;">
@@ -199,6 +199,9 @@
                                 </form>
                             </div>
                         </div>
+                    </div>
+
+                    <div style="height: 100px" class="w-100">
                     </div>
 
                   
