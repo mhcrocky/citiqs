@@ -702,12 +702,14 @@ transition: all .5s ease-out;
 
 #checkout-modal .modal-body{
 	background-color: white;
-	overflow-y: scroll;
+	
 	padding-top: 0;
 }
 
+
 #checkout-modal .modal-content{
 	border-top-right-radius: 0;
+	overflow-y: scroll;
 	border-bottom-right-radius: 0;
 	height: 100vh;
 }
