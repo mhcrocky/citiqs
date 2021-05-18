@@ -25,6 +25,7 @@ class Events extends BaseControllerWeb
         $this->load->helper('country_helper');
         $this->load->helper('email_helper');
         $this->load->helper('ticketingemail_helper');
+        $this->load->helper('text');
         $this->load->library('language', array('controller' => $this->router->class));
         
 
