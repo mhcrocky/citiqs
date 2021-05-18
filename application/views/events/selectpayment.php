@@ -13,6 +13,24 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
     <div class="row mx-auto">
 
         <div class="col-md-8 col-sm-12 serviceBox blue mx-auto">
+
+		<?php if(in_array('payconiq payment', $activePayments)): ?>
+			<div class="half-col  mb-4">
+				<a data-paymentFee="<?php echo $payconiqPaymentFee ?>"
+				   class="text-primary pay_method"
+				   href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>?order=<?php echo $orderRandomKey; ?>"
+
+				>
+					<img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
+						 alt="Payconiq" />
+				</a>
+				<p style="paymentFee bg-primary"><?php echo $payconiqPaymentFee; ?></p>
+				<h3 class="title">
+					<a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" >Payconiq</a>
+				</h3>
+			</div>
+		<?php endif; ?>
+
         <?php if(in_array('ideal payment', $activePayments)): ?>
             <div class="half-col  mb-4">
             <a  data-paymentFee="<?php echo $idealPaymentFee; ?>" class="iDealPay" href="javascript:;" onclick="paymentMethodRedirect(this)">
@@ -90,22 +108,7 @@ $pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
             </div>
         <?php endif; ?>
 
-        <?php if(in_array('payconiq payment', $activePayments)): ?>
-            <div class="half-col  mb-4">
-            <a data-paymentFee="<?php echo $payconiqPaymentFee ?>"
-               class="text-primary pay_method"
-               href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>?order=<?php echo $orderRandomKey; ?>"
-               
-            >
-                <img class="img-w-89" style="max-width: 85px;" src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png"
-                    alt="Payconiq" />
-            </a>
-                <p style="paymentFee bg-primary"><?php echo $payconiqPaymentFee; ?></p>
-                <h3 class="title">
-                    <a id="payconiq" data-paymentFee="<?php echo $payconiqPaymentFee ?>" class="text-primary pay_method" href="<?php echo base_url(); ?>booking/onlinepayment/<?php echo $payconiqPaymentType; ?>?order=<?php echo $orderRandomKey; ?>" >Payconiq</a>
-                </h3>
-            </div>
-        <?php endif; ?>
+
 
         <?php if(in_array('giro payment', $activePayments)): ?>
             <div class="half-col  mb-4">
