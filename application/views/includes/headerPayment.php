@@ -39,7 +39,7 @@
 
 </head>
 
-<body id="body">
+<body id="body" style="display: block !important;">
 
     <!-- HEADER -->
     <header class="header">
@@ -53,7 +53,7 @@
                 aria-label="Toggle navigation"></button>
 
             <div class="collapse navbar-collapse pl-md-4" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto d-none">
                     <li class="nav-item active pt-2 pt-md-0">
                         <a class="nav-link"
                             href="#">Home
