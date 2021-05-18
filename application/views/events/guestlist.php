@@ -167,11 +167,13 @@
                             <div class="form-group pb-2 px-3">
                                 <select id="guestTicketId" name="guestTicketId" class="form-control" required>
                                     <option value="">Select ticket</option>
+                                    <?php if(!empty($tickets)) : ?>
                                     <?php foreach($tickets as $ticket): ?>
                                     <option value="<?php echo $ticket['ticketId']; ?>">
                                         <?php echo $ticket['ticketDescription']; ?>
                                     </option>
                                     <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                             </div>
 
