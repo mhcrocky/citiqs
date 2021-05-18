@@ -711,8 +711,8 @@ transition: all .5s ease-out;
 	overflow-y: scroll;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	min-height: 100vh;
-	height: auto;
+	min-height: auto;
+	height: 100%;
 }
 
 #checkout-modal .modal-header{
