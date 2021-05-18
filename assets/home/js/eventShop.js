@@ -1,7 +1,10 @@
 (function() {
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
         window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;
+    } else if(typeof globalTime !== 'undefined' && dayjs(globalTime.time) < dayjs()){
+        window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;
     }
+
     if($('.ticket_item').length > 0){
         $('#payForm').show();
     }
@@ -58,7 +61,9 @@ $(document).ready(function(){
 
       $(document).on('change', '.emails', function() {
         let email = $("#email").val();
+        email = email.toLowerCase();
         let repeatEmail = $("#repeatEmail").val();
+        repeatEmail = repeatEmail.toLowerCase();
         if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
             $("#email").closest("div").addClass('input100-error');
             $("#repeatEmail").closest("div").addClass('input100-error');
@@ -88,7 +93,9 @@ $("#next").on('click', function(e) {
 function payFormSubmit() {
     validatePayForm();
     let email = $("#email").val();
+    email = email.toLowerCase();
     let repeatEmail = $("#repeatEmail").val();
+    repeatEmail = repeatEmail.toLowerCase();
     if(validateEmail(email) && validateEmail(repeatEmail) && (email != repeatEmail)){
         $("#email").closest("div").addClass('input100-error');
         $("#repeatEmail").closest("div").addClass('input100-error');
