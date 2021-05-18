@@ -534,14 +534,26 @@ class Agenda_booking extends BaseControllerWeb
         $this->load->helper('money');
 
         $this->global['pageTitle'] = 'Payment Method';
-        $data['activePayments'] = $this->bookandpayagendabooking_model->get_active_payment_methods($customer['id']);
-        $data['idealPaymentType'] = $this->config->item('idealPaymentType');
-        $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
-        $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
-        $data['giroPaymentType'] = $this->config->item('giroPaymentType');
-        $data['payconiqPaymentType'] = $this->config->item('payconiqPaymentType');
-        $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
-        $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
+
+        $data = [
+            'activePayments'            => $this->bookandpayagendabooking_model->get_active_payment_methods($customer['id']),
+            'idealPaymentType'          => $this->config->item('idealPaymentType'),
+            'creditCardPaymentType'     => $this->config->item('creditCardPaymentType'),
+            'bancontactPaymentType'     => $this->config->item('bancontactPaymentType'),
+            'giroPaymentType'           => $this->config->item('giroPaymentType'),
+            'payconiqPaymentType'       => $this->config->item('payconiqPaymentType'),
+            'myBankPaymentType'         => $this->config->item('myBankPaymentType'),
+            'shortUrl'                  => $customer['usershorturl'],
+            'idealPaymentText'          => $this->config->item('idealPayment'),
+            'creditCardPaymentText'     => $this->config->item('creditCardPayment'),
+            'bancontactPaymentText'     => $this->config->item('bancontactPayment'),
+            'giroPaymentText'           => $this->config->item('giroPayment'),
+            'payconiqPaymentText'       => $this->config->item('payconiqPayment'),
+            'voucherPaymentText'        => $this->config->item('voucherPayment'),
+            'pinMachinePaymentText'     => $this->config->item('pinMachinePayment'),
+            'myBankPaymentText'         => $this->config->item('myBankPayment'),
+        ];
+
         $amount = $orderData['amount'];
 
         $reservationsPayments = $this->bookandpayagendabooking_model->get_payment_methods($customer['id']);
