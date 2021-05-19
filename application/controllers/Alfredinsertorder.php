@@ -248,6 +248,79 @@ class Alfredinsertorder extends BaseControllerWeb
         exit();
     }
 
+    private function setAmountAndServiceFee(array &$post): void
+    {
+        $serviceTypeId = intval($post['order']['serviceTypeId']);
+        $this->setAmount($post, $serviceTypeId);
+        $this->setServiceFee($post, $serviceTypeId);
+        return;
+    }
+
+    private function getProductPrice(int $id, int $type): string
+    {
+        if ($type === $this->config->item('local')) {
+            $property = 'price';
+        } elseif ($type === $this->config->item('deliveryType')) {
+            $property = 'deliveryPrice';
+        } elseif ($type === $this->config->item('pickupType')) {
+            $property = 'pickupPrice';
+        }
+
+        return $this->shopproductex_model->setObjectId($id)->getProperty($property);
+    }
+
+    private function  setAmount(array &$post, int $serviceTypeId): void{
+        $products = $post['makeOrder'];
+        $checkAmount = 0;
+        foreach ($products as $key => $product) {
+            $productId = array_keys($product)[0];
+            $productAmount = $this->getProductPrice($productId, $serviceTypeId);
+            $checkAmount += floatval($productAmount);
+            $product = reset($product);
+            if (!empty($product['addons'])) {
+                $addons = $product['addons'];
+                foreach ($addons as $addonId => $addon) {
+                    $addonAmount = $this->getProductPrice($addonId, $serviceTypeId);
+                    $checkAmount += floatval($addonAmount);
+                }
+            }
+        }
+        $post['order']['amount'] = $checkAmount;
+        return;
+    }
+
+    private function getServiceFeeAmountAndPercent(array $post , int $serviceTypeId): array
+    {
+        if ($serviceTypeId === $this->config->item('local')) {
+            $percent = $post['pos'] === '0' ? 'serviceFeePercent' : 'serviceFeePercentPos';
+            $amount =  $post['pos'] === '0' ? 'serviceFeeAmount' : 'serviceFeeAmountPos';
+            $minimum = $post['pos'] === '0' ? 'minimumOrderFee' : 'minimumOrderFeePos';
+        } elseif ($serviceTypeId === $this->config->item('deliveryType')) {
+            $percent = $post['pos'] === '0' ? 'deliveryServiceFeePercent' : 'deliveryServiceFeePercentPos';
+            $amount =  $post['pos'] === '0' ? 'deliveryServiceFeeAmount' : 'deliveryServiceFeeAmountPos';
+            $minimum = $post['pos'] === '0' ? 'deliveryMinimumOrderFee' : 'deliveryMinimumOrderFeePos';
+        } elseif ($serviceTypeId === $this->config->item('pickupType')) {
+            $percent = $post['pos'] === '0' ? 'pickupServiceFeePercent' : 'pickupServiceFeePercentPos';
+            $amount =  $post['pos'] === '0' ? 'pickupServiceFeeAmount' : 'pickupServiceFeeAmountPos';
+            $minimum = $post['pos'] === '0' ? 'pickupMinimumOrderFee' : 'pickupMinimumOrderFeePos';
+        }
+
+        $percentValue = floatval($this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getProperty($percent));
+        $amountValue = floatval($this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getProperty($amount));
+        $minimumValue = floatval($this->shopvendor_model->setProperty('vendorId', $post['vendorId'])->getProperty($minimum));
+        return [$percentValue, $amountValue, $minimumValue];
+    }
+
+    private function setServiceFee(array &$post, int $serviceTypeId): void
+    {
+        list($percent, $amount, $minimum) = $this->getServiceFeeAmountAndPercent($post, $serviceTypeId);
+        $serviceFee =  $post['order']['amount'] * $percent / 100 + $minimum;
+        if ($serviceFee > $amount) {
+            $serviceFee = $amount;
+        }
+        $post['order']['serviceFee'] = round($serviceFee, 2);
+    }
+
     private function insertOrderProcess(array $post, string $orderRandomKey): int
     {
         $this->user_model->manageAndSetBuyer($post['user']);
@@ -323,6 +396,8 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['order']['serviceTypeId'] = $spot['spotTypeId'];
         $post['order']['orderRandomKey'] = $orderRandomKey;
         $post['order']['createdOrder'] = date('Y-m-d H:i:s');
+
+        $this->setAmountAndServiceFee($post);
 
         if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
             $orderDate = explode(' ', $post['order']['date']);

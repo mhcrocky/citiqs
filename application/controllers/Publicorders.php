@@ -69,6 +69,10 @@
             $spotId = empty($get['spotid']) ? 0 : intval($get['spotid']);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
 
+            if (is_null($vendor)) {
+                redirect(base_url(). 'places');
+            }
+
             $this->setGlobalDesign($vendor['design']);
             $this->setGlobalVendor($vendor);
             $this->isVendorClosed($vendor);

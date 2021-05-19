@@ -59,16 +59,18 @@ class Alfredpayment extends BaseControllerWeb
             redirect($result->transaction->paymentURL);
             exit();
         }
-
+        $result = null;
         $this->failedRedirect($orderId, $result);
         return;
     }
 
-    private function failedRedirect(int $orderId, object $result): void
+    private function failedRedirect(int $orderId, ?object $result): void
     {
         $orderRandomKey = $this->shoporder_model->setObjectId($orderId)->getProperty('orderRandomKey');
         if ($orderRandomKey) {
-            $message = $this->returnErrMessage($result->request->errorId);
+            if ($result) {
+                $message = $this->returnErrMessage($result->request->errorId);
+            }
             $this->session->set_flashdata('error', $message);
             $redirect = base_url() . 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
         } else {
