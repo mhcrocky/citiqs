@@ -20,7 +20,13 @@ $(document).ready(function() {
             {
 
                 title: 'Description',
-                data: 'eventdescript'
+                data: null,
+                "render": function(data, type, row) {
+                    let eventdescript = data.eventdescript;
+                    eventdescript = eventdescript.replace(/(<([^>]+)>)/gi, "");
+                    eventdescript = eventdescript.substring(0,25) + '...';
+                    return eventdescript;
+                }
 
             },
             {
