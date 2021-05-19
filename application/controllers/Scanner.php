@@ -46,8 +46,8 @@ class Scanner extends BaseControllerWeb
 
     public function index(): void
     {
-        $this->global['pageTitle'] = 'TIQS : ORDERING';
+        $this->global['pageTitle'] = 'TIQS : SCANNER';
 
-        $this->loadViews('scanner/scanner', $this->global, null, null, null);
+        $this->loadViews('scanner/scanner', $this->global, null, null, 'headerWarehousePublic');
     }
 }
