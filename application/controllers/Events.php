@@ -26,6 +26,7 @@ class Events extends BaseControllerWeb
         $this->load->helper('email_helper');
         $this->load->helper('ticketingemail_helper');
         $this->load->helper('text');
+        $this->load->helper('cookie');
         $this->load->library('language', array('controller' => $this->router->class));
         
 
@@ -42,6 +43,12 @@ class Events extends BaseControllerWeb
         $data['shopsettings'] = $this->event_model->get_shopsettings($this->vendor_id);
         $where = ['vendorId' => $this->vendor_id];
         $data['tags'] = $this->event_model->get_event_tags($where);
+        $data['shortUrl'] = $this->session->userdata('userShortUrl');
+
+        if(isset($_COOKIE['eventId'])){
+            $data['cookieEventId'] = $_COOKIE['eventId'];
+        }
+
         $this->loadViews("events/events", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
@@ -57,6 +64,11 @@ class Events extends BaseControllerWeb
     public function event($eventId)
     {
         $this->global['pageTitle'] = 'TIQS: Step Two'; 
+
+        $cookie = array('eventId', $eventId, time() + 3600);
+        setcookie('eventId', $eventId, time() + 3600, '/');
+
+
         $this->load->model('shopvoucher_model');
 		$what = ['tbl_shop_voucher.id' ,'tbl_shop_voucher.description', 'tbl_email_templates.template_name'];
         $join = [
@@ -229,6 +241,8 @@ class Events extends BaseControllerWeb
     public function edit($eventId)
     {
         $this->global['pageTitle'] = 'TIQS: Edit Event';
+        $cookie = array( 'eventId', $eventId, time() + 3600);
+        setcookie('eventId', $eventId, time() + 3600, '/');
         $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
         $data['countries'] = Country_helper::getCountries();
 
