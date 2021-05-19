@@ -255,12 +255,17 @@ $(document).ready(function () {
         title: "Email Template",
         data: null,
         render: function (data, type, row) {
+          var emails = JSON.parse(globalEmails);
+          let color = '#e5e5e5';
+          if(data.emailId == '0' || data.emailId == ''){
+            color = '#df0000';
+          }
           var html =
-            '<select style="min-width: 150px;" class="form-control" id="email_template" onchange="updateEmailTemplate(this, ' +
+            '<select style="min-width: 150px;border: 1px solid '+color+' !important" class="form-control" id="email_template" onchange="updateEmailTemplate(this, ' +
             data.ticketId +
             ')">';
           html += '<option value="0">Select Template</option>';
-          var emails = JSON.parse(globalEmails);
+          
           $.each(emails, function (index, email) {
             let template_name = email.template_name;
             if (data.emailId == email.id) {
