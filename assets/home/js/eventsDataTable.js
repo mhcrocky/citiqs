@@ -17,6 +17,7 @@ $(document).ready(function() {
                 data: 'eventname'
 
             },
+            /*
             {
 
                 title: 'Description',
@@ -59,30 +60,35 @@ $(document).ready(function() {
                 data: 'eventZipcode'
 
             },
+            */
             {
 
                 title: 'Start Date',
                 data: 'StartDate'
 
             },
+            /*
             {
 
                 title: 'End Date',
                 data: 'EndDate'
 
             },
+            */
             {
 
                 title: 'Start Time',
                 data: 'StartTime'
 
             },
+            /*
             {
 
                 title: 'End Time',
                 data: 'EndTime'
 
             },
+            */
             {
 
                 title: 'Archived',
@@ -114,7 +120,10 @@ $(document).ready(function() {
                 data: null,
                 "render": function(data, type, row) {
                     return '<a id="shop_url_'+data.id+'" href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" target="_blank">Go To Shop</a>';
-                }
+                },
+                createdCell: function (td, cellData, rowData, row, col) {
+                    $(td).closest('tr').addClass('eventRow'+ rowData.id);
+                 }
 
             },
             {
@@ -148,12 +157,12 @@ $(document).ready(function() {
             if(settings.nTable.id == 'events'){
                 let val = $('#selectTime option:selected').val();
                 let current_timestamp = dayjs();
-                let end_str_timestamp = data[8] + ' ' + data[10];
-                let end_timestamp = dayjs(end_str_timestamp);
-                let start_str_timestamp = data[7] + ' ' + data[9];
+                //let end_str_timestamp = data[8] + ' ' + data[10];
+                //let end_timestamp = dayjs(end_str_timestamp);
+                let start_str_timestamp = data[1] + ' ' + data[2];
                 let start_timestamp = dayjs(start_str_timestamp);
                 
-                if (val == 'past' && current_timestamp >= end_timestamp) { return true;}
+                if (val == 'past' && current_timestamp >= start_timestamp) { return true;}
                 if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
                 if(val == 'archived' && data[11] == 'Yes') { return true; }
                 if(val == 'all') { return true; }
