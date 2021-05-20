@@ -1,7 +1,10 @@
 (function() {
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
-        window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations";
+        window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations?order=" + globalKey.orderRandomKey;
+    } else if(typeof globalTime !== 'undefined' && dayjs(globalTime.time) < dayjs()){
+        window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations?order=" + globalKey.orderRandomKey;
     }
+    
     if($('.ticket_item').length > 0){
         $('#payForm').show();
     }
@@ -67,9 +70,10 @@ function getSpotsView(agendaId, date, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + agendaId).addClass('bg-light').removeClass('bg-white');
-    let img_src = $('#background_img_' + eventId).val();
+    let img_src = $('#background_img_' + agendaId).val();
     $.post(globalVariables.baseUrl + "booking_reservations/spots/" + date + "/" + agendaId, {
-        isAjax: isAjax
+        isAjax: isAjax,
+        order: globalKey.orderRandomKey
     }, function(data) {
         $("#spots").empty();
         $("#main-content").after(data);
@@ -102,11 +106,12 @@ function countDownTimer(distance){
         $(".timer").text("Expiration time: " + addZero(minutes) + ":" + addZero(seconds) + "");
         if (minutes == 0 && seconds == 0) {
             setTimeout(() => {
-                window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations";
+                window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations?order=" + globalKey.orderRandomKey;
             }, 500);
         }
         if (distance < 0) {
             clearInterval(x);
+            window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations?order=" + globalKey.orderRandomKey;
             $(".timer").text("EXPIRED");
         }
     } else {
@@ -212,6 +217,7 @@ function removeTicket(id, agendaId, spotId, price, reservationFee) {
         totime: encodeURI(totime),
         numberofpersons: numberofpersons,
         time: current_time,
+        order: globalKey.orderRandomKey,
         remove: 1
     };
     $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
@@ -306,7 +312,8 @@ function addTicket(id, agendaId, spotId, price, reservationFee, limit=2) {
         fromtime: encodeURI(fromtime),
         totime: encodeURI(totime),
         numberofpersons: numberofpersons,
-        time: current_time
+        time: current_time,
+        order: globalKey.orderRandomKey
     };
     $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){
@@ -396,7 +403,8 @@ function addMultiReservations(id, inputId, agendaId, spotId, price, reservationF
         fromtime: fromtime,
         totime: totime,
         quantity: quantityValue,
-        time: current_time
+        time: current_time,
+        order: globalKey.orderRandomKey
     };
     $.post(globalVariables.baseUrl + "booking_reservations/add_to_basket", data, function(data){
         if(data == 'error'){

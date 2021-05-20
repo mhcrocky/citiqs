@@ -12,54 +12,53 @@ class Booking_reservations extends BaseControllerWeb
         parent::__construct();
         $this->load->helper('url');
         $this->load->model('user_model');
+        $this->load->model('shopvendor_model');
+        $this->load->model('shopsession_model');
         $this->load->model('bookandpay_model');
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpaytimeslots_model');
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
+
+        $this->load->helper('jwt_helper');
         $this->load->library('language', array('controller' => $this->router->class)); 
     } 
 
     public function index($shortUrl = false)
     {
+        $this->global['pageTitle'] = 'TIQS: RESERVATIONS & BOOKINGS';
+
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+
+        $orderData = [];
+
+        if($orderRandomKey){
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        }
+
+
         if (!$shortUrl) {
-            redirect('https://tiqs.com/places');
+            redirect(base_url());
         }
 
-        $this->session->unset_userdata('customer');
 
-        if($this->session->userdata('eTicketing')){
-            session_unset();
-        }
-
-        $this->session->set_userdata('bookings', true);
-
-        $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
+        $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);       
         
 
         if (!$customer) {
-			redirect('https://tiqs.com/places');
+			redirect(base_url());
         }
 
-        $logoUrl = 'assets/home/images/tiqslogowhite.png';
-        if ($customer->logo) {
-			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
-        }
+        $sessionData['vendorId'] = $customer->id;
+        $sessionData['shortUrl'] = $shortUrl;
+        $sessionData['spotId'] = 0;
+        $sessionData['bookings'] = [];
+        $sessionData['expTime'] = false;
+        $sessionData['totalAmount'] = false;
 
-        if($this->session->userdata('shortUrl') != $shortUrl){
-            $this->session->unset_userdata('tickets');
-            $this->session->unset_userdata('exp_time');
-            $this->session->unset_userdata('total');
-        }
-
-        $this->session->set_userdata('shortUrl', $shortUrl);
-
-        $data['logoUrl'] = $logoUrl;
-        $this->global['pageTitle'] = 'TIQS: RESERVATIONS & BOOKINGS';
-
-        $customer->logo = (property_exists($customer, 'logo')) ? $customer->logo : '';
-        $this->session->set_userdata('customer', [
+        $logoUrl = (property_exists($customer, 'logo')) ? $customer->logo : '';
+        $sessionData['customer'] = [
             'id' => $customer->id,
             'usershorturl' => $customer->usershorturl,
             'username' => $customer->username,
@@ -67,12 +66,34 @@ class Booking_reservations extends BaseControllerWeb
             'second_name' => $customer->second_name,
             'email' => $customer->email,
             'logo' => $customer->logo,
-        ]);
+        ];
 
-        $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
-        $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
+        $sessionData['logoUrl'] = $logoUrl;
         
 
+        if(count($orderData) < 1){
+            $orderData = $this->shopsession_model->insertSessionData($sessionData);
+            redirect(base_url() . 'booking_reservations/' . $shortUrl . '?order=' . $orderData->randomKey);
+        }
+
+
+        $logoUrl = 'assets/home/images/tiqslogowhite.png';
+        if ($customer->logo) {
+			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
+        }
+
+
+
+        $data['logoUrl'] = $logoUrl;
+
+        $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
+
+        $this->global['orderRandomKey'] = $orderRandomKey;
+        $this->global['bookings'] = $orderData['bookings'];
+        $this->global['expTime'] = $orderData['expTime'];
+        $this->global['totalAmount'] = $orderData['totalAmount'];
+        $this->global['logoUrl'] = $orderData['logoUrl'];
+       ;
         
         $this->loadViews("booking_agenda/shop", $this->global, $data, 'footerBooking', 'headerBooking');
 
@@ -81,11 +102,21 @@ class Booking_reservations extends BaseControllerWeb
     public function spots($eventDate = false, $eventId = false)
     {
         if(!$this->input->post('isAjax')){ 
-            redirect('booking_agenda/shop/'. $this->session->userdata('shortUrl'));
+            redirect(base_url());
             return; 
         }
 
-        $customer = $this->session->userdata('customer');
+        $orderRandomKey = $this->input->post('order') ? $this->input->post('order') : false;
+
+        $orderData = [];
+
+        if($orderRandomKey){
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        } else {
+            return ;
+        }
+
+        $customer = $orderData['customer'];
 
         if (empty($customer) || !isset($customer['id'])) {
             redirect();
@@ -95,11 +126,6 @@ class Booking_reservations extends BaseControllerWeb
             redirect('booking_reservations/' . $customer['usershorturl']);
         }
 
-       
-
-        $this->session->set_userdata('eventDate', $eventDate);
-        $this->session->set_userdata('eventId', $eventId);
-        $this->session->set_userdata('spot', $eventId);
 
         $allSpots = $this->bookandpayspot_model->getAllSpots($customer['id']);
 
@@ -165,6 +191,8 @@ class Booking_reservations extends BaseControllerWeb
         $data["eventId"] = $eventId;
         $data["spots"] = $spots;
 
+        $data['checkout_reservations'] = $orderData['bookings'];
+
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
         $result = $this->load->view("booking_agenda/spots", $data,true);
 				if( isset($result) ) {
@@ -178,12 +206,34 @@ class Booking_reservations extends BaseControllerWeb
 
     public function add_to_basket()
     {
-        $customer = $this->session->userdata('customer');
+        $orderRandomKey = $this->input->post('order') ? $this->input->post('order') : false;
+
+        $orderData = [];
+
+        if($orderRandomKey){
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+        }
+
+        if(count($orderData) < 1){
+            $response = [
+                'status' => 'error',
+                'message' => 'Something went wrong!',
+                'quantity' => 1,
+                'amount' => 0
+            ];
+
+            echo json_encode($response);
+            return ;
+        }
+
+        $bookings = $orderData['bookings'];
+        $customer = $orderData['customer'];
         $first_booking = false;
-        if(!$this->session->userdata('tickets')){
+        
+        if(count($bookings) < 1){
             $first_booking = true;
         }
-        $bookings = $this->session->userdata('tickets') ?? [];
+        
         $quantity = 0;
         if(count($bookings) > 0){
             foreach($bookings as $booking){
@@ -197,14 +247,12 @@ class Booking_reservations extends BaseControllerWeb
             return ;
         }
 
-        $this->session->unset_userdata('bookings');
         $current_time = date($booking['time']);
         $newTime = date("Y-m-d H:i:s",strtotime("$current_time +10 minutes"));
-        $this->session->set_tempdata('exp_time', $newTime, 600);
+        $orderData['expTime'] = $newTime;
         $amount = (floatval($booking['price']) + floatval($booking['reservationFee']))*floatval($booking['quantity']);
         
         $agenda = $this->bookandpayagendabooking_model->getAgendaById($booking['agendaId']);
-        unset($bookings[$timeslotId]);
         $timeslot = $this->bookandpaytimeslots_model->getTimeSlot($timeslotId);
         $bookings[$timeslotId] = [
             'customer' => $customer['id'],
@@ -231,10 +279,15 @@ class Booking_reservations extends BaseControllerWeb
             $total = $total + (floatval($booking['price']) + floatval($booking['reservationFee']))*floatval($booking['quantity']);
         }
         
-        $this->session->set_tempdata('bookings', $bookings, 600);
-        $this->session->set_tempdata('tickets', $bookings, 600);
         $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600); 
+        $orderData['totalAmount'] = $total; 
+        $orderData['bookings'] = $bookings; 
+
+        $this
+        ->shopsession_model
+        ->setIdFromRandomKey($orderRandomKey)
+        ->setProperty('orderData', Jwt_helper::encode($orderData))
+        ->update();
         
         $reservation_data = [
             'fromtime'=> $fromtime,
@@ -248,70 +301,100 @@ class Booking_reservations extends BaseControllerWeb
 
     public function clear_reservations()
     {
-        $this->session->unset_userdata('bookings');
-        $this->session->unset_userdata('tickets');
-        $this->session->unset_userdata('exp_time');
-        $this->session->unset_userdata('total');
-        $this->session->unset_tempdata('bookings');
-        $this->session->unset_tempdata('tickets');
-        $this->session->unset_tempdata('exp_time');
-        $this->session->unset_tempdata('total');
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('booking_reservations/'. $this->session->userdata('shortUrl'));
+        
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : '';
+        
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();;
+
+        if(count($orderData) < 1){
+            redirect(base_url());
         }
+
+        $shortUrl = $orderData['shortUrl'];
+        
+        $what = ['id'];
+		$where = ["randomKey" => $orderRandomKey];
+			
+        $result = $this->shopsession_model->read($what,$where);
+        $result = reset($result);
+        $ids = [$result['id']];
+
+        if($this->shopsession_model->multipleDelete($ids, $where)){
+            $this->session->set_flashdata('expired', 'Session Expired!');
+            redirect('/booking_reservations/'. $shortUrl);
+        }
+
+        return ;
+        
+        
+        
     }
 
     public function delete_reservation()
     {
-        $tickets = $this->session->tempdata('tickets');
-        $ticketId = $this->input->post('id');
-        $time = (int)($this->input->post('current_time')/1000);
-        $time = $time - 2;
-        unset($tickets[$ticketId]);
-        
-        $this->session->unset_userdata('tickets');
-        $this->session->unset_tempdata('tickets');
-        $this->session->unset_tempdata('total');
+        $orderRandomKey = $this->input->post('order') ? $this->input->post('order') : false;
+
+        if(!$orderRandomKey){
+            return ;
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            return ;
+        }
+
+        $bookings = $orderData['bookings'];
+        $timeslotId = $this->input->post('id');
+    
+        unset($bookings[$timeslotId]);
+
         $items = $this->input->post('list_items');
         $total = $this->input->post('totalBasket');
         $total = number_format($total, 2, '.', '');
-        $this->session->set_tempdata('total', $total, 600); 
-        $this->session->set_tempdata('tickets', $tickets, $time); 
-        if($items == 0){
-            $this->session->unset_tempdata('exp_time');
-        }
-        return ;
-    }
+        $orderData['totalAmount'] = $total; 
+        $orderData['bookings'] = $bookings;
 
-    public function pay()
-    {
-        $this->global['pageTitle'] = 'TIQS: Pay';
-        if(!$this->session->tempdata('tickets')){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('booking_reservations/'. $this->session->userdata('shortUrl'));
+        if($items == 0){
+            $orderData['expTime'] = false;
         }
-        $this->loadViews("booking_agenda/pay", $this->global, '', 'footerBooking', 'headerBooking');
+        
+
+        $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+        return ;
     }
 
     public function payment_proceed()
     {
-        if($this->session->userdata('eTicketing')){
-            redirect(base_url().'/booking_reservations/'.$this->session->userdata('shortUrl'));
+        $orderRandomKey = $this->input->post('orderRandomKey') ? $this->input->post('orderRandomKey') : false;
+
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            redirect(base_url());
         }
 
         $amount = 0;
         $buyerInfo = $this->input->post(null, true);
-        $bookings = $this->session->tempdata('tickets');
+        $bookings = $orderData['bookings'];
 
         $reservationIds = $this->bookandpay_model->save_reservations($buyerInfo, $bookings);
 
-        $this->session->set_userdata('reservations', $reservationIds);
+        $orderData['reservations'] = $reservationIds;
 
         
         if ($buyerInfo) {
             $reservations = $this->bookandpay_model->getReservationsByIds($reservationIds);
-            $this->session->set_userdata('buyerEmail', $buyerInfo['email']);
 
             foreach ($reservations as $key => $reservation) {
                 $amount += floatval($reservation->price) + floatval($reservation->reservationFee);
@@ -323,39 +406,69 @@ class Booking_reservations extends BaseControllerWeb
                
             }
 
-            $this->session->set_userdata('amount', number_format($amount, 2, '.', ''));
+            $orderData['amount'] = number_format($amount, 2, '.', '');
 
         } else {
-            //redirect('agenda_booking/pay');
+            redirect(base_url());
         }
 
+        $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+
         
-        redirect('/booking_reservations/select_payment_type');
+        redirect('/booking_reservations/select_payment_type?order=' . $orderRandomKey);
         
     }
     
     
     public function select_payment_type()
     {
-        if (empty($_SESSION['reservationIds'])) {
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
             redirect(base_url());
         }
+
+        $customer = $orderData['customer'];
 
         $this->load->helper('money');
 
         $this->global['pageTitle'] = 'Payment Method';
-        $data['activePayments'] = $this->bookandpayagendabooking_model->get_active_payment_methods($this->session->userdata('customer')['id']);
-        $data['idealPaymentType'] = $this->config->item('idealPaymentType');
-        $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
-        $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
-        $data['giroPaymentType'] = $this->config->item('giroPaymentType');
-        $data['payconiqPaymentType'] = $this->config->item('payconiqPaymentType');
-        $data['pinMachinePaymentType'] = $this->config->item('pinMachinePaymentType');
-        $data['myBankPaymentType'] = $this->config->item('myBankPaymentType');
-        $amount = $this->session->userdata('amount');
 
-        $reservationsPayments = $this->bookandpayagendabooking_model->get_payment_methods($this->session->userdata('customer')['id']);
-        $vendorCost = $this->bookandpayagendabooking_model->get_vendor_cost($this->session->userdata('customer')['id']);
+        $data = [
+            'activePayments'            => $this->bookandpayagendabooking_model->get_active_payment_methods($customer['id']),
+            'idealPaymentType'          => $this->config->item('idealPaymentType'),
+            'creditCardPaymentType'     => $this->config->item('creditCardPaymentType'),
+            'bancontactPaymentType'     => $this->config->item('bancontactPaymentType'),
+            'giroPaymentType'           => $this->config->item('giroPaymentType'),
+            'payconiqPaymentType'       => $this->config->item('payconiqPaymentType'),
+            'myBankPaymentType'         => $this->config->item('myBankPaymentType'),
+            'shortUrl'                  => $customer['usershorturl'],
+            'idealPaymentText'          => $this->config->item('idealPayment'),
+            'creditCardPaymentText'     => $this->config->item('creditCardPayment'),
+            'bancontactPaymentText'     => $this->config->item('bancontactPayment'),
+            'giroPaymentText'           => $this->config->item('giroPayment'),
+            'payconiqPaymentText'       => $this->config->item('payconiqPayment'),
+            'voucherPaymentText'        => $this->config->item('voucherPayment'),
+            'pinMachinePaymentText'     => $this->config->item('pinMachinePayment'),
+            'myBankPaymentText'         => $this->config->item('myBankPayment'),
+        ];
+
+
+        $amount = $orderData['amount'];
+
+        $reservationsPayments = $this->bookandpayagendabooking_model->get_payment_methods($customer['id']);
+        $vendorCost = $this->bookandpayagendabooking_model->get_vendor_cost($customer['id']);
         foreach($reservationsPayments as $key => $reservationsPayment){
             $paymentMethod = ucwords($key);
             $paymentMethod = str_replace(' ', '', $paymentMethod);
@@ -368,17 +481,13 @@ class Booking_reservations extends BaseControllerWeb
             }
         }
         
-        $data['amount'] = $this->session->userdata('amount');
+        $this->global['amount'] = $orderData['amount'];
+        $this->global['orderRandomKey'] = $orderRandomKey;
 
-        $this->loadViews("booking_agenda/select_payment_type", $this->global, $data, 'footerPayment', "headerPayment");
+        $this->loadViews("bookings/select_payment_type", $this->global, $data, 'footerPayment', "headerPayment");
     }
 
-
-
-
     
-
-
     private function check_diff_multi($array1, $array2){
         $result = array();
         foreach($array1 as $key => $val) {

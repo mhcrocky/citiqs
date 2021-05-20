@@ -16,9 +16,10 @@
                 <?php $total = 0; ?>
                 <div class="menu-list">
                     <div id="checkout-list" class="w-100">
-                        <?php if($this->session->userdata('tickets')): 
-                    $bookings = $this->session->userdata('tickets');
-                    $total = $this->session->userdata('total') ?? 0.00;
+                        <?php 
+                        
+                        if(isset($bookings) && count($bookings) > 0): 
+                    $total = isset($totalAmount) ? $totalAmount : 0.00;
                     foreach($bookings as $booking): 
                         $dt1 = new DateTime($booking['timefrom']);
                         $fromtime = $dt1->format('H:i');
@@ -111,6 +112,8 @@
                                             placeholder="Phone Number (Optional)">
                                         <span class="focus-input100"></span>
                                     </div>
+
+                                    <input type="hidden" name="orderRandomKey" value="<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>">
 
                                         <button style="display: none;" id="pay" class="btn btn-danger btn-lg btn-block mt-2">
                                             PAY

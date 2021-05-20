@@ -75,21 +75,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 
     <?php include_once FCPATH . 'application/views/includes/customCss.php'; ?>
     <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
-    <?php if($this->session->tempdata('exp_time')): ?>
+    <?php if(isset($expTime) && $expTime): ?>
     <script>
     'use strict';
     var globalTime = (function() {
         let globals = {
-            time: '<?php echo $this->session->tempdata('exp_time'); ?>',
+            time: '<?php echo $expTime; ?>',
         }
         Object.freeze(globals);
         return globals;
     }());
+
     </script>
     <?php endif; ?>
+    <script>
+    'use strict';
+    var globalKey = (function() {
+        let globals = {
+            orderRandomKey: '<?php echo isset($orderRandomKey) ? $orderRandomKey : ''; ?>',
+        }
+        Object.freeze(globals);
+        return globals;
+    }());
+    
+    </script>
 
 </head>
 
@@ -99,7 +112,7 @@
     <header class="header">
         <nav class="navbar navbar-expand-lg container">
             <a class="navbar-brand"
-                href="<?php echo $this->baseUrl; ?>booking_reservations/<?php echo $this->session->userdata('shortUrl'); ?>">
+                href="<?php echo $this->baseUrl; ?>booking_reservations/<?php echo isset($shortUrl) ? $shortUrl : ''; ?>">
                 <img class="menu-icon" src="<?php echo base_url(); ?>assets/home/images/logo1.png" alt="">
             </a>
             <button class="navbar-toggler py-2 px-3 px-md-4 bg-secondary" type="button" data-toggle="collapse"
@@ -107,10 +120,10 @@
                 aria-label="Toggle navigation"></button>
 
             <div class="collapse navbar-collapse pl-md-4" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto d-none">
                     <li class="nav-item active pt-2 pt-md-0">
                         <a class="nav-link"
-                            href="<?php echo $this->baseUrl; ?>booking_reservations/<?php echo $this->session->userdata('shortUrl'); ?>">Home
+                            href="<?php echo $this->baseUrl; ?>booking_reservations/">Home
                             <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
@@ -118,7 +131,7 @@
             <a href="#" class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout"
                 data-toggle="modal" data-target="#checkout-modal"><i class="fa fa-shopping-basket mr-md-3"></i><span
                     class='d-none d-lg-inline'>CHECKOUT</span> &nbsp €<b
-                    class="totalBasket"><?php echo $this->session->userdata('total'); ?></b></a>
+                    class="totalBasket"><?php echo $totalAmount ? number_format($totalAmount, 2, '.', ',') : ''; ?></b></a>
 
         </nav>
     </header>

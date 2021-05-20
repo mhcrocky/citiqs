@@ -32,10 +32,9 @@
         foreach($spots as $key=>$spot):
             $spotId = $spot['data']->id;
             $timeslots = $spot['timeslots'];
-            $checkout_reservations = [];
             $checkout_reservations_id = [];
-            if($this->session->tempdata('tickets')){
-                $checkout_reservations = $this->session->tempdata('tickets');
+            
+            if(count($checkout_reservations) > 0){
                 $checkout_reservations_id = array_values(array_keys($checkout_reservations));
             }
             
