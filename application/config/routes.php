@@ -572,6 +572,7 @@ $route['events/get_event_inputs'] = 'Events/get_event_inputs';
 $route['events/save_event_inputs'] = 'Events/save_event_inputs';
 $route['events/update_event_inputs'] = 'Events/update_event_inputs';
 $route['events/delete_event_inputs'] = 'Events/delete_event_inputs';
+$route['events/update_event_archived'] = 'Events/update_event_archived';
 $route['events/event/(:num)'] = 'Events/event/$1';
 $route['events/report/(:num)'] = 'Events/report/$1';
 $route['events/graph/(:num)'] = 'Events/graph/$1';
