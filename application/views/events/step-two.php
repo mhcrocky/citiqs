@@ -81,7 +81,7 @@
                 -->
                     <div class="row mb-2">
                         <div class="col-md-3 text-dark">
-                         Voucher
+                            Voucher
                         </div>
                         <div class="col-md-3">
                             <select id="voucherId" name="voucherId" style="height: 35px !important;padding-top: 6px;"
@@ -102,8 +102,8 @@
                     <div class="row mb-2">
                         <div class="col-md-3 text-dark">Max Booking</div>
                         <div class="col-md-3">
-                            <input type="number" id="maxBooking" name="maxBooking"
-                                class="form-control inp-height" min="1" value="1">
+                            <input type="number" id="maxBooking" name="maxBooking" class="form-control inp-height"
+                                min="1" value="1">
                         </div>
                     </div>
 
@@ -123,12 +123,14 @@
                                     Automatically when ticket is almost sold out
                                 </label>
                             </div>
-                            
 
-                            
+
+
                         </div>
                         <div class="col-md-3">
-                            <select id="previousFaseId" name="previousFaseId" style="height: 35px !important; padding: 0px !important;padding-left: 8px !important;" class="form-control input-w">
+                            <select id="previousFaseId" name="previousFaseId"
+                                style="height: 35px !important; padding: 0px !important;padding-left: 8px !important;"
+                                class="form-control input-w">
                                 <option value="0">Select option</option>
                                 <?php if(!empty($groups) && count($tickets) > 0): ?>
                                 <?php foreach($tickets as $ticket): ?>
@@ -142,7 +144,7 @@
                     </div>
                     <div class="my-2"></div>
                     <div class="row">
-                         
+
                         <div class="col-md-6 mb-4">
                             <!-- Default unchecked -->
                             <div class="custom-control custom-radio">
@@ -151,9 +153,9 @@
                                 <label class="custom-control-label text-dark" for="manually">On date and time</label>
                             </div>
 
-                            
 
-                            
+
+
                             </section>
                         </div>
                     </div>
@@ -175,8 +177,8 @@
                         </div>
                         <div class="col-md-3 mt-1">
                             <div class="input-group">
-                                <input style="padding-top: 5px !important;" type="time" class="form-control inp-height timestamp" id="startTime"
-                                    name="startTime">
+                                <input style="padding-top: 5px !important;" type="time"
+                                    class="form-control inp-height timestamp" id="startTime" name="startTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
                             </div>
@@ -200,7 +202,8 @@
                         </div>
                         <div class="col col-md-3 mt-1">
                             <div class="input-group">
-                                <input style="padding-top: 5px !important;" type="time" onchange="checkTicketTimestamp()" onfocus="checkTicketTimestamp()"
+                                <input style="padding-top: 5px !important;" type="time"
+                                    onchange="checkTicketTimestamp()" onfocus="checkTicketTimestamp()"
                                     oninput="checkTicketTimestamp()" onkeyup="checkTicketTimestamp()"
                                     class="form-control inp-height timestamp" id="endTime" name="endTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
@@ -244,13 +247,14 @@
                                 <li>
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" id="soldoutVisibility" type="checkbox">
-                                        <label class="custom-control-label font-weight-bold text-dark" for="soldoutVisibility">
+                                        <label class="custom-control-label font-weight-bold text-dark"
+                                            for="soldoutVisibility">
 
                                         </label>
                                     </div>
                                 </li>
                             </ul>
-                           
+
                         </div>
 
 
@@ -773,7 +777,8 @@
 
                 <fieldset style="max-height: 400px; overflow-y: auto;" id="tab031">
                     <div class="w-100 mt-3 p-3 mt-5 table-responsive">
-                        <table id="guestlist" class="table table-striped table-bordered text-center" cellspacing="0" width="100%">
+                        <table id="guestlist" class="table table-striped table-bordered text-center" cellspacing="0"
+                            width="100%">
                         </table>
                     </div>
                 </fieldset>
@@ -803,27 +808,46 @@
 
 <main class="my-form">
     <div class="w-100 mt-5 p-3">
-        <div class="input-group col-md-4">
-            <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"
-                class="btn btn-success form-control mb-3 text-left" id="event-time2" name="event-time2"
-                data-toggle="modal" data-target="#addModal">
-            <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
-                data-toggle="modal" data-target="#addModal">
-                <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
+        <div style="justify-content: space-between;" class="row mt-5 p-4">
+            <div class="input-group col-md-4 mb-3">
+                <input type="button" value="Add Ticket" style="background: #009933 !important;border-radius:0"
+                    class="btn btn-success form-control mb-3 text-left" id="event-time2" name="event-time2"
+                    data-toggle="modal" data-target="#addModal">
+                <a style="background: #004d1a;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+                    data-toggle="modal" data-target="#addModal">
+                    <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i></a>
                 <a href="<?php echo base_url(); ?>events/inputs/<?php echo $eventId; ?>">
-            <input type="button" value="Set custom inputs"
-                style="background: #10b96d !important;border-radius:0;height:45px;"
-                class="btn btn-primary form-control mb-3 text-left ml-2" >
-            </a>
-            <a href="<?php echo base_url(); ?>events/inputs/<?php echo $eventId; ?>" style="background: #0a6635;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3" >
-                <i style="color: #fff;font-size: 18px;" class="fa fa-file-text-o"></i></a>
+                    <input type="button" value="Set custom inputs"
+                        style="background: #10b96d !important;border-radius:0;height:45px;"
+                        class="btn btn-primary form-control mb-3 text-left ml-2">
+                </a>
+                <a href="<?php echo base_url(); ?>events/inputs/<?php echo $eventId; ?>"
+                    style="background: #0a6635;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3">
+                    <i style="color: #fff;font-size: 18px;" class="fa fa-file-text-o"></i></a>
+            </div>
+            
+            <div class="col-md-2 mb-3">
+                <a href="<?php base_url(); ?>events">
+                    <div class="input-group">
+                        <input type="button" value="<?php echo $this->language->tline('Go Back'); ?>"
+                            style="background: #10b981 !important;border-radius:0;height:45px;"
+                            class="btn btn-primary form-control mb-3 text-left" data-toggle="modal"
+                            data-target="#guestlistModal">
+                        <span style="background: #275C5D;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+                            data-toggle="modal" data-target="#guestlistModal">
+                            <i style="color: #fff;font-size: 18px;" class="ti ti-arrow-left"></i>
+                        </span>
+
+                    </div>
+                </a>
+            </div>
         </div>
 
         <p class="mt-2"><strong style="font-size: 16px;" class="ml-1">Tickets</strong></p>
         <div class="table-responsive mt-2 mb-1">
-        <table id="tickets" style="width:100%">
+            <table id="tickets" style="width:100%">
 
-        </table>
+            </table>
         </div>
         <div class="table-responsive mt-5">
             <table style="background: none !important;" class="table">

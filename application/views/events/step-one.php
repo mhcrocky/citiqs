@@ -5,6 +5,25 @@
                 <div style="background: none;" class="card p-4">
 
                     <div class="card-body">
+                    
+                        <div class="col-md-2 ml-auto">
+                            <a href="<?php base_url(); ?>events">
+                                <div class="input-group">
+                                    <input type="button" value="<?php echo $this->language->tline('Go Back'); ?>"
+                                        style="background: #10b981 !important;border-radius:0;height:45px;"
+                                        class="btn btn-primary form-control mb-3 text-left" data-toggle="modal"
+                                        data-target="#guestlistModal">
+                                    <span style="background: #275C5D;padding-top: 14px;"
+                                        class="input-group-addon pl-2 pr-2 mb-3" data-toggle="modal"
+                                        data-target="#guestlistModal">
+                                        <i style="color: #fff;font-size: 18px;" class="ti ti-arrow-left"></i>
+                                    </span>
+
+                                </div>
+                            </a>
+                        </div>
+
+
                         <form name="events-form" class="needs-validation"
                             action="<?php echo base_url(); ?>events/save_event" method="POST"
                             enctype="multipart/form-data" novalidate>
@@ -38,14 +57,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Event Image</label>
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Event
+                                    Image</label>
                                 <div class="col-md-8">
 
 
                                     <label class="file">
                                         <input type="file" class="border-50" name="userfile" id="file"
                                             onchange="imageUpload(this)" aria-label="File browser">
-                                        <span id="imageUpload" class="file-custom" data-content="Choose image ..."></span>
+                                        <span id="imageUpload" class="file-custom"
+                                            data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">
                                         <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="preview"
@@ -57,18 +78,20 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Background Image</label>
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Background
+                                    Image</label>
                                 <div class="col-md-8">
 
 
                                     <label class="file">
                                         <input type="file" class="border-50" name="backgroundfile" id="background-file"
                                             onchange="imageBackgroundUpload(this)" aria-label="File browser">
-                                        <span class="file-custom" id="img-background" data-content="Choose image ..."></span>
+                                        <span class="file-custom" id="img-background"
+                                            data-content="Choose image ..."></span>
                                     </label>
                                     <div style="padding-left: 0;" class="col-sm-6">
-                                        <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="background-preview"
-                                            class="img-thumbnail">
+                                        <img src="<?php echo base_url(); ?>assets/images/img-preview.png"
+                                            id="background-preview" class="img-thumbnail">
                                     </div>
 
 
@@ -192,7 +215,8 @@
                                 <label for="country" class="col-md-4 col-form-label text-md-left">Country
                                 </label>
                                 <div class="col-md-6">
-                                    <select id="country" name="eventCountry" class="form-control input-w border-50 field" required>
+                                    <select id="country" name="eventCountry"
+                                        class="form-control input-w border-50 field" required>
                                         <option value="">Select option</option>
                                         <?php if(count($countries) > 0): ?>
                                         <?php foreach($countries as $country): ?>
@@ -200,7 +224,7 @@
                                         <?php endforeach; ?>
                                         <?php endif; ?>
                                     </select>
-                                    
+
                                 </div>
                             </div>
 
@@ -235,9 +259,11 @@
                                 <div class="col-md-6">
                                     <div class="input-group date">
                                         <input type="text" class="form-control input-w input-date inp-group-radius-left"
-                                            id="event-date2" name="EndDate" onchange="checkTimestamp()" onfocus="timestampOnFocus()" required>
+                                            id="event-date2" name="EndDate" onchange="checkTimestamp()"
+                                            onfocus="timestampOnFocus()" required>
                                         <input type="time" class="form-control input-w" id="event-time2" name="EndTime"
-                                            value="12:00:00" onchange="checkTimestamp()" onfocus="timestampOnFocus()" required>
+                                            value="12:00:00" onchange="checkTimestamp()" onfocus="timestampOnFocus()"
+                                            required>
                                         <span class="input-group-addon fa-input pl-2 pr-2">
                                             <i style="color: #fff;font-size: 18px;" class="fa fa-calendar"></i></span>
                                     </div>
