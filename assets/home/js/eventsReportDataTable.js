@@ -137,6 +137,25 @@ $(document).ready(function () {
 
     columns: [
       {
+        title: "",
+        data: null,
+        render: function (data, type, row) {
+          return (
+            '<a href="javascript:;" onclick="confirmResendTicket(\'' +
+            data.reservationId +
+            "', '" +
+            data.email +
+            '\')" class="btn btn-primary">Resend Ticket</a>'
+          );
+        },
+      },
+      {
+
+        title: 'ID',
+        data: 'id'
+
+      },
+      {
         title: "Event Name",
         data: "eventname",
       },
@@ -224,20 +243,9 @@ $(document).ready(function () {
         },
       },
       */
-      {
-        title: "",
-        data: null,
-        render: function (data, type, row) {
-          return (
-            '<a href="javascript:;" onclick="confirmResendTicket(\'' +
-            data.reservationId +
-            "', '" +
-            data.email +
-            '\')" class="btn btn-primary">Resend Ticket</a>'
-          );
-        },
-      },
+      
     ],
+    order: [[15, "desc"]]
   });
 
 
@@ -261,7 +269,7 @@ $(document).ready(function () {
           var date = full_timestamp.split(" - ");
           var min = moment(date[0]);
           var max = moment(date[1]);
-          var startDate = moment(data[13]); // data['Position of date's column -1']
+          var startDate = moment(data[15]); // data['Position of date's column -1']
    
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}
