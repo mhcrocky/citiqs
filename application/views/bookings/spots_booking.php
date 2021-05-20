@@ -135,7 +135,7 @@ p.p-title {
                             <p class="text-content mb-50"><?php echo date("d.m.Y", strtotime($eventDate)) ?></p>
                         </div>
                         <div class="text-center mb-50" style="text-align:center">
-                        <?php if(file_exists($this->baseUrl . 'assets/home/images/' . $spot['data']->image)): ?>
+                        <?php if(@getimagesize($this->baseUrl . 'assets/home/images/' . $spot['data']->image)): ?>
                             <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>" alt="tiqs" width="150"
                                  height="auto"/>
                         <?php endif; ?>
