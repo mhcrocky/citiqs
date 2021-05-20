@@ -384,6 +384,7 @@ class Alfredinsertorder extends BaseControllerWeb
 
         $orderForImage = $this->shoporder_model->setObjectId($orderId)->fetchOrdersForPrintcopy();
         $orderForImage = reset($orderForImage);
+        // all details for printer in one order sheat
         Receiptprint_helper::printAllReceipts($orderId);
         Orderprint_helper::saveOrderImage($orderForImage);
     }
