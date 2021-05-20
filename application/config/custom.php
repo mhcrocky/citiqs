@@ -579,3 +579,6 @@ $config['landingTypes'] = [
 $config['landingPageFolder'] = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'landing_pages' . DIRECTORY_SEPARATOR;
 $config['landingTemplateExt'] = 'txt';
 $config['landingPageView'] = 'ladnigPages/template';
+
+// report periods
+$config['reportPeriods'] = ['day', 'week', 'month'];
