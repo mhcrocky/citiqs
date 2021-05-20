@@ -250,6 +250,8 @@ class Alfredinsertorder extends BaseControllerWeb
 
     private function setAmountAndServiceFee(array &$post): void
     {
+        if ($post['pos'] === '1') return;
+
         $serviceTypeId = intval($post['order']['serviceTypeId']);
         $this->setAmount($post, $serviceTypeId);
         $this->setServiceFee($post, $serviceTypeId);
@@ -274,14 +276,14 @@ class Alfredinsertorder extends BaseControllerWeb
         $checkAmount = 0;
         foreach ($products as $key => $product) {
             $productId = array_keys($product)[0];
-            $productAmount = $this->getProductPrice($productId, $serviceTypeId);
-            $checkAmount += floatval($productAmount);
             $product = reset($product);
+            $productAmount = $this->getProductPrice($productId, $serviceTypeId);
+            $checkAmount += floatval($productAmount) * intval($product['quantity']);
             if (!empty($product['addons'])) {
                 $addons = $product['addons'];
                 foreach ($addons as $addonId => $addon) {
                     $addonAmount = $this->getProductPrice($addonId, $serviceTypeId);
-                    $checkAmount += floatval($addonAmount);
+                    $checkAmount += floatval($addonAmount) * intval($addon['quantity']);
                 }
             }
         }
@@ -398,7 +400,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['order']['orderRandomKey'] = $orderRandomKey;
         $post['order']['createdOrder'] = date('Y-m-d H:i:s');
 
-        // $this->setAmountAndServiceFee($post);
+        $this->setAmountAndServiceFee($post);
 
         if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
             $orderDate = explode(' ', $post['order']['date']);
