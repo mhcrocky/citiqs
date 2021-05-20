@@ -1,5 +1,4 @@
-
-<div class="row mt-5 p-4">
+<div style="justify-content: space-between;" class="row mt-5 p-4">
     <div class="col-md-4 mb-3">
         <div class="input-group">
             <input type="button" value="<?php echo $this->language->tline('Add Guest'); ?>"
@@ -10,6 +9,22 @@
                 <i style="color: #fff;font-size: 18px;" class="fa fa-plus"></i>
             </span>
         </div>
+
+    </div>
+    <div class="col-md-2 mb-3">
+        <a href="<?php base_url(); ?>events">
+            <div class="input-group">
+                <input type="button" value="<?php echo $this->language->tline('Go Back'); ?>"
+                    style="background: #10b981 !important;border-radius:0;height:45px;"
+                    class="btn btn-primary form-control mb-3 text-left" data-toggle="modal"
+                    data-target="#guestlistModal">
+                <span style="background: #275C5D;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+                    data-toggle="modal" data-target="#guestlistModal">
+                    <i style="color: #fff;font-size: 18px;" class="ti ti-arrow-left"></i>
+                </span>
+
+            </div>
+        </a>
     </div>
 </div>
 
@@ -206,7 +221,7 @@
                                             <div style="height:40px;border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important; padding-top: 8px;"
                                                 class="btn btn-secondary custom-file-uploader">
                                                 <input type="file" id="userfile" name="userfile"
-                                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                                                     onchange="this.form.filename.value = this.files.length ? this.files[0].name : ''">
                                                 Select a file
                                             </div>
