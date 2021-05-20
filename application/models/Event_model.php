@@ -23,6 +23,15 @@ class Event_model extends CI_Model {
 		return $this->db->update('tbl_events',$data);
 	}
 
+	public function update_event_archived($vendorId, $eventId, $value)
+	{
+		$this->db->where("id", $eventId);
+		$this->db->where("vendorId", $vendorId);
+		$this->db->set('archived', $value);
+		$this->db->update('tbl_events');
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
 	public function save_ticket($data)
 	{
 		return $this->db->insert('tbl_event_tickets',$data);
@@ -81,6 +90,7 @@ class Event_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_events');
 		$this->db->where('vendorId', $vendor_id);
+		$this->db->where('archived', '0');
 		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
 		$query = $this->db->get();
 		$this->db->trans_complete();
@@ -161,7 +171,8 @@ class Event_model extends CI_Model {
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'left');
 		$this->db->join('tbl_ticket_groups', 'tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId', 'left');
 		$this->db->join('tbl_ticket_options', 'tbl_ticket_options.ticketId = tbl_event_tickets.id', 'left');
-		$this->db->where('ticketVisible', 1);
+		$this->db->where('ticketVisible', '1');
+		$this->db->where('archived', '0');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
