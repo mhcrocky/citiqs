@@ -8,7 +8,7 @@
                     <div class="card-body">
 
                         <div class="col-md-2 ml-auto">
-                            <a href="<?php base_url(); ?>events">
+                            <a href="<?php echo base_url(); ?>events">
                                 <div class="input-group">
                                     <input type="button" value="<?php echo $this->language->tline('Go Back'); ?>"
                                         style="background: #10b981 !important;border-radius:0;height:45px;"
