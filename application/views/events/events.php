@@ -26,7 +26,7 @@
             <div class="input-group col-md-3 justify-content-center">
 
                 <a style="width: 80%" href="<?php echo base_url(); ?>events/inputs">
-                    <input type="button" value="Set custom inputs"
+                    <input type="button" value="Add custom field"
                         style="background: #10b96d !important;border-radius:0;height:45px;"
                         class="btn btn-primary form-control mb-3 text-left">
                 </a>
