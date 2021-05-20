@@ -270,7 +270,7 @@
                         </div>
                         <div class="col col-md-3">ticket sold</div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-3 d-none">
                         <div class="col col-md-3">On email address</div>
                         <div class="col col-md-6">
                             <input type="text" id="emailAddress" name="emailAddress" class="form-control inp-height">
