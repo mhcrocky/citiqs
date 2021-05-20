@@ -398,7 +398,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['order']['orderRandomKey'] = $orderRandomKey;
         $post['order']['createdOrder'] = date('Y-m-d H:i:s');
 
-        $this->setAmountAndServiceFee($post);
+        // $this->setAmountAndServiceFee($post);
 
         if (!empty($post['order']['date']) && !empty($post['order']['time'])) {
             $orderDate = explode(' ', $post['order']['date']);
