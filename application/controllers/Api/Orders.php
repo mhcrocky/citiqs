@@ -53,7 +53,12 @@
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
             // do printing job
-            if ($printOnlyReceipt && $order['paidStatus'] ===  $this->config->item('orderPaid') && $printReceipts) {
+            if (
+                $printOnlyReceipt
+                && $order['paidStatus'] ===  $this->config->item('orderPaid')
+                && $printReceipts
+                && $this->isCashpayment($order)
+            ) {
                 header('Content-type: image/png');
                 echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
             } else {
