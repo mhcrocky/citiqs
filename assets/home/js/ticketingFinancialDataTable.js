@@ -172,7 +172,7 @@ $(document).ready( function () {
       $(tfoot).find('th').eq(7).html(round_up(amountTotal));
     },
     rowId: function(a) {
-      return 'row_id_' + a.order_id;
+      return 'row_id_' + a.bookandpay_id;
     },
     columns:[
     {

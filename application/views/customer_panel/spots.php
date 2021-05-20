@@ -257,10 +257,10 @@
 
 
     <script>
-    $(document).ready(function() {
-        
+    (function() {
         $('.js-spots-basic-multiple').select2();
-    });
+        $('.btn').attr('style', 'border-radius:0px !important');
+    })();
 
     const templateGlobals = (function() {
         let globals = {
