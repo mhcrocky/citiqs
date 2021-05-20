@@ -518,6 +518,13 @@ class Events extends BaseControllerWeb
         $this->event_model->update_group($id, $param, $value);
     }
 
+    public function update_event_archived() : bool
+    {
+        $eventId = $this->input->post('id');
+        $value = intval($this->input->post('value'));
+        return $this->event_model->update_event_archived($this->vendor_id, $eventId, $value);
+    }
+
     public function update_ticket_group()
     {
         $tickets = json_decode($this->input->post('tickets'));
