@@ -585,7 +585,7 @@
                 <span class="icon-c">
                     <i class="fa fa-ticket" aria-hidden="true"></i>
                 </span>
-                <?php echo $key; ?>: Total tickets sold
+                Total tickets sold
             </div>
             <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
             <?php echo $sold_tickets; ?>
@@ -595,7 +595,7 @@
         <?php foreach($event_order as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-            <?php echo $ticket['ticketDescription']; ?>
+            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
                 <?php echo $ticket['booking_number']; ?>
@@ -623,7 +623,7 @@
         <?php foreach($event_order as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                <?php echo $ticket['ticketDescription']; ?>
+            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
             €<?php echo number_format($ticket['amount'], 2); ?>
@@ -662,7 +662,7 @@ foreach($tickets as $ticket){
         <?php foreach($tickets as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                <?php echo $ticket['ticketDescription']; ?>
+            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
             <?php echo count($ticket['male']) ?>
@@ -691,7 +691,7 @@ foreach($tickets as $ticket){
         <?php foreach($tickets as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
-                <?php echo $ticket['ticketDescription']; ?>
+            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
             </div>
             <div class="f-12 pr-2 d-table-cell text-right">
             <?php echo count($ticket['female']); ?>
