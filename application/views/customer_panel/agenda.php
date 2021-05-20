@@ -70,9 +70,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th><?php echo $this->language->tLine('Reservation Description'); ?></th>
-                            <th><?php echo $this->language->tLine('Reservation Date'); ?></th>
-                            <th><?php echo $this->language->tLine('Background Color'); ?>
+                            <th><?php echo $this->language->tLine('Description'); ?></th>
+                            <th><?php echo $this->language->tLine('Date'); ?></th>
+                            <th class="d-none"><?php echo $this->language->tLine('Background Color'); ?>
                             <th><?php echo $this->language->tLine('Email Template'); ?></th>
                             <th><?php echo $this->language->tLine('Max Spots'); ?></th>
                             <th><?php echo $this->language->tLine('Online'); ?></th>
@@ -84,7 +84,7 @@
                                 <td scope="row">{{ agenda.id }}</td>
                                 <td>{{ agenda.ReservationDescription }}</td>
                                 <td>{{ dateFormat(agenda.ReservationDateTime) }}</td>
-                                <td class="background-td " :class="'background-'+agenda.Background">
+                                <td class="background-td d-none" :class="'background-'+agenda.Background">
                                     {{ backgroundText(agenda.Background) }}
                                 </td>
                                 <td>
@@ -132,13 +132,13 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="ReservationDescription"><?php echo $this->language->tLine('Reservation Name'); ?></label>
+                            <label for="ReservationDescription"><?php echo $this->language->tLine('Description'); ?></label>
                             <input type="text" name="reservationDescription"
                                    v-model="agendaModalData.ReservationDescription" class="form-control"
 							id="ReservationDescription" >
                         </div>
                         <div class="form-group">
-                            <label for="ReservationDate"><?php echo $this->language->tLine('Reservation Date'); ?></label>
+                            <label for="ReservationDate"><?php echo $this->language->tLine('Date'); ?></label>
                             <datepicker
                                     :format="format"
                                     :disabled-dates="disabledDates"
@@ -147,7 +147,7 @@
                                     input-class="form-control">
                             </datepicker>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label for="background_color">Background Color</label>
                             <select class="form-control" id="background_color" name="background_color"
                                     v-model="agendaModalData.Background">
@@ -287,22 +287,22 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="ReservationDescription"><?php echo $this->language->tLine('Reservation Name'); ?></label>
+                            <label for="ReservationDescription"><?php echo $this->language->tLine('Description'); ?></label>
                             <input type="text" name="reservationDescription"
                                    v-model="agendaModalData.ReservationDescription" class="form-control"
-                                   id="ReservationDescription" placeholder="<?php echo $this->language->tLine('Reservation Name'); ?>">
+                                   id="ReservationDescription" placeholder="<?php echo $this->language->tLine('Description'); ?>">
                         </div>
                         <div class="form-group">
-                            <label for="ReservationDate"><?php echo $this->language->tLine('Reservation Date'); ?></label>
+                            <label for="ReservationDate"><?php echo $this->language->tLine('Date'); ?></label>
                             <datepicker
                                     :format="format"
                                     :disabled-dates="disabledDates"
                                     v-model="agendaModalData.ReservationDateTime"
-                                    placeholder="<?php echo $this->language->tLine('Reservation Date'); ?>"
+                                    placeholder="<?php echo $this->language->tLine('Date'); ?>"
                                     input-class="form-control">
                             </datepicker>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label for="background_color">Background Color</label>
                             <select class="form-control" id="background_color" name="background_color"
                                     v-model="agendaModalData.Background">
