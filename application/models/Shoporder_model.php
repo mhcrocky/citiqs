@@ -1660,14 +1660,15 @@
             // chekc is vendor bbUser, if it is email will not be send
 			// this is a very bad check
 			// it checks if the vendor is in the table tbl_
-            $this->load->model('shopvendorfod_model');
-            return $this->shopvendorfod_model->isOnlyBBVendor($vendorId);
+            // $this->load->model('shopvendorfod_model');
+            // return $this->shopvendorfod_model->isOnlyBBVendor($vendorId);
         }
 
         private function getOrderImagePath(string $filterString): ?string
         {
             $orderImageFullPath = FCPATH .  'receipts' . DIRECTORY_SEPARATOR . $this->id .'-email' . '.png';
             if (!file_exists($orderImageFullPath)) {
+                $this->load->helper('orderprint_helper');
                 $order = $this->fetchOrdersForPrintcopy($filterString);
                 if (is_null($order)) return null;
                 $order = reset($order);
