@@ -12,7 +12,7 @@
 
             </div>
             <div class="input-group col-md-3 justify-content-center">
-                <a style="width: 80%" href="#">
+                <a style="width: 80%" href="javascript:;">
                     <input type="button" value="Set shop settings"
                         style="background: #10b981 !important;border-radius:0;height:45px;"
                         class="btn btn-primary form-control mb-3 text-left" data-toggle="modal"
@@ -149,6 +149,19 @@
             </div>
             <div style="overflow: auto !important;" class="modal-body">
                 <form id="shopsettings" method="post" enctype="multipart/form-data" action="#">
+                    <div class="form-group row">
+
+                        <label for="labels" class="col-md-4 col-form-label text-md-left">
+                            Labels
+                        </label>
+                        <div class="col-md-6">
+                            <select id="labels" name="labels"
+                                class="form-control custom-select custom-select-sm form-control-sm">
+                                <option value="1" selected>Show</option>
+                                <option value="0">Hide</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group row">
 
                         <label for="showAddress" class="col-md-4 col-form-label text-md-left">
@@ -383,6 +396,7 @@
     var shopsettings = '<?php echo json_encode($shopsettings); ?>';
     shopsettings = JSON.parse(shopsettings);
     if (typeof shopsettings === 'object' && shopsettings !== null) {
+        $('#labels').val(shopsettings.labels);
         $('#showAddress').val(shopsettings.showAddress);
         $('#showCountry').val(shopsettings.showCountry);
         $('#showZipcode').val(shopsettings.showZipcode);
@@ -399,24 +413,24 @@
 
 <?php if(isset($cookieEventId)): ?>
 <script>
-
 function addStyle(styles) {
-    
+
     var css = document.createElement('style');
     css.type = 'text/css';
-    
-    if (css.styleSheet) 
+
+    if (css.styleSheet)
         css.styleSheet.cssText = styles;
-    else 
+    else
         css.appendChild(document.createTextNode(styles));
-                
-    
+
+
     document.getElementsByTagName("head")[0].appendChild(css);
 }
 
 const cookieEventId = '<?php echo $cookieEventId; ?>';
-var styles = '.eventRow'+cookieEventId+' { outline: 1px solid red }';
-window.onload = function() { addStyle(styles) };
-
+var styles = '.eventRow' + cookieEventId + ' { outline: 1px solid red }';
+window.onload = function() {
+    addStyle(styles)
+};
 </script>
 <?php endif; ?>
