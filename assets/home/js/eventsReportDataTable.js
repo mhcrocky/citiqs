@@ -160,20 +160,20 @@ $(document).ready(function () {
         data: "eventname",
       },
       {
-        title: "Reservation Id",
-        data: "reservationId",
-      },
-      {
-        title: "Transaction Id",
-        data: "TransactionID",
-      },
-      {
         title: "Buyer Name",
         data: "name",
       },
       {
         title: "Buyer Email",
         data: "email",
+      },
+      {
+        title: "Reservation Id",
+        data: "reservationId",
+      },
+      {
+        title: "Transaction Id",
+        data: "TransactionID",
       },
       {
         title: "Buyer Mobile",

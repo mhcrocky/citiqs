@@ -132,18 +132,10 @@ $(document).ready(function () {
       dataSrc: "",
     },
     rowId: function (a) {
-      return "row_id_" + a.order_id;
+      return "row_id_" + a.id;
     },
 
     columns: [
-      {
-        title: "Reservation Id",
-        data: "reservationId",
-      },
-      {
-        title: "Transaction Id",
-        data: "TransactionID",
-      },
       {
         title: "Buyer Name",
         data: "name",
@@ -151,6 +143,14 @@ $(document).ready(function () {
       {
         title: "Buyer Email",
         data: "email",
+      },
+      {
+        title: "Reservation Id",
+        data: "reservationId",
+      },
+      {
+        title: "Transaction Id",
+        data: "TransactionID",
       },
       {
         title: "Buyer Mobile",
