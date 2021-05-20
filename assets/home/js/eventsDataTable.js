@@ -103,6 +103,18 @@ $(document).ready(function() {
             },
             {
 
+                title: 'Archive',
+                data: null,
+                "render": function(data, type, row) {
+                    if(data.archived == 1){
+                        return '<button onclick="update_archived('+data.id+', 0)" class="btn btn-primary">Unarchive</button>';
+                    }
+                    return '<button onclick="update_archived('+data.id+', 1)" class="btn btn-primary">Archive</button>';
+                }
+
+            },
+            {
+
                 title: 'Actions',
                 data: null,
                 "render": function(data, type, row) {
@@ -163,8 +175,9 @@ $(document).ready(function() {
                 let start_timestamp = dayjs(start_str_timestamp);
                 
                 if (val == 'past' && current_timestamp >= start_timestamp) { return true;}
-                if(val == 'future' && current_timestamp <= start_timestamp) {return true;}
-                if(val == 'archived' && data[11] == 'Yes') { return true; }
+                if(val == 'archived' && data[3] == 'Yes') { return true; }
+                if(val == 'future' && current_timestamp <= start_timestamp && data[3] != 'Yes') {return true;}
+                
                 if(val == 'all') { return true; }
                 return false;
             }
@@ -246,4 +259,10 @@ function saveShopSettings() {
                 alertify['error']("Something went wrong");
             }
         });
+}
+
+function update_archived(eventId, value){
+    $.post(globalVariables.baseUrl + 'events/update_event_archived', {id: eventId, value: value});
+    $('#events').DataTable().ajax.reload();
+    return ;
 }
