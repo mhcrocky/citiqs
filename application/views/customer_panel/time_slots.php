@@ -236,12 +236,13 @@ li {
     <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script>
-    $(document).ready(function () {
+    (function () {
         $('#add_time_slot_modal').on('hidden.bs.modal', function () {
             $('#fromtime').val('');
             $('#totime').val('');
         });
-    });
+        $('.btn').attr('style', 'border-radius:0px !important');
+    })();
 
     const templateGlobals = (function() {
         let globals = {
