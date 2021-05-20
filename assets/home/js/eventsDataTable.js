@@ -13,6 +13,13 @@ $(document).ready(function() {
 
             {
 
+                title: 'ID',
+                data: 'id'
+
+            },
+
+            {
+
                 title: 'Name',
                 data: 'eventname'
 
@@ -174,7 +181,7 @@ $(document).ready(function() {
                 let current_timestamp = dayjs();
                 //let end_str_timestamp = data[8] + ' ' + data[10];
                 //let end_timestamp = dayjs(end_str_timestamp);
-                let start_str_timestamp = data[1] + ' ' + data[2];
+                let start_str_timestamp = data[2] + ' ' + data[3];
                 let start_timestamp = dayjs(start_str_timestamp);
                 
                 if (val == 'past' && current_timestamp >= start_timestamp) { return true;}
