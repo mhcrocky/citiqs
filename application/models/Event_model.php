@@ -765,11 +765,18 @@ class Event_model extends CI_Model {
 
 	private function get_guestlist_count($ticketId)
 	{
-		$this->db->select('id');
+		$this->db->select('sum(ticketQuantity) as count_ticket');
 		$this->db->from('tbl_guestlist');
 		$this->db->where('ticketId', $ticketId);
+		$this->db->where('eventId<>', '0');
+		$this->db->group_by('ticketId');
 		$query = $this->db->get();
-		return $query->num_rows();
+		if($query->num_rows() > 0){
+			$result = $query->first_row();
+			return $result->count_ticket;
+			
+		}
+		return 0;
 	}
 
 	public function get_guestlists($vendorId)
@@ -893,7 +900,7 @@ class Event_model extends CI_Model {
 
 	public function get_shopsettings($vendorId)
 	{
-		$this->db->select('showAddress, showCountry, showZipcode, showMobileNumber, showAge, googleAnalyticsCode, googleAdwordsConversionId, googleAdwordsConversionLabel, googleTagManagerCode, facebookPixelId, termsofuseFile');
+		$this->db->select('labels, showAddress, showCountry, showZipcode, showMobileNumber, showAge, googleAnalyticsCode, googleAdwordsConversionId, googleAdwordsConversionLabel, googleTagManagerCode, facebookPixelId, termsofuseFile');
 		$this->db->where('vendorId', $vendorId);
 		$query = $this->db->get('tbl_event_shop');
 		return ($this->db->affected_rows()) ? $query->first_row() : null;

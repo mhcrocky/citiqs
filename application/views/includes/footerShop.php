@@ -255,6 +255,7 @@
         if(shopsettings.showZipcode == "1") { $('#zipcode').closest('div').removeClass('d-none'); }
         if(shopsettings.showMobileNumber == "1") { $('#mobileNumber').closest('div').removeClass('d-none'); }
         if(shopsettings.showAge == "1") { $('#age').closest('div').removeClass('d-none'); }
+        if(shopsettings.labels == "0") { $('.label-input100').hide(); $('.login100-form').attr('style','padding: 10px 1px 1px 0px !important;'); }
     }
 }());
 </script>
