@@ -382,10 +382,11 @@ class Events extends BaseControllerWeb
     public function get_ticket_options($ticketId)
     {
         $data = $this->event_model->get_ticket_options($ticketId);
-        $data['startDate'] = date('d-m-Y', strtotime($data['startDate']));
-		$data['endDate'] = date('d-m-Y', strtotime($data['endDate']));
+        if(is_array($data)){
+            $data['startDate'] = date('d-m-Y', strtotime($data['startDate']));
+            $data['endDate'] = date('d-m-Y', strtotime($data['endDate']));
+        }
         echo json_encode($data);
-
     }
 
     public function get_tickets()
