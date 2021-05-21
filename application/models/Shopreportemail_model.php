@@ -52,4 +52,26 @@
             return true;
         }
 
+        public function saveEmails(array $emails): bool
+        {
+            $this->deleteEmails();
+            foreach ($emails as $email) {
+                $email = trim($email);
+                if (!$this->setproperty('email', $email)->create()) {
+                    $this->deleteEmails();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private function deleteEmails(): bool
+        {
+            $where = [
+                $this->table . '.reportId' => $this->reportId
+            ];
+
+            return $this->customDelete($where);
+        }
     }

@@ -382,4 +382,6 @@
 	<script src='<?php echo base_url(); ?>assets/home/js/sortProducts.js'></script>
 <?php } elseif ($this->view === 'scanner/scanner') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/scanner.js'></script>
+<?php }  elseif ($this->view === 'profile/reportsSettings') { ?>
+	<script src='<?php echo base_url(); ?>assets/home/js/reportsSettings.js'></script>
 <?php } ?>

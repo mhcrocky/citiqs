@@ -44,6 +44,8 @@ class Ajax extends CI_Controller
         $this->load->model('shopprinters_model');
         $this->load->model('shopproducttime_model');
         $this->load->model('shopproduct_model');
+        $this->load->model('shopreport_model');
+        $this->load->model('shopreportemail_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -2586,5 +2588,115 @@ class Ajax extends CI_Controller
         ];
         echo json_encode($response);
         return;
+    }
+
+    function saveReportsSettings($id = null): void
+    {
+        if (!$this->input->is_ajax_request() || empty($_SESSION['userId'])) return;
+
+        $id = ($id) ? intval($id) : null;
+        $post = $this->security->xss_clean($_POST);
+
+        $reportSettings = $this->prepareReportSettings($post);
+        $reportEmails = explode(' ', trim($post['reportEmails']['emails']));
+
+        if (!$this->validateReportData($reportSettings, $reportEmails)) return;
+        if (!$this->saveReport($reportSettings, $id)) return;
+        if (!$this->saveEmails($reportEmails, $this->shopreport_model->id)) return;
+
+        $response = [
+            'status' => '1',
+            'reportId' =>  $this->shopreport_model->id,
+            'messages' => ['Saved']
+        ];
+
+        echo json_encode($response);
+        return;
+    }
+
+    private function prepareReportSettings(array $post): array
+    {
+        $reportSettings = $post['reportSettings'];
+        $reportSettings['vendorId'] = $_SESSION['userId'];
+        $reportSettings = array_filter($reportSettings);
+        return $reportSettings;
+    }
+
+    private function validateReportData(array $reportSettings, array $reportEmails): bool
+    {
+        $messages = [];
+        if (!(isset($reportSettings['xReport']) || isset($reportSettings['zReport']))) {
+            array_push($messages, 'You must select x and/or z report(s)');
+        }
+
+        if (empty($reportSettings['sendTime'])) {
+            array_push($messages, 'You must set send time');
+        }
+
+        if ($reportSettings['sendPeriod'] === $this->config->item('weekPeriod') && empty($reportSettings['sendDay'])) {
+            array_push($messages, 'You must select day for week period');
+        }
+
+        if ($reportSettings['sendPeriod'] === $this->config->item('monthPeriod') && empty($reportSettings['sendDate'])) {
+            array_push($messages, 'You must select date for month period');
+        }
+
+        if (empty($reportSettings['sendPeriod'])) {
+            array_push($messages, 'You must select report period');
+        }
+
+        if (empty($reportEmails)) {
+            array_push($messages, 'No email(s)');
+        } else {
+            foreach($reportEmails as $email) {
+                if (!Validate_data_helper::validateEmail($email)) {
+                    $email = trim($email);
+                    array_push($messages, 'Email "' . $email . '" is not valid');
+                }
+            }
+        }
+
+        if ($messages) {
+            $response = [
+                'status' => '0',
+                'messages' => $messages
+            ];
+            echo json_encode($response);
+            return false;
+        }
+
+        return true;
+    }
+
+    private function saveReport(array $reportSettings, ?int $id): bool
+    {
+        $this->shopreport_model->setObjectFromArray($reportSettings);
+        $save = ($id) ? $this->shopreport_model->setObjectId($id)->updateReport() : $this->shopreport_model->createReport();
+
+        if (!$save) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Process failed. Report not saved']
+            ];
+            echo json_encode($response);
+            return false;
+        } else {
+            $response['reportId'] = $this->shopreport_model->id;
+            return true;
+        }
+    }
+
+    private function saveEmails(array $reportEmails, int $id): bool
+    {
+        if (!$this->shopreportemail_model->setProperty('reportId', $id)->saveEmails($reportEmails)) {
+            $response = [
+                'status' => '0',
+                'reportId' =>  $this->shopreport_model->id,
+                'messages' => ['Report created, but insert emails failed. Please try again']
+            ];
+            echo json_encode($response);
+            return false;
+        }
+        return true;
     }
 }

@@ -62,6 +62,31 @@ function sendAjaxPostRequestImproved(post, url, callFunction = null, functionArg
     });
 }
 
+function sendFormAjaxRequestImproved(form, url, callFunction = null, functionArg = []) {
+    let formData = new FormData(form);
+    sendFormDataAjaxRequestImproved(formData, url, callFunction, functionArg);
+}
+
+function sendFormDataAjaxRequestImproved(formData, url, callFunction = null, functionArg = []) {
+    $.ajax({
+        url: url,
+        data: formData,
+        processData: false,
+        contentType: false,
+        type: 'POST',
+        success: function (response) {
+            let data = JSON.parse(response);
+            if (callFunction) {
+                functionArg.push(data);
+                callFunction(...functionArg);
+            }
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+}
+
 function sendUrlRequest(url, callBack, callFunction = null, functionArg = []) {
     $.ajax({
         url: url,
