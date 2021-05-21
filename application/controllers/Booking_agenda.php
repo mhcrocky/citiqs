@@ -508,6 +508,7 @@ class Booking_agenda extends BaseControllerWeb
 
     public function payment_proceed()
     {
+        $buyerInfo = $this->input->post(null, true);
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
         
         if(!$orderRandomKey){
@@ -523,7 +524,6 @@ class Booking_agenda extends BaseControllerWeb
 
 
         $amount = 0;
-        $buyerInfo = $orderData['buyer_info'];
         $reservationIds = $orderData['reservations'];
         
         if ($buyerInfo) {
