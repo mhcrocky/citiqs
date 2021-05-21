@@ -67,4 +67,55 @@
             return true;
         }
 
+        public function createReport():bool
+        {
+            return $this->create();
+        }
+
+        public function updateReport():bool
+        {
+            return ($this->isVendorReport()) ? $this->update() : false;
+        }
+
+        private function isVendorReport(): bool
+        {
+            $check = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.id' => $this->id,
+                    $this->table . '.vendorId' => $this->vendorId,
+                ]
+            ]);
+
+            return !is_null($check);
+        }
+
+        public function getVendorReport(): ?array
+        {
+            $separator = '|||';
+            $report = $this->readImproved([
+                'what' => [
+                    $this->table . '.*',
+                    'GROUP_CONCAT(
+                        tbl_shop_reports_emails.email
+                        SEPARATOR "'. $separator . '"
+                    ) AS reportEmails',
+                ],
+                'where' => [
+                    $this->table . '.vendorId' => $this->vendorId
+                ],
+                'joins' => [
+                    ['tbl_shop_reports_emails', 'tbl_shop_reports_emails.reportId = ' . $this->table . '.id', 'LEFT']
+                ],
+            ]);
+
+            $report = reset($report);
+            if (is_null($report['id'])) return null;
+
+
+            $report['reportEmails'] = ($report['reportEmails']) ? explode($separator, $report['reportEmails']) : null;
+            $report['sendDate'] = intval($report['sendDate']);
+
+            return $report;
+        }
     }

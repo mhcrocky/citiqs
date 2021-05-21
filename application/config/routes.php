@@ -622,6 +622,7 @@ $route['openandclose'] = "profile/openandclose";
 $route['userapi'] = "profile/userApi";
 $route['paynl_merchant'] = 'profile/paynlMerchant';
 $route['reset_times'] = 'profile/resetTimes';
+$route['reports_settings'] = 'profile/reportsSettings';
 
 $route['inandout/(:any)/(:num)'] = "Blackbox/index/$1/$2";
 $route['in/(:any)/(:num)'] = "Blackbox/actionIn/$1/$2";
