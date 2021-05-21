@@ -206,4 +206,10 @@ $activePayments = array_values($activePayments);
 </div>
 
 <script src="<?php echo base_url(); ?>assets/home/js/utility.js"></script>
-<script src="<?php echo base_url(); ?>assets/home/js/payOrder.js"></script>
+<script src="<?php echo base_url(); ?>assets/home/js/payOrderNew.js"></script>
+
+<script>
+$('a').on('click', function() {
+    $(this).attr('href', 'javascript:;');
+});
+</script>
