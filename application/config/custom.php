@@ -581,4 +581,8 @@ $config['landingTemplateExt'] = 'txt';
 $config['landingPageView'] = 'ladnigPages/template';
 
 // report periods
-$config['reportPeriods'] = ['day', 'week', 'month'];
+$config['dayPeriod'] = 'day';
+$config['weekPeriod'] = 'week';
+$config['monthPeriod'] = 'month';
+
+$config['reportPeriods'] = [$config['dayPeriod'],$config['weekPeriod'], $config['monthPeriod']];

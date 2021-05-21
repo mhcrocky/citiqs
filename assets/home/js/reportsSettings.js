@@ -14,6 +14,14 @@ function togglePeriod(value) {
 
 function saveReport(form) {
     let url = globalVariables['ajax'] + 'saveReportsSettings';
-    sendFormAjaxRequestImproved(form, url, alertifyAjaxResponse);
+    sendFormAjaxRequestImproved(form, url, saveReportResponse);
     return false;
+}
+
+function saveReportResponse(response) {
+    if (response.hasOwnProperty('status')) {
+        alertifyAjaxResponse(response);
+    } else {
+
+    }
 }

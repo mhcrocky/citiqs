@@ -2587,4 +2587,65 @@ class Ajax extends CI_Controller
         echo json_encode($response);
         return;
     }
+
+    function saveReportsSettings(): void
+    {
+        if (!$this->input->is_ajax_request() || empty($_SESSION['userId'])) return;
+
+        $post = $this->security->xss_clean($_POST);
+        $reportSettings = $post['reportSettings'];
+        $reportEmails = trim($post['reportEmails']['emails']);
+
+        if (!$this->validateReportData($reportSettings, $reportEmails)) return;
+
+        var_dump($reportSettings, $reportEmails);
+
+        return;
+    }
+
+    private function validateReportData(array $reportSettings, string $reportEmails): bool
+    {
+        $messages = [];
+        if (!(isset($reportSettings['xReport']) || isset($reportSettings['zReport']))) {
+            array_push($messages, 'You must select x and/or z report(s)');
+        }
+
+        if (empty($reportSettings['sendTime'])) {
+            array_push($messages, 'You must set send time');
+        }
+
+        if ($reportSettings['sendPeriod'] === $this->config->item('weekPeriod') && empty($reportSettings['sendDay'])) {
+            array_push($messages, 'You must select day for week period');
+        }
+
+        if ($reportSettings['sendPeriod'] === $this->config->item('monthPeriod') && empty($reportSettings['sendDate'])) {
+            array_push($messages, 'You must select date for month period');
+        }
+
+        if (empty($reportSettings['sendPeriod'])) {
+            array_push($messages, 'You must select report period');
+        }
+
+        if (empty($reportEmails)) {
+            array_push($messages, 'No email(s)');
+        } else {
+            $emails = explode(' ', $reportEmails);
+            foreach($emails as $email) {
+                if (!Validate_data_helper::validateEmail($email)) {
+                    array_push($messages, 'Email "' . $email . '" is not valid');
+                }
+            }
+        }
+
+        if ($messages) {
+            $response = [
+                'status' => '0',
+                'messages' => $messages
+            ];
+            echo json_encode($response);
+            return false;
+        }
+
+        return true;
+    }
 }

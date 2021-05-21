@@ -390,4 +390,17 @@ class  Profile extends BaseControllerWeb
 		$this->global['pageTitle'] = 'TIQS: RESET TIMES';
 		$this->loadViews('profile/resetTimes', $this->global, null, 'footerbusiness', 'headerbusiness');
 	}
+
+	public function reportsSettings(): void
+	{
+		$data = [
+			'xReport' => $this->config->item('x_report'),
+			'zReport' => $this->config->item('z_report'),
+			'reportPeriods' => $this->config->item('reportPeriods'),
+			'weekDays' => $this->config->item('weekDays'),
+		];
+
+		$this->global['pageTitle'] = 'TIQS: REPORTS SETTINGS';
+		$this->loadViews('profile/reportsSettings', $this->global, $data, 'footerbusiness', 'headerbusiness');
+	}
 }
