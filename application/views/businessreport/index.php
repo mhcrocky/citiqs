@@ -591,7 +591,7 @@
             <?php echo $sold_tickets; ?>
             </div>
         </div>
-        <div class="w-100 pt-25 mb-2 ticket-card">
+        <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
         <?php foreach($event_order as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
@@ -619,7 +619,7 @@
             </div>
         </div>
 
-        <div class="w-100 pt-25 mb-2 ticket-card">
+        <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
         <?php foreach($event_order as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
@@ -658,7 +658,7 @@ foreach($tickets as $ticket){
             </div>
         </div>
 
-        <div class="w-100 pt-25 mb-2">
+        <div class="w-100 pt-25 mb-2 ticket-info-card">
         <?php foreach($tickets as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">
@@ -687,7 +687,7 @@ foreach($tickets as $ticket){
             </div>
         </div>
 
-        <div class="w-100 pt-25 mb-2">
+        <div class="w-100 pt-25 mb-2 ticket-info-card">
         <?php foreach($tickets as $ticket): ?>
         <div class="d-table">
             <div class="w-100 f-12 pr-2 d-table-cell">

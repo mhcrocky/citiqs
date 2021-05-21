@@ -584,7 +584,7 @@ class Event_model extends CI_Model {
 
 	public function get_events_stats($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_event_tickets.id, eventname, tbl_bookandpay.ticketDescription, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount
+		$query = $this->db->query("SELECT tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql
@@ -594,6 +594,7 @@ class Event_model extends CI_Model {
 		$tickets = [];
 		foreach($results as $result){
 			$eventname = $result['eventname'];
+			
 			if(isset($tickets[$eventname])){
 				$tickets[$eventname]['booking_number'] = $tickets[$eventname]['booking_number'] + intval($result['booking_number']);
 				$tickets[$eventname]['amount'] = $tickets[$eventname]['amount'] + floatval($result['amount']);
@@ -601,7 +602,9 @@ class Event_model extends CI_Model {
 				$tickets[$eventname]['booking_number'] = intval($result['booking_number']);
 				$tickets[$eventname]['amount'] = floatval($result['amount']);
 			}
+
 			$tickets[$eventname][] = $result;
+			
 		}
 
 		return $tickets;
@@ -609,10 +612,11 @@ class Event_model extends CI_Model {
 
 	public function get_tickets_gender($vendorId)
 	{
-		$query = $this->db->query("SELECT tbl_event_tickets.id, tbl_bookandpay.ticketDescription, eventname, gender
+		$query = $this->db->query("SELECT tbl_event_tickets.id, tbl_event_tickets.ticketDescription, eventname, gender
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." ");
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId."
+		GROUP BY tbl_events.id, tbl_event_tickets.id ");
 		$results = $query->result_array();
 		$tickets = [];
 		foreach($results as $result){

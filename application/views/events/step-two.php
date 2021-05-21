@@ -860,9 +860,9 @@
                     <td><?php echo $event->eventZipcode; ?></td>
                     <td><?php echo $event->eventCountry; ?></td>
                     <td><?php echo $event->StartDate; ?></td>
-                    <td><?php echo $event->EndDate; ?></td>
+                    <td id="eventEndDate" data-endDate="<?php echo $event->EndDate; ?>"><?php echo $event->EndDate; ?></td>
                     <td><?php echo $event->StartTime; ?></td>
-                    <td><?php echo $event->EndTime; ?></td>
+                    <td id="eventEndTime" data-endTime="<?php echo $event->EndTime; ?>"><?php echo $event->EndTime; ?></td>
                     <td>
                         <a href="<?php echo base_url(); ?>events/shop/<?php echo $this->session->userdata('userShortUrl'); ?>"
                             class="btn btn-primary" style="background: #10b981;" target="_blank">Go to Shop</a>
