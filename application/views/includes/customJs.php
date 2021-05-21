@@ -105,7 +105,7 @@
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderNew.js"></script>
 <?php } elseif ($this->view === 'publicorders/payOrder') { ?>
-	<script src="<?php echo $this->baseUrl ?>assets/home/js/payOrder.js"></script>
+	<script src="<?php echo $this->baseUrl ?>assets/home/js/payOrderNew.js"></script>
 <?php } elseif ($this->view === 'publicorders/buyerDetails') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 <?php } elseif ($this->view === 'bizdir/index') { ?>
@@ -124,7 +124,7 @@
 		<script src="<?php echo $this->baseUrl; ?>assets/home/js/checkoutOrder.js"></script>
 	<?php } ?>
 	<?php if (!empty($posPay)) { ?>	
-		<script src="<?php echo $this->baseUrl ?>assets/home/js/payOrder.js"></script>
+		<script src="<?php echo $this->baseUrl ?>assets/home/js/payOrderNew.js"></script>
 	<?php }	?>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/posPinCode.js"></script>
 <?php } elseif ($this->view === 'profile/openandclose') { ?>
