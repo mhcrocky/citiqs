@@ -1,9 +1,5 @@
 'use strict';
 
-document.querySelectorAll("a").forEach(anchor => 
-    anchor.addEventListener("click", () => anchor.setAttribute('href', 'javascript:void(0);'))
-);
-
 function toogleElements(showId, hideId, className) {
     document.getElementById(showId).classList.toggle(className)
     document.getElementById(hideId).classList.toggle(className)
