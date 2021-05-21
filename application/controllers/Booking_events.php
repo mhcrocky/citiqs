@@ -32,7 +32,6 @@ class Booking_events extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Shop';
 
-        var_dump(Jwt_helper::decode('qrrnsvbwA8hgjcpjWs1Gd1gf7t4gTkbprY7tta3Dvaa36BE7we62sncngdtMB84yhyyQJxj66JGmmxjn8tDVfhcY94wek3R9pC9A9v55SNdbcXC3b7EhH5qwFqR4Qka2yTff76XsxFyWvdqe5cxKS8vfhmePpVkKber59PmNg83d4HwxMas'));
         
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
 
