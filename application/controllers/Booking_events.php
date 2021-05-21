@@ -31,6 +31,8 @@ class Booking_events extends BaseControllerWeb
     public function index($shortUrl = false)
     {
         $this->global['pageTitle'] = 'TIQS: Shop';
+
+        var_dump(Jwt_helper::decode('qrrnsvbwA8hgjcpjWs1Gd1gf7t4gTkbprY7tta3Dvaa36BE7we62sncngdtMB84yhyyQJxj66JGmmxjn8tDVfhcY94wek3R9pC9A9v55SNdbcXC3b7EhH5qwFqR4Qka2yTff76XsxFyWvdqe5cxKS8vfhmePpVkKber59PmNg83d4HwxMas'));
         
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
 
@@ -428,25 +430,23 @@ class Booking_events extends BaseControllerWeb
         $customer = $orderData['vendorId'];
         $ticketingPayments = $this->event_model->get_payment_methods($customer);
 
-        $data = [
-            'activePayments'            => (array)$this->event_model->get_active_payment_methods($customer),
-            'idealPaymentType'          => $this->config->item('idealPaymentType'),
-            'creditCardPaymentType'     => $this->config->item('creditCardPaymentType'),
-            'bancontactPaymentType'     => $this->config->item('bancontactPaymentType'),
-            'giroPaymentType'           => $this->config->item('giroPaymentType'),
-            'payconiqPaymentType'       => $this->config->item('payconiqPaymentType'),
-            'myBankPaymentType'         => $this->config->item('myBankPaymentType'),
-            'vendorCost'                => $this->event_model->get_vendor_cost($customer),
-            'shortUrl'                  => $orderData['shortUrl'],
-            'idealPaymentText'          => $this->config->item('idealPayment'),
-            'creditCardPaymentText'     => $this->config->item('creditCardPayment'),
-            'bancontactPaymentText'     => $this->config->item('bancontactPayment'),
-            'giroPaymentText'           => $this->config->item('giroPayment'),
-            'payconiqPaymentText'       => $this->config->item('payconiqPayment'),
-            'voucherPaymentText'        => $this->config->item('voucherPayment'),
-            'pinMachinePaymentText'     => $this->config->item('pinMachinePayment'),
-            'myBankPaymentText'         => $this->config->item('myBankPayment'),
-        ];
+        $data['activePayments'] = (array)$this->event_model->get_active_payment_methods($customer);
+        $data['idealPaymentType'] = $this->config->item('idealPaymentType');
+        $data['creditCardPaymentType'] = $this->config->item('creditCardPaymentType');
+        $data['bancontactPaymentType'] = $this->config->item('bancontactPaymentType');
+        $data['giroPaymentType']           = $this->config->item('giroPaymentType');
+        $data['payconiqPaymentType']       = $this->config->item('payconiqPaymentType');
+        $data['myBankPaymentType']         = $this->config->item('myBankPaymentType');
+        $data['vendorCost']                = $this->event_model->get_vendor_cost($customer);
+        $data['shortUrl']                  = $orderData['shortUrl'];
+        $data['idealPaymentText']          = $this->config->item('idealPayment');
+        $data['creditCardPaymentText']    = $this->config->item('creditCardPayment');
+        $data['bancontactPaymentText']     = $this->config->item('bancontactPayment');
+        $data['giroPaymentText']         = $this->config->item('giroPayment');
+        $data['payconiqPaymentText']       = $this->config->item('payconiqPayment');
+        $data['voucherPaymentText']        = $this->config->item('voucherPayment');
+        $data['pinMachinePaymentText']     = $this->config->item('pinMachinePayment');
+        $data['myBankPaymentText']         = $this->config->item('myBankPayment');
 
 
         $amount = floatval($orderData['totalAmount']);
