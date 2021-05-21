@@ -13,15 +13,16 @@ function togglePeriod(value) {
 }
 
 function saveReport(form) {
-    let url = globalVariables['ajax'] + 'saveReportsSettings';
+    let url = reportsGlobals['updateUrl'];
     sendFormAjaxRequestImproved(form, url, saveReportResponse);
     return false;
 }
 
 function saveReportResponse(response) {
-    if (response.hasOwnProperty('status')) {
-        alertifyAjaxResponse(response);
-    } else {
 
+    alertifyAjaxResponse(response);
+
+    if (response.hasOwnProperty('reportId')) {
+        reportsGlobals['updateUrl'] = reportsGlobals['updateUrl'] + '/' + response['reportId']
     }
 }
