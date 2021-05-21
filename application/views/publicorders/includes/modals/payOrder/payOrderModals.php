@@ -16,7 +16,8 @@
                                 $cashRedirect .= '/' . $this->config->item('prePaid');
                                 $cashRedirect .= '?' . $orderDataGetKey . '=' . $orderRandomKey;
                             ?>
-                            onclick="payRedirect(this, '<?php echo $cashRedirect; ?>')"
+                            data-href="<?php echo $cashRedirect; ?>"
+                            onclick="payRedirect(this)"
                             >
                             <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
                         </button>
@@ -58,8 +59,9 @@
                                 $cashRedirect .= '/' . $this->config->item('postPaid');
                                 $cashRedirect .= '?' . $orderDataGetKey . '=' . $orderRandomKey;
                             ?>
-                            onclick="payRedirect(this, '<?php echo $cashRedirect; ?>')"
-                            >
+                            data-href="<?php echo $cashRedirect; ?>"
+                            onclick="payRedirect(this)"
+                        >
                             <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
                         </button>
                     </div>

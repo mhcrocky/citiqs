@@ -5,10 +5,25 @@ function toogleElements(showId, hideId, className) {
     document.getElementById(hideId).classList.toggle(className)
 }
 
-function payRedirect(element, url) {
+function payRedirect(element) {
     if (element.dataset.clicked === '0') {
+        let url = element.dataset.href;
         element.dataset.clicked = '1';
+        blockPamyentButtons();
         window.location.href = url;
+    } else {
+        alertify.error('Please wait!')
+        alertify.error('If page is not redirected, reload it')
+    }
+}
+
+function blockPamyentButtons() {
+    let buttons = document.querySelectorAll('[data-clicked]');
+    let buttonsLength = buttons.length;
+    let i;
+    for (i = 0; i < buttonsLength; i++) {
+        let button = buttons[i];
+        button.setAttribute('data-clicked', '1');
     }
 }
 

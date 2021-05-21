@@ -102,6 +102,9 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     .modal-backdrop {
         position: unset
     }
+    .paymentMethod:hover {
+        cursor: pointer;
+    }
 </style>
 <?php } elseif ($this->view === 'customer_panel/spots' || $this->view === 'customer_panel/agenda') { ?>
 <style>
