@@ -107,9 +107,16 @@ $(document).ready(function () {
   $("#manually").on("change", function () {
     $('.timestamp').prop("disabled", false);
     let today = dayjs().format('DD-MM-YYYY');
+    let time = dayjs().format('HH:mm:ss');
+    let endDate = $('#eventEndDate').attr('data-endDate');
+    let endTime = $('#eventEndTime').attr('data-endTime');
     $('#startDate').val(today);
+    $('#startTime').val(time);
+    $('#endDate').val(endDate);
+    $('#endTime').val(endTime);
+
     let input = document.getElementById('endDate');
-    input.select();
+    //input.select();
   });
 
   $("#ticketCurrency").on("change", function () {
@@ -536,7 +543,15 @@ function getTicketOptions(ticketId) {
   $.get(
     globalVariables.baseUrl + "events/get_ticket_options/" + ticketId,
     function (data) {
-      if (data == "") {
+      if (data.length == "2") {
+        let today = dayjs().format('DD-MM-YYYY');
+        let time = dayjs().format('HH:mm:ss');
+        let endDate = $('#eventEndDate').attr('data-endDate');
+        let endTime = $('#eventEndTime').attr('data-endTime');
+        $('#startDate').val(today);
+        $('#startTime').val(time);
+        $('#endDate').val(endDate);
+        $('#endTime').val(endTime);
         return ;
       }
       data = JSON.parse(data);
