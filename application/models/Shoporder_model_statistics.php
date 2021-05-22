@@ -1361,7 +1361,7 @@
             return reset($order);
         }
 
-        public function fetchUnpaidVendorOrders(int $vendorId, bool $sum = true, string $from = '', string $to = ''): ?array
+        public function fetchUnpaidVendorOrdersStore(int $vendorId, bool $sum = true, string $from = '', string $to = ''): ?array
         {
             $this->load->config('custom');
             $where = [
@@ -1377,9 +1377,10 @@
                 $where[$this->table . '.createdOrder<='] = $to;
             }
 
-//            if ($sum) {
-//                return $this->sumAllVendorOrders($where);
-//            }
+            if ($sum) {
+                return $this->sumAllVendorOrders($where);
+            }
+
             return $this->allVendorOrders($where);
 
 

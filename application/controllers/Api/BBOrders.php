@@ -55,7 +55,7 @@ class BBOrders extends REST_Controller
 	public function data2_get(): void
 	{
 		$logFile = FCPATH . 'application/tiqs_logs/messages.txt';
-		Utility_helper::logMessage($logFile, 'request from tiqsbox');
+//		Utility_helper::logMessage($logFile, 'request from tiqsbox');
 		$get = Utility_helper::sanitizeGet();
 		if(!$get['mac'] || !$get['vendorId'] || !isset($get['boxenable'])) {
 			Utility_helper::logMessage($logFile, 'something is missing');

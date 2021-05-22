@@ -61,7 +61,7 @@ class Bstatistics extends REST_Controller
             $from = empty($get['from']) ? '' : str_replace('T', ' ', $get['from']);
             $to = empty($get['to']) ? '' : str_replace('T', ' ', $get['to']);
 
-            $orders = $this->shoporder_model_statistics->fetchUnpaidVendorOrders($vendorId, true, $from, $to);
+            $orders = $this->shoporder_model_statistics->fetchUnpaidVendorOrdersStore($vendorId, true, $from, $to);
 
             if ($orders) {
                 $response = [

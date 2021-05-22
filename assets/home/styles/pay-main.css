@@ -125,6 +125,7 @@ iframe {
   align-items: center;
   padding: 15px;
   background: #ebeeef;
+  height: calc(100% + 100px);
 }
 .wrap-login100 {
   width: 670px;
