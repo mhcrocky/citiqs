@@ -224,9 +224,9 @@ $activePayments = array_values($activePayments);
                     </div>
                 </div>
 
-                <?php } ?>
+            <?php } ?>
 
-                <?php if (in_array($giroPayment, $activePayments)) { ?>
+            <?php if (in_array($giroPaymentText, $activePayments)) { ?>
                 <div class="method method-ideal hidden"  id="giroBanks">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>
@@ -312,7 +312,7 @@ $activePayments = array_values($activePayments);
                         </a>
                     </div>
                 </div>
-                <?php } ?>
+            <?php } ?>
 
             <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
             <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
