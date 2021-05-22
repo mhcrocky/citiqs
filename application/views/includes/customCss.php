@@ -526,18 +526,21 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
     <style> 
-    .header__checkout{
-		position: sticky;
-		position: fixed;
-		right: 0;
-		top: 10px;
-		z-index: 99999;
-	}
-	
-	.header__checkout span{
-		display: none !important;
-	}
-</style>
+        .header__checkout{
+            position: sticky;
+            position: fixed;
+            right: 0;
+            top: 10px;
+            z-index: 99999;
+        }
+        
+        .header__checkout span{
+            display: none !important;
+        }
+        .paymentMethod:hover {
+            cursor: pointer;
+        }
+    </style>
 <?php  } elseif ($this->view === 'bookings/select_payment_type' || $this->view === 'new_bookings/select_payment_type' || $this->view === 'booking_agenda/select_payment_type') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
@@ -555,7 +558,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 		top: 10px;
 		z-index: 99999;
 	}
-	
+
 	.header__checkout span{
 		display: none !important;
 	}
