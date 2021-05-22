@@ -200,11 +200,8 @@
                             </div>
                         </div>
                     </div>
-
                     <div style="height: 100px" class="w-100">
                     </div>
-
-                  
                 </div>
             </div>
             <div class="modal-footer">
@@ -228,43 +225,49 @@
     <div class="container text-center">
         <div class="row footer__row">
             <div class="col-12 col-md-6 text-center">
-                &#169 TIQS <?php echo date('Y'); ?>. All rights reserved
+                &#169; TIQS <?php echo date('Y'); ?>. All rights reserved
                 <br>
-                Powered by <a style="font-size: 100%;" href="https://tiqs.com">tiqs.com<a>
+                Powered by <a style="font-size: 100%;" href="https://tiqs.com">tiqs.com</a>
             </div>
         </div>
 
     </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"
+></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="<?php echo $this->baseUrl; ?>assets/home/js/utility.js"></script>
+<!-- <script src="<?php #echo $this->baseUrl; ?>assets/home/js/ajax.js"></script> -->
 <script src="<?php echo $this->baseUrl; ?>assets/js/iziToast.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/eventShop.js"></script>
+
+<?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
+<?php include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; ?>
+
 <?php
     // we need this check because footer is used on pay page where $shopsettings is not set
     if (!empty($shopsettings)) {
-?>
-<script>
-(function(){
-    var shopsettings = '<?php echo json_encode($shopsettings); ?>';
-    shopsettings = JSON.parse(shopsettings);
-    if(typeof shopsettings === 'object' && shopsettings !== null){
-        if(shopsettings.showAddress == "1") { $('#address').closest('div').removeClass('d-none'); }
-        if(shopsettings.showCountry == "1") { $('#country').closest('div').removeClass('d-none'); }
-        if(shopsettings.showZipcode == "1") { $('#zipcode').closest('div').removeClass('d-none'); }
-        if(shopsettings.showMobileNumber == "1") { $('#mobileNumber').closest('div').removeClass('d-none'); }
-        if(shopsettings.showAge == "1") { $('#age').closest('div').removeClass('d-none'); }
-        if(shopsettings.labels == "0") { $('.label-input100').hide(); $('.login100-form').attr('style','padding: 10px 1px 1px 0px !important;'); }
+        ?>
+        <script>
+            (function(){
+                var shopsettings = '<?php echo json_encode($shopsettings); ?>';
+                shopsettings = JSON.parse(shopsettings);
+                if(typeof shopsettings === 'object' && shopsettings !== null){
+                    if(shopsettings.showAddress == "1") { $('#address').closest('div').removeClass('d-none'); }
+                    if(shopsettings.showCountry == "1") { $('#country').closest('div').removeClass('d-none'); }
+                    if(shopsettings.showZipcode == "1") { $('#zipcode').closest('div').removeClass('d-none'); }
+                    if(shopsettings.showMobileNumber == "1") { $('#mobileNumber').closest('div').removeClass('d-none'); }
+                    if(shopsettings.showAge == "1") { $('#age').closest('div').removeClass('d-none'); }
+                    if(shopsettings.labels == "0") { $('.label-input100').hide(); $('.login100-form').attr('style','padding: 10px 1px 1px 0px !important;'); }
+                }
+            }());
+        </script>
+        <?php
     }
-}());
-</script>
-<?php
-    }
 ?>
-
-<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-<?php //include_once FCPATH . 'application/views/includes/customJs.php'; ?>
 
 </body>
 
