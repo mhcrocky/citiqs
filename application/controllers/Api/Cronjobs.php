@@ -12,10 +12,12 @@
         {
             parent::__construct();
             $this->load->model('shopprinterrequest_model');
+            $this->load->model('shopreport_model');
             
             $this->load->helper('utility_helper');
             $this->load->helper('validate_data_helper');
             $this->load->helper('queue_helper');
+            $this->load->helper('email_helper');
 
             $this->load->config('custom');
             $this->load->library('language', array('controller' => $this->router->class));
@@ -46,5 +48,84 @@
         public function smsAlert_get(): void
         {
             $this->shopprinterrequest_model->sendSmsAlert();
+        }
+
+        public function sendReportes_get(): void
+        {
+            $reportsSettings = $this->shopreport_model->fetchReportsForCronJob();
+
+            if (is_null($reportsSettings)) return;
+
+            $concatSeparator = $this->config->item('concatSeparator');
+            $date = date('d');
+            $numberOfDaysInMonth = date('t');
+            $reportesFolder =  $this->config->item('financeReportes');
+            $xReport = $this->config->item('x_report');
+            $zReport = $this->config->item('z_report');
+
+            foreach ($reportsSettings as $report) {
+                $this->setReportEmails($report, $concatSeparator);
+                $this->setDateTimeFromTo($report, $numberOfDaysInMonth, $date);
+                if ($report['xReport'] === '1' && $this->saveReport(intval($report['vendorId']), $report['form'], $report['to'],  $xReport)) {
+                    $xReportFile = $reportesFolder . $report['vendorId'] . '_' . $xReport . '.png';
+                    $this->sendEmailWithReport($report['reportEmails'], $xReportFile, $xReport);
+                }
+
+                if ($report['zReport'] === '1' && $this->saveReport(intval($report['vendorId']), $report['form'], $report['to'], $zReport)) {
+                    $zReportFile = $reportesFolder . $report['vendorId'] . '_' . $zReport . '.png';
+                    $this->sendEmailWithReport($report['reportEmails'], $zReportFile, $zReport);
+                }
+            }
+
+            return;
+        }
+
+        private function setReportEmails(array &$report, string $concatSeparator): void
+        {
+            $report['reportEmails'] = explode($concatSeparator, $report['reportEmails']);
+            return;
+        }
+
+        private function setDateTimeFromTo(array &$report, string $numberOfDaysInMonth, string $date): void
+        {
+            $report['to'] = date('Y-m-d ' . $report['sendTime']);
+
+            if ($report['sendPeriod'] === $this->config->item('dayPeriod')) {
+                $report['form'] = date('Y-m-d ' . $report['sendTime'], strtotime("-1 day"));
+            } elseif ($report['sendPeriod'] === $this->config->item('weekPeriod')) {
+                $report['form'] = date('Y-m-d ' . $report['sendTime'], strtotime("-1 week"));
+            } elseif ($report['sendPeriod'] === $this->config->item('monthPeriod')) {
+                if ($numberOfDaysInMonth === $date) {
+                    $report['form'] = date('Y-m-d ' . $report['sendTime'], strtotime("last day of -1 month"));
+                } else {
+                    $report['form'] = date('Y-m-d ' . $report['sendTime'], strtotime("-1 month"));
+                }
+            }
+
+            return;
+        }
+
+        private function saveReport(int $userId, string $from, string $to, string $report): bool
+        {
+            $url  = base_url() . 'api/report?';
+            $url .= 'vendorid=' . $userId;
+            $url .= '&datetimefrom=' . str_replace(' ', 'T', $from);
+            $url .= '&datetimeto=' . str_replace(' ', 'T', $to);
+            $url .= '&report=' . $report;
+            $url .= '&finance=1';
+
+            $reportResponse = json_decode(file_get_contents($url));
+
+            return (!empty($reportResponse && $reportResponse->status === '1' )) ? true : false;
+        }
+
+        private function sendEmailWithReport(array $reportEmails, string $reportFile, string $reportType): void
+        {
+            foreach ($reportEmails as $email) {
+                Email_helper::sendEmail($email, $reportType, '', false, $reportFile);
+            }
+
+            unlink($reportFile);
+            return;
         }
     }

@@ -118,4 +118,84 @@
 
             return $report;
         }
+
+        public function fetchReportsForCronJob(): ?array
+        {
+            $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+
+            $config['dayPeriod'] = 'day';
+            $config['weekPeriod'] = 'week';
+            $config['monthPeriod'] = 'month';
+
+            list($month, $numberOfMonthDays, $date, $day, $sendTime) = $this->getTimeValues();
+            $query  =   'SELECT ';
+            $query .=       $this->table . '.*, ';
+            $query .=       'GROUP_CONCAT(
+                                tbl_shop_reports_emails.email
+                                SEPARATOR "'. $concatSeparator . '"
+                            ) AS reportEmails ';
+            $query .=   'FROM ';
+            $query .=       $this->table . ' ';
+            $query .=   'INNER JOIN ';
+            $query .=       'tbl_shop_reports_emails ON tbl_shop_reports_emails.reportId = ' . $this->table . '.id ';
+            $query .=   'WHERE ';
+            $query .=       '(sendTime = "' . $sendTime . '" AND sendPeriod = "' . $this->config->item('dayPeriod') . '")';
+            $query .=       '|| (sendTime = "' . $sendTime . '" AND sendPeriod = "' . $this->config->item('weekPeriod') . '" AND sendDay = "' . $day . '")';
+
+            $this->handleMonthPeriod($query, $month, $numberOfMonthDays, $date, $sendTime);
+
+            $query .= 'GROUP BY ' . $this->table . '.id;';
+
+
+            $data = $this->db->query($query)->result_array();
+
+            return empty($data) ? null : $data;
+        }
+
+        private function getTimeValues(): array
+        {
+            $month = date('m');
+            $numberOfMonthDays = intval(date('t'));
+            $date = intval(date('d'));
+            $day = date('D');
+            $sendTime = date('H') . ':00:00';
+
+            return [$month, $numberOfMonthDays, $date, $day, $sendTime];
+        }
+
+        /**
+         * Handle edge cases for last day of month (user wants report every 31th of month and month has less days)
+         *
+         * @param string $query
+         * @param string $month
+         * @param integer $numberOfMonthDays
+         * @param integer $date
+         * @return void
+         */
+        private function handleMonthPeriod(string &$query, string $month, int $numberOfMonthDays, int $date, string $sendTime): void
+        {
+            // all dates to 29th of every month plus january, march, may, july, august, october and december
+            if ($date < 29 || $numberOfMonthDays === 31) {
+                $query .= '|| (sendTime = "' . $sendTime . '" AND sendPeriod = "' . $this->config->item('monthPeriod') . '" AND sendDate = "' . $date . '")';
+            } else {
+                // april, june, september, november
+                if (in_array($month, ['04', '06', '09', '11'])) {
+                    if ($date === 29) {
+                        $query .= '|| (sendTime = "' . $sendTime . '" AND sendPeriod = "' . $this->config->item('monthPeriod') . '" AND sendDate = "' . $date . '")';
+                    } else {
+                        $query .= '|| (sendTime = "' . $sendTime . '" AND sendPeriod = "' . $this->config->item('monthPeriod') . '" AND sendDate IN ("30", "31"))';
+                    }
+                } else {
+                    //february
+                    if ($date === 29) {
+                        $query .= '|| (sendTime = "' . $sendTime . '" AND sendPeriod = "' . $this->config->item('monthPeriod') . '" AND sendDate = "' . $date . '")';
+                    } else {
+                        $query .= '|| (sendTime = "' . $sendTime . '" AND sendPeriod = "' . $this->config->item('monthPeriod') . '" AND sendDate IN ("29", "30", "31"))';
+                    }
+                }
+            }
+            $query .= ' ';
+            return;
+        }
     }

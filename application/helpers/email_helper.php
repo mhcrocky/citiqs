@@ -126,6 +126,7 @@
             $config = self::getConfig();
             $CI =& get_instance();
             $CI->load->library('email', $config);
+            $CI->email->clear(TRUE);
             $CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
             $CI->email->set_newline("\r\n");
             $CI->email->from(EMAIL_FROM);
