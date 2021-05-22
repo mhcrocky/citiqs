@@ -2598,7 +2598,7 @@ class Ajax extends CI_Controller
         $post = $this->security->xss_clean($_POST);
 
         $reportSettings = $this->prepareReportSettings($post);
-        $reportEmails = explode(' ', trim($post['reportEmails']['emails']));
+        $reportEmails = explode(';', str_replace(' ', '', $post['reportEmails']['emails']));
 
         if (!$this->validateReportData($reportSettings, $reportEmails)) return;
         if (!$this->saveReport($reportSettings, $id)) return;

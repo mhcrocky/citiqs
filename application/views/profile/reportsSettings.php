@@ -107,13 +107,13 @@
             &nbsp;&nbsp;o' clock.
         </p>
         <p style="font-size:20px">
-            Send report(s) on this email(s) address(es) (emails MUST be separated with empty space)
+            Send report(s) on this email(s) address(es) (emails MUST be separated with ";" )
             <textarea
                 name="reportEmails[emails]"
                 rows="<?php echo isset($report['reportEmails']) ? count($report['reportEmails']) : '1'; ?>"
             ><?php
                 if (!empty($report['reportEmails'])) {
-                    echo implode(' ', $report['reportEmails']);
+                    echo implode('; ', $report['reportEmails']);
                 }
             ?></textarea>
         </p>
