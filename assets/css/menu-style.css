@@ -165,7 +165,7 @@ h2{
 
 .single-item__image img{
     max-width: 100%;
-    object-fit: cover;
+    object-fit: scale-down;
     min-width: 100%;
     min-height: 100%;
 }
