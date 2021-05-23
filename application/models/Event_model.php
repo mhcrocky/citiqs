@@ -176,6 +176,7 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
+		$this->db->order_by('ticketOrder');
 		$query = $this->db->get();
 		$this->db->trans_complete();
 		$results = $query->result_array();
