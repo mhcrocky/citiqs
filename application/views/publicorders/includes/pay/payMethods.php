@@ -55,8 +55,6 @@
                 <div id="paymentContainer" class="payment-container methods">
 					<?php if (in_array($payconiqPayment, $paymentMethodsKey)) { ?>
 						<a
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
                             href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="paymentMethod method-card addTargetBlank"
                         >
