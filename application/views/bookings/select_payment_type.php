@@ -193,7 +193,7 @@ $activePayments = array_values($activePayments);
             <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
             <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
             <div id="payFooter" class="footer" style="text-align:left">
-                <a id="backLink" href="<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>?order=<?php echo $orderRandomKey; ?>" class="btn btn-cancel">
+                <a id="backLink" href="<?php echo base_url(); ?>booking_agenda/pay?order=<?php echo $orderRandomKey; ?>" class="btn btn-cancel">
                     <i class="fa fa-arrow-left"></i>
                     <span data-trans="" data-trn-key="Annuleren">BACK</span>
                 </a>
