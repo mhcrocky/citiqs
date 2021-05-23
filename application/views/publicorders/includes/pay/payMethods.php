@@ -267,12 +267,13 @@
                             <span class="paymentMethodText">van Lanschot</span>
                         </span>
                         <div class="clearfix"></div>
-                        <a
-                            href="javascript:void(0)"                                                
-                            onclick="toogleElements('paymentMethodsContainer', 'idealBanks', 'hidden')"
-                            >
-                            <?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?>
-                        </a>
+                        <span onclick="toogleElements('paymentMethodsContainer', 'idealBanks', 'hidden')" data-clicked="0"
+                                            data-href="javascript:void(0);"
+                                            class="text-center text-primary mb-1">
+                                            
+                            <span class="text-primary"><?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?></span>
+                        </span>
+                        
                     </div>
                 </div>
             <?php } ?>
@@ -356,12 +357,13 @@
                             <span class="paymentMethodText">Deutsche Kreditbank AG</span>
                         </span>
                         <div class="clearfix"></div>
-                        <a
-                            href="javascript:void(0)"
-                            onclick="toogleElements('paymentMethodsContainer', 'giroBanks', 'hidden')"
-                            >
-                            <?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?>
-                        </a>
+                        <span onclick="toogleElements('paymentMethodsContainer', 'giroBanks', 'hidden')" data-clicked="0"
+                                            data-href="javascript:void(0)"
+                                            class="text-center text-primary mb-1">
+                                            
+                            <span class="text-primary"><?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?></span>
+                        </span>
+
                     </div>
                 </div>
             <?php } ?>
