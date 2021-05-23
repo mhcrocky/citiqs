@@ -132,7 +132,7 @@
                                 style="height: 35px !important; padding: 0px !important;padding-left: 8px !important;"
                                 class="form-control input-w">
                                 <option value="0">Select option</option>
-                                <?php if(!empty($groups) && count($tickets) > 0): ?>
+                                <?php if(!empty($tickets) && count($tickets) > 0): ?>
                                 <?php foreach($tickets as $ticket): ?>
                                 <option value="<?php echo $ticket['ticketId']; ?>">
                                     <?php echo $ticket['ticketDescription']; ?>
@@ -345,7 +345,7 @@
                             <div class="col-md-6">
                                 <select id="ticketEmailTemplate" class="form-control input-w">
                                     <option selected disabled>Select option</option>
-                                    <?php if(!empty($groups) && count($emails) > 0): ?>
+                                    <?php if(!empty($emails) && count($emails) > 0): ?>
                                     <?php foreach($emails as $email): ?>
                                     <option value="<?php echo $email->id; ?>">
                                         <?php echo str_replace('ticketing_', '', $email->template_name); ?>
@@ -389,7 +389,7 @@
                                 <select id="ticketType" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
                                     <option value="ticket">Ticket</option>
-                                    <option value="group">Group</option>
+                                    <!--<option value="group">Group</option> -->
                                 </select>
                                 <input type="hidden" id="ticketTypeVal" name="ticketType">
                             </div>
