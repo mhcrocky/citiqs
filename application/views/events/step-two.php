@@ -61,7 +61,7 @@
                         <div class="col-md-3 text-dark">Min 0.00</div>
                         <div class="col-md-3">
                             <input type="number" id="nonSharedTicketFee" name="nonSharedTicketFee"
-                                class="form-control inp-height" min="0" step="0.01" value="1">
+                                class="form-control inp-height" min="0" step="0.01" value="1.00">
                         </div>
                         <!--
                     <div class="col-md-3">Shared ( Min 0.00 )</div>
@@ -87,7 +87,7 @@
                             <select id="voucherId" name="voucherId" style="height: 35px !important;padding-top: 6px;"
                                 class="form-control input-w">
                                 <option value="0">Select option</option>
-                                <?php if(!empty($groups) && count($vouchers) > 0): ?>
+                                <?php if(!empty($vouchers) && count($vouchers) > 0): ?>
                                 <?php foreach($vouchers as $voucher): ?>
                                 <option value="<?php echo $voucher['id']; ?>">
                                     <?php echo $voucher['template_name'] .' ('. $voucher['description'] . ')'; ?>
