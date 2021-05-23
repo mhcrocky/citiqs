@@ -52,7 +52,7 @@
                     <h2 style="font-family: caption-bold"><?php echo ($this->language->Line("FINAL-0013", "THE CONDITIONS")) ? $this->language->Line("FINAL-0013", "THE CONDITIONS") : "THE CONDITIONS"; ?></h2>
                     <p style="font-family: caption-bold"><?php echo ($this->language->Line("FINAL-0013", "BY PAYING YOU EXPRESSLY AGREE TO THE FOLLOWING CONDITIONS")) ? $this->language->Line("FINAL-0013", "BY PAYING YOU EXPRESSLY AGREE TO THE FOLLOWING CONDITIONS") : "BY PAYING YOU EXPRESSLY AGREE TO THE FOLLOWING CONDITIONS"; ?></p>
                     <p style="font-family: caption-light">
-                    <?php echo $termsofuse->body; ?>
+                    <?php echo strip_tags($termsofuse->body); ?>
                     </p>
                 </div>
                 <div class="pricing-block-footer" style="height: 200px">
