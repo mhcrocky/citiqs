@@ -69,6 +69,16 @@ function addTargetBlank() {
     }
 }
 
+function preventDoubleClick(element) {
+    if (element.dataset.clicked === '0') {
+        element.dataset.clicked = '1';
+        element.href="javascript:void(0)";
+    } else {
+        alertify.error('Please wait!');
+        alertify.error('If page is not redirected, reload it');
+    }
+}
+
 if (inIframe()) {
     addTargetBlank();
 }
