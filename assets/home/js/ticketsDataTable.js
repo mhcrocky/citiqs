@@ -419,24 +419,29 @@ $(document).ready(function () {
         if(ticketId == 0){ return; }
         if(index == 0){
           lastGroupId = $(this).attr('data-groupId');
-          if(isNaN(lastGroupId)){ return; }
-          var ticket = {'ticketId': $(this).attr('data-ticketId'), 'groupId': lastGroupId };
+          if(isNaN(lastGroupId)){ lastGroupId = 0; }
+          var ticket = {'ticketId': $(this).attr('data-ticketId'), 'groupId': lastGroupId, 'position': index+1 };
           tickets[index] = ticket;
           return;
         }
+
+        
 
         if(isNaN(ticketId)){
           lastGroupId = $(this).attr('data-groupId');
           return;
         }
-        var ticket = {'ticketId': ticketId, 'groupId':lastGroupId };
+        var ticket = {'ticketId': ticketId, 'groupId':lastGroupId, 'position': index+1 };
         tickets[index] = ticket;
+        
 
       });
 
+     
       $.post(globalVariables.baseUrl + "events/update_ticket_group", {tickets: JSON.stringify(tickets)}, function (data) {
         $("#tickets").DataTable().ajax.reload();
       });
+      
     }
   });
 
