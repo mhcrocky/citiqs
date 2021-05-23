@@ -54,15 +54,15 @@
             <div class="content-container clearfix" id="paymentMethodsContainer">
                 <div id="paymentContainer" class="payment-container methods">
 					<?php if (in_array($payconiqPayment, $paymentMethodsKey)) { ?>
-						<span
+						<a
                             onclick="payRedirect(this)"
                             data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="paymentMethod method-card addTargetBlank"
                         >
 							<img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
 							<span class="paymentMethodText">Payconiq</span>
-						</span>
+						</a>
 					<?php } ?>
                     <?php if (in_array($idealPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
@@ -71,44 +71,38 @@
                         </a>
                     <?php } ?>
                     <?php if (in_array($creditCardPayment, $paymentMethodsKey)) { ?>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $creditCardPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $creditCardPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="paymentMethod method-card addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/creditcard.png" alt="Creditcard">
                             <span class="paymentMethodText">Creditcard</span>
-                        </span>
+                        </a>
                     <?php } ?>
 
                     <?php if (in_array($bancontactPayment, $paymentMethodsKey)) { ?>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $bancontactPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $bancontactPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="paymentMethod method-card addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
                             <span class="paymentMethodText">Bancontact</span>
-                        </span>
+                        </a>
                     <?php } ?>
                     <?php if (in_array($myBankPayment, $paymentMethodsKey)) { ?>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $myBankPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $myBankPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="paymentMethod method-card addTargetBlank"
                         >
                             <img src="https://static.pay.nl/payment_profiles/100x100/1588.png" alt="bancontact">
                             <span class="paymentMethodText">My Bank</span>
-                        </span>
+                        </a>
                     <?php } ?>
                     <?php if (in_array($giroPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/giropay(1).png" alt="bancontact">
                             <span class="paymentMethodText" data-trans="" data-trn-key="Bancontact">Giropay</span>
-                        </span>
+                        </a>
                     <?php } ?>
                     <?php if ($localType === intval($spot['spotTypeId'])) { ?>
                         <?php if (in_array($prePaid, $paymentMethodsKey)) { ?>
@@ -133,15 +127,13 @@
                         <?php } ?>
                     <?php } ?>
                     <?php if (in_array($pinMachinePayment, $paymentMethodsKey)) { ?>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $pinMachinePaymentType; ?>/<?php echo $pinMachineOptionSubId; ?><?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $pinMachinePaymentType; ?>/<?php echo $pinMachineOptionSubId; ?><?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="paymentMethod method-card addTargetBlank"
                         >
                         <img src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine">
                             <span class="paymentMethodText">Pin machine</span>
-                        </span>
+                        </a>
                     <?php } ?>
                     <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:void(0);" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
@@ -154,118 +146,94 @@
             </div>
 
             <?php if (in_array($idealPayment, $paymentMethodsKey)) { ?>
-                <div class="method method-ideal hidden"  id="idealBanks">
+                <div class="method method-ideal hidden"  id="idealBanks" style="z-index:1000">
                     <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>                                        
                     <div class="payment-container">
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/1<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/1<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod abn_amro addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/abn_amro.png" alt="ABN AMRO">
                             <span class="paymentMethodText">ABN AMRO</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/8<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/8<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod asn_bank addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/asn_bank.png" alt="ASN Bank">
                             <span class="paymentMethodText">ASN Bank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5080<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5080<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod bunq addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bunq.png" alt="Bunq">
                             <span class="paymentMethodText">Bunq</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5082<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5082<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod handelsbanken addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/handelsbanken.png" alt="Handelsbanken">
                             <span class="paymentMethodText">Handelsbanken</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/4<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/4<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod ing addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ing.png" alt="ING">
                             <span class="paymentMethodText">ING</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/12<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/12<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod knab addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/knab(1).png" alt="Knab">
                             <span class="paymentMethodText">Knab</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5081<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5081<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod moneyou addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/moneyou.png" alt="Moneyou">
                             <span class="paymentMethodText">Moneyou</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/2<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/2<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod rabobank addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/rabobank.png" alt="Rabobank">
                             <span class="paymentMethodText">Rabobank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/9<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/9<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod regiobank addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/regiobank.png" alt="RegioBank">
                             <span class="paymentMethodText">RegioBank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/5<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod sns_bank addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/sns_bank.png" alt="SNS Bank">
                             <span class="paymentMethodText">SNS Bank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/10<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/10<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod triodos_bank addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/triodos_bank.png" alt="Triodos Bank">
                             <span class="paymentMethodText">Triodos Bank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/11<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $idealPaymentType; ?>/11<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod van_lanschot addTargetBlank"
                         >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/van_lanschot.png" alt="van Lanschot">
                             <span class="paymentMethodText">van Lanschot</span>
-                        </span>
+                        </a>
                         <div class="clearfix"></div>
                         <a
                             href="javascript:void(0)"                                                
@@ -283,78 +251,62 @@
                         <span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
                     </div>
                     <div class="payment-container">
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">Sparkasse</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">Volksbanken Raiffeisenbanken</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">Postbank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">Comdirect</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">BB Bank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">MLP Bank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">PSD Bank</span>
-                        </span>
-                        <span
-                            onclick="payRedirect(this)"
-                            data-clicked="0"
-                            data-href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
+                        </a>
+                        <a
+                            href="<?php echo base_url(); ?>onlinepayment/<?php echo $giroPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
                             class="bank paymentMethod addTargetBlank"
                         >
                             <!-- <img src="https://tiqs.com/qrzvafood/assets/imgs/extra/abn_amro.png" alt="ABN AMRO"> -->
                             <span class="paymentMethodText">Deutsche Kreditbank AG</span>
-                        </span>
+                        </a>
                         <div class="clearfix"></div>
                         <a
                             href="javascript:void(0)"
