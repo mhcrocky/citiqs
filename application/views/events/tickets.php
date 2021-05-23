@@ -10,7 +10,7 @@
                             <?php if($eventImage == ''): ?>
                             src="<?php echo base_url(); ?>assets/home/images/logo1.png"
                             <?php else: ?>
-                            src="https://tiqs.com/alfred/assets/images/events/<?php echo $eventImage; ?>"
+                            src="<?php echo base_url(); ?>assets/images/events/<?php echo $eventImage; ?>"
                             <?php endif; ?>
                             alt="<?php echo $eventName; ?>">
                         </li>
