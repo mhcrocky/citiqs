@@ -53,13 +53,13 @@
                 aria-label="Toggle navigation"></button>
 
             <div class="collapse navbar-collapse pl-md-4" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto d-none">
+                <!--<ul class="navbar-nav mr-auto d-none">
                     <li class="nav-item active pt-2 pt-md-0">
                         <a class="nav-link"
                             href="#">Home
                             <span class="sr-only">(current)</span></a>
                     </li>
-                </ul>
+                </ul>-->
             </div>
             <a href="#" class="btn btn-primary btn-lg bg-primary px-3 px-md-4 text-center header__checkout"
                 data-toggle="modal" data-target="#checkout-modal"><i class="fa fa-shopping-basket mr-md-3"></i><span
