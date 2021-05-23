@@ -146,7 +146,7 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
-		$this->db->order_by('tbl_ticket_groups.id');
+		$this->db->order_by('ticketOrder');
 		$query = $this->db->get();
 		$tickets = $query->result_array();
 		$groups = $this->get_ticket_groups($eventId);
@@ -359,10 +359,13 @@ class Event_model extends CI_Model {
 	function update_ticket_group($tickets){
 		foreach($tickets as $key => $ticket){
 			$groupId = $key;
-			$this->db->set('ticketGroupId', $groupId);
 			$ids = explode(',', $ticket);
-			$this->db->where_in('id', $ids);
-			$this->db->update('tbl_event_tickets');
+			foreach($ids as $i => $id){
+				$this->db->set('ticketGroupId', $groupId);
+				$this->db->set('ticketOrder', $i+1);
+				$this->db->where('id', $id);
+				$this->db->update('tbl_event_tickets');
+			}
 		}
 		return ;
 	}
