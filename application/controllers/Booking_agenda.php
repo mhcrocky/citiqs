@@ -508,7 +508,7 @@ class Booking_agenda extends BaseControllerWeb
 
     public function payment_proceed()
     {
-        $buyerInfo = $this->input->post(null, true);
+        
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
         
         if(!$orderRandomKey){
@@ -524,6 +524,8 @@ class Booking_agenda extends BaseControllerWeb
 
 
         $amount = 0;
+        $buyerInfo = $orderData['buyer_info'];
+        var_dump($buyerInfo);
         $reservationIds = $orderData['reservations'];
         
         if ($buyerInfo) {
@@ -589,8 +591,7 @@ class Booking_agenda extends BaseControllerWeb
         $data['giroPaymentType']           = $this->config->item('giroPaymentType');
         $data['payconiqPaymentType']       = $this->config->item('payconiqPaymentType');
         $data['myBankPaymentType']         = $this->config->item('myBankPaymentType');
-        $data['vendorCost']                = $this->event_model->get_vendor_cost($customer);
-        $data['shortUrl']                  = $orderData['shortUrl'];
+        $data['shortUrl']                  = $customer['usershorturl'];
         $data['idealPaymentText']          = $this->config->item('idealPayment');
         $data['creditCardPaymentText']    = $this->config->item('creditCardPayment');
         $data['bancontactPaymentText']     = $this->config->item('bancontactPayment');
@@ -605,6 +606,7 @@ class Booking_agenda extends BaseControllerWeb
 
         $reservationsPayments = $this->bookandpayagendabooking_model->get_payment_methods($customer['id']);
         $vendorCost = $this->bookandpayagendabooking_model->get_vendor_cost($customer['id']);
+        $data['vendorCost'] = $vendorCost;
         foreach($reservationsPayments as $key => $reservationsPayment){
             $paymentMethod = ucwords($key);
             $paymentMethod = str_replace(' ', '', $paymentMethod);
