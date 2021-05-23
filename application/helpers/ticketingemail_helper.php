@@ -167,7 +167,7 @@
 								    if(self::sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
                                         $file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
-                                        Utility_helper::logMessage($file, $mailtemplate);
+//                                        Utility_helper::logMessage($file, $mailtemplate);
                                         $CI->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                     }

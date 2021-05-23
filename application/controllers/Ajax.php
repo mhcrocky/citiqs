@@ -2598,7 +2598,7 @@ class Ajax extends CI_Controller
         $post = $this->security->xss_clean($_POST);
 
         $reportSettings = $this->prepareReportSettings($post);
-        $reportEmails = explode(' ', trim($post['reportEmails']['emails']));
+        $reportEmails = explode(';', str_replace(' ', '', $post['reportEmails']['emails']));
 
         if (!$this->validateReportData($reportSettings, $reportEmails)) return;
         if (!$this->saveReport($reportSettings, $id)) return;
@@ -2670,6 +2670,14 @@ class Ajax extends CI_Controller
 
     private function saveReport(array $reportSettings, ?int $id): bool
     {
+        if (!isset($reportSettings['xReport'])) {
+            $reportSettings['xReport'] = '0';
+        }
+
+        if (!isset($reportSettings['zReport'])) {
+            $reportSettings['zReport'] = '0';
+        }
+
         $this->shopreport_model->setObjectFromArray($reportSettings);
         $save = ($id) ? $this->shopreport_model->setObjectId($id)->updateReport() : $this->shopreport_model->createReport();
 

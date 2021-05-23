@@ -139,7 +139,8 @@
                                 ->checkIsPrinterConnected();
 
                 if (!$connected) {
-                    $this->sentSms($printer);
+                	// something to correct here
+                    // $this->sentSms($printer);
                 }
             }
         }

@@ -57,11 +57,10 @@ class Bstatistics extends REST_Controller
             if (!$this->authentication()) return;
 
             $get = Utility_helper::sanitizeGet();
-            $vendorId = intval($get['vendor']);
             $from = empty($get['from']) ? '' : str_replace('T', ' ', $get['from']);
             $to = empty($get['to']) ? '' : str_replace('T', ' ', $get['to']);
 
-            $orders = $this->shoporder_model_statistics->fetchUnpaidVendorOrders($vendorId, true, $from, $to);
+            $orders = $this->shoporder_model_statistics->fetchOrdersForStatistics($from, $to);
 
             if ($orders) {
                 $response = [

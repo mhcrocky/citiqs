@@ -49,7 +49,7 @@ class Reports extends REST_Controller
 
 		if (file_exists($report)) {
 			$respone = [
-				'status' => '1',
+				'status' => '1'
 			];
 		} else {
 			$respone = [

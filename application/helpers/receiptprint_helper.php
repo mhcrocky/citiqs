@@ -56,7 +56,7 @@
 
 			if (file_put_contents($receipt, $resultpngprinter) && ENVIRONMENT !== 'development') {
 				$logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
-				Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
+				//Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
             }
 
             header('Content-type: image/png');
@@ -295,7 +295,7 @@
 			if (file_put_contents($receipt, $resultpngprinter) ) {
                 if (ENVIRONMENT !== 'development') {
                     $logFile = FCPATH . 'application/tiqs_logs/write-error.txt';
-                    Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
+//                    Utility_helper::logMessage($logFile, 'file order written to server: ' .$receipt);
                 }
             }
 

@@ -1361,7 +1361,7 @@
             return reset($order);
         }
 
-        public function fetchUnpaidVendorOrders(int $vendorId, bool $sum = true, string $from = '', string $to = ''): ?array
+        public function fetchUnpaidVendorOrdersStore(int $vendorId, bool $sum = true, string $from = '', string $to = ''): ?array
         {
             $this->load->config('custom');
             $where = [
@@ -1377,9 +1377,10 @@
                 $where[$this->table . '.createdOrder<='] = $to;
             }
 
-//            if ($sum) {
-//                return $this->sumAllVendorOrders($where);
-//            }
+            if ($sum) {
+                return $this->sumAllVendorOrders($where);
+            }
+
             return $this->allVendorOrders($where);
 
 
@@ -1586,4 +1587,38 @@
             return intval($vendorId['userId']);
         }
 
+        public function fetchOrdersForStatistics(string $from = '', $to = ''): ?array
+        {
+            $this->load->config('custom');
+            $where = [
+                $this->table . '.paid' => '1',
+                'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos')
+            ];
+            
+            if ($from) {
+                $where[$this->table . '.createdOrder>='] = $from;
+            }
+            if ($to) {
+                $where[$this->table . '.createdOrder<='] = $to;
+            }
+
+
+            $orders = $this->readImproved([
+                'what' => [
+                    $this->table . '.*',
+                    'tbl_shop_payment_methods.percent paymentMethodPercent',
+                    'tbl_shop_payment_methods.amount paymentMethodAmount'
+                ],
+                'where' => $where,
+                'joins' => [
+                    ['tbl_shop_payment_methods', 'tbl_shop_payment_methods.paymentMethod = ' . $this->table . '.paymentType', 'INNER']
+                ],
+                'conditions' => [
+                    'GROUP_BY' => [$this->table . '.id']
+                ]
+            ]);
+
+            return $orders;
+
+        }
     }

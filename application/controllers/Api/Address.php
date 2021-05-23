@@ -621,7 +621,7 @@
         public function data_post()
         {
             $file = FCPATH . 'application/tiqs_logs/messages.txt';
-            Utility_helper::logMessage($file, 'printer send post request');
+//            Utility_helper::logMessage($file, 'printer send post request');
             // Check is valid POST request type
             if (strtolower($_SERVER['CONTENT_TYPE']) !== 'application/json')
 			{
@@ -707,7 +707,7 @@
                         } else {
                             $file = FCPATH . 'application/tiqs_logs/messages.txt';
                             $errorMessage = 'SMS NOT SENT TO DRIVER FOR ORDER ID: ' . $order['orderId'];
-                            Utility_helper::logMessage($file, $errorMessage);
+//                            Utility_helper::logMessage($file, $errorMessage);
                         }
                     }
                 }
