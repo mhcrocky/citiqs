@@ -64,8 +64,13 @@
                     </div>
                     <div class="single-item__content">
                         <p class='mb-0'><?php echo $event['eventname']; ?></p>
-                        <div style="overflow: auto; max-height: 100px;" >
-                            <span class='single-item__price'> 
+                        <div style="overflow: hidden; max-height: 100px;" >
+                            <span class='single-item__price'>
+                            This is an event where we explain the usage of tiqs.  This is an event where we explain the usage of tiqs.  This is an event where we explain the usage of tiqs.  This is an event where we explain the usage of tiqs.  This is an event where we explain the usage of tiqs. 
+                            This is an event where we explain the usage of tiqs. 
+                            This is an event where we explain the usage of tiqs. 
+                            This is an event where we explain the usage of tiqs. 
+                            This is an event where we explain the usage of tiqs.  
                                 <?php echo $event['eventdescript']; ?>
                             </span>
                         </div>
