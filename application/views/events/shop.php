@@ -66,15 +66,6 @@
                         <p class='mb-0'><?php echo $event['eventname']; ?></p>
                         <div class="scroll-descript" >
                             <span class='single-item__price'>
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
-                            This is an event where we explain the usage of tiqs. 
                                 <?php echo $event['eventdescript']; ?>
                             </span>
                         </div>
