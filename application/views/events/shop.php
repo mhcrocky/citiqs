@@ -64,8 +64,10 @@
                     </div>
                     <div class="single-item__content">
                         <p class='mb-0'><?php echo $event['eventname']; ?></p>
-                        <div>
-                            <span class='single-item__price'><?php echo $event['eventdescript']; ?></span>
+                        <div style="overflow: auto; max-height: 100px;" >
+                            <span class='single-item__price'> 
+                                <?php echo $event['eventdescript']; ?>
+                            </span>
                         </div>
                     </div>
                 </a>
