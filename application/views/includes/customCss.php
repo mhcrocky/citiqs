@@ -516,6 +516,17 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+    <style>
+    .scroll-descript {
+        overflow: auto;
+        max-height: 100px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scroll-descript::-webkit-scrollbar {
+        display: none;
+    }
+    </style>
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
