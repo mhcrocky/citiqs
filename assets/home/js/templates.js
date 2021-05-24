@@ -364,10 +364,11 @@ function tinyMceInit(textAreaId, templateContent = '') {
             "print",
             "ruler",
 			"table",
-			"textcolor"
+			"textcolor",
+			"emoticons"
         ],
         ruler: true,
-        toolbar: "insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | tags | qrcode | help | fullpage | preview | fullscreen | print",
+        toolbar: "insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | emoticons | tags | qrcode | help | fullpage | preview | fullscreen | print",
         contextmenu: "image imagetools table",
         content_css: [
             "//fonts.googleapis.com/css?family=Lato:300,300i,400,400i",

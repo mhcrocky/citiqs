@@ -1594,13 +1594,18 @@
                 $this->table . '.paid' => '1',
                 'tbl_shop_payment_methods.productGroup' => $this->config->item('storeAndPos')
             ];
-            
+
+//			var_dump($from);
+//			var_dump($to);
+
             if ($from) {
                 $where[$this->table . '.createdOrder>='] = $from;
             }
             if ($to) {
                 $where[$this->table . '.createdOrder<='] = $to;
             }
+
+//            die();
 
 
             $orders = $this->readImproved([

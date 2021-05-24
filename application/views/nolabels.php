@@ -6,10 +6,12 @@
 			</div>
 			<div style="text-align:left; margin-top: 30px">
 				<h1 class="heading" style="font-size: 400%; margin-bottom: 20px">
-					<?php echo $this->language->line('ALFRED-VA10001A','ALFRED</a>');?>
+					DIGITALLY
+<!--					--><?php //echo $this->language->tline('DIGITALLY');?>
 				</h1>
 				<h3 class="heading">
-					<?php echo $this->language->line('ALFRED-VB100010','THE DIGITAL BUTLER');?>
+					CONNECT WITH YOUR VISITORS
+<!--					--><?php //echo $this->language->tline('CONNECT WITH YOUR VISITORS');?>
 				</h3>
 			</div>
 

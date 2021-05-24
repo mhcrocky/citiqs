@@ -56,6 +56,9 @@ class Bstatistics extends REST_Controller
         {
             if (!$this->authentication()) return;
 
+//			$vendor = $this->security->xss_clean($this->input->post('vendor'));
+//			$from = $this->security->xss_clean($this->input->post('from'));
+//			$to = $this->security->xss_clean($this->input->post('to'));
             $get = Utility_helper::sanitizeGet();
             $from = empty($get['from']) ? '' : str_replace('T', ' ', $get['from']);
             $to = empty($get['to']) ? '' : str_replace('T', ' ', $get['to']);

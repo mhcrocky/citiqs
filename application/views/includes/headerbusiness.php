@@ -368,7 +368,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 										<?php } ?>
 
 										<ul class="collapse">
-											<li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your reservations'); ?></span></a></li>
+											<li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Your reservations'); ?></span></a></li>
 											<li data-menuid="5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/manual_reservations"><i class="ti-ticket"></i> <span><?php echo $this->language->tLine('Manual booking'); ?></span></a></li>
 											<li data-menuid="5.3"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
                                             <!--                                            <li data-menuid="5.3"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/reservations_report"><i class="ti-write"></i> <span>--><?php //echo $this->language->tLine('Reservations Report'); ?><!--</span></a></li>-->
