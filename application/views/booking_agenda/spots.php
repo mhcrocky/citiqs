@@ -2,10 +2,7 @@
 <section>
 <div class="container">
         <div class="row row-menu">
-            <div class="col-12 col-md-4">
-            <h1 class="color-secondary"><?php echo $agenda->ReservationDescription; ?></h1>
-            <h5 class="text-dark"><?php echo date("d.m.Y", strtotime($agenda->ReservationDateTime)); ?></h5>
-        </div>
+
     </div>
     </div>
 </section>
