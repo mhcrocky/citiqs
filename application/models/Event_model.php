@@ -195,6 +195,11 @@ class Event_model extends CI_Model {
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$sold_out = false;
 
+			if($this->_check_ticket_bundle_max($result['ticketGroupId'])){
+				$sold_out = true;
+				$result['soldOutWhenExpired'] = 'Sold Out';
+			}
+
 			if($result['ticketExpired'] == 'manually'){
 				$startDt = new DateTime($result['startTimestamp'], new DateTimeZone('Europe/Amsterdam'));
 				$startTimestamp = $startDt->format('Y-m-d H:i:s');
@@ -488,6 +493,7 @@ class Event_model extends CI_Model {
 			$result = $query->first_row();
 			return $result->usershorturl;
 		}
+
 		return false;
 	}
 
@@ -1001,6 +1007,21 @@ class Event_model extends CI_Model {
 	{
 		$this->db->delete('tbl_event_inputs', $where);
 		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+
+	private function _check_ticket_bundle_max($groupId) : bool
+	{
+		$query = $this->db->query("SELECT count(tbl_event_tickets.id) AS tickets, groupQuantity
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_ticket_groups ON tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId 
+		WHERE tbl_ticket_groups.id = ".$groupId." AND tbl_bookandpay.ticketDescription <> '' AND paid = 1
+		GROUP BY tbl_ticket_groups.id");
+		$result = $query->first_row();
+		if(isset($result->tickets) && $result->tickets >= $result->groupQuantity){
+			return true;
+		}
+		return false;
 	}
 
 
