@@ -109,7 +109,7 @@
                 <div class="splide__track">
                     <ul class="splide__list d-flex align-items-center">
                         <?php foreach ($agendas as $key => $agenda): 
-        if($agenda->backgroundImage != ''){
+        if(file_exists(FCPATH .'assets/home/images/' . $agenda->backgroundImage)){
     ?>
                         <li class="splide__slide"><img
                                 src="<?php echo base_url(); ?>assets/home/images/<?php echo $agenda->backgroundImage; ?>">
@@ -123,6 +123,7 @@
                 </div>
             </div>
         </div>
+        
 
 
 
