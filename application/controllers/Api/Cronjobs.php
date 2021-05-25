@@ -4,7 +4,7 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
 
     require APPPATH . 'libraries/REST_Controller.php';
-    
+
     class Cronjobs extends REST_Controller
     {
 
@@ -127,5 +127,60 @@
 
             unlink($reportFile);
             return;
+        }
+
+        public function updatePaymentMethod_get(): void
+        {
+            $csvFolder = FCPATH . 'assets' . DIRECTORY_SEPARATOR . 'paynl' . DIRECTORY_SEPARATOR;
+            $files = scandir($csvFolder);
+            $paymentMethods = [
+                'iDEAL',
+                'Visa Mastercard',
+                'Giropay',
+                'Payconiq - Payconiq Nederland',
+                'Bancontact'
+            ];
+
+            $query = 'UPDATE tbl_bookandpay SET paymentMethod = CASE ';
+            foreach ($files as $file) {
+                if ($file === '.' || $file === '..') continue;
+
+                $ile = $csvFolder . $file;
+                $lines = file($ile, FILE_IGNORE_NEW_LINES);
+                $transactionIds = [];
+
+                foreach ($lines as $key => $value) {
+                    if ($key === 0) continue;
+                    $data = str_getcsv($value, ';');
+                    if (!in_array($data[14], $paymentMethods)) continue;
+                    $tranhsactionId = '"' . $data[25] . '"';
+                    array_push($transactionIds, $tranhsactionId);
+                    $query .= ' WHEN TransactionID = "' . $data[25] . '" THEN "' . $this->getPaymentMethods($data[14]) . '" ';
+                }
+            }
+
+            $query .= ' END ';
+            $query .= ' WHERE 1;';
+            $this->db->query($query);
+            var_dump($this->db->affected_rows());
+
+        }
+
+        private function getPaymentMethods(string $payNlPaymentMethod): string
+        {
+            $alfredNameMethod = '';
+            if ($payNlPaymentMethod === 'iDEAL') {
+                $alfredNameMethod = $this->config->item('idealPayment');
+            } elseif ($payNlPaymentMethod === 'Giropay') {
+                $alfredNameMethod = $this->config->item('giroPayment');
+            } elseif ($payNlPaymentMethod === 'Payconiq - Payconiq Nederland') {
+                $alfredNameMethod = $this->config->item('payconiqPayment');
+            } elseif ($payNlPaymentMethod === 'Bancontact') {
+                $alfredNameMethod = $this->config->item('bancontactPayment');
+            } else {
+                $alfredNameMethod = $this->config->item('creditCardPayment');
+            }
+
+            return $alfredNameMethod;
         }
     }
