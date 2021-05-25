@@ -386,7 +386,7 @@
 
 
                         <div class="form-group row">
-                            <label for="group" class="col-md-4 col-form-label text-md-left">Ticket type</label>
+                            <label for="group" class="col-md-4 col-form-label text-md-left">Bundle</label>
                             <div class="col-md-6">
                                 <select id="group" class="form-control input-w">
                                     <option selected disabled>Select option</option>
@@ -403,13 +403,13 @@
                         </div>
 
 
-                        <div class="form-group row d-none">
+                        <div class="form-group row">
                             <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
                             <div class="col-md-6">
                                 <select id="ticketType" class="form-control input-w" required>
                                     <option selected disabled>Select option</option>
                                     <option value="ticket">Ticket</option>
-                                    <!--<option value="group">Group</option> -->
+                                    <option value="group">Bundle</option>
                                 </select>
                                 <input type="hidden" id="ticketTypeVal" name="ticketType">
                             </div>
