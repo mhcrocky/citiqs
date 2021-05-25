@@ -90,7 +90,7 @@
 
 
         </div>
-        <div class="container-body mb-5">
+        <div class="w-100">
             <div class="cal-modal-container">
                 <div style="width: 100%" class="cal-modal">
                     <h3>UPCOMING EVENTS</h3>
@@ -104,7 +104,7 @@
 
 
 
-        <div style="background: rgb(212, 231, 53)" class="w-100 p-4">
+        <div style="background: rgb(212, 231, 53)" class="w-100 pr-4 pl-4">
             <div id="splide" class="splide">
                 <div class="splide__track">
                     <ul class="splide__list d-flex align-items-center">
