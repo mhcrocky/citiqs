@@ -340,6 +340,18 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
+                            <div class="col-md-6">
+                                <select id="ticketType" class="form-control input-w" required>
+                                    <option selected disabled>Select option</option>
+                                    <option value="ticket">Ticket</option>
+                                    <option value="group">Bundle</option>
+                                </select>
+                                <input type="hidden" id="ticketTypeVal" name="ticketType">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="ticketEmailTemplate" class="col-md-4 col-form-label text-md-left">Email
                                 Template</label>
                             <div class="col-md-6">
@@ -402,17 +414,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
-                            <div class="col-md-6">
-                                <select id="ticketType" class="form-control input-w" required>
-                                    <option selected disabled>Select option</option>
-                                    <option value="ticket">Ticket</option>
-                                    <option value="group">Bundle</option>
-                                </select>
-                                <input type="hidden" id="ticketTypeVal" name="ticketType">
-                            </div>
-                        </div>
+                        
 
                         <div class="form-group row">
                             <label for="quantity" class="col-md-4 col-form-label text-md-left">Ticket quantity</label>
