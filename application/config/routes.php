@@ -673,5 +673,7 @@ $route['api/finanza/orders/(:any)'] = 'Api/finanza/orders/$1';
 $route['printer_sms_alert'] = 'Api/Cronjobs/smsAlert';
 
 $route['send_reportes'] = 'Api/Cronjobs/sendReportes';
+
+$route['update_payment_method'] = 'Api/Cronjobs/updatePaymentMethod';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
