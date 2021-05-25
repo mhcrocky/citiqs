@@ -402,7 +402,6 @@
                             </div>
                         </div>
 
-
                         <div class="form-group row">
                             <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
                             <div class="col-md-6">
