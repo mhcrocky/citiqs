@@ -63,7 +63,7 @@ class Event_model extends CI_Model {
 
 	public function save_ticket_group($groupname,$quantity,$eventId)
 	{
-		$this->db->insert('tbl_ticket_groups',['groupname' => $groupname, 'groupQuantity' => $quantity, 'eventId' => $eventId]);
+		$this->db->insert('tbl_ticket_groups',['groupname' => $groupname, 'groupQuantity' => $quantity]);
 		return $this->db->insert_id();
 		
 	}
@@ -146,10 +146,10 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
-		$this->db->order_by('ticketOrder');
+		$this->db->order_by('tbl_ticket_groups.id, ticketOrder');
 		$query = $this->db->get();
 		$tickets = $query->result_array();
-		$groups = $this->get_ticket_groups($eventId);
+		$groups = $this->get_ticket_groups();
 		$groupIds = [];
 		foreach ($tickets as $key => $ticket) {
 			$tickets[$key]['guestlistCount'] = $this->get_guestlist_count($ticket['ticketId']);
@@ -176,7 +176,7 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
-		$this->db->order_by('ticketOrder');
+		$this->db->order_by('tbl_ticket_groups.id, ticketOrder');
 		$query = $this->db->get();
 		$this->db->trans_complete();
 		$results = $query->result_array();
@@ -314,11 +314,10 @@ class Event_model extends CI_Model {
 	}
 
 
-	public function get_ticket_groups($eventId)
+	public function get_ticket_groups()
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_ticket_groups');
-		$this->db->where('eventId', $eventId);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -360,10 +359,11 @@ class Event_model extends CI_Model {
 	function update_ticket_group($tickets){
 		foreach($tickets as $key => $ticket){
 			$groupId = $key;
-			$ids = explode(',', $ticket);
+			$ids = explode(',', $ticket[0]);
 			foreach($ids as $i => $id){
+				$position = $ticket[1][$id];
 				$this->db->set('ticketGroupId', $groupId);
-				$this->db->set('ticketOrder', $i+1);
+				$this->db->set('ticketOrder', $position);
 				$this->db->where('id', $id);
 				$this->db->update('tbl_event_tickets');
 			}
