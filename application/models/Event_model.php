@@ -149,7 +149,7 @@ class Event_model extends CI_Model {
 		$this->db->order_by('tbl_ticket_groups.id, ticketOrder');
 		$query = $this->db->get();
 		$tickets = $query->result_array();
-		$groups = $this->get_ticket_groups();
+		$groups = $this->get_ticket_groups($eventId);
 		$groupIds = [];
 		foreach ($tickets as $key => $ticket) {
 			$tickets[$key]['guestlistCount'] = $this->get_guestlist_count($ticket['ticketId']);
@@ -319,13 +319,15 @@ class Event_model extends CI_Model {
 	}
 
 
-	public function get_ticket_groups()
+	public function get_ticket_groups($eventId)
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_ticket_groups');
+		$this->db->where('eventId', $eventId);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
 
 	function save_event_design($vendor_id, $eventId, $design){
 		$this->db->set('shopDesign', $design);

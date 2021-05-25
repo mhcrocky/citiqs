@@ -84,7 +84,7 @@ class Events extends BaseControllerWeb
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
             'vouchers' => $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']),
-            'groups' => $this->event_model->get_ticket_groups(),
+            'groups' => $this->event_model->get_ticket_groups($eventId),
             'guests' => $this->event_model->get_guestlist($eventId, $this->vendor_id),
             'tickets' => $this->event_model->get_tickets($this->vendor_id, $eventId)
         ];
