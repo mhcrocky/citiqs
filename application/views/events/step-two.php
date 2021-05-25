@@ -383,7 +383,27 @@
                         </div>
                         -->
                         <input type="hidden" id="eventId" name="eventId" value="<?php echo $eventId; ?>">
+
+
                         <div class="form-group row">
+                            <label for="group" class="col-md-4 col-form-label text-md-left">Ticket type</label>
+                            <div class="col-md-6">
+                                <select id="group" class="form-control input-w">
+                                    <option selected disabled>Select option</option>
+                                    <?php if(!empty($groups) && count($groups) > 0): ?>
+                                    <?php foreach($groups as $group): ?>
+                                    <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>">
+                                        <?php echo $group['groupname']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                                <input type="hidden" id="ticketGroup" name="ticketGroupId">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row d-none">
                             <label for="ticketType" class="col-md-4 col-form-label text-md-left">Ticket type</label>
                             <div class="col-md-6">
                                 <select id="ticketType" class="form-control input-w" required>
@@ -431,22 +451,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group row d-none">
-                            <label for="group" class="col-md-4 col-form-label text-md-left">Ticket group</label>
-                            <div class="col-md-6">
-                                <select id="group" class="form-control input-w">
-                                    <option selected disabled>Select option</option>
-                                    <?php /* if(!empty($groups) && count($groups) > 0): ?>
-                                    <?php foreach($groups as $group): ?>
-                                    <option id="group_<?php echo $group['id']; ?>" value="<?php echo $group['id']; ?>">
-                                        <?php echo $group['groupname']; ?>
-                                    </option>
-                                    <?php endforeach; ?>
-                                    <?php endif;*/ ?>
-                                </select>
-                                <input type="hidden" id="ticketGroup" name="ticketGroupId">
-                            </div>
-                        </div>
                 </div>
             </div>
             <div class="modal-footer">
