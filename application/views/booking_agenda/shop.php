@@ -1,5 +1,58 @@
 <!-- HERO SECTION -->
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css'>
 
+<style>
+.splide {
+    padding: 20px 0;
+}
+
+.splide__slide img {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    transition: transform 400ms;
+    transform: scale(0.9);
+    transform-origin: center center;
+}
+
+.splide__slide.is-active img {
+    transform: scale(1);
+}
+
+.splide .splide__arrow {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    transform: none;
+    border-radius: unset;
+    width: 50px;
+    opacity: 0.9;
+}
+
+.splide .splide__arrow svg {
+    filter: invert(1);
+    width: 24px;
+    height: 24px;
+}
+
+.splide__arrow.splide__arrow--prev {
+    left: 0;
+    background: linear-gradient(90deg, rgba(212, 231, 53, 0.7) 0%, rgba(212, 231, 53, 0) 100%);
+}
+
+.splide__arrow.splide__arrow--next {
+    right: 0;
+    background: linear-gradient(270deg, rgba(212, 231, 53, 0.7) 0%, rgba(212, 231, 53, 0) 100%);
+}
+
+
+
+
+
+.left {
+    text-align: left;
+}
+</style>
 
 <?php if($this->session->flashdata('expired')): ?>
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -16,7 +69,8 @@
         <img id="background-image" class="d-none"
             src="<?php echo base_url(); ?>assets/home/images/<?php echo $agendas[0]->backgroundImage ; ?>" alt="">
         <?php else: ?>
-        <img id="background-image" class="d-none" src="<?php echo base_url(); ?>assets/images/events/default_background.webp" alt="">
+        <img id="background-image" class="d-none"
+            src="<?php echo base_url(); ?>assets/images/events/default_background.webp" alt="">
         <?php endif; ?>
 
     </div>
@@ -48,31 +102,33 @@
             </div>
         </div>
 
-        
-        
-
-        <div class="swiper-container mySwiper d-none">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-        <div class="swiper-slide">Slide 4</div>
-        <div class="swiper-slide">Slide 5</div>
-        <div class="swiper-slide">Slide 6</div>
-        <div class="swiper-slide">Slide 7</div>
-        <div class="swiper-slide">Slide 8</div>
-        <div class="swiper-slide">Slide 9</div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
-    </div>
 
 
+        <div style="background: rgb(212, 231, 53)" class="w-100 p-4">
+            <div id="splide" class="splide">
+                <div class="splide__track">
+                    <ul class="splide__list d-flex align-items-center">
+                        <?php foreach ($agendas as $key => $agenda): 
+        if($agenda->backgroundImage != ''){
+    ?>
+                        <li class="splide__slide"><img
+                                src="<?php echo base_url(); ?>assets/home/images/<?php echo $agenda->backgroundImage; ?>">
+                        </li>
+                        <?php } else {?>
+                        <li class="splide__slide"><img
+                                src="<?php echo base_url(); ?>assets/images/events/default_background.webp"></li>
+                        <?php } ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
 
 
-        
+
+
+
         <input type="hidden" id="exp_time" name="exp_time" value="1">
         <!-- end row -->
 
@@ -122,39 +178,63 @@
     </div>
 </section>
 <!-- END HERO SECTION -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/@splidejs/splide@2.4.6/dist/js/splide.min.js'></script>
+<script id="rendered-js">
+document.addEventListener('DOMContentLoaded', function() {
+    new Splide('#splide', {
+        type: 'slide',
+        perPage: 3,
+        focus: 'center',
+        autoplay: false,
+        interval: 8000,
+        flickMaxPages: 3,
+        updateOnMove: true,
+        pagination: false,
+        padding: '10%',
+        throttle: 300,
+        breakpoints: {
+            1440: {
+                perPage: 1,
+                padding: '30%'
+            }
+        }
+    }).
+
+
+    mount();
+});
+//# sourceURL=pen.js
+</script>
 <script>
 (function() {
     changeTextContent();
-    
-    
-    
+
+
+
 
 
 
 }());
-
-
 </script>
 
 
 <script src='https://cdn.jsdelivr.net/npm/flatpickr'></script>
 <script>
 // generate events
-var agendas  = '<?php echo json_encode($agendas); ?>';
+var agendas = '<?php echo json_encode($agendas); ?>';
 agendas = JSON.parse(agendas);
 console.log(agendas);
 
 var eventDates = {};
 
-if(agendas.length > 0){
-  $.each(agendas, function(index, agenda) {
-    let dateTime = agenda.ReservationDateTime.split(' ');
-    let day = dateTime[0];
-    eventDates[day] = [
-    agenda.id
-  ];
-  });
+if (agendas.length > 0) {
+    $.each(agendas, function(index, agenda) {
+        let dateTime = agenda.ReservationDateTime.split(' ');
+        let day = dateTime[0];
+        eventDates[day] = [
+            agenda.id
+        ];
+    });
 }
 
 
@@ -182,7 +262,7 @@ var flatpickr = $('#calendar .placeholder').flatpickr({
             for (i = 0; i < eventDates[str].length; i++) {
                 if (typeof window.CP !== 'undefined' && window.CP.shouldStopExecution(0)) break;
                 agendaId = eventDates[str][i];
-                
+
                 return getSpotsView(agendaId);
             }
         }
