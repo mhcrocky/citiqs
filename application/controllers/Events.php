@@ -84,7 +84,7 @@ class Events extends BaseControllerWeb
             'eventId' => $eventId,
             'emails' => $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id),
             'vouchers' => $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']),
-            'groups' => $this->event_model->get_ticket_groups($eventId),
+            'groups' => $this->event_model->get_ticket_groups(),
             'guests' => $this->event_model->get_guestlist($eventId, $this->vendor_id),
             'tickets' => $this->event_model->get_tickets($this->vendor_id, $eventId)
         ];
@@ -533,10 +533,11 @@ class Events extends BaseControllerWeb
         foreach($tickets as $ticket){
             if(!isset($ticket->groupId) || !is_numeric($ticket->groupId)){ continue;}
             if(isset($results[$ticket->groupId])){
-                $results[$ticket->groupId] = $results[$ticket->groupId] . ',' . $ticket->ticketId;
+                $results[$ticket->groupId][0] = $results[$ticket->groupId][0] . ',' . $ticket->ticketId;
             } else {
-                $results[$ticket->groupId] =  $ticket->ticketId;
+                $results[$ticket->groupId][0] =  $ticket->ticketId;
             }
+            $results[$ticket->groupId][1][$ticket->ticketId] =  $ticket->position;
         }
         return $this->event_model->update_ticket_group($results);
     }
