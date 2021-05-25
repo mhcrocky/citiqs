@@ -61,7 +61,7 @@ class Vendors extends REST_Controller
             $from = empty($get['from']) ? '' : str_replace('T', ' ', $get['from']);
             $to = empty($get['to']) ? '' : str_replace('T', ' ', $get['to']);
 
-            $orders = $this->shoporder_model->fetchUnpaidVendorOrders($vendorId, false, $from, $to);
+            $orders = $this->shoporder_model->fetchUnpaidVendorOrders($vendorId, true, $from, $to);
 
             if ($orders) {
                 $response = [
