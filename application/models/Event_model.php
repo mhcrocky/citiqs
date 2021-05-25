@@ -63,7 +63,7 @@ class Event_model extends CI_Model {
 
 	public function save_ticket_group($groupname,$quantity,$eventId)
 	{
-		$this->db->insert('tbl_ticket_groups',['groupname' => $groupname, 'groupQuantity' => $quantity]);
+		$this->db->insert('tbl_ticket_groups',['groupname' => $groupname, 'groupQuantity' => $quantity, 'eventId' => $eventId]);
 		return $this->db->insert_id();
 		
 	}
