@@ -67,10 +67,14 @@ p.p-title {
                         <div align="center">
                             <p class="text-content mb-50"><?php echo date("d.m.Y", strtotime($eventDate)) ?></p>
                         </div>
+                        
                         <div class="text-center mb-50" style="text-align:center">
+                        <?php if(file_exists(FCPATH . 'assets/home/images/' . $spot['data']->image)): ?>
                             <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>" alt="tiqs" width="150"
                                  height="auto"/>
+                        <?php endif; ?>
                         </div>
+                        
 
                         <?php if ($spot['status'] != "soldout"): ?>
                             <div align="center">
@@ -87,7 +91,7 @@ p.p-title {
                                 </p>
                                 <p class="text-content mb-50" style="font-family: caption-light;font-size: small">
                                     <?php
-                                        echo $spot['data']->feedescript . '&nbsp;&euro;&nbsp' . number_format(($spot['data']->reservationFee), 2, ",",".");
+                                        //echo $spot['data']->feedescript . '&nbsp;&euro;&nbsp' . number_format(($spot['data']->reservationFee), 2, ",",".");
                                     ?>
                                 </p>
                             <?php else: ?>
@@ -145,7 +149,7 @@ p.p-title {
                             <p class="text-content mb-50"><?php echo date("d.m.Y", strtotime($eventDate)) ?></p>
                         </div>
                         <div class="text-center mb-50" style="text-align:center">
-                        <?php if(@getimagesize($this->baseUrl . 'assets/home/images/' . $spot['data']->image)): ?>
+                        <?php if(file_exists(FCPATH . 'assets/home/images/' . $spot['data']->image)): ?>
                             <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot['data']->image; ?>" alt="tiqs" width="150"
                                  height="auto"/>
                         <?php endif; ?>
@@ -166,7 +170,7 @@ p.p-title {
                                 </p>
                                 <p class="text-content mb-50" style="font-family: caption-light;font-size: small">
                                     <?php
-                                        echo $spot['data']->feedescript . '&nbsp;&euro;&nbsp' . number_format(($spot['data']->reservationFee), 2, ",",".");
+                                        //echo $spot['data']->feedescript . '&nbsp;&euro;&nbsp' . number_format(($spot['data']->reservationFee), 2, ",",".");
                                     ?>
                                 </p>
                             </div>
