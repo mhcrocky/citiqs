@@ -69,6 +69,7 @@ class Booking_events extends BaseControllerWeb
         $sessionData['tag'] = $tag;
         $sessionData['ticketFee'] = 0;
         $sessionData['logoUrl'] = $logoUrl;
+        $sessionData['eventId'] = $eventId;
         
 
         if(count($orderData) < 1){
@@ -413,9 +414,10 @@ class Booking_events extends BaseControllerWeb
         
     }
 
-    private function redirectToShop(string $shortUrl, string $orderRandomKey): void
+    private function redirectToShop(array $orderData, string $orderRandomKey): void
     {
-        $redirect  = base_url() . 'events'. DIRECTORY_SEPARATOR . 'shop' . DIRECTORY_SEPARATOR . $shortUrl;
+        $redirect  = base_url() . 'events'. DIRECTORY_SEPARATOR . 'shop' . DIRECTORY_SEPARATOR;
+        $redirect .= !empty($orderData['eventId']) ? $orderData['eventId'] : $orderData['shortUrl'];
         $redirect .= '?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '#ticket';
         redirect($redirect);
         return;
@@ -431,8 +433,12 @@ class Booking_events extends BaseControllerWeb
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
-        if (count($orderData) < 1 || empty($orderData['reservationIds'])) {
-            $this->redirectToShop($orderData['shortUrl'], $orderRandomKey);
+        if (count($orderData) < 1) {
+            redirect(base_url());
+        }
+
+        if (empty($orderData['reservationIds'])) {
+            $this->redirectToShop($orderData, $orderRandomKey);
         }
 
         $customer = $orderData['vendorId'];
