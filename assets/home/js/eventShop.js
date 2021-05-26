@@ -41,7 +41,9 @@ $(document).ready(function(){
         let id = $(this).data("embellishmentid");
         let price = $("#price_"+id).val();
         let ticketFee = $("#price_"+id).attr('data-ticketfee');
-        addTicket(id,  50, price, ticketFee, 'totalBasket');
+        let groupId = $("#ticketQuantityValue_" + id).attr('data-groupid');
+        let bundleMax = $('.quantity-input_'+groupId).attr('data-bundlemax');
+        addTicket(id,  50, price, ticketFee, 'totalBasket', bundleMax);
       });
 
     $(document).on('click', '.quantity-down', function() {
@@ -303,6 +305,8 @@ function removeTicket(id, price, ticketFee, totalClass) {
         var ticketFee_data = data['ticketFee'];
         var first_ticket = data['first_ticket'];
         var eventName = data['eventName'];
+        var groupId = data['groupId'];
+        var bundle = data['bundleMax'];
         let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
             '<b class="menu-list__title">Description</b>'+
@@ -316,7 +320,7 @@ function removeTicket(id, price, ticketFee, totalClass) {
             '</div>'+
             '<div class="quantity-section mx-auto mb-2">'+
                 '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+
-                '<input type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input ticketQuantityValue_'+id+'">'+
+                '<input data-groupid="'+groupId+'" data-bundlemax="'+bundle+'" type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \''+ticketFee+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input quantity-input_'+id+' ticketQuantityValue_'+id+'">'+
                 '<button type="button" class="quantity-button quantity-up" data-embellishmentid="'+id+'">+</button>'+
             '</div>'+
             '<b class="menu-list__type mx-auto">'+
@@ -339,7 +343,8 @@ function removeTicket(id, price, ticketFee, totalClass) {
     });
 }
 
-function addTicket(id, limit, price, ticketfee, totalClass) {
+function addTicket(id, limit, price, ticketfee, totalClass, bundleMax) {
+    console.log(bundleMax);
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("#totalBasketAmount").val();
@@ -362,6 +367,25 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
             });
             return ;
         
+    }
+
+    var quantityValues = 0;
+    let groupId = $("#ticketQuantityValue_" + id).attr('data-groupid');
+
+    $('.quantity-input_'+groupId).each(function(index) {
+        quantityValues = quantityValues + parseInt($(this).val());
+ 
+    });
+    
+
+    if(bundleMax <= quantityValues){
+        $(".ticketQuantityValue_" + id).val(quantityValue-1);
+            iziToast.error({
+                title: 'SOLD OUT!',
+                message: '',
+                position: 'topRight'
+            });
+            return ;
     }
 
     if(limit < quantityValue){
@@ -428,6 +452,8 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
         var ticketFee_data = data['ticketFee'];
         var first_ticket = data['first_ticket'];
         var eventName = data['eventName'];
+        var groupId = data['groupId'];
+        let bundle = data['bundleMax'];
         let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
             '<b class="menu-list__title">Description</b>'+
@@ -441,7 +467,7 @@ function addTicket(id, limit, price, ticketfee, totalClass) {
             '</div>'+
             '<div class="quantity-section mx-auto mb-2">'+
                 '<button type="button" class="quantity-button quantity-down" data-embellishmentid="'+id+'">-</button>'+
-                '<input type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input ticketQuantityValue_'+id+'">'+
+                '<input data-groupid="'+groupId+'" data-bundlemax="'+bundle+'" type="text" value="'+quantityValue+'" placeholder="0" onfocus="clearTotal(this, \''+price+'\', \'totalBasket\')" onblur="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" onchange="ticketQuantity(this,\''+id+'\', \''+price+'\', \'totalBasket\')" oninput="absVal(this);" disabled="" class="quantity-input quantity-input_'+id+' ticketQuantityValue_'+id+'">'+
                 '<button type="button" class="quantity-button quantity-up" data-embellishmentid="'+id+'">+</button>'+
             '</div>'+
             '<b class="menu-list__type mx-auto">'+
