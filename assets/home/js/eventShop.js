@@ -344,7 +344,6 @@ function removeTicket(id, price, ticketFee, totalClass) {
 }
 
 function addTicket(id, limit, price, ticketfee, totalClass, bundleMax) {
-    console.log(bundleMax);
     $('#payForm').show();
     var quantityValue = $(".ticketQuantityValue_" + id).val();
     var totalBasket = $("#totalBasketAmount").val();
