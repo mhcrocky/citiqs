@@ -258,8 +258,8 @@ class Ajaxdorian extends CI_Controller
             'Customer' => $this->session->userdata('userId'),
             'email_id' => $this->input->post('email_id'),
             'online' => intval($this->input->post('online')),
-            'agendaImage' => $imgName,
-            'backgroundImage' => $backgroundImgName,
+            'agendaImage' => ($imgName == null) ? '' : $imgName,
+            'backgroundImage' => ($backgroundImgName == null) ? '' : $backgroundImgName,
             'max_spots' => intval($this->input->post('max_spots'))
         ];
 
