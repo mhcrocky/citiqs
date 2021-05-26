@@ -124,7 +124,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 				$this->db->or_where('agenda_id',$agenda);
 			}
 		}
-		
+		 
 		$query = $this->db->get();
 		$results = $query->result_array();
 		$insertData = [];
@@ -1188,7 +1188,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 		->group_by('agenda_id');
 		$query = $this->db->get();
 		$result = $query->first_row();
-		return $result->spot_count;
+		return isset($result->spot_count) ? $result->spot_count : 0;
 	}
 
 	function get_manual_reservations($vendorId){
