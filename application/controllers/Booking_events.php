@@ -240,6 +240,8 @@ class Booking_events extends BaseControllerWeb
             'price' => $ticketInfo->ticketPrice,
             'ticketType' => $ticketType,
             'ticketFee' => $ticketInfo->ticketFee,
+            'ticketGroupId' => $ticketInfo->ticketGroupId,
+            'bundleMax' => $this->event_model->get_ticket_bundle_max($ticketInfo->ticketGroupId),
             'amount' => $amount,
             'startDate' => $eventInfo->StartDate,
             'startTime' => $eventInfo->StartTime,
@@ -275,6 +277,8 @@ class Booking_events extends BaseControllerWeb
             'descript' => $ticket['descript'],
             'price' => $ticketInfo->ticketPrice, 
             'ticketFee' => $ticketInfo->ticketFee,
+            'groupId' => $ticketInfo->ticketGroupId,
+            'bundleMax' => $this->event_model->get_ticket_bundle_max($ticketInfo->ticketGroupId),
             'first_ticket' => $first_ticket,
             'eventName' => $eventInfo->eventname
         ];
