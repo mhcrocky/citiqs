@@ -157,16 +157,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script src="https://unpkg.com/izitoast@1.4.0/dist/js/iziToast.js"></script>
+<?php include_once FCPATH . 'application/views/includes/customJs.php'; ?>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/bookingReservations.js"></script>
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCst0EJ-LFVj3q0a6NHGFDU6HQ10H84HTI&callback=initAutocomplete&libraries=places&v=weekly"
-    async></script>
-<script src="<?php echo $this->baseUrl; ?>assets/home/js/googleAddressAutocomplete.js"></script>
 
 
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-<?php //include_once FCPATH . 'application/views/includes/customJs.php'; ?>
+
 
 </body>
 

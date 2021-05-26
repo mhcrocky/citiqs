@@ -1,3 +1,25 @@
+document.addEventListener('DOMContentLoaded', function() {
+    new Splide('#splide', {
+        type: 'slide',
+        perPage: 3,
+        focus: 'center',
+        autoplay: false,
+        interval: 8000,
+        flickMaxPages: 3,
+        updateOnMove: true,
+        pagination: false,
+        padding: '10%',
+        throttle: 300,
+        breakpoints: {
+            1440: {
+                perPage: 1,
+                padding: '30%'
+            }
+        }
+    }).mount();
+    
+});
+
 (function() {
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
         window.location.href = globalVariables.baseUrl + "booking_reservations/clear_reservations?order=" + globalKey.orderRandomKey;
