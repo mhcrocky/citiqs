@@ -116,7 +116,7 @@
                 </div>
                 <div class="width-650"></div>
                 <div class="text-center mb-50" style="text-align:center">
-                <?php if(file_exists(FCPATH . 'assets/home/images/' . $spot->image)): ?>
+                <?php if(file_exists(FCPATH . 'assets/home/images/' . $spot->image) && $spot->image != ''): ?>
                     <img src="<?php echo $this->baseUrl; ?>assets/home/images/<?php echo $spot->image; ?>" alt="tiqs"
                         width="150" height="auto" />
                 <?php endif; ?>
