@@ -153,5 +153,5 @@ body {
 }
 
 .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
-    background-color: #1d252c;
+    background: #1d252c !important;
 }
