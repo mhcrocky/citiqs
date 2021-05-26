@@ -177,6 +177,7 @@ class Event_model extends CI_Model {
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
 		$this->db->order_by('tbl_ticket_groups.id, ticketOrder');
+		
 		$query = $this->db->get();
 		$this->db->trans_complete();
 		$results = $query->result_array();
@@ -194,6 +195,7 @@ class Event_model extends CI_Model {
 			$ticket_used = isset($tickets_used[$ticketId]) ? $tickets_used[$ticketId] : 0;
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$sold_out = false;
+			$result['bundleMax'] = $this->get_ticket_bundle_max($result['ticketGroupId']);
 
 			if($this->_check_ticket_bundle_max($result['ticketGroupId'])){
 				$sold_out = true;
@@ -1009,6 +1011,22 @@ class Event_model extends CI_Model {
 	{
 		$this->db->delete('tbl_event_inputs', $where);
 		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+
+	public function get_ticket_bundle_max($groupId) : int
+	{
+		$query = $this->db->query("SELECT count(tbl_event_tickets.id) AS tickets, groupQuantity
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_ticket_groups ON tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId 
+		WHERE tbl_ticket_groups.id = ".$groupId." AND tbl_bookandpay.ticketDescription <> '' AND paid = 1
+		GROUP BY tbl_ticket_groups.id");
+		$result = $query->first_row();
+		if(isset($result->tickets)){
+			$diff = intval($result->groupQuantity) - intval($result->tickets);
+			return $diff;
+		}
+		return 999;
 	}
 
 
