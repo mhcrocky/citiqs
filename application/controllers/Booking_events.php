@@ -40,7 +40,7 @@ class Booking_events extends BaseControllerWeb
         if($orderRandomKey){
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
         }
-        
+
         $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
         $eventId = '';
         $get_by_event_id = false;
@@ -413,22 +413,27 @@ class Booking_events extends BaseControllerWeb
         
     }
 
+    private function redirectToShop(string $shortUrl, string $orderRandomKey): void
+    {
+        $redirect  = base_url() . 'events'. DIRECTORY_SEPARATOR . 'shop' . DIRECTORY_SEPARATOR . $shortUrl;
+        $redirect .= '?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey . '#ticket';
+        redirect($redirect);
+        return;
+    }
+
     public function selectpayment()
     {
-        
-        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order', true) : false;
 
-        if(!$orderRandomKey){
+        if (!$orderRandomKey) {
             redirect(base_url());
-            
         }
 
         $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
-        if(count($orderData) < 1){
-            redirect(base_url());
+        if (count($orderData) < 1 || empty($orderData['reservationIds'])) {
+            $this->redirectToShop($orderData['shortUrl'], $orderRandomKey);
         }
-
 
         $customer = $orderData['vendorId'];
         $ticketingPayments = $this->event_model->get_payment_methods($customer);
@@ -558,7 +563,21 @@ class Booking_events extends BaseControllerWeb
         //Delete data from session table
         //$this->shopsession_model->multipleDelete($ids, $where);
 
+        // remove order ids because user update same orders when go back from payments
+        $this->removeOrderIds($orderData, $orderRandomKey);
+
         $this->processPaymenttype($strUrl, $reservationIds);
+    }
+
+    private function removeOrderIds(array $orderData, string $orderRandomKey): void
+    {
+        unset($orderData['reservationIds']);
+        $this
+            ->shopsession_model
+            ->setProperty('randomKey', $orderRandomKey)
+            ->updateSessionData($orderData);
+
+        return;
     }
 
     private function processPaymenttype(string $strUrl, array $reservationIds)
