@@ -52,6 +52,18 @@
 .left {
     text-align: left;
 }
+
+@media only screen and (max-width: 400px) {
+
+.flatpickr-weekdays, .flatpickr-day {
+    width: 250px !important;
+}
+.dayContainer {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    }
+}
 </style>
 
 <?php if($this->session->flashdata('expired')): ?>
@@ -295,25 +307,36 @@ $(window).on('resize', function() {
 
 function eventCaledarResize($el) {
     var width = $el.width();
-    console.log(width);
+    if (width < 400) {
+        flatpickr.set('showMonths', 1);
+
+        flatpickr.set('maxDate', maxDate[0]);
+        $('.flatpickr-calendar').css('width', '200px');
+    }
+
     if (flatpickr.selectedDates.length) {
         flatpickr.clear();
     }
+
     if (width >= 992 && flatpickr.config.showMonths !== 3) {
         flatpickr.set('showMonths', 1);
         flatpickr.set('maxDate', maxDate[1]);
         $('.flatpickr-calendar').css('width', '');
     }
+    
     if (width < 992 && width >= 768 && flatpickr.config.showMonths !== 2) {
         flatpickr.set('showMonths', 1);
+        console.log(width);
         flatpickr.set('maxDate', maxDate[1]);
         $('.flatpickr-calendar').css('width', '');
     }
     if (width < 768 && flatpickr.config.showMonths !== 1) {
+        console.log(width);
         flatpickr.set('showMonths', 1);
         flatpickr.set('maxDate', maxDate[1]);
         $('.flatpickr-calendar').css('width', '');
     }
+    
 }
 
 function formatDate(date) {
