@@ -428,7 +428,9 @@ class Booking_agenda extends BaseControllerWeb
         $data['selectedTimeSlot'] = $selectedTimeSlot;
         $data['allTimeSlots'] = $allTimeSlots;
         $data["orderRandomKey"] = $orderRandomKey;
+        $data["bookings"] = $orderData['reservations'];
 
+     
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
 
         $this->loadViews("bookings/next_time_slot", $this->global, $data, 'bookingfooter', 'bookingheader'); // payment screen
@@ -666,6 +668,12 @@ class Booking_agenda extends BaseControllerWeb
 
 
         $orderData['reservations'] = $reservationIds;
+
+        $this
+            ->shopsession_model
+            ->setIdFromRandomKey($orderRandomKey)
+            ->setProperty('orderData', Jwt_helper::encode($orderData))
+            ->update();
 
         redirect('booking_agenda/reserved?order=' . $orderRandomKey);
     }
