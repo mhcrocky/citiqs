@@ -45,12 +45,13 @@
                                         onclick="removeTicket('<?php echo $ticket['id']; ?>','<?php echo $ticket['price']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">-</button>
                                     <input type="text" min="1"
                                         value="<?php echo $ticket['quantity']; ?>" placeholder="0"
+                                        data-groupid="<?php echo $ticket['ticketGroupId']; ?>"
                                         onfocus="clearTotal(this, '<?php echo $ticket['price']; ?>', 'totalBasket')"
                                         onblur="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')"
                                         onchange="ticketQuantity(this,'<?php echo $ticket['id']; ?>', '<?php echo $ticket['price']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')"
                                         oninput="absVal(this);" placeholder="0" disabled class="quantity-input ticketQuantityValue_<?php echo $ticket['id']; ?>">
                                     <button type="button" class="quantity-button"
-                                        onclick="addTicket('<?php echo $ticket['id']; ?>', '50', '<?php echo $ticket['price']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">+</button>
+                                        onclick="addTicket('<?php echo $ticket['id']; ?>', '50', '<?php echo $ticket['price']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket', '<?php echo $ticket['bundleMax']; ?>')">+</button>
                                 </div>
                                 <b class="menu-list__type mx-auto">
                                     <button
