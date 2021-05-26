@@ -63,6 +63,8 @@
                                     <button type="button" class="quantity-button"
                                         onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">-</button>
                                     <input type="number" min="1" 
+                                        data-bundlemax="<?php echo $ticket['bundleMax']; ?>"
+                                        data-groupid="<?php echo $ticket['ticketGroupId']; ?>"
                                         data-available="<?php echo $ticket['ticketAvailable']; ?>"
                                         data-maxbooking="<?php echo $ticket['maxBooking']; ?>"
                                         <?php if(in_array($ticketId,$checkout_tickets_id)){?>
@@ -72,9 +74,10 @@
                                         <?php } ?> 
                                         onkeyup="absVal(this);" placeholder="0"
                                         id="ticketQuantityValue_<?php echo $ticketId; ?>"
-                                        class="quantity-input ticketQuantityValue_<?php echo $ticketId; ?>" disabled>
+                                        class="quantity-input quantity-input_<?php echo $ticket['ticketGroupId']; ?> ticketQuantityValue_<?php echo $ticketId; ?>" disabled>
                                     <button type="button" class="quantity-button"
-                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketAvailable']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket')">+</button>
+                                    
+                                        onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketAvailable']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket', '<?php echo $ticket['bundleMax']; ?>')">+</button>
                                 </div>
                                 <?php if(!$vendor_cost_paid): ?>
                                 <b style="font-size: min(1.2vw, 14px);" class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> and min pay fee €0,50</b>
