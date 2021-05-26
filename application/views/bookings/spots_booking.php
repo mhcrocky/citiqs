@@ -48,7 +48,7 @@ p.p-title {
                     
                 }
             }
-            
+            // here we filter egendaId spots
             $spots = $rows;
 
         }
@@ -78,8 +78,18 @@ p.p-title {
                             </div>
                             <div align="center">
                             <?php if($spot['data']->price != 0): ?>
-                                <p class="text-content" style="text-transform: uppercase"><?php echo $spot['data']->pricingdescript; ?> € <?php echo number_format($spot['data']->price, 2); ?></p>
-                                <p class="text-content mb-50" style="font-family: caption-light;font-size: small"><?php echo $spot['data']->feedescript; ?> € <?php echo number_format(($bookingfee*$spot['data']->numberofpersons), 2, ",","."); ?></p>
+                                <p class="text-content" style="text-transform: uppercase">
+                                    <?php
+                                        echo $spot['data']->pricingdescript . '&nbsp;&euro;&nbsp;';
+                                        $price = intval($spot['data']->timeSlotPrice) ? $spot['data']->timeSlotPrice : $spot['data']->price;
+                                        echo number_format($price, 2);
+                                    ?>
+                                </p>
+                                <p class="text-content mb-50" style="font-family: caption-light;font-size: small">
+                                    <?php
+                                        echo $spot['data']->feedescript . '&nbsp;&euro;&nbsp' . number_format(($spot['data']->reservationFee), 2, ",",".");
+                                    ?>
+                                </p>
                             <?php else: ?>
                             <div align="center">
                                 <p class="text-content" style="text-transform: uppercase">&nbsp</p>
@@ -147,8 +157,18 @@ p.p-title {
                             </div>
                             <?php if($spot['data']->price != 0): ?>
                             <div align="center">
-                                <p class="text-content" style="text-transform: uppercase"><?php echo $spot['data']->pricingdescript; ?> € <?php echo number_format($spot['data']->price, 2); ?></p>
-                                <p class="text-content mb-50" style="font-family: caption-light;font-size: small"><?php echo $spot['data']->feedescript; ?> € <?php echo number_format(($bookingfee*$spot['data']->numberofpersons), 2, ",","."); ?></p>
+                                <p class="text-content" style="text-transform: uppercase">
+                                    <?php
+                                        echo $spot['data']->pricingdescript . '&nbsp;&euro;&nbsp;';
+                                        $price = intval($spot['data']->timeSlotPrice) ? $spot['data']->timeSlotPrice : $spot['data']->price;
+                                        echo number_format($price, 2);
+                                    ?>
+                                </p>
+                                <p class="text-content mb-50" style="font-family: caption-light;font-size: small">
+                                    <?php
+                                        echo $spot['data']->feedescript . '&nbsp;&euro;&nbsp' . number_format(($spot['data']->reservationFee), 2, ",",".");
+                                    ?>
+                                </p>
                             </div>
                             <?php else: ?>
                             <div align="center">

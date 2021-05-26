@@ -100,9 +100,15 @@ class Bookandpayspot_model extends CI_Model
 
     public function getAllSpots($customer_id)
     {
-        $this->db->select('tbl_bookandpayspot.id, tbl_bookandpayspot.*');
+        $this->db->select('
+            tbl_bookandpayspot.id,
+            tbl_bookandpayspot.*,
+            tbl_bookandpaytimeslots.reservationFee,
+            tbl_bookandpaytimeslots.price timeSlotPrice
+        ');
         $this->db->from('tbl_bookandpayspot');
         $this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
+        $this->db->join('tbl_bookandpaytimeslots', 'tbl_bookandpaytimeslots.spot_id = tbl_bookandpayspot.id', 'left');
         $this->db->where('tbl_bookandpayagenda.Customer', $customer_id);
         $this->db->order_by('sort_order', 'asc');
         $query = $this->db->get();
