@@ -57,9 +57,23 @@
                         <?php foreach ($agendas as $key => $agenda): 
         if(file_exists(FCPATH .'assets/home/images/' . $agenda->backgroundImage)){
     ?>
-                        <li class="splide__slide"><img
-                                src="<?php echo base_url(); ?>assets/home/images/<?php echo $agenda->backgroundImage; ?>">
+
+                        <li class="splide__slide  text-center" style="background: rgba(255, 255, 255, 0.3);border-radius: 10px;padding: 20px;margin: 5px">
+
+                            <div class="splide__slide__container mb-3">
+
+
+
+                                <img
+                                    src="<?php echo base_url(); ?>assets/home/images/<?php echo $agenda->backgroundImage; ?>">
+                            </div>
+                            <a href="#spots" class="text-primary"
+                                onclick="getSpotsView('<?php echo $agenda->id; ?>', <?php echo date('Ymd', strtotime($agenda->ReservationDateTime)); ?>)">
+                                <?php echo $agenda->ReservationDescription; ?>
+                            </a>
                         </li>
+
+
                         <?php } else {?>
                         <li class="splide__slide"><img
                                 src="<?php echo base_url(); ?>assets/images/events/default_background.webp"></li>
