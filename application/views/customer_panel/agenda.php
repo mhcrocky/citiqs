@@ -350,19 +350,11 @@
                                             <span class="file-custom" data-content="Choose image ..."></span>
                                         </label>
                                         <div style="padding-left: 0;width: 100%;" class="col-sm-6">
-                                            <img v-if="agendaModalData.agendaImage" style="width: auto;"
-                                                :src="imgFullPath(agendaModalData.agendaImage)"
-                                                class="img-thumbnail bg-secondary agendaImagePreview">
-                                            <input type="hidden" class="imgDeleted" value="0">
-                                            <button v-if="agendaModalData.agendaImage" type="button" onclick="deleteAgendaImage()" class="btn btn-danger mt-1">
-                                                Delete Image
-                                            </button>
+                                            
 
-                                            <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
+                                            <img src="<?php echo base_url(); ?>assets/images/img-preview.png"
                                                  class="img-thumbnail agendaImagePreview">
-                                            <button v-if="agendaModalData.agendaImage == ''" type="button" onclick="deleteAgendaImage()" class="btn btn-danger mt-1 d-none">
-                                                Delete Image
-                                            </button>
+                                            
                                         </div>
 
 
@@ -384,19 +376,10 @@
                                             <span class="background-file-custom" data-content="Choose image ..."></span>
                                         </label>
                                         <div style="padding-left: 0;width: 100%;" class="col-sm-6">
-                                            <img v-if="agendaModalData.backgroundImage" style="width: auto;"
-                                                :src="imgFullPath(agendaModalData.backgroundImage)"
-                                                class="img-thumbnail bg-secondary backgroundImagePreview">
-                                            <input type="hidden" class="backgroundImgDeleted" value="0">
-                                            <button v-if="agendaModalData.backgroundImage" type="button" onclick="deleteBackgroundImage()" class="btn btn-danger mt-1">
-                                                Delete Image
-                                            </button>
-
-                                            <img v-else src="<?php echo base_url(); ?>assets/images/img-preview.png"
+     
+                                            <img src="<?php echo base_url(); ?>assets/images/img-preview.png"
                                                  class="img-thumbnail backgroundImagePreview">
-                                            <button v-if="agendaModalData.backgroundImage == ''" type="button" onclick="deleteBackgroundImage()" class="btn btn-danger mt-1 d-none">
-                                                Delete Image
-                                            </button>
+
                                         </div>
 
 
