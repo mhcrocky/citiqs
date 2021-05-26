@@ -25,10 +25,25 @@
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-						<?php ;?>
-						<?php 
+						
+						<?php if(AVAILABLE_TO_BOOK_EXTRA_TIME && count($bookings) < HOW_MANY_SLOTS_CAN_BE_BOOKED): ?>
+                            <h4 style="font-family: caption-bold; text-transform: uppercase;">
+							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0004", "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE.")) ? $this->language->Line("NEXT_TIME_SLOT-0004", "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE.") : "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE."; ?>
+							</h4>
+ 
+                            <div class="mb-35">
+                                <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $reservation->SpotId; ?>?order=<?php echo $orderRandomKey; ?>" type="button" class="button button-orange">
+								    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0005", "EXTRA TIME")) ? $this->language->Line("NEXT_TIME_SLOT-0005", "EXTRA TIME") : "EXTRA TIME"; ?>
+								</a>
+                            </div>
+                        <?php endif; ?>
+						<a href="<?php echo $this->baseUrl; ?>booking_agenda/pay?order=<?php echo $orderRandomKey; ?>" type="button" class="button button-orange">
+							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0003", "PAY")) ? $this->language->Line("NEXT_TIME_SLOT-0003", "PAY") : "PAY"; ?>
+							</a>
+						<?php /*
 						$i = count($allTimeSlots) - 1;
-						if($allTimeSlots[$i]->price != 0): ?>
+						
+						if($i >= 0 && $allTimeSlots[$i]->price != 0): ?>
 						<div class="pricing-block-footer" style="height: 200px" >
 							<div>
 								<h2 style="font-family: caption-bold; text-transform: uppercase;">
@@ -41,9 +56,7 @@
 							</a>
 
 						</div>
-                        <?php if(AVAILABLE_TO_BOOK_EXTRA_TIME &&
-                            (HOW_MANY_SLOTS_CAN_BE_BOOKED == 0 || count($reservations) < HOW_MANY_SLOTS_CAN_BE_BOOKED) &&
-                            count($reservations) < count($allTimeSlots)): ?>
+                        <?php if(AVAILABLE_TO_BOOK_EXTRA_TIME): ?>
                             <h2 style="font-family: caption-bold; text-transform: uppercase;">
 							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0004", "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE.")) ? $this->language->Line("NEXT_TIME_SLOT-0004", "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE.") : "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE."; ?>
 							</h2>
@@ -63,7 +76,7 @@
 							<a href="<?php echo $this->baseUrl; ?>booking_agenda/pay?order=<?php echo $orderRandomKey; ?>" type="button" class="button button-orange">
 							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0003", "NEXT")) ? $this->language->Line("NEXT_TIME_SLOT-0003", "NEXT") : "NEXT"; ?>
 							</a>
-						<?php endif; ?>
+						<?php endif; */ ?>
 					</div>
 				</div><!-- end pricing block body -->
 			</div><!-- end pricing block -->
