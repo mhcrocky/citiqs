@@ -177,7 +177,7 @@
                         </div>
                         <div class="col-md-3 mt-1">
                             <div class="input-group">
-                                <input style="padding-top: 5px !important;" type="time"
+                                <input style="padding-top: 5px !important;" type="time" step="any"
                                     class="form-control inp-height timestamp" id="startTime" name="startTime">
                                 <span style="padding-top: 5px;" class="input-group-addon fa-input pl-2 pr-2">
                                     <i style="color: #fff;font-size: 20px;" class="fa fa-clock-o"></i></span>
@@ -202,7 +202,7 @@
                         </div>
                         <div class="col col-md-3 mt-1">
                             <div class="input-group">
-                                <input style="padding-top: 5px !important;" type="time"
+                                <input style="padding-top: 5px !important;" type="time" step="any"
                                     onchange="checkTicketTimestamp()" onfocus="checkTicketTimestamp()"
                                     oninput="checkTicketTimestamp()" onkeyup="checkTicketTimestamp()"
                                     class="form-control inp-height timestamp" id="endTime" name="endTime">
