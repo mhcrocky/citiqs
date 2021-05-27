@@ -30,6 +30,7 @@
                         $status_open = false;
                         foreach ($timeSlots as $key => $timeSlot) {
                             if ($timeSlot['multiple_timeslots'] === '1') {
+
                                 $start_time = '';
                                 $end_time = '';
 
@@ -46,23 +47,21 @@
                                 $checkEndPoint = intval($checkEndPoint[0]) * 3600 + intval($checkEndPoint[1]) * 60 + intval($checkEndPoint[2]);
 
                                 $endTime = date('H:i:s', strtotime($timeSlot['totime']));
-                                var_dump($endTime);
                                 $endTime = explode(':', $endTime);
                                 $hours = ($timeSlot['totime'] > $timeSlot['fromtime']) ? intval($endTime[0]) : intval($endTime[0]) + 24;
                                 $endTime = $hours * 3600 + intval($endTime[1]) * 60 + intval($endTime[2]);
 
                                 $i = 0;
-                                while (!($endTime > $checkStartPoint && $endTime < $checkEndPoint)) {
+                                while (!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint)) {
                                     $checkStartPoint += $step;
                                     $checkEndPoint += $step;
-                                    if ($i < 10) {
-                                        var_dump(!($endTime > $checkStartPoint && $endTime < $checkEndPoint));
-                                        var_dump('END TIME: ' . date('H:i:s', $endTime));
-                                        var_dump('CHECK TIME: ' .date('H:i:s', $checkStartPoint));
-                                        var_dump('START TIME: ' .date('H:i:s', $checkEndPoint));
-                                    }
-
-                                    continue;
+                                    // if ($i < 10) {
+                                    //     var_dump(!($endTime > $checkStartPoint && $endTime < $checkEndPoint));
+                                    //     var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
+                                    //     var_dump('POINT: ' . date('H:i:s', $endTime));
+                                    //     var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
+                                    // }
+                                    // continue;
 
                                     if ($i == 0) {
                                         $start_time = Booking_agenda::explode_time($timeSlot['fromtime']);
