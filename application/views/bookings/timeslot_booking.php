@@ -55,7 +55,8 @@
                                 while (!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint)) {
                                     $checkStartPoint += $step;
                                     $checkEndPoint += $step;
-                                    if ($i < 20) {
+                                    if ($i < 25) {
+                                        $i++;
                                         var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
                                         var_dump('POINT: ' . date('H:i:s', $endTime));
                                         var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
