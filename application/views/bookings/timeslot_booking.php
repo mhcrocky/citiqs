@@ -37,25 +37,30 @@
                                 $start_time = '';
                                 $end_time = '';
 
-                                print_r($timeSlot['duration']);
-                                echo '<br/><br/>';
-                                print_r($timeSlot['overflow']);
-                                echo '<br/><br/>';
-                                print_r(strtotime($timeSlot['duration']));
-                                echo '<br/><br/>';
-                                print_r(strtotime($timeSlot['overflow']));
-                                echo '<br/><br/>';
-                                print_r(date('H:i:s', strtotime($timeSlot['duration'])));
-                                echo '<br/><br/>';
-                                print_r(date('H:i:s', strtotime($timeSlot['overflow'])));
-                                echo '<br/><br/>';
-                                $step = date('H:i:s', strtotime($timeSlot['duration']) + strtotime($timeSlot['overflow']));
+                                $duration = explode(':', $timeSlot['duration']);
+                                $overflow = explode(':', $timeSlot['overflow']);
+
+                                $step = 3600 * ($duration[0] + $overflow[0]) + 60 * ($duration[1] + $overflow[1]) +  + ($duration[2] + $overflow[2]);
+
+                                // print_r($timeSlot['duration']);
+                                // echo '<br/><br/>';
+                                // print_r($timeSlot['overflow']);
+                                // echo '<br/><br/>';
+                                // print_r(strtotime($timeSlot['duration']));
+                                // echo '<br/><br/>';
+                                // print_r(strtotime($timeSlot['overflow']));
+                                // echo '<br/><br/>';
+                                // print_r(date('H:i:s', strtotime($timeSlot['duration'])));
+                                // echo '<br/><br/>';
+                                // print_r(date('H:i:s', strtotime($timeSlot['overflow'])));
+                                // echo '<br/><br/>';
+                                // $step = date('H:i:s', strtotime($timeSlot['duration']) + strtotime($timeSlot['overflow']));
+                                // print_r($step);
+                                // $step = explode(':', $step);
+                                // print_r($step);
+                                // $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
                                 print_r($step);
-                                $step = explode(':', $step);
-                                print_r($step);
-                                $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
-                                print_r($step);
-                                echo '<br/>';
+                                echo '<br/><br/><br/><br/>';
 
                                 $checkStartPoint = date('H:i:s', strtotime($timeSlot['fromtime']));
                                 print_r($checkStartPoint);
