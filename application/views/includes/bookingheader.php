@@ -62,18 +62,21 @@
 		fbq('init', '944700975992089');
 		fbq('track', 'PageView');
 	</script>
-	<noscript>
-		<img height="1" width="1" style="display:none"
-			 src="https://www.facebook.com/tr?id=944700975992089&ev=PageView&noscript=1"/>
-	</noscript>
 
 </head>
-
 <?php if ($this->view === 'map') {?>
 <body onload="getLocation()">
 <?php } else { ?>
 <body>
-
+<noscript>
+	<img
+		height="1"
+		width="1"
+		style="display:none"
+		src="https://www.facebook.com/tr?id=944700975992089&ev=PageView&noscript=1"
+		alt="facebook pixel"
+	/>
+</noscript>
 
 <?php } ?>
 <header class="header">
@@ -81,7 +84,7 @@
 		<a href="<?php echo base_url(); ?>thuishaven" class="nav-logo">
 			<img src="<?php echo base_url(); ?>assets/home/images/thuishaven.png" alt="">
 		</a>
-		<div class="header-menu" id="header-menu" align="right">
+		<div class="header-menu" id="header-menu" style="text-align:right">
 
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>found"></a>

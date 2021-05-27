@@ -224,7 +224,6 @@ class Booking_agenda extends BaseControllerWeb
         $timeSlots = [];
         //$allSpotReservations = 0;
         //$allAvailableItems = 0;
-        
 
         foreach ($allTimeSlots as $timeSlot) {
             $spotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($customer['id'], $timeSlot['id'], $spotId, $timeSlot['fromtime']);
@@ -733,6 +732,7 @@ class Booking_agenda extends BaseControllerWeb
 
     public static function second_to_hhmm($time){
         $hour = floor($time/3600);
+        $hour = ($hour > 24) ? $hour - 24 : $hour;
         $min = strval(floor(($time%3600)/60));
         if($min <= 9){
             $min = '0'.$min;
