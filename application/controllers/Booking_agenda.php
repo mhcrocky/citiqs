@@ -313,7 +313,7 @@ class Booking_agenda extends BaseControllerWeb
                 $reservations = [$result->reservationId];
             }
 
-            if(count($reservations) <= 2){
+            if(count($reservations) <= $spot->maxBooking){
                 $orderData['reservations'] = $reservations;
                 $orderData['selectedTimeSlot'] = $selectedTimeSlot;
             }
@@ -328,7 +328,7 @@ class Booking_agenda extends BaseControllerWeb
                 redirect('booking_agenda/pay?order=' . $orderRandomKey);
             }
 
-            if(AVAILABLE_TO_BOOK_EXTRA_TIME == true && HOW_MANY_SLOTS_CAN_BE_BOOKED > 1){
+            if($spot->maxBooking > 1){
                 redirect('booking_agenda/reserved?order=' . $orderRandomKey);
             } else {
                 redirect('booking_agenda/pay?order=' . $orderRandomKey);
@@ -418,15 +418,17 @@ class Booking_agenda extends BaseControllerWeb
 
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer['logo']) {
-			$logoUrl = 'assets/images/vendorLogos/' . $customer->logo;
+			$logoUrl = 'assets/images/vendorLogos/' . $customer['logo'];
         }
 
-        $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $selectedTimeSlot->spot_id);
+        $allTimeSlots = $this->bookandpaytimeslots_model->getTimeSlotsByCustomerAndSpot($customer['id'], $selectedTimeSlot['spot_id']);
 
         $data['logoUrl'] = $logoUrl;
         $data['reservations'] = $reservations;
         $data['selectedTimeSlot'] = $selectedTimeSlot;
         $data['allTimeSlots'] = $allTimeSlots;
+        $spot = $this->bookandpayspot_model->getSpot($selectedTimeSlot['spot_id']);
+        $data['maxBooking'] = intval($spot->maxBooking);
         $data["orderRandomKey"] = $orderRandomKey;
         $data["bookings"] = $orderData['reservations'];
 
