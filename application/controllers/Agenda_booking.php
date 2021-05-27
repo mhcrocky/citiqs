@@ -337,7 +337,7 @@ class Agenda_booking extends BaseControllerWeb
                 $reservations = [];
             }
 
-            if(count($reservations) <= 1){
+            if(is_array($reservations) && count($reservations) <= 1){
                 $orderData['reservations'] = $result->reservationId;
                 $orderData['selectedTimeSlot'] = $selectedTimeSlot;
                 $orderData['timeslotPrice'] = $selectedTimeSlot->price;
@@ -366,6 +366,7 @@ class Agenda_booking extends BaseControllerWeb
         $data['timeSlots'] = $timeSlots;
         $data['eventDate'] = $orderData['eventDate'];
         $data['eventId'] = $eventId;
+        $data['orderRandomKey'] = $orderRandomKey;
 
         $this
             ->shopsession_model
