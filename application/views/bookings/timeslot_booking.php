@@ -28,8 +28,10 @@
                     <input type="hidden" id="endTime" name="endTime" />
                     <?php
                         $status_open = false;
+                        echo '<pre>';
                         foreach ($timeSlots as $key => $timeSlot) {
                             if ($timeSlot['multiple_timeslots'] === '1') {
+
 
                                 $start_time = '';
                                 $end_time = '';
@@ -39,8 +41,13 @@
                                 $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
 
                                 $checkStartPoint = date('H:i:s', strtotime($timeSlot['fromtime']));
+                                print_r($checkStartPoint);
                                 $checkStartPoint = explode(':', $checkStartPoint);
+                                print_r($checkStartPoint);
+
                                 $checkStartPoint = intval($checkStartPoint[0]) * 3600 + intval($checkStartPoint[1]) * 60 + intval($checkStartPoint[2]);
+                                print_r($checkStartPoint);
+                                die();
 
                                 $checkEndPoint = date('H:i:s', ($checkStartPoint + $step));
                                 $checkEndPoint = explode(':', $checkEndPoint);
