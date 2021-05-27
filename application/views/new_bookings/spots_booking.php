@@ -95,8 +95,8 @@
 <?php if($spots_exist): ?>
     <table style="background: none !important;" class="table table-striped w-100 text-center">
         <tr>
-            <th><?php echo $this->language->tLine('Place'); ?></th>
-            <th><?php echo $this->language->tLine('Status'); ?></th>
+            <th id="place"><?php echo $this->language->tLine('Place'); ?></th>
+            <th id="status"><?php echo $this->language->tLine('Status'); ?></th>
         </tr>
         <?php foreach($spots as $key=>$spot): ?>
         
@@ -108,7 +108,7 @@
                 </td>
                 <td>
                 
-                    <?php echo ($spot['data']->status == 'soldout') ? 'Sold out' : 'available'; ?>
+                    <?php echo ($spot['data']->status == 'soldout') ? 'Sold out' : $this->language->tLine('available'); ?>
                 </td>
             </tr>
         <?php endforeach; ?>
