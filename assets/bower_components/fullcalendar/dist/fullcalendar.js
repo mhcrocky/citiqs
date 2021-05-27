@@ -14964,7 +14964,7 @@ ViewRegistry_1.defineView('list', {
     defaults: {
         buttonText: 'list',
         listDayFormat: 'LL',
-        noEventsMessage: 'No events to display'
+        noEventsMessage: ''
     }
 });
 ViewRegistry_1.defineView('listDay', {
