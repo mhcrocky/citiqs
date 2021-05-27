@@ -116,6 +116,8 @@
                                         $end_time = $start_time + Booking_agenda::explode_time($timeSlot['duration']);
                                     }
 
+                                    $timeslotSoldout = Booking_agenda::check_if_soldout($timeSlot['id'], Booking_agenda::second_to_hhmm($start_time), Booking_agenda::second_to_hhmm($end_time), $timeSlot['available_items']);
+                                    $timeSlot['status'] = ($timeslotSoldout === true) ? 'soldout' : $timeSlot['status'];
                                     if ($timeSlot['status'] !== 'soldout') {
                                         $status_open = true; ?>
                                             <p>

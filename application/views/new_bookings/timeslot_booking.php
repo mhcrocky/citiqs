@@ -31,13 +31,17 @@
             $start_time = $end_time + Agenda_booking::explode_time($timeSlot['overflow']);
             $end_time = $start_time + Agenda_booking::explode_time($timeSlot['duration']);
         }
+
+        $timeslotSoldout = Agenda_booking::check_if_soldout($timeSlot['id'], Agenda_booking::second_to_hhmm($start_time), Agenda_booking::second_to_hhmm($end_time), $timeSlot['available_items']);
+        $timeSlot['status'] = ($timeslotSoldout === true) ? 'soldout' : $timeSlot['status'];
     ?>
     <tr>
+    <?php if($timeSlot['status'] != "soldout"): ?>
     <td>
     <form id="form-<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>"
         action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>?order=<?php echo $orderRandomKey; ?>" method="post"
         enctype="multipart/form-data">
-        <?php if($timeSlot['status'] != "soldout"): ?>
+        
         <div class="form-check">
             <input class="form-check-input" data-timeslot="<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>" type="radio"
                 id="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>" name="selected_time_slot_id" data-starttime="<?php echo $start_time; ?>" data-endtime="<?php echo $end_time; ?>"
@@ -46,12 +50,13 @@
                 <?php echo Agenda_booking::second_to_hhmm($start_time).' - '.Agenda_booking::second_to_hhmm($end_time); ?>
             </label>
         </div>
-        <?php endif; ?>
+        
         <input type="hidden" name="save" value="1" />
     </form>
     </td>
     <td><?php echo $timeSlot['price']; ?>€</td>
     </tr>
+    <?php endif; ?>
     <?php endfor; ?>
     <?php else: ?>
     <tr>
