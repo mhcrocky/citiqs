@@ -47,17 +47,24 @@
 
                                 $checkStartPoint = intval($checkStartPoint[0]) * 3600 + intval($checkStartPoint[1]) * 60 + intval($checkStartPoint[2]);
                                 print_r($checkStartPoint);
-                                die();
+                                
 
                                 $checkEndPoint = date('H:i:s', ($checkStartPoint + $step));
+                                print_r($checkEndPoint);
                                 $checkEndPoint = explode(':', $checkEndPoint);
+                                print_r($checkEndPoint);
                                 $checkEndPoint = intval($checkEndPoint[0]) * 3600 + intval($checkEndPoint[1]) * 60 + intval($checkEndPoint[2]);
+                                print_r($checkEndPoint);
 
                                 $endTime = date('H:i:s', strtotime($timeSlot['totime']));
+                                print_r($endTime);
                                 $endTime = explode(':', $endTime);
+                                print_r($endTime);
                                 $hours = ($timeSlot['totime'] > $timeSlot['fromtime']) ? intval($endTime[0]) : intval($endTime[0]) + 24;
                                 $endTime = $hours * 3600 + intval($endTime[1]) * 60 + intval($endTime[2]);
+                                print_r($endTime);
 
+                                die();
                                 $i = 0;
                                 while (!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint)) {
                                     $checkStartPoint += $step;
