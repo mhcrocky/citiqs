@@ -26,7 +26,7 @@
                                 </div>
                             <?php endforeach; ?>
 						
-						<?php if(AVAILABLE_TO_BOOK_EXTRA_TIME && count($bookings) < HOW_MANY_SLOTS_CAN_BE_BOOKED): ?>
+						<?php if(count($bookings) < $maxBooking): ?>
                             <h4 style="font-family: caption-bold; text-transform: uppercase;">
 							    <?php echo ($this->language->Line("NEXT_TIME_SLOT-0004", "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE.")) ? $this->language->Line("NEXT_TIME_SLOT-0004", "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE.") : "WANT TO MAKE AN ADDITIONAL RESERVATION? CLICK HERE."; ?>
 							</h4>
