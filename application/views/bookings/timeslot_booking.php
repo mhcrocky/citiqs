@@ -37,8 +37,11 @@
                                 $end_time = '';
 
                                 $step = date('H:i:s', strtotime($timeSlot['duration']) + strtotime($timeSlot['overflow']));
+                                print_r($step);
                                 $step = explode(':', $step);
+                                print_r($step);
                                 $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
+                                print_r($step);
 
                                 $checkStartPoint = date('H:i:s', strtotime($timeSlot['fromtime']));
                                 print_r($checkStartPoint);
