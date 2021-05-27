@@ -3,11 +3,9 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/SendyPHP.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 require APPPATH . '/libraries/vendor/autoload.php';
-include APPPATH . '/libraries/ical/ICS.php';
 
 class Bookingpay extends BaseControllerWeb
 {
@@ -20,6 +18,7 @@ class Bookingpay extends BaseControllerWeb
         $this->load->helper('email_helper');
         $this->load->helper('jwt_helper');
         $this->load->helper('pay_helper');
+        $this->load->helper('reservationsemail_helper');
         
         $this->load->model('log_model');
         $this->load->model('bookandpay_model');
@@ -587,165 +586,9 @@ class Bookingpay extends BaseControllerWeb
 	{
         
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
-        $eventdate = '';
-        foreach ($reservations as $key => $reservation):
-            $result = $this->sendreservation_model->getEventReservationData($reservation->reservationId);
-            
-            foreach ($result as $record) {
-                $customer = $record->customer;
-				$eventid = $record->eventid;
-				$eventdate = $record->eventdate;
-				$reservationId = $record->reservationId;
-				$spotId = $record->SpotId;
-				$price = $record->price;
-                $orderAmount = floatval($record->price) + floatval($record->reservationFee);
-                $orderAmount = number_format($orderAmount, 2, '.', '');
-				$Spotlabel = $record->Spotlabel;
-				$numberofpersons = $record->numberofpersons;
-				$name = $record->name;
-				$email = $record->email;
-				$mobile = $record->mobilephone;
-				$reservationset = $record->reservationset;
-				$fromtime = $record->timefrom;
-				$totime = $record->timeto;
-				$paid = $record->paid;
-				$timeSlotId = $record->timeslot;
-				$TransactionId = $record->TransactionID;
-				$voucher = $record->voucher;
-                $evenDescript = $record->ReservationDescription;
-                $orderId = $record->orderId;
-                
-                    if ($paid = 1) {
-                        
-                        $qrtext = $reservationId;
-
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-						}
-
-						$SERVERFILEPATH = $file;
-						$text = $qrtext;
-						$folder = $SERVERFILEPATH;
-						$file_name1 = $qrtext . ".png";
-						$file_name = $folder . $file_name1;
-
-						QRcode::png($text, $file_name);
-
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
-
-                        $timeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeSlotId);
-
-                        $spot = $this->bookandpayspot_model->getSpot($spotId);
-                        $agenda = $this->bookandpayagenda_model->getBookingAgendaById($spot->agenda_id);
-
-                        $emailId = false;
-
-                        if($timeSlot && $timeSlot->email_id != 0) {
-                            $emailId = $timeSlot->email_id;
-                        } elseif ($spot && $spot->email_id != 0) {
-                            $emailId = $spot->email_id;
-                        } elseif ($agenda && $agenda->email_id != 0) {
-                            $emailId = $agenda->email_id;
-                        }
-
-
-                        
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
-
-                        
-						if($emailId) {
-                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-                            
-                            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
-                            $qrlink = $SERVERFILEPATH . $file_name1;
-
-							if($mailtemplate) {
-                                $dt = new DateTime('now');
-                                $date = $dt->format('Y.m.d');
-                                $mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
-                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
-                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
-                                $mailtemplate = str_replace('[buyerName]', $name, $mailtemplate);
-                                $mailtemplate = str_replace('[buyerEmail]', $email, $mailtemplate);
-                                $mailtemplate = str_replace('[buyerMobile]', $mobile, $mailtemplate);
-								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
-								$mailtemplate = str_replace('[eventDate]', date('d.m.Y', strtotime($eventdate)), $mailtemplate);
-								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
-								$mailtemplate = str_replace('[spotId]', $spotId, $mailtemplate);
-								$mailtemplate = str_replace('[price]', $price, $mailtemplate);
-                                $mailtemplate = str_replace('[ticketPrice]', $price, $mailtemplate);
-								$mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
-                                $mailtemplate = str_replace('[ticketQuantity]', $numberofpersons, $mailtemplate);
-								$mailtemplate = str_replace('[numberOfPersons]', $numberofpersons, $mailtemplate);
-								$mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
-								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
-								$mailtemplate = str_replace('[timeSlot]', $timeSlotId, $mailtemplate);
-								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
-								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-                                $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
-                                $download_pdf_link = base_url() . "booking/pdf/" . $emailId . "/" . $reservationId;
-                                $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
-                                $mailtemplate .= '</div>';
-								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
-								$datachange['mailsend'] = 1;
-
-                                //'dtstart' => '2021-10-16 9:00AM',
-                                //'dtend' => '2022-1-16 9:00AM',
-                                
-                                $ics = new ICS(array(
-                                    'organizer' => 'TIQS:malito:support@tiqs.com',
-                                    'description' => strip_tags($evenDescript),
-                                    'dtstart' => $eventdate .' '. $fromtime,
-                                    'dtend' => $eventdate .' '. $totime,
-                                    'summary' => strip_tags($evenDescript),
-                                    'url' => $download_pdf_link
-                                ));
-
-
-                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .' '. $fromtime)));
-                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .'T'. $totime)));
-
-                              
-                                $icsContent = $ics->to_string();
-                                
-								//$this->sendEmail("pnroos@icloud.com", $subject, $mailtemplate, $icsContent);
-								if($this->sendEmail($email, $subject, $mailtemplate, $icsContent)) {
-                                    $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
-                                    
-                                }
-                            
-                        }
-                    }
-                }
-            }
-            endforeach;
-        }
+        Reservationsemail_helper::sendEmailReservation($reservations, true);
+        
+    }
 
 
 
