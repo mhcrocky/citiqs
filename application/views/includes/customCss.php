@@ -618,10 +618,13 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php  } elseif ($this->view === 'new_bookings/spots_booking') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/css/card-style.css">
 <?php  } elseif ($this->view === 'new_bookings/index') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/agendaCalendar.css">
+
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/flatpickrCalendar.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'>
     <style>
-        .legend {
-        display: none;
+    .cal-modal-container {
+    height: auto !important;
     }
     </style>
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>

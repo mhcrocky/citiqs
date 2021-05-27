@@ -35,7 +35,7 @@ var flatpickr = $('#calendar .placeholder').flatpickr({
         let agendaId = '';
         if (date.length) {
             console.log(eventDates[str].length);
-            for (i = 0; i < eventDates[str].length; i++) {
+            for (let i = 0; i < eventDates[str].length; i++) {
                 if (typeof window.CP !== 'undefined' && window.CP.shouldStopExecution(0)) break;
                 agendaId = eventDates[str][i];
 
