@@ -226,7 +226,7 @@ class Booking_agenda extends BaseControllerWeb
         //$allAvailableItems = 0;
 
         foreach ($allTimeSlots as $timeSlot) {
-            $spotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($customer['id'], $timeSlot['id'], $spotId, $timeSlot['fromtime']);
+            $spotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($timeSlot['id'], $timeSlot['fromtime'], $timeSlot['totime']);
             $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($customer['id'], $spotId, $timeSlot['id'], $timeSlot['fromtime']);
             if($spotsReserved >= $timeSlot['available_items']){
                 $status = 'soldout';
@@ -290,6 +290,7 @@ class Booking_agenda extends BaseControllerWeb
                 'timefrom' => $fromtime,
                 'timeto' => $totime,
                 'timeslot' => $selectedTimeSlot->id,
+                'timeslotId' => $selectedTimeSlot->id,
                 'reservationFee' => $selectedTimeSlot->reservationFee,
                 'price' => $selectedTimeSlot->price ? $selectedTimeSlot->price : $price,
                 'numberofpersons' => $numberOfPersons,
@@ -739,6 +740,16 @@ class Booking_agenda extends BaseControllerWeb
         }
         $time = $hour . ':' . $min; 
         return $time;
+    }
+
+    public static function check_if_soldout($timeslotId, $fromtime, $totime, $availableItems) : bool
+    {
+        $CI =& get_instance();
+        $spotReserved = $CI->bookandpay_model->getBookingCountByTimeSlot($timeslotId, $fromtime, $totime);
+        if($spotReserved >= $availableItems){
+            return true;
+        }
+        return false;
     }
 
 
