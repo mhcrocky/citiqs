@@ -817,7 +817,6 @@ class Booking_events extends BaseControllerWeb
     public function successBooking()
     {
         // uncomment for landing pages if you like and think it is ok
-        session_unset();
         $get = Utility_helper::sanitizeGet();
 
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
