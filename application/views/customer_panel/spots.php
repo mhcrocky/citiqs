@@ -65,6 +65,7 @@
                                     <th>Number of persons</th>
                                     <th>Price</th>
                                     <th>Email Template</th>
+                                    <th>Max Bookings</th>
                                     <th>Image</th>
                                     <th>Action</th>
                                 </tr>
@@ -84,6 +85,7 @@
                                             {{ spot.template_name }}
                                         </a>
                                     </td>
+                                    <td>{{ spot.maxBooking }}</td>
                                     <td class="spot_table_image"><img :class="backgroundClass(spot.background)"
                                             :src="imgFullPath(spot.image)" alt=""></td>
                                     <td class="td_action">
@@ -198,6 +200,11 @@
                                     class="form-control" id="Price" placeholder="Price">
                             </div>
                             <div class="form-group">
+                                <label for="Price"><?php echo $this->language->tLine('Max Bookings'); ?></label>
+                                <input type="number" name="maxBooking" v-model="spotModalData.maxBooking"
+                                    class="form-control" id="maxBooking" placeholder="Max Bookings" value="1">
+                            </div>
+                            <div class="form-group">
                                 <label for="descript"><?php echo $this->language->tLine('Email Template'); ?></label>
                                 <search-select :options="emailsOptions" v-model="spotModalData.email_id"
                                     placeholder="Select Email Template"></search-select>
@@ -292,6 +299,7 @@
                 price: 0,
                 image: '',
                 background: 'blue-light',
+                maxBooking: 1,
                 agenda_id: null,
                 email_id: null,
                 spotLabelId: null
@@ -331,6 +339,7 @@
                     numberofpersons: 1,
                     image: '',
                     background: 'blue-light',
+                    maxBooking: 1,
                     agenda_id: null,
                     email_id: null,
                     spotLabelId: null
@@ -412,6 +421,7 @@
                 formData.append("userfile", $("#userfile")[0].files[0]);
                 formData.append("imgDeleted", $('#imgDeleted').val());
                 formData.append("agenda_id", this.spotModalData.agenda_id);
+                formData.append("maxBooking", this.spotModalData.maxBooking);
                 formData.append("email_id", this.spotModalData.email_id);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
                 formData.append("spots", $('#spots').val());
@@ -467,6 +477,7 @@
                 formData.append("imgDeleted", $('#imgDeleted').val());
                 formData.append("agenda_id", this.spotModalData.agenda_id);
                 formData.append("email_id", this.spotModalData.email_id);
+                formData.append("maxBooking", this.spotModalData.maxBooking);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
                 formData.append("spots", this.spotModalData.id);
                 
