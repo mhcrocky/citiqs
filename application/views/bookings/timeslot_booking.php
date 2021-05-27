@@ -32,6 +32,7 @@
                         foreach ($timeSlots as $key => $timeSlot) {
                             if ($timeSlot['multiple_timeslots'] === '1') {
 
+                                print_r($timeSlot);
 
                                 $start_time = '';
                                 $end_time = '';
