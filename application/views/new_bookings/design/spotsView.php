@@ -1,6 +1,32 @@
 <fieldset id="spotsView" class="hideFieldsets">
     <legend>Select spots view</legend>
     <div class="form-group col-sm-12">
+		<label style="display:block;">
+			Event Text:
+			<input  type="text" class="form-control b-radius" name="tableTitle[place]"
+				onfocus="styleELements(this)"
+				onchange="styleELements(this)"
+					style="width:100%"
+				<?php if ( isset($design['tableTitle']['place']) ) { ?>
+				value="<?php echo $design['tableTitle']['place']?>" data-value="1"
+				<?php } else { ?> value="<?php echo $this->language->tLine('Place'); ?>"
+				<?php } ?> />
+		</label>
+	</div>
+	<div class="form-group col-sm-12">
+		<label style="display:block;">
+			SPOT Text:
+			<input  type="text" class="form-control b-radius" name="tableTitle[status]"
+				onfocus="styleELements(this)"
+				onchange="styleELements(this)"
+					style="width:100%"
+				<?php if ( isset($design['tableTitle']['status']) ) { ?>
+				value="<?php echo $design['tableTitle']['status']?>" data-value="1"
+				<?php } else { ?> value="<?php echo $this->language->tLine('Status'); ?>"
+				<?php } ?> />
+		</label>
+	</div>
+    <div class="form-group col-sm-12">
         <label style="display:block;">
         Card Background color:
             <input 
