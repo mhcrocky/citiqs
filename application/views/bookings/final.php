@@ -43,7 +43,7 @@
                 </div>
                 <h2 style="font-family: caption-bold"><?php echo ($this->language->Line("FINAL-0011", "MOBILE")) ? $this->language->Line("FINAL-0011", "MOBILE") : "MOBILE"; ?></h2>
 				<div class="form-group has-feedback" style="margin-left: 30px;margin-right: 30px;" >
-                    <input name="mobile" id="mobile" type="tel" class="form-control"
+                    <input name="mobile" id="mobile" type="tel" class="form-control" minlength="10"
                            style="font-family:'caption-light'; border-radius: 50px;"
                            placeholder="<?php echo ($this->language->Line("FINAL-0012", "Your Phone Number")) ? $this->language->Line("FINAL-0012", "Your Phone Number") : "Your Phone Number"; ?>" required/>
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
