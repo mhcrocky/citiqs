@@ -214,11 +214,13 @@
                     <?php } ?>
                 </form>
             </div>
+            <?php if($spot->maxBooking > 1): ?>
             <div style="text-align:center">
                 <p style="font-size: smaller" class="text-content mb-50">
                     <?php echo $this->language->Line("TIMESLOT-BOOKING-0003", "RESERVE LONG TIMESLOT? ADD AN ADDITIONAL TIME SLOT TO YOUR BOOKING IN THE NEXT SCREEN"); ?>
                 </p>
             </div>
+            <?php endif; ?>
             <div class="form-group has-feedback mt-35">
                 <div style="text-align: right">
                     <a href="#top"><i class="fa fa-arrow-circle-up" style="font-size:48px; color:white"></i></a>
