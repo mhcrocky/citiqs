@@ -87,6 +87,14 @@
                 echo "$('.".$key."').text('" . $this->language->tLine($headerTitle) . "');";
             }
         }
+
+        if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['tableTitle'])){
+            $tableTitles = unserialize($customDesign[0]['design'])['tableTitle'];
+            foreach($tableTitles as $key => $tableTitle){
+                echo "$('#".$key."').text('" . $this->language->tLine($tableTitle) . "');";
+            }
+        }
+
         if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['chooseTitle'])){
 
             $chooseTitles = unserialize($customDesign[0]['design'])['chooseTitle'];
