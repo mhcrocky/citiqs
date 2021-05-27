@@ -11,7 +11,7 @@
         </div>
         <div class="form-group w-100">
             <label class="form-check-label" for="11"><strong>Phone Number</strong></label>
-            <input class="form-control" name="mobile" id="mobile" type="tel" placeholder="Your Phone Number" required>
+            <input class="form-control" name="mobile" id="mobile" type="tel" placeholder="Your Phone Number" minlength="10" required>
         </div>
         <!-- end booking form inputs -->
         <div id="booking-footer" class="booking-form__result w-100">
