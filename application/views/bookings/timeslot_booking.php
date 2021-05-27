@@ -28,42 +28,81 @@
                     <input type="hidden" id="endTime" name="endTime" />
                     <?php
                         $status_open = false;
+                        // echo '<pre>';
                         foreach ($timeSlots as $key => $timeSlot) {
                             if ($timeSlot['multiple_timeslots'] === '1') {
+
+                                #print_r($timeSlot);
 
                                 $start_time = '';
                                 $end_time = '';
 
-                                $step = date('H:i:s', strtotime($timeSlot['duration']) + strtotime($timeSlot['overflow']));
-                                $step = explode(':', $step);
-                                $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
+                                $duration = explode(':', $timeSlot['duration']);
+                                $overflow = explode(':', $timeSlot['overflow']);
+
+                                $step = 3600 * (intval($duration[0]) + intval($overflow[0]));
+                                $step += 60 * (intval($duration[1]) + intval($overflow[1]));
+                                $step += intval($duration[2]) + intval($overflow[2]);
+                                // var_dump($step);die();
+
+                                // print_r($timeSlot['duration']);
+                                // echo '<br/><br/>';
+                                // print_r($timeSlot['overflow']);
+                                // echo '<br/><br/>';
+                                // print_r(strtotime($timeSlot['duration']));
+                                // echo '<br/><br/>';
+                                // print_r(strtotime($timeSlot['overflow']));
+                                // echo '<br/><br/>';
+                                // print_r(date('H:i:s', strtotime($timeSlot['duration'])));
+                                // echo '<br/><br/>';
+                                // print_r(date('H:i:s', strtotime($timeSlot['overflow'])));
+                                // echo '<br/><br/>';
+                                // $step = date('H:i:s', strtotime($timeSlot['duration']) + strtotime($timeSlot['overflow']));
+                                // print_r($step);
+                                // $step = explode(':', $step);
+                                // print_r($step);
+                                // $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
+                                // print_r($step);
+                                // echo '<br/><br/><br/><br/>';
 
                                 $checkStartPoint = date('H:i:s', strtotime($timeSlot['fromtime']));
+                                // print_r($checkStartPoint);
                                 $checkStartPoint = explode(':', $checkStartPoint);
+                                // print_r($checkStartPoint);
+
                                 $checkStartPoint = intval($checkStartPoint[0]) * 3600 + intval($checkStartPoint[1]) * 60 + intval($checkStartPoint[2]);
+                                // print_r($checkStartPoint);
+                                // echo '<br/>';
 
                                 $checkEndPoint = date('H:i:s', ($checkStartPoint + $step));
+                                // print_r($checkEndPoint);
                                 $checkEndPoint = explode(':', $checkEndPoint);
+                                // print_r($checkEndPoint);
                                 $checkEndPoint = intval($checkEndPoint[0]) * 3600 + intval($checkEndPoint[1]) * 60 + intval($checkEndPoint[2]);
-
+                                // print_r($checkEndPoint);
+                                // echo '<br/>';
                                 $endTime = date('H:i:s', strtotime($timeSlot['totime']));
+                                // print_r($endTime);
                                 $endTime = explode(':', $endTime);
+                                // print_r($endTime);
                                 $hours = ($timeSlot['totime'] > $timeSlot['fromtime']) ? intval($endTime[0]) : intval($endTime[0]) + 24;
                                 $endTime = $hours * 3600 + intval($endTime[1]) * 60 + intval($endTime[2]);
+                                // print_r($endTime);
 
+                                // die();
                                 $i = 0;
                                 while (!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint)) {
                                     $checkStartPoint += $step;
                                     $checkEndPoint += $step;
-                                    if ($i < 25) {
-                                        $i++;
-                                        var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
-                                        var_dump('POINT: ' . date('H:i:s', $endTime));
-                                        var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
-                                        var_dump(!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint));
-                                        if ($i === 21) die();
-                                    }
-                                    continue;
+                                    // if ($i < 25) {
+                                    //     $i++;
+                                    //     var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
+                                    //     var_dump('POINT: ' . date('H:i:s', $endTime));
+                                    //     var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
+                                    //     var_dump(!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint));
+                                    //     if ($i === 21) die();
+                                    // }
+                                    // continue;
 
                                     if ($i == 0) {
                                         $start_time = Booking_agenda::explode_time($timeSlot['fromtime']);
