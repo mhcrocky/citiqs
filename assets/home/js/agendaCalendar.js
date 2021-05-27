@@ -256,8 +256,8 @@
     });
   
     if(!events.length) {
-      var div = createElement('div', 'event empty');
-      var span = createElement('span', '', 'No Events');
+      var div = createElement('div', '');
+      var span = createElement('span', '', '');
   
       div.appendChild(span);
       wrapper.appendChild(div);
