@@ -426,7 +426,7 @@ class Bookingpay extends BaseControllerWeb
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
 
-        //$this->removeOrderIds($orderData, $orderRandomKey);
+        $this->removeOrderIds($orderData, $orderRandomKey);
 
         $this->processPaymenttype($strUrl, $reservationIds);
         
@@ -444,7 +444,7 @@ class Bookingpay extends BaseControllerWeb
         return;
     }
 
-    private function processPaymenttype(string $strUrl, array $reservationIds)
+    private function processPaymenttype($strUrl, $reservationIds)
     {
         # Get API result
         $strResult = @file_get_contents($strUrl);
