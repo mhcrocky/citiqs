@@ -107,7 +107,6 @@
                                     };
                                     $i++;
                                 }
-                                die();
                             } else {
                                 $dt1 = new DateTime($timeSlot['fromtime']);
                                 $fromtime = $dt1->format('H:i');
