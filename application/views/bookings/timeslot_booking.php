@@ -43,6 +43,7 @@
                                 print_r($step);
                                 $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
                                 print_r($step);
+                                echo '<br/>';
 
                                 $checkStartPoint = date('H:i:s', strtotime($timeSlot['fromtime']));
                                 print_r($checkStartPoint);
@@ -51,7 +52,7 @@
 
                                 $checkStartPoint = intval($checkStartPoint[0]) * 3600 + intval($checkStartPoint[1]) * 60 + intval($checkStartPoint[2]);
                                 print_r($checkStartPoint);
-                                
+                                echo '<br/>';
 
                                 $checkEndPoint = date('H:i:s', ($checkStartPoint + $step));
                                 print_r($checkEndPoint);
@@ -59,7 +60,7 @@
                                 print_r($checkEndPoint);
                                 $checkEndPoint = intval($checkEndPoint[0]) * 3600 + intval($checkEndPoint[1]) * 60 + intval($checkEndPoint[2]);
                                 print_r($checkEndPoint);
-
+                                echo '<br/>';
                                 $endTime = date('H:i:s', strtotime($timeSlot['totime']));
                                 print_r($endTime);
                                 $endTime = explode(':', $endTime);
