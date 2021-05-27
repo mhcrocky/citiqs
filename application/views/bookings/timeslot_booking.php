@@ -91,15 +91,19 @@
 
                                 // die();
                                 $i = 0;
-                                while (!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint)) {
-                                    $checkStartPoint += $step;
-                                    $checkEndPoint += $step;
+                                $notBreak = true;
+                                #while (!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint)) {
+                                while ($notBreak) {   
+
+                                    // to fetch last period
+                                    $notBreak = !($endTime >= $checkStartPoint && $endTime <= $checkEndPoint);
                                     // if ($i < 25) {
                                     //     $i++;
-                                    //     var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
-                                    //     var_dump('POINT: ' . date('H:i:s', $endTime));
-                                    //     var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
-                                    //     var_dump(!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint));
+                                        // var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
+                                        // var_dump('POINT: ' . date('H:i:s', $endTime));
+                                        // var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
+                                        // var_dump(!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint));
+                                        // $notBreak = !($endTime >= $checkStartPoint && $endTime <= $checkEndPoint);
                                     //     if ($i === 21) die();
                                     // }
                                     // continue;
@@ -147,6 +151,8 @@
                                         <?php
                                     };
                                     $i++;
+                                    $checkStartPoint += $step;
+                                    $checkEndPoint += $step;
                                 }
                             } else {
                                 $dt1 = new DateTime($timeSlot['fromtime']);
