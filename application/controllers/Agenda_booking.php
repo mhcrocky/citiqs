@@ -419,6 +419,7 @@ class Agenda_booking extends BaseControllerWeb
         $this->form_validation->set_rules('mobile', 'Phone Number', 'trim|required|min_length[10]');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]');
 
+
         if ($this->form_validation->run()) {
             $buyer_info['mobilephone'] = strtolower($this->input->post('mobile'));
             $buyer_info['email'] = strtolower($this->input->post('email'));
@@ -473,7 +474,7 @@ class Agenda_booking extends BaseControllerWeb
             redirect(base_url());
         }
 
-        $buyerInfo = $orderData['buyerInfo'];
+        $buyerInfo = $orderData['buyer_info'];
         $customer = $orderData['customer'];
 
         $amount = 0;
