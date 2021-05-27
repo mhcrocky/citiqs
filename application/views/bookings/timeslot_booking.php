@@ -32,11 +32,23 @@
                         foreach ($timeSlots as $key => $timeSlot) {
                             if ($timeSlot['multiple_timeslots'] === '1') {
 
-                                print_r($timeSlot);
+                                #print_r($timeSlot);
 
                                 $start_time = '';
                                 $end_time = '';
 
+                                print_r($timeSlot['duration']);
+                                echo '<br/><br/>';
+                                print_r($timeSlot['overflow']);
+                                echo '<br/><br/>';
+                                print_r(strtotime($timeSlot['duration']));
+                                echo '<br/><br/>';
+                                print_r(strtotime($timeSlot['overflow']));
+                                echo '<br/><br/>';
+                                print_r(date('H:i:s', strtotime($timeSlot['duration'])));
+                                echo '<br/><br/>';
+                                print_r(date('H:i:s', strtotime($timeSlot['overflow'])));
+                                echo '<br/><br/>';
                                 $step = date('H:i:s', strtotime($timeSlot['duration']) + strtotime($timeSlot['overflow']));
                                 print_r($step);
                                 $step = explode(':', $step);
