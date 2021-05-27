@@ -122,109 +122,138 @@
                 <?php endif; ?>
                 </div>
 
-                <div align="center">
+                <div style="text-align: right">
                     <p class="text-content mb-50">
                         <?php echo $this->language->Line("TIMESLOT-BOOKING-0001", "CHOOSE YOUR TIME"); ?></p>
                 </div>
-                <div class="login-box" align="center">
+                <div class="login-box" style="text-align: right">
                     <form id="checkItem"
                         action="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot->id; ?>?order=<?php echo $orderRandomKey; ?>"
                         method="post" enctype="multipart/form-data">
                         <input type="hidden" id="startTime" name="startTime">
                         <input type="hidden" id="endTime" name="endTime">
                         <?php $status_open = false; ?>
-                        <?php foreach ($timeSlots as $key => $timeSlot): ?>
-                        <?php 
-                        if($timeSlot['multiple_timeslots'] == 1):
-                            $fromtime = explode(':',$timeSlot['fromtime']);
-                            $totime = explode(':', $timeSlot['totime']);
-                            $duration = explode(':', $timeSlot['duration']);
-                            $overflow = explode(':', $timeSlot['overflow']);
+                        <?php
+                            foreach ($timeSlots as $key => $timeSlot) {
+                                if ($timeSlot['multiple_timeslots'] === '1') {
+                                    $start_time = '';
+                                    $end_time = '';
 
-                            $time_diff = ($totime[0]*60 - $fromtime[0]*60) + ($totime[1] - $fromtime[1]);
-                            $time_duration = ($duration[0]*60 + $overflow[0]*60) + ($duration[1] + $overflow[1]);
-                            $time_div = intval($time_diff/$time_duration);
-                            $start_time = '';
-                            $end_time = '';
-                            for($i=0; $i < $time_div; $i++):
-                            
-                            if($i == 0){
-                                $start_time = Booking_agenda::explode_time($timeSlot['fromtime']);
-                                $end_time = $start_time + Booking_agenda::explode_time($timeSlot['duration']);
-                            } else {
-                                $start_time = $end_time + Booking_agenda::explode_time($timeSlot['overflow']);
-                                $end_time = $start_time + Booking_agenda::explode_time($timeSlot['duration']);
+                                    $step = date('H:i:s', strtotime($timeSlot['duration']) + strtotime($timeSlot['overflow']));
+                                    $step = explode(':', $step);
+                                    $step = intval($step[0]) * 3600 + intval($step[1]) * 60 + intval($step[2]);
+
+                                    $checkStartPoint = date('H:i:s', strtotime($timeSlot['fromtime']));
+                                    $checkStartPoint = explode(':', $checkStartPoint);
+                                    $checkStartPoint = intval($checkStartPoint[0]) * 3600 + intval($checkStartPoint[1]) * 60 + intval($checkStartPoint[2]);
+
+                                    $checkEndPoint = date('H:i:s', ($checkStartPoint + $step));
+                                    $checkEndPoint = explode(':', $checkEndPoint);
+                                    $checkEndPoint = intval($checkEndPoint[0]) * 3600 + intval($checkEndPoint[1]) * 60 + intval($checkEndPoint[2]);
+
+                                    $endTime = date('H:i:s', strtotime($timeSlot['totime']));
+                                    $endTime = explode(':', $endTime);
+                                    $hours = ($timeSlot['totime'] > $timeSlot['fromtime']) ? intval($endTime[0]) : intval($endTime[0]) + 24;
+                                    $endTime = $hours * 3600 + intval($endTime[1]) * 60 + intval($endTime[2]);
+
+                                    $i = 0;
+
+                                    while (!($endTime > $checkStartPoint && $endTime < $checkEndPoint)) {
+                                        $checkStartPoint += $step;
+                                        $checkEndPoint += $step;
+
+                                        if ($i == 0) {
+                                            $start_time = Booking_agenda::explode_time($timeSlot['fromtime']);
+                                            $end_time = $start_time + Booking_agenda::explode_time($timeSlot['duration']);
+                                        } else {
+                                            $start_time = $end_time + Booking_agenda::explode_time($timeSlot['overflow']);
+                                            $end_time = $start_time + Booking_agenda::explode_time($timeSlot['duration']);
+                                        }
+
+                                        if ($timeSlot['status'] !== 'soldout') {
+                                            $status_open = true; ?>
+                                                <p>
+                                                    <input
+                                                        type="radio"
+                                                        id="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>"
+                                                        name="selected_time_slot_id"
+                                                        value="<?php echo $timeSlot['id']; ?>"
+                                                        data-starttime="<?php echo $start_time; ?>"
+                                                        data-endtime="<?php echo $end_time; ?>"
+                                                        checked
+                                                    />
+                                                    <label style="font-family: caption-light; font-size: large; text-align: right;"
+                                                        for="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>">
+                                                        <?php echo $timeSlot['timeslotdescript']; ?>
+                                                    </label>
+                                                    <div>
+                                                        <?php echo Booking_agenda::second_to_hhmm($start_time).' - '.Booking_agenda::second_to_hhmm($end_time); ?>
+                                                    </div>
+                                                </p>
+                                            <?php
+                                        } else {
+                                            ?>
+                                                <p>
+                                                    <div style="font-family: caption-light; font-size: small">
+                                                        <?php echo Booking_agenda::second_to_hhmm($start_time).' - '.Booking_agenda::second_to_hhmm($end_time); ?>
+                                                        &nbsp;<span style="color: #ff4d4d;font-weight:bold;"> SOLD OUT</span>
+                                                    </div>
+                                                </p>
+                                            <?php
+                                        };
+                                        $i++;
+                                    }
+                                } else {
+                                    $dt1 = new DateTime($timeSlot['fromtime']);
+                                    $fromtime = $dt1->format('H:i');
+                                    $dt2 = new DateTime($timeSlot['totime']);
+                                    $totime = $dt2->format('H:i');
+
+                                    if ($timeSlot['status'] != "soldout") {
+                                        $status_open = true;
+                                        ?>
+                                            <p>
+                                                <input type="radio" id="test<?php echo $timeSlot['id']; ?>" name="selected_time_slot_id"
+                                                    value="<?php echo $timeSlot['id']; ?>" checked>
+                                                <label style="font-family: caption-light; font-size: large; text-align: right;"
+                                                    for="test<?php echo $timeSlot['id']; ?>">
+                                                    <?php echo $timeSlot['timeslotdescript']; ?>
+                                                </label>
+                                                <div>
+                                                    <?php echo $fromtime .' - '.$totime; ?>
+                                                </div>
+                                            </p>
+                                        <?php
+                                    } else {
+                                        ?>
+                                            <p>
+                                                <div style="font-family: caption-light; font-size: small">
+                                                    <?php echo $fromtime.' - '.$totime; ?>
+                                                    &nbsp <span style="color: #ff4d4d;font-weight:bold;"> SOLD OUT</span>
+                                                </div>
+                                            </p>
+                                        <?php
+                                    }
+                                }
                             }
-
-                        if($timeSlot['status'] != "soldout"): ?>
-
-                        <?php $status_open = true; ?>
-
-                        <p>
-                            <input type="radio" id="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>" name="selected_time_slot_id"
-                                value="<?php echo $timeSlot['id']; ?>" data-starttime="<?php echo $start_time; ?>" data-endtime="<?php echo $end_time; ?>" checked>
-                            <label style="font-family: caption-light; font-size: large; text-align: right;"
-                                for="test<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>">
-                                <?php echo $timeSlot['timeslotdescript']; ?>
-                            </label>
-                        <div>
-                            <?php echo Booking_agenda::second_to_hhmm($start_time).' - '.Booking_agenda::second_to_hhmm($end_time); ?>
-                        </div>
-                        </p>
-                        <?php  else: ?>
-                        <p>
-                        <div style="font-family: caption-light; font-size: small">
-                        <?php echo Booking_agenda::second_to_hhmm($start_time).' - '.Booking_agenda::second_to_hhmm($end_time); ?>
-                            &nbsp <span style="color: #ff4d4d;font-weight:bold;"> SOLD OUT</span>
-                        </div>
-                        </p>
-                        <?php endif; ?>
-                        <?php endfor; ?>
-                        <?php else: 
-                        $dt1 = new DateTime($timeSlot['fromtime']);
-                        $fromtime = $dt1->format('H:i');
-                        $dt2 = new DateTime($timeSlot['totime']);
-                        $totime = $dt2->format('H:i'); ?>
-
-                        <?php 
-                        if($timeSlot['status'] != "soldout"): ?>
-
-                        <?php $status_open = true; ?>
-
-                        <p>
-                            <input type="radio" id="test<?php echo $timeSlot['id']; ?>" name="selected_time_slot_id"
-                                value="<?php echo $timeSlot['id']; ?>" checked>
-                            <label style="font-family: caption-light; font-size: large; text-align: right;"
-                                for="test<?php echo $timeSlot['id']; ?>">
-                                <?php echo $timeSlot['timeslotdescript']; ?>
-                            </label>
-                        <div>
-                            <?php echo $fromtime .' - '.$totime; ?>
-                        </div>
-                        </p>
-                        <?php else: ?>
-                        <p>
-                        <div style="font-family: caption-light; font-size: small">
-                            <?php echo $fromtime.' - '.$totime; ?>
-                            &nbsp <span style="color: #ff4d4d;font-weight:bold;"> SOLD OUT</span>
-                        </div>
-                        </p>
-                        <?php endif; ?>
-                        <?php endif; ?>
-                        <?php endforeach; ?>
-
-                        <?php if($status_open): ?>
-                        <div class="form-group has-feedback mt-35">
-                            <div style="text-align: center; ">
-                                <input type="hidden" name="save" value="1" />
-                                <button type="button" onclick="submitTimeslotForm()"
-                                    class="button button-orange mb-25"><?php echo ($this->language->Line("TIMESLOT-BOOKING-0002", "NEXT")) ? $this->language->Line("TIMESLOT-BOOKING-0002", "NEXT") : 'NEXT'; ?></button>
+                        ?>
+                        <?php if ($status_open) { ?>
+                            <div class="form-group has-feedback mt-35">
+                                <div style="text-align: center; ">
+                                    <input type="hidden" name="save" value="1" />
+                                    <button
+                                        type="button"
+                                        onclick="submitTimeslotForm()"
+                                        class="button button-orange mb-25"
+                                    >
+                                        <?php echo ($this->language->Line("TIMESLOT-BOOKING-0002", "NEXT")) ? $this->language->Line("TIMESLOT-BOOKING-0002", "NEXT") : 'NEXT'; ?>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <?php endif; ?>
+                        <?php } ?>
                     </form>
                 </div>
-                <div align="center">
+                <div style="text-align:center">
                     <p style="font-size: smaller" class="text-content mb-50">
                         <?php echo $this->language->Line("TIMESLOT-BOOKING-0003", "RESERVE LONG TIMESLOT? ADD AN ADDITIONAL TIME SLOT TO YOUR BOOKING IN THE NEXT SCREEN"); ?>
                     </p>
