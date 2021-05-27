@@ -181,9 +181,9 @@ class Bookandpay_model extends CI_Model
 //				die();
 		return $result;
 	}
+ 
 
-
-	function updateBookandpayByTransactionId($TransactionID)
+	public function updateBookandpayByTransactionId($TransactionID)
 	{
 		try {
 			$this->db->where('TransactionID', $TransactionID);
@@ -199,7 +199,7 @@ class Bookandpay_model extends CI_Model
 	}
 
 
-	function updateTransactionIdByReservationIds($reservationIds, $TransactionID)
+	public function updateTransactionIdByReservationIds($reservationIds, $TransactionID)
 	{
 		$this->db->where_in('id', $reservationIds);
 		$this->db->set('TransactionID', $TransactionID);
@@ -208,8 +208,17 @@ class Bookandpay_model extends CI_Model
 
 	}
 
+	public function updateTransactionIdByReservations($reservationIds, $TransactionID)
+	{
+		$this->db->where_in('reservationId', $reservationIds);
+		$this->db->set('TransactionID', $TransactionID);
+		$this->db->update('tbl_bookandpay');
+		return TRUE;
 
-	function editbookandpay($labelInfo, $reservationId)
+	}
+
+
+	public function editbookandpay($labelInfo, $reservationId)
 	{
 		try {
 			$this->db->where('reservationId', $reservationId);
@@ -226,7 +235,7 @@ class Bookandpay_model extends CI_Model
 		}
 	}
 
-	function countreservationsinprogresoverall($customer,$eventdate)
+	public function countreservationsinprogresoverall($customer,$eventdate)
 	{
 		$this->db->select('id');
 		$this->db->from('tbl_bookandpay');

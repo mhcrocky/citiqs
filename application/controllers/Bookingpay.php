@@ -360,7 +360,7 @@ class Bookingpay extends BaseControllerWeb
         # Prepare complete API URL
         $strUrl = $strUrl . http_build_query($arrArguments);
 
-        $this->processPaymenttype($strUrl);
+        $this->processPaymenttype($strUrl, $reservationIds);
 
         # Get API result
         /*
@@ -426,22 +426,25 @@ class Bookingpay extends BaseControllerWeb
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
 
-        $what = ['id'];
-		$where = ["randomKey" => $orderRandomKey];
-			
-        $result = $this->shopsession_model->read($what,$where);
-        $result = reset($result);
-        $ids = [$result['id']];
-
-        //Delete data from session table
-        $this->shopsession_model->multipleDelete($ids, $where);
-
+        //$this->removeOrderIds($orderData, $orderRandomKey);
 
         $this->processPaymenttype($strUrl, $reservationIds);
+        
 
     }
 
-    private function processPaymenttype($strUrl, $reservationIds)
+    private function removeOrderIds(array $orderData, string $orderRandomKey): void
+    {
+        unset($orderData['reservations']);
+        $this
+            ->shopsession_model
+            ->setProperty('randomKey', $orderRandomKey)
+            ->updateSessionData($orderData);
+
+        return;
+    }
+
+    private function processPaymenttype(string $strUrl, array $reservationIds)
     {
         # Get API result
         $strResult = @file_get_contents($strUrl);
@@ -457,7 +460,7 @@ class Bookingpay extends BaseControllerWeb
 
             
             $transactionId = $result->transaction->transactionId;
-            $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
+            $this->bookandpay_model->updateTransactionIdByReservations($reservationIds, $transactionId);
             redirect($result->transaction->paymentURL);
 
         } else {
