@@ -567,14 +567,14 @@ class Bookandpay_model extends CI_Model
 	 * since : 18 November 2020
 	 */
 
-	function getBookingCountByTimeSlot($customer,$timeSlotId, $spotId, $fromtime)
+	function getBookingCountByTimeSlot($timeSlotId, $fromtime, $totime)
     {
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
-		$this->db->where('timeslot', $timeSlotId);
-		$this->db->where('SpotId', $spotId);
-		$this->db->where('timefrom', $fromtime);
-		$this->db->where('customer', $customer);
+		$this->db->where('paid', '1');
+		$this->db->where('timeslotId', $timeSlotId);
+		$this->db->like('timefrom', $fromtime);
+		$this->db->like('timeto', $totime);
 
         $query = $this->db->get();
 
