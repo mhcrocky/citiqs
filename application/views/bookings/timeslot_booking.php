@@ -55,13 +55,14 @@
                                 while (!($endTime >= $checkStartPoint && $endTime <= $checkEndPoint)) {
                                     $checkStartPoint += $step;
                                     $checkEndPoint += $step;
-                                    // if ($i < 10) {
-                                    //     var_dump(!($endTime > $checkStartPoint && $endTime < $checkEndPoint));
-                                    //     var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
-                                    //     var_dump('POINT: ' . date('H:i:s', $endTime));
-                                    //     var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
-                                    // }
-                                    // continue;
+                                    if ($i < 20) {
+                                        var_dump(!($endTime > $checkStartPoint && $endTime < $checkEndPoint));
+                                        var_dump('START POINT: ' .date('H:i:s', $checkStartPoint));
+                                        var_dump('POINT: ' . date('H:i:s', $endTime));
+                                        var_dump('END POINT: ' .date('H:i:s', $checkEndPoint));
+                                        if ($i === 21) die();
+                                    }
+                                    continue;
 
                                     if ($i == 0) {
                                         $start_time = Booking_agenda::explode_time($timeSlot['fromtime']);
