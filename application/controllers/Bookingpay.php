@@ -716,32 +716,27 @@ class Bookingpay extends BaseControllerWeb
     
         public function successBooking()
         {
-            if (ENVIRONMENT === 'development') {
-                $transactionid = $this->input->get('orderId', true);
-                $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
-                $this->emailReservation($transactionid);
-            }
-
             $statuscode = intval($this->input->get('orderStatusId'));
             if ($statuscode == 100) {
+                if (ENVIRONMENT === 'development') {
+                    $transactionid = $this->input->get('orderId', true);
+                    $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
+                    $this->emailReservation($transactionid);
+                }
                 $data = array();
                 $this->global['pageTitle'] = 'TIQS : THANKS';
-                $this->session->sess_destroy();
                 $this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
             } elseif ($statuscode <0) {
                 $data = array();
                 $this->global['pageTitle'] = 'TIQS : THANKS';
-                $this->session->sess_destroy();
                 $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
             } elseif ($statuscode >= 0) {
                 $data = array();
 			    $this->global['pageTitle'] = 'TIQS : THANKS';
-			    $this->session->sess_destroy();
 			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
             } else {
 			    $data = array();
 			    $this->global['pageTitle'] = 'TIQS : THANKS';
-			    $this->session->sess_destroy();
 			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
             }
 
