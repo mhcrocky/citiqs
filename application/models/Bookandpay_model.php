@@ -12,6 +12,9 @@ class Bookandpay_model extends CI_Model
 
 	public $uploadFolder = FCPATH . 'uploads/LabelImages';
 
+	public $id;
+	public $TransactionID;
+	public $reservationId;
 
 	function newbooking($labelInfo)
 	{
@@ -737,4 +740,33 @@ class Bookandpay_model extends CI_Model
 		return $reservationIds;
 	}
 
+	public function getBookingByReservationId(string $reservationId): ?array
+	{
+		$this->db->where('reservationId', $reservationId);
+		$result = $this->db->get('tbl_bookandpay')->result_array();
+		return empty($result) ? null : reset($result);
+	}
+
+	public function updateBooking(array $what): bool
+	{
+		if ($this->id) {
+			$this->db->where('id', $this->id);
+		} elseif ($this->TransactionID) {
+			$this->db->where('TransactionID', $this->TransactionID);
+		} elseif ($this->reservationId) {
+			$this->db->where('reservationId', $this->reservationId);
+		}
+
+        foreach ($what as $key => $value) {
+            $this->db->set($key, $value);
+        }
+
+        return $this->db->update('tbl_bookandpay');
+	}
+
+	public function setPropertry(string $key, $value): Bookandpay_model
+	{
+		$this->{$key} = $value;
+		return $this;
+	}
 }

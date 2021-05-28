@@ -394,4 +394,6 @@
 	<script src='<?php echo base_url(); ?>assets/home/js/flatpickrCalendar.js'></script>
 <?php } elseif ($this->view === 'bookings/timeslot_booking') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/timeslotBooking.js'></script>
-<?php  }?>
+<?php } elseif ($this->view === 'bookings/changeReservation') { ?>
+	<script src='<?php echo base_url(); ?>assets/home/js/changeReservation.js'></script>
+<?php } ?>

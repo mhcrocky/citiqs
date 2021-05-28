@@ -46,6 +46,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopproduct_model');
         $this->load->model('shopreport_model');
         $this->load->model('shopreportemail_model');
+        $this->load->model('bookandpay_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -2707,4 +2708,110 @@ class Ajax extends CI_Controller
         }
         return true;
     }
+
+    public function changeReservation(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $post = $this->security->xss_clean($_POST);
+
+        $this->validateChangeReservationPost($post);
+        list($oldReservation, $newReservation) = $this->getReservations($post);
+        $this->validateReservations($oldReservation, $newReservation, $post);
+        $this->updateRequestRefund($post['oldReservationId']);
+
+        if ($this->errorMessages) {
+            $response = [
+                'status' => '0',
+                'messages' => $this->errorMessages
+            ];
+        } else {
+            $response = [
+                'status' => '1',
+                'messages' => ['Reservation changed']
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    private function validateChangeReservationPost(array $post): void
+    {
+        if (empty($post['oldReservationId'])) {
+            array_push($this->errorMessages, 'Old reservation transaction id is requried');
+        }
+
+        if (empty($post['newReservationId'])) {
+            array_push($this->errorMessages, 'New reservation transaction id is requried');
+        }
+
+        if ($post['oldReservationId'] ===  $post['newReservationId']) {
+            array_push($this->errorMessages, 'Reservation ids cannot be equal');
+        }
+    }
+
+    private function getReservations(array $post): array
+    {
+        if ($this->errorMessages) return [null, null];
+
+        return [
+            $this->bookandpay_model->getBookingByReservationId($post['oldReservationId']),
+            $this->bookandpay_model->getBookingByReservationId($post['newReservationId'])
+        ];
+    }
+
+    private function validateReservations(?array $oldReservation, ?array $newReservation, array $post): void
+    {
+        if ($this->errorMessages) return;
+
+        if ($oldReservation && $newReservation && $oldReservation['customer'] !== $newReservation['customer']) {
+            array_push($this->errorMessages, 'Not allowed. This reservations created by different vendors');
+        }
+
+        $this->validateReservation($oldReservation, $post['oldReservationId']);
+        $this->validateReservation($newReservation, $post['newReservationId']);
+
+        return;
+    }
+
+    private function validateReservation(?array $reservation, string $transactionId): void
+    {
+        if ($this->errorMessages) return;
+
+        if( is_null($reservation)) {
+            array_push($this->errorMessages, 'Reservation with  transaction id "' . $transactionId . '" does not exists');
+            return;
+        }
+
+        if (!intval($reservation['paid'])) {
+            array_push($this->errorMessages, 'Reservation with  transaction id "' . $transactionId . '" is not paid');
+        }
+
+        if (intval($reservation['scanned'])) {
+            array_push($this->errorMessages, 'Reservation with  transaction id "' . $transactionId . '" already scanned');
+        }
+
+        if (intval($reservation['refundRequested'])) {
+            array_push($this->errorMessages, 'Refund for reservation with  transaction id "' . $transactionId . '" already requested');
+        }
+
+        $today = date('Y-m-d');
+        $checkDate = date('Y-m-d', strtotime('-2 days', strtotime($reservation['eventdate'])));
+        if ($today >= $checkDate) {
+            array_push($this->errorMessages, 'Not allowed to change. Reservation date for reservation with id "' . $transactionId . '" must not be in next two days');
+        }
+
+        return;
+    }
+
+    private function updateRequestRefund(string $reservationId): void
+    {
+        if ($this->errorMessages) return;
+
+        if (!$this->bookandpay_model->setPropertry('reservationId', $reservationId)->updateBooking(['refundRequested' => '1'])) {
+            array_push($this->errorMessages, 'Failed');
+        }
+    }
+
 }
