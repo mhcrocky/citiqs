@@ -1,3 +1,24 @@
+<style>
+li {
+    list-style-type: none;
+
+
+
+    &:nth-of-type(1) {
+        .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%230fff00' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+        }
+
+        .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+            background-color: #5bc0de;
+        }
+    }
+
+
+}
+
+</style>
+
 <div class="modal fade" id="emailTemplateModal" tabindex="-1" role="dialog" aria-labelledby="emailTemplateModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -52,7 +73,7 @@
                     <a :href="baseURL+ 'emaildesigner'" class="btn btn-success">Email Designer</a>
                 </div>
                 <div class="col-md-12" style="text-align:center">
-                    <div style="text-align:center">
+                    <div class="table-responsive" style="text-align:center">
                         <table class="table table-striped">
                             <thead>
                                 <tr class="tab_head">
@@ -66,6 +87,8 @@
                                     <th>Price</th>
                                     <th>Email Template</th>
                                     <th>Max Bookings</th>
+                                    <td>Send To Email</td>
+                                    <td>Email</td>
                                     <th>Background Color</th>
                                     <th>Image</th>
                                     <th>Action</th>
@@ -87,6 +110,8 @@
                                         </a>
                                     </td>
                                     <td>{{ spot.maxBooking }}</td>
+                                    <td>{{ spot.send_to_email }}</td>
+                                    <td>{{ spot.spot_email }}</td>
                                     <td class="background-td" :class="'background-'+spot.background_color">
                                     <div :style="'width:70px;height: 30px;background:'+ spot.background_color"><div>
                                 </td>
@@ -213,6 +238,24 @@
                                 <search-select :options="emailsOptions" v-model="spotModalData.email_id"
                                     placeholder="Select Email Template"></search-select>
                             </div>
+                            <div style="display: flex;" class="form-group">
+                                <label style="margin-right:20px;" for="totime"><?php echo $this->language->tLine('Send To Email'); ?></label>
+                                <ul>
+                                    <li>
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="visible" type="checkbox" v-model="checkboxValue">
+                                            <label class="custom-control-label font-weight-bold text-dark"
+                                                for="visible">
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div v-if="spotModalData.send_to_email == 1" class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" v-model="spotModalData.spot_email" class="form-control"
+                                    placeholder="<?php echo $this->language->tLine('Email'); ?>">
+                            </div>
                             <div class="form-group">
                             <label for="background_color">Background Color</label>
                             <select class="form-control" id="background_color" name="background_color"
@@ -226,6 +269,7 @@
                                 <option value="#446087" data-color="#446087">Yankee</option>
                             </select>
                         </div>
+                        
                             <div class="images justify-content-center d-flex flex-wrap">
                                 <div class="form-group row">
                                     <label for="image" class="col-md-4 col-form-label text-md-left"><?php echo $this->language->tLine('Upload Image'); ?></label>
@@ -317,6 +361,8 @@
                 image: '',
                 background: 'blue-light',
                 background_color: '#4682B4',
+                send_to_email: 0,
+                spot_email: '',
                 maxBooking: 1,
                 agenda_id: null,
                 email_id: null,
@@ -358,6 +404,8 @@
                     image: '',
                     background: 'blue-light',
                     background_color: '#4682B4',
+                    send_to_email: 0,
+                    spot_email: '',
                     maxBooking: 1,
                     agenda_id: null,
                     email_id: null,
@@ -444,6 +492,8 @@
                 formData.append("agenda_id", this.spotModalData.agenda_id);
                 formData.append("maxBooking", this.spotModalData.maxBooking);
                 formData.append("background_color", this.spotModalData.background_color);
+                formData.append("send_to_email", this.spotModalData.send_to_email);
+                formData.append("spot_email", this.spotModalData.spot_email);
                 formData.append("email_id", this.spotModalData.email_id);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
                 formData.append("spots", $('#spots').val());
@@ -606,6 +656,23 @@
                 set: function(value) {
                     this.spotModalData.agenda_id = value;
                     this.selectAgenda()
+                }
+            },
+            checkboxValue: {
+                get: function() {
+                    if(this.spotModalData.send_to_email == 0){
+                        return false;
+                    }
+                    return true;
+                },
+                set: function(value) {
+                    if(value == true){
+                        this.spotModalData.send_to_email = 1;
+                    } else {
+                        this.spotModalData.send_to_email = 0;
+                        this.spotModalData.spot_email = '';
+                    }
+                   
                 }
             },
             agendasOptions: function() {
