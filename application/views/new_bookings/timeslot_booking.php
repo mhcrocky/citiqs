@@ -1,7 +1,5 @@
 <!-- end step 2-->
-<style>
 
-</style>
 <div class="col-12 step step-3 active" id="time-input">
 <table style="background: none !important;" class="table table-striped w-100 text-center">
         <tr>
