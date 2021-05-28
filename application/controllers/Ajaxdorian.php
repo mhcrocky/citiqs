@@ -356,6 +356,8 @@ class Ajaxdorian extends CI_Controller
             'image' => $imgName,
             'maxBooking' => $this->input->post('maxBooking'),
             'background_color' => $this->input->post('background_color'),
+            'send_to_email' => $this->input->post('send_to_email'),
+            'spot_email' => $this->input->post('spot_email'),
             'agenda_id' => $this->input->post('agenda_id'),
             'email_id' => $this->input->post('email_id'),
             'spotLabelId' => $this->input->post('spotLabelId'),
