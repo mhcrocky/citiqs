@@ -66,6 +66,7 @@
                                     <th>Price</th>
                                     <th>Email Template</th>
                                     <th>Max Bookings</th>
+                                    <th>Background Color</th>
                                     <th>Image</th>
                                     <th>Action</th>
                                 </tr>
@@ -86,6 +87,9 @@
                                         </a>
                                     </td>
                                     <td>{{ spot.maxBooking }}</td>
+                                    <td class="background-td" :class="'background-'+spot.background_color">
+                                    <div :style="'width:70px;height: 30px;background:'+ spot.background_color"><div>
+                                </td>
                                     <td class="spot_table_image"><img :class="backgroundClass(spot.background)"
                                             :src="imgFullPath(spot.image)" alt=""></td>
                                     <td class="td_action">
@@ -209,6 +213,19 @@
                                 <search-select :options="emailsOptions" v-model="spotModalData.email_id"
                                     placeholder="Select Email Template"></search-select>
                             </div>
+                            <div class="form-group">
+                            <label for="background_color">Background Color</label>
+                            <select class="form-control" id="background_color" name="background_color"
+                                    v-model="spotModalData.background_color">
+                                <option value="#4682B4" data-color="#4682B4">Blue Light</option>
+                                <option value="#F9A602" data-color="#F9A602">Yellow</option>
+                                <option value="#af69ee" data-color="#af69ee">Purple Light</option>
+                                <option value="#72B19F" data-color="#72B19F">Green</option>
+                                <option value="#E25F2A" data-color="#E25F2A">Orange</option>
+                                <option value="#131e3a" data-color="#131e3a">Blue</option>
+                                <option value="#446087" data-color="#446087">Yankee</option>
+                            </select>
+                        </div>
                             <div class="images justify-content-center d-flex flex-wrap">
                                 <div class="form-group row">
                                     <label for="image" class="col-md-4 col-form-label text-md-left"><?php echo $this->language->tLine('Upload Image'); ?></label>
@@ -299,6 +316,7 @@
                 price: 0,
                 image: '',
                 background: 'blue-light',
+                background_color: '#4682B4',
                 maxBooking: 1,
                 agenda_id: null,
                 email_id: null,
@@ -339,6 +357,7 @@
                     numberofpersons: 1,
                     image: '',
                     background: 'blue-light',
+                    background_color: '#4682B4',
                     maxBooking: 1,
                     agenda_id: null,
                     email_id: null,
@@ -361,6 +380,7 @@
             editSpot(spot) {
                 this.method = 'edit';
                 this.spotModalData = Object.assign({}, spot);
+                $('#background_color').val(this.spotModalData.background_color).trigger('change');
                 $('#add_spot_modal').modal('show');
                 $('.modal-title').text('Edit Spot');
             },
@@ -386,6 +406,7 @@
                 $('#copyfrom').hide();
                 $('.modal-title').text('Copy Spot');
                 this.spotModalData = Object.assign({}, spot);
+                $('#background_color').val(this.spotModalData.background_color).trigger('change');
                 $('#saveCopySpot').removeClass('d-none');
                 $('#saveCopySpot').show();
                 $('#saveSpot').hide();
@@ -422,6 +443,7 @@
                 formData.append("imgDeleted", $('#imgDeleted').val());
                 formData.append("agenda_id", this.spotModalData.agenda_id);
                 formData.append("maxBooking", this.spotModalData.maxBooking);
+                formData.append("background_color", this.spotModalData.background_color);
                 formData.append("email_id", this.spotModalData.email_id);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
                 formData.append("spots", $('#spots').val());
@@ -478,6 +500,7 @@
                 formData.append("agenda_id", this.spotModalData.agenda_id);
                 formData.append("email_id", this.spotModalData.email_id);
                 formData.append("maxBooking", this.spotModalData.maxBooking);
+                formData.append("background_color", this.spotModalData.background_color);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
                 formData.append("spots", this.spotModalData.id);
                 
@@ -611,8 +634,14 @@
             }
         },
         mounted: function() {
-            this.$nextTick(function() {
+            this.$nextTick(function () {
+                $('#background_color').colorselector();
 
+
+                $('#background_color').change(() => {
+                    this.spotModalData.background_color = $('#background_color').val();
+                    
+                })
             })
         }
     })

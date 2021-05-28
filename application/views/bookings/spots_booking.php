@@ -59,7 +59,7 @@ p.p-title {
             <?php if($spots_exist): ?>
             <?php foreach($spots as $key=>$spot): ?>
                 <?php if($count % 2 == 0): ?>
-                    <div class="<?php echo $backgroundColors[$backgroundCount]; ?> height-40">
+                    <div style="background:<?php echo $spot['data']->background_color; ?> !important" class="<?php echo $backgroundColors[$backgroundCount]; ?> height-40">
                     <div style="text-align: left">
                         <a href="javascript:history.back()"><i class="fa fa-arrow-circle-left" style="font-size:48px; color:white"></i></a>
                     </div>
