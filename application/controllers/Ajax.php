@@ -2781,6 +2781,7 @@ class Ajax extends CI_Controller
 
         if( is_null($reservation)) {
             array_push($this->errorMessages, 'Reservation with  transaction id "' . $transactionId . '" does not exists');
+            return;
         }
 
         if (!intval($reservation['paid'])) {
