@@ -132,6 +132,8 @@ class Agenda_booking extends BaseControllerWeb
         
         $orderData['spot'] =  $eventId;
 
+        $orderData['eventId'] =  $eventId;
+
         $this
                 ->shopsession_model
                 ->setIdFromRandomKey($orderRandomKey)
@@ -317,7 +319,7 @@ class Agenda_booking extends BaseControllerWeb
                 'timeslot' => $selectedTimeSlot->id,
                 'timeslotId' => $selectedTimeSlot->id,
                 'reservationFee' => $selectedTimeSlot->reservationFee,
-                'price' => $selectedTimeSlot->price ? $selectedTimeSlot->price : $price,
+                'price' => ($selectedTimeSlot->price != '0') ? $selectedTimeSlot->price : $price,
                 'numberofpersons' => $numberOfPersons,
                 'reservationset' => '1'
             ];
@@ -359,6 +361,11 @@ class Agenda_booking extends BaseControllerWeb
             
 
             redirect('agenda_booking/pay?order=' . $orderRandomKey);
+            
+        }
+
+        foreach($timeSlots as $key => $timeslot){
+            $timeSlots[$key]['price'] = ($timeslot['price'] == '0') ? $spot->price : $timeslot['price'];
             
         }
 
