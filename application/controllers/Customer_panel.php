@@ -67,7 +67,7 @@ class  Customer_panel extends BaseControllerWeb
             'emails' => $emails
         ]; 
 
-		$this->global['pageTitle'] = 'TIQS : BOOKING2020';
+		$this->global['pageTitle'] = 'TIQS : RESERVATIONS';
         $this->loadViews("customer_panel/agenda", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
@@ -110,7 +110,7 @@ class  Customer_panel extends BaseControllerWeb
         } else {
             $data['agendas'] = $this->bookandpayagendabooking_model->getbookingagenda($this->user_model->id);
         }
-		$this->global['pageTitle'] = 'TIQS : BOOKING2020';
+		$this->global['pageTitle'] = 'TIQS : RESERVATIONS';
         $this->loadViews("customer_panel/spots", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
@@ -157,7 +157,7 @@ class  Customer_panel extends BaseControllerWeb
             $data['spots'] = $this->bookandpayspot_model->getSpotsByCustomer($this->user_model->id);
         }
 
-		$this->global['pageTitle'] = 'TIQS : BOOKING2020';
+		$this->global['pageTitle'] = 'TIQS : RESERVATIONS';
         $this->loadViews("customer_panel/time_slots", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
