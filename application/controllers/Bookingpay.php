@@ -40,14 +40,14 @@ class Bookingpay extends BaseControllerWeb
         if (isset($_SESSION["reservation_data"])) {
             $data = $_SESSION["reservation_data"];
         } else {
-            var_dump();
+            // var_dump();
 
             redirect('thuishaven');
         }
 
         $result = $this->bookandpay_model->getReservationId($_SESSION['ReservationId']);
         if (empty($result)) {
-            var_dump();
+            // var_dump();
             redirect('thuishaven');
         }
         // time set in db
@@ -525,7 +525,7 @@ class Bookingpay extends BaseControllerWeb
 
     public function successPaymentPay($reservation_id)
     {
-		$statuscode = intval($this->input->get('orderStatusId'));
+        $statuscode = intval($this->input->get('orderStatusId'));
 
 		if ($statuscode == 100) {
 
@@ -590,7 +590,7 @@ class Bookingpay extends BaseControllerWeb
         
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
         Reservationsemail_helper::sendEmailReservation($reservations, true);
-        
+
     }
 
 
@@ -716,6 +716,12 @@ class Bookingpay extends BaseControllerWeb
     
         public function successBooking()
         {
+            if (ENVIRONMENT === 'development') {
+                $transactionid = $this->input->get('orderId', true);
+                $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
+                $this->emailReservation($transactionid);
+            }
+
             $statuscode = intval($this->input->get('orderStatusId'));
             if ($statuscode == 100) {
                 $data = array();

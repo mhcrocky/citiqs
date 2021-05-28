@@ -32,7 +32,7 @@ class  Paysuccesslink extends BaseControllerWeb
 
     private function getLandingPage(array &$data, string $landingPage): void
     {
-        if (empty($data)) return;
+        if (empty($data['order'])) return;
 
         $vendorId = intval($data['order']['vendorId']);
         $landingPage = $this

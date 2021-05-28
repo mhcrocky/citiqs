@@ -62,8 +62,12 @@
                 'what' => ['orderId'],
                 'where' => ['transactionId' => $this->transactionId]
             ]);
-            $orderId = reset($orderId);
-            $this->orderId = intval($orderId['orderId']);
+
+            if (!is_null($orderId)) {
+                $orderId = reset($orderId);
+                $this->orderId = intval($orderId['orderId']);
+            }
+
             return $this;
         }
 
