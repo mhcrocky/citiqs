@@ -301,7 +301,9 @@
             $data['datetimeto'] = str_replace(' ', 'T', $data['datetimeto']);
 
             $url = base_url() . 'api/report?' . http_build_query($data);
-            $response = json_decode(file_get_contents($url));
+            $content = file_get_contents($url);
+            if (!$content) return;
+            $response = json_decode($content);
 
             if ($response->status === '1') {
                 $report = $this->config->item('financeReportes') . $data['vendorid'] . '_' . $data['report'] . '.png';

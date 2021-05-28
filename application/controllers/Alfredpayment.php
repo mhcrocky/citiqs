@@ -70,8 +70,8 @@ class Alfredpayment extends BaseControllerWeb
         if ($orderRandomKey) {
             if ($result) {
                 $message = $this->returnErrMessage($result->request->errorId);
+                $this->session->set_flashdata('error', $message);
             }
-            $this->session->set_flashdata('error', $message);
             $redirect = base_url() . 'pay_order?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
         } else {
             $redirect = base_url();
@@ -119,48 +119,50 @@ class Alfredpayment extends BaseControllerWeb
     public function successPayment(): void
     {
         $get = Utility_helper::sanitizeGet();
+        $getUrlPart = '';
 
         $this->shoporderpaynl_model->setProperty('transactionId', $get['orderId'])->setAlfredOrderId();
 
-        $orderId = intval($this->shoporderpaynl_model->orderId);
-        $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
-        $order = reset($order);
-        $vendorId = intval($order['vendorId']);
-        $redirect = base_url() . 'cancel?status=' . $get['orderStatusId'];
+        if ($this->shoporderpaynl_model->orderId) {
+            $orderId = intval($this->shoporderpaynl_model->orderId);
+            $order = $this->shoporder_model->setObjectId($orderId)->fetchOne();
+            $order = reset($order);
+            $getUrlPart =  '?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+        }
 
         // $this->logPaynlGetResponse($get);
 
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
             // need to do something with the facebook pixel.
-            if (ENVIRONMENT === 'development') {
+            if (ENVIRONMENT === 'development' && $this->shoporderpaynl_model->orderId) {
                 $this->shoporderpaynl_model->updatePayNl(['successPayment' => date('Y-m-d H:i:s')]);
                 $this->shoporder_model->updatePaidStatus($this->shoporderpaynl_model, ['paid' => $this->config->item('orderPaid')]);
                 $this->shoporder_model->emailReceipt();
             }
-            $redirect = base_url() . 'success?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            $redirect = base_url() . 'success' . $getUrlPart;
         } elseif (in_array($get['orderStatusId'], $this->config->item('payNlPending'))) {
-            $redirect = base_url() . 'pending?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            $redirect = base_url() . 'pending' . $getUrlPart;
         } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
-            $redirect = base_url() . 'authorised?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            $redirect = base_url() . 'authorised' . $getUrlPart;
         } elseif ($get['orderStatusId'] === $this->config->item('payNlVerify')) {
-            $redirect = base_url() . 'verify?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            $redirect = base_url() . 'verify' . $getUrlPart;
         } elseif ($get['orderStatusId'] === $this->config->item('payNlCancel')) {
-            $redirect = base_url() . 'cancel?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            $redirect = base_url() . 'cancel' . $getUrlPart;
         } elseif ($get['orderStatusId'] === $this->config->item('payNlDenied')) {
-            $redirect = base_url() . 'denied?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            $redirect = base_url() . 'denied' . $getUrlPart;
         } else {
-            $redirect = base_url() . 'cancel?' . $this->config->item('orderDataGetKey') . '=' . $order['orderRandomKey'] . '&orderid=' . $order['orderId'];
+            $redirect = base_url() . 'cancel' . $getUrlPart;
         }
 
         redirect($redirect);
         exit();
     }
 
-    private function logPaynlGetResponse(array $get):void
-    {
-        $file = FCPATH . 'application/tiqs_logs/payment_logs_shop.txt';
-        $message = http_build_query($get);
-        Utility_helper::logMessage($file, $message);
-        return;
-    }
+    // private function logPaynlGetResponse(array $get):void
+    // {
+    //     $file = FCPATH . 'application/tiqs_logs/payment_logs_shop.txt';
+    //     $message = http_build_query($get);
+    //     Utility_helper::logMessage($file, $message);
+    //     return;
+    // }
 }
