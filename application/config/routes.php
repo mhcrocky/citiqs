@@ -499,7 +499,7 @@ $route['booking_agenda/get_agenda/spots/(:num)/(:num)'] = "Booking_agenda/get_ag
 $route['booking_agenda/getAllAgenda/(:any)'] = "Booking_agenda/getAllAgenda/$1";
 $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
 $route['booking/successbooking'] = "Booking/successBooking";
-
+$route['change_reservation'] = 'Booking_agenda/changeReservation';
 
 
 $route['agenda_booking/reserved'] = "Agenda_booking/reserved";

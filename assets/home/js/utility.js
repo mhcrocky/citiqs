@@ -82,6 +82,7 @@ function validateFormData(form) {
     let i;
     let countErrors = 0;
 
+
     for (i = 0; i < inputsLength; i++) {
         let input = inputs[i];
         countErrors += alertifyErrMessage(input);

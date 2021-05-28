@@ -752,5 +752,11 @@ class Booking_agenda extends BaseControllerWeb
         return false;
     }
 
+    public function changeReservation(): void
+    {
+        $data['pageTitle'] = 'TIQS : CHANGE RESERVATION';
+
+        $this->loadViews('bookings/changeReservation', $data, '', 'bookingfooter', 'bookingheader');
+    }
 
 }
