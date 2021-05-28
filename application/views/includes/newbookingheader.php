@@ -36,7 +36,7 @@
         }
     }
     label:hover {
-        color: #212528 !important;
+        color: #000 !important;
         cursor: pointer;
     }
     #booking-footer {
