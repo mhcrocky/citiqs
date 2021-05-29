@@ -671,5 +671,36 @@ function hideTemplateEditor() {
     return;
 }
 
+function sendTestEmail(emailId, templateId){
+  let email = document.getElementById(emailId);
+  let templateHtml = tinyMCE.get(templateId).getContent().trim();
+  let url = globalVariables.baseUrl + 'Ajaxdorian/sendTestEmail';
+  var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  if(!email.value.match(mailformat))
+  {
+    alertify['error']("Invalid email address!");
+    return false;
+  }
+
+  let post = {
+    'email' : email.value.trim(),
+    'templateHtml' : templateHtml,
+  };
+
+
+
+  $.post(url, post, function(data) {
+    data = JSON.parse(data);
+    alertifyAjaxResponse(data);
+  });
+
+}
+
+function sendTestEmailResponse(email, response) {
+  console.log(response);
+  alertifyAjaxResponse(response);
+  return;
+}
+
 showTemplates();
 setTimeout(hideTemplateEditor, 1000);
