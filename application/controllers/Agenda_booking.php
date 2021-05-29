@@ -66,6 +66,9 @@ class Agenda_booking extends BaseControllerWeb
         $sessionData['spotId'] = 0;
         $sessionData['reservations'] = [];
         $sessionData['totalAmount'] = false;
+        $sessionData['eventId'] = false;
+        $sessionData['eventDate'] = false;
+        $sessionData['timeslot'] = false;
         
 
         if(count($orderData) < 1){
@@ -99,7 +102,12 @@ class Agenda_booking extends BaseControllerWeb
         $data['logoUrl'] = $logoUrl;
         $this->global['pageTitle'] = 'TIQS: AGENDA';
         $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer->id);
-        $data['shortUrl'] = $shortUrl;
+        $this->global['shortUrl'] = $orderData['customer']['usershorturl'];
+        $this->global['orderRandomKey'] = $orderRandomKey;
+        $this->global['eventId'] = $orderData['eventId'];
+        $this->global['eventDate'] = str_replace('-', '', $orderData['eventDate']);
+        $this->global['spotId'] = $orderData['spotId'];
+        $this->global['timeslot'] = $orderData['timeslot'];
         $this->loadViews('new_bookings/index', $this->global, $data, 'newbookingfooter', 'newbookingheader');
         
 
@@ -198,6 +206,12 @@ class Agenda_booking extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
         $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
+        $this->global['shortUrl'] = $orderData['customer']['usershorturl'];
+        $this->global['eventId'] = $orderData['eventId'];
+        $this->global['eventDate'] = str_replace('-', '', $orderData['eventDate']);
+        $this->global['orderRandomKey'] = $orderRandomKey;
+        $this->global['spotId'] = $orderData['spotId'];
+        $this->global['timeslot'] = $orderData['timeslot'];
         $this->loadViews("new_bookings/spots_booking", $this->global, $data, 'newbookingfooter', 'newbookingheader');    
     }
 
@@ -347,6 +361,7 @@ class Agenda_booking extends BaseControllerWeb
                 $orderData['reservationFee'] = $selectedTimeSlot->reservationFee;
             }
             
+            $orderData['spotId'] = $spotId;
 
             $this
                 ->shopsession_model
@@ -374,7 +389,6 @@ class Agenda_booking extends BaseControllerWeb
         $data['timeSlots'] = $timeSlots;
         $data['eventDate'] = $orderData['eventDate'];
         $data['eventId'] = $eventId;
-        $data['orderRandomKey'] = $orderRandomKey;
 
         $this
             ->shopsession_model
@@ -385,6 +399,12 @@ class Agenda_booking extends BaseControllerWeb
         
         $this->global['pageTitle'] = 'TIQS : BOOKINGS';
         $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
+        $this->global['shortUrl'] = $orderData['customer']['usershorturl'];
+        $this->global['eventId'] = $orderData['eventId'];
+        $this->global['eventDate'] = str_replace('-', '', $orderData['eventDate']);
+        $this->global['spotId'] = $spotId;
+        $this->global['timeslot'] = $orderData['timeslot'];
+        $this->global['orderRandomKey'] = $orderRandomKey;
 
         $this->loadViews("new_bookings/timeslot_booking", $this->global, $data, 'newbookingfooter', 'newbookingheader');
     }
@@ -463,6 +483,12 @@ class Agenda_booking extends BaseControllerWeb
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS'; 
         $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
+        $this->global['shortUrl'] = $orderData['customer']['usershorturl'];
+        $this->global['eventId'] = $orderData['eventId'];
+        $this->global['eventDate'] = str_replace('-', '', $orderData['eventDate']);
+        $this->global['spotId'] = $orderData['spotId'];
+        $this->global['timeslot'] = true;
+        $this->global['orderRandomKey'] = $orderRandomKey;
         $data['termsofuse'] = $this->bookandpayagendabooking_model->getTermsofuse();
 
         $this->loadViews("new_bookings/final", $this->global, $data, 'newbookingfooter', 'newbookingheader'); // payment screen
