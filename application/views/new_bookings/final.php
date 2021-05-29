@@ -21,10 +21,10 @@
 
             <tr class="text-left" style="width:50%">
 			    <th class="booking-info">
-			        <strong class="event-text">Date</strong>
+			        <strong class="event-text">Datum</strong>
 			    </th>
 				<th class="booking-info">
-				    <strong class="spot-text">Place</strong>
+				    <strong class="spot-text">Plaats</strong>
 			    </th>
 			</tr>
 			<tr class="text-left" style="width:50%">
@@ -40,7 +40,7 @@
 
 			<tr class="text-left" style="width:50%;">
 			    <th class="booking-info pt-4">
-			        <strong class="timeslot-text">Time</strong>
+			        <strong class="timeslot-text">Tijd</strong>
 			    </th>
 				<th class="booking-info  pt-4">
 				    <strong>Price</strong>
