@@ -35,9 +35,11 @@
             max-width: 100% !important;
         }
     }
-    label:hover {
-        color: #000 !important;
-        cursor: pointer;
+    .btn-primary:hover {
+        opacity: 0.8 !important;
+    }
+    .btn-primary {
+        width: 130px !important;
     }
     #booking-footer {
         padding: 0px !important;
