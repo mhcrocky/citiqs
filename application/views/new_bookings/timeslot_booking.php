@@ -32,6 +32,7 @@
 
         $timeslotSoldout = Agenda_booking::check_if_soldout($timeSlot['id'], Agenda_booking::second_to_hhmm($start_time), Agenda_booking::second_to_hhmm($end_time), $timeSlot['available_items']);
         $timeSlot['status'] = ($timeslotSoldout === true) ? 'soldout' : 'open';
+        
     ?>
         <tr>
             <?php if($timeSlot['status'] != "soldout"): ?>
