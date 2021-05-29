@@ -1,12 +1,12 @@
 <?php 
-$idealPaymentFee = isset($idealPayment) ? $idealPayment : '';
-$bancontactPaymentFee = isset($bancontactPayment) ? $bancontactPayment : '';
-$creditCardPaymentFee = isset($creditCardPayment) ? $creditCardPayment : '';
-$voucherPaymentFee = isset($voucher) ? $voucher : '';
-$myBankPaymentFee = isset($myBank) ? $myBank : '';
-$payconiqPaymentFee = isset($payconiqPayment) ? $payconiqPayment : '';
-$giroPaymentFee = isset($giroPayment) ? $giroPayment : '';
-$pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : '';
+$idealPaymentFee = isset($idealPayment) ? $idealPayment : 0;
+$bancontactPaymentFee = isset($bancontactPayment) ? $bancontactPayment : 0;
+$creditCardPaymentFee = isset($creditCardPayment) ? $creditCardPayment : 0;
+$voucherPaymentFee = isset($voucher) ? $voucher : 0;
+$myBankPaymentFee = isset($myBank) ? $myBank : 0;
+$payconiqPaymentFee = isset($payconiqPayment) ? $payconiqPayment : 0;
+$giroPaymentFee = isset($giroPayment) ? $giroPayment : 0;
+$pinMachinePaymentFee = isset($pinMachine) ? $pinMachine : 0;
 $activePayments = array_values($activePayments);
 ?>
 <div class="col-md-12 payOrderBackgroundColor">
@@ -28,18 +28,21 @@ $activePayments = array_values($activePayments);
 					<?php if (in_array($payconiqPaymentText, $activePayments)) { ?>
 						<a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?order=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
 							<img src="https://tiqs.com/alfred/assets/home/imgs/extra/payconiq.png" alt="Payconiq">
+                            <p class="paymentFee"><?php echo ($payconiqPaymentFee == 0) ? '&nbsp' : '€'.$payconiqPaymentFee; ?></p>
 							<span class="paymentMethodText">Payconiq</span>
 						</a>
 					<?php } ?>
                     <?php if (in_array($idealPaymentText, $activePayments)) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('idealBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/ideal.png" alt="iDEAL">
+                            <p class="paymentFee"><?php echo ($idealPaymentFee == 0) ? '&nbsp' : '€'.$idealPaymentFee; ?></p>
                             <span class="paymentMethodText">iDEAL</span>
                         </a>
                     <?php } ?>
                     <?php if (in_array($creditCardPaymentText, $activePayments)) { ?>
                         <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $creditCardPaymentType; ?>/0<?php echo '?order=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/creditcard.png" alt="Creditcard">
+                            <p class="paymentFee"><?php echo ($creditCardPaymentFee == 0) ? '&nbsp' : '€'.$creditCardPaymentFee; ?></p>
                             <span class="paymentMethodText">Creditcard</span>
                         </a>
                     <?php } ?>
@@ -47,18 +50,21 @@ $activePayments = array_values($activePayments);
                     <?php if (in_array($bancontactPaymentText, $activePayments)) { ?>
                         <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $bancontactPaymentType; ?>/0<?php echo '?order=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/bancontact.png" alt="bancontact">
+                            <p class="paymentFee"><?php echo ($bancontactPaymentFee == 0) ? '&nbsp' : '€'.$bancontactPaymentFee; ?></p>
                             <span class="paymentMethodText">Bancontact</span>
                         </a>
                     <?php } ?>
                     <?php if (in_array($myBankPaymentText, $activePayments)) { ?>
                         <a href="<?php echo base_url(); ?>bookingpay/onlinepayment/<?php echo $myBankPaymentType; ?>/0<?php echo '?order=' . $orderRandomKey; ?>" class="paymentMethod method-card addTargetBlank">
                             <img src="https://static.pay.nl/payment_profiles/100x100/1588.png" alt="bancontact">
+                            <p class="paymentFee"><?php echo ($myBankPaymentFee == 0) ? '&nbsp' : '€'.$myBankPaymentFee; ?></p>
                             <span class="paymentMethodText">My Bank</span>
                         </a>
                     <?php } ?>
                     <?php if (in_array($giroPaymentText, $activePayments)) { ?>
                         <a href="javascript:void(0)" onclick="toogleElements('giroBanks', 'paymentMethodsContainer', 'hidden')" class="paymentMethod method-card" >
                             <img src="https://tiqs.com/alfred/assets/home/imgs/extra/giropay(1).png" alt="bancontact">
+                            <p class="paymentFee"><?php echo ($myBankPaymentFee == 0) ? '&nbsp' : '€'.$myBankPaymentFee; ?></p>
                             <span class="paymentMethodText" data-trans="" data-trn-key="Bancontact">Giropay</span>
                         </a>
                     <?php } ?>
@@ -66,6 +72,7 @@ $activePayments = array_values($activePayments);
                     <?php if (in_array($voucherPaymentText, $activePayments)) { ?>
                         <a href="javascript:;" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                             <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
+                            <p class="paymentFee"><?php echo ($voucherPaymentFee == 0) ? '&nbsp' : '€'.$voucherPaymentFee; ?></p>
                             <span class="paymentMethodText"><?php echo $this->language->tline('Use Voucher');?></span>
                         </a>
                     <?php } ?>
@@ -193,7 +200,7 @@ $activePayments = array_values($activePayments);
             <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
             <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
             <div id="payFooter" class="footer" style="text-align:left">
-                <a id="backLink" href="<?php echo base_url(); ?>agenda_booking/pay?order=<?php echo $orderRandomKey; ?>" class="btn btn-cancel">
+                <a id="backLink" href="<?php echo base_url(); ?>booking_agenda/pay?order=<?php echo $orderRandomKey; ?>" class="btn btn-cancel">
                     <i class="fa fa-arrow-left"></i>
                     <span data-trans="" data-trn-key="Annuleren">BACK</span>
                 </a>
