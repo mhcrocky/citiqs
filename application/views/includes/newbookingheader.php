@@ -57,6 +57,9 @@
     .booking-info > span {
         font-weight: 50;
     }
+    </style>
+
+    <style>
 
 
     <?php if(isset($customDesign[0]['design'])) {
@@ -64,10 +67,11 @@
 
         $design_ids=$design['id'];
 
+
         foreach($design_ids as $key=> $design_id) {
-            echo '#'. $key . '{';
-            echo array_keys($design_id)[0].':';
-            echo array_values($design_id)[0].'!important } ';
+            echo '#'. $key . ' {';
+            echo array_keys($design_id)[0].': ';
+            echo array_values($design_id)[0].' !important } ';
         }
 
         $design_classes=$design['class'];
@@ -76,15 +80,16 @@
             if($key == 'booking-info'){
                 echo '.booking-info, .booking-info > span {';
             } else {
-                echo '.'. $key . '{';
+                echo '.'. $key . ' {';
             }
-            echo array_keys($design_class)[0].':';
-            echo array_values($design_class)[0].'!important } ';
+            echo array_keys($design_class)[0].': ';
+            echo array_values($design_class)[0].' !important } ';
         }
     }
 
     ?>
     </style>
+   
     <script>
     function customDesignLoad() {
         <?php 
