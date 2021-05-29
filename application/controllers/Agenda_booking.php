@@ -227,7 +227,7 @@ class Agenda_booking extends BaseControllerWeb
         $spot = $this->bookandpayspot_model->getSpot($spotId);
         $spotReservations = 0;
         $orderData['spotDescript'] = $spot->descript;
-        $orderData['spotPrice'] = $spot->price.' €';
+        $orderData['spotPrice'] = $spot->price;
         
 
         $availableItems = $spot->available_items;
@@ -459,11 +459,12 @@ class Agenda_booking extends BaseControllerWeb
         $data['eventDate'] = isset($orderData['eventDate']) ? $orderData['eventDate'] : '';
         $data['spotDescript'] = isset($orderData['spotDescript']) ? $orderData['spotDescript'] : '';
         $data['timeslot'] = isset($orderData['timeslot']) ? $orderData['timeslot'] : '';
-        $data['timeslotPrice'] = isset($orderData['timeslotPrice']) ? $orderData['timeslotPrice'] : '';
+        $data['timeslotPrice'] = !empty($orderData['timeslotPrice']) ? $orderData['timeslotPrice'] : floatval($orderData['spotPrice']);
 
         $this->global['pageTitle'] = 'TIQS : BOOKINGS'; 
         $this->global['customDesign'] = $this->bookandpayagendabooking_model->get_agenda_booking_design($customer['id']);
         $data['termsofuse'] = $this->bookandpayagendabooking_model->getTermsofuse();
+
         $this->loadViews("new_bookings/final", $this->global, $data, 'newbookingfooter', 'newbookingheader'); // payment screen
     }
 
