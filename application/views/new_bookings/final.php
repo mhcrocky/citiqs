@@ -2,16 +2,16 @@
 <div class="col-12 step step-4 active">
     <form id="checkItem" class="w-100" action="<?php echo $this->baseUrl; ?>agenda_booking/pay?order=<?php echo $orderRandomKey; ?>" method="post">
         <div class="form-group w-100">
-            <label class="form-check-label" for="11"><strong>Name</strong></label>
-            <input class="form-control" type="text" id="username" name="username" placeholder="Your Name" required>
+            <label class="form-check-label" for="11"><strong>Naam</strong></label>
+            <input class="form-control" type="text" id="username" name="username" placeholder="" required>
         </div>
         <div class="form-group w-100">
-            <label class="form-check-label" for="11"><strong>Email</strong></label>
-            <input class="form-control" id="email" name="email" placeholder="Your Email" required>
+            <label class="form-check-label" for="11"><strong>Emial</strong></label>
+            <input class="form-control" id="email" name="email" placeholder="" required>
         </div>
         <div class="form-group w-100">
-            <label class="form-check-label" for="11"><strong>Phone Number</strong></label>
-            <input class="form-control" name="mobile" id="mobile" type="tel" placeholder="Your Phone Number" minlength="10" required>
+            <label class="form-check-label" for="11"><strong>Telefoonnumemr</strong></label>
+            <input class="form-control" name="mobile" id="mobile" type="tel" placeholder="" minlength="10" required>
         </div>
         <!-- end booking form inputs -->
         <div id="booking-footer" class="booking-form__result w-100">
@@ -21,10 +21,10 @@
 
             <tr class="text-left" style="width:50%">
 			    <th class="booking-info">
-			        <strong class="event-text">Date</strong>
+			        <strong class="event-text">Datum</strong>
 			    </th>
 				<th class="booking-info">
-				    <strong class="spot-text">Place</strong>
+				    <strong class="spot-text">Plaats</strong>
 			    </th>
 			</tr>
 			<tr class="text-left" style="width:50%">
@@ -40,7 +40,7 @@
 
 			<tr class="text-left" style="width:50%;">
 			    <th class="booking-info pt-4">
-			        <strong class="timeslot-text">Time</strong>
+			        <strong class="timeslot-text">Tijd</strong>
 			    </th>
 				<th class="booking-info  pt-4">
 				    <strong>Price</strong>

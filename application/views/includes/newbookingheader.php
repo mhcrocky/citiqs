@@ -35,6 +35,11 @@
             max-width: 100% !important;
         }
     }
+    .btn-primary:hover {
+        opacity: 0.8 !important;
+    }
+    .btn-primary {
+        width: 130px !important;
 
     label:hover {
         color: #000 !important;
