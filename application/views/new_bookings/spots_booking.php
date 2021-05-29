@@ -101,14 +101,21 @@
         <?php foreach($spots as $key=>$spot): ?>
         
             <tr>
-                <td>
+                <td style="vertical-align: middle !important;">
                     <a style="text-decoration: none;" class="text-dark" href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>?order=<?php echo $orderRandomKey; ?>">
                         <?php echo $spot['data']->descript; ?>
                     <a>
                 </td>
-                <td>
-                
-                    <?php echo ($spot['data']->status == 'soldout') ? 'Sold out' : $this->language->tLine('available'); ?>
+                <td style="vertical-align: middle !important;">
+                <?php if($spot['data']->status == 'soldout'): ?>
+                    <a href="javascript:;" id="btn-soldout" class="btn btn-danger">
+                        <?php echo 'Sold Out'; ?>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot['data']->id; ?>?order=<?php echo $orderRandomKey; ?>" id="btn-available" class="btn btn-primary">
+                       <?php echo $this->language->tLine('Available'); ?>
+                    </a>
+                <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
