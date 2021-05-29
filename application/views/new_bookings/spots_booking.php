@@ -1,6 +1,6 @@
 <div class="col-12 step step-2 active" id="person-input">
     <h3 id="title">
-        <span id="choose-spot">Choose an available SPOT: </span>
+        <span id="choose-spot">Selecteer: </span>
     </h3>
     <?php 
         $last = $this->uri->total_segments();
