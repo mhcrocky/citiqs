@@ -940,34 +940,46 @@
          */
         public function addProductAddons(): void
         {
+            $data = $this->security->xss_clean($_POST);
             $productId = intval($this->uri->segment(3));
-            $data = $this->input->post(null, true);
-            $productAddons = $data['productAddons'];
-            $productQuantities = $data['productQuantities'];
             $product =  $this->shopproductex_model->setProperty('productId', $productId)->getProductName();
-            $success = true;
+
             if (!$this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons()) {
                 $this->session->set_flashdata('error', 'Addons update failed for product "' . $product . '"!');
             } else {
-                foreach($productAddons as $productExtendedId => $addonProductId) {
-                    $insert = [
-                        'addonProductId' => $addonProductId,
-                        'productExtendedId' => $productExtendedId,
-                        'quantity' => $productQuantities[$productExtendedId],
-                    ];
-                    if (!$this->shopproductaddons_model->setObjectFromArray($insert)->create()) {
-                        $this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons();
-                        $this->session->set_flashdata('error', 'Addons update failed for product "' . $product . '"!');
-                        $success = false;
-                        break;
-                    };
-                }
-
-                if ($success) $this->session->set_flashdata('success', 'Addons updated for product "' . $product . '"!');
+                $this->insertAddons($data, $productId, $product);
             }
 
             $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
             redirect($redirect);
+        }
+
+        private function insertAddons(array $data, int $productId, string $product): void
+        {
+            if (empty($data['productAddons'])) {
+                $this->session->set_flashdata('success', 'No new addons for product "' . $product . '"!');    
+                return;
+            }
+
+            $productAddons = $data['productAddons'];
+            $productQuantities = $data['productQuantities'];
+
+            foreach($productAddons as $productExtendedId => $addonProductId) {
+                $insert = [
+                    'addonProductId' => $addonProductId,
+                    'productExtendedId' => $productExtendedId,
+                    'quantity' => $productQuantities[$productExtendedId],
+                ];
+                if (!$this->shopproductaddons_model->setObjectFromArray($insert)->create()) {
+                    $this->shopproductaddons_model->setProperty('productId', $productId)->deleteProductAddons();
+                    $this->session->set_flashdata('error', 'Addons update failed for product "' . $product . '"!');
+                    return;
+                };
+            }
+
+            $this->session->set_flashdata('success', 'Addons updated for product "' . $product . '"!');
+
+            return;
         }
 
         // VISITORS
