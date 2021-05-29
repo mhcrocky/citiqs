@@ -1,5 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div style="margin-left:20px">
+<div class="input-group mt-5 mb-3 col-lg-8 col-sm-12">
+  <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+  <div class="input-group-append">
+    <button class="btn btn-success" onclick="sendTestEmail('email', 'templateHtml')" type="button">Send Test Email</button>
+  </div>
+</div>
     <br/>
     <div class="form-grop col-lg-8 col-sm-12">
         <?php if ($emailTemplatesEdit === true && $tiqsId === $vendorId && !empty($emailTemplates)) { ?>
