@@ -177,7 +177,7 @@
             endforeach;
         }
 
-        private static function sendEmail($email, $subject, $message, $icsContent=false)
+        public static function sendEmail($email, $subject, $message, $icsContent=false)
         {
             $configemail = array(
 			    'protocol' => PROTOCOL,
