@@ -590,6 +590,14 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         font-size: 24px !important;
     }
 
+    #area-container .payment-container .paymentMethod span {
+        padding-top: 0px !important;
+    }
+
+    #area-container .payment-container .paymentMethod {
+        height: 125px !important;
+    }
+
 </style>
 <?php  } elseif ($this->view === 'events/pay') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
