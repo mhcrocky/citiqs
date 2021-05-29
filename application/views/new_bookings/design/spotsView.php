@@ -28,6 +28,44 @@
 	</div>
     <div class="form-group col-sm-12">
         <label style="display:block;">
+        Available Background color:
+            <input 
+                data-jscolor=""
+                class="form-control b-radius jscolor w-100"
+                name="selectShortUrl[id][btn-available][background]"
+                data-css-selector="id"
+                data-css-selector-value="btn-available"
+                data-css-property="background"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['selectShortUrl']['id']['btn-available']['background']) ) { ?>
+                value = "<?php echo $design['selectShortUrl']['id']['btn-available']['background']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+        Sold Out Background color:
+            <input 
+                data-jscolor=""
+                class="form-control b-radius jscolor w-100"
+                name="selectShortUrl[id][btn-soldout][background]"
+                data-css-selector="id"
+                data-css-selector-value="btn-soldout"
+                data-css-property="background"
+                onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['selectShortUrl']['id']['btn-soldout']['background']) ) { ?>
+                value = "<?php echo $design['selectShortUrl']['id']['btn-soldout']['background']?>"
+                data-value="1"
+                <?php } ?>
+            />
+        </label>
+    </div>
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
         Card Background color:
             <input 
                 data-jscolor=""
