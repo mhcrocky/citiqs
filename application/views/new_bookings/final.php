@@ -43,7 +43,7 @@
 			        <strong class="timeslot-text">Tijd</strong>
 			    </th>
 				<th class="booking-info  pt-4">
-				    <strong>Price</strong>
+				    <strong><?php echo $this->language->tLine('Price'); ?></strong>
 			    </th>
 			</tr>
 			<tr class="text-left" style="width:50%">

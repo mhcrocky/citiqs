@@ -59,17 +59,6 @@ class Booking extends BaseControllerWeb
 	public function bookingpay()
 	{
 
-		// checken we hier nog de betaling een keer op uitverkocht?
-		//				var_dump($_SESSION['ReservationId']);
-		//				var_dump($_SESSION['ReservationId2']);
-		//				var_dump($_SESSION['ReservationId']);
-		//				var_dump($_SESSION['ReservationId2']);
-		//				var_dump($_SESSION['reservation_data']);
-		//				var_dump($_SESSION['reservation_data2']);
-		//
-		//				die();
-
-
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('username', 'Full Name', 'trim|required|max_length[128]');
 		$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|min_length[10]');
