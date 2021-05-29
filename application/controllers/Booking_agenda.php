@@ -615,11 +615,11 @@ class Booking_agenda extends BaseControllerWeb
             $paymentMethod = ucwords($key);
             $paymentMethod = str_replace(' ', '', $paymentMethod);
             $paymentMethod = lcfirst($paymentMethod);
-            $total_amount = floatval($amount)*floatval($reservationsPayment['percent']) + floatval($reservationsPayment['amount']);
+            $total_amount = (floatval($amount)*floatval($reservationsPayment['percent'])/100) + floatval($reservationsPayment['amount']);
             if((isset($vendorCost[$key]) && $vendorCost[$key] == 1) || $total_amount  == 0){
-                $data[$paymentMethod] = '&nbsp';
+                $data[$paymentMethod] = 0;
             } else {
-                $data[$paymentMethod] = '€'. number_format($total_amount, 2, '.', '');
+                $data[$paymentMethod] = number_format($total_amount, 2, '.', '');
             }
         }
         

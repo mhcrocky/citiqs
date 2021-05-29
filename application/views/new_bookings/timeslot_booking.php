@@ -32,6 +32,7 @@
 
         $timeslotSoldout = Agenda_booking::check_if_soldout($timeSlot['id'], Agenda_booking::second_to_hhmm($start_time), Agenda_booking::second_to_hhmm($end_time), $timeSlot['available_items']);
         $timeSlot['status'] = ($timeslotSoldout === true) ? 'soldout' : 'open';
+        
     ?>
         <tr>
             <?php if($timeSlot['status'] != "soldout"): ?>
@@ -115,8 +116,7 @@
     </table>
     <div class="w-100 go-back-wrapper">
         <a class="go-back-button"
-            href="javascript:location.replace('<?php echo base_url();?>agenda_booking/spots/<?php echo $eventDate; ?>/<?php echo $eventId; ?>?order=<?php echo $orderRandomKey; ?>')">Go
-            Back</a>
+            href="javascript:location.replace('<?php echo base_url();?>agenda_booking/spots/<?php echo $eventDate; ?>/<?php echo $eventId; ?>?order=<?php echo $orderRandomKey; ?>')"><?php echo $this->language->tLine('Go Back'); ?></a>
     </div>
 </div>
 

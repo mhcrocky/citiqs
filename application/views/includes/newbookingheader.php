@@ -57,6 +57,9 @@
     .booking-info > span {
         font-weight: 50;
     }
+    </style>
+
+    <style>
 
 
     <?php if(isset($customDesign[0]['design'])) {
@@ -64,10 +67,11 @@
 
         $design_ids=$design['id'];
 
+
         foreach($design_ids as $key=> $design_id) {
-            echo '#'. $key . '{';
-            echo array_keys($design_id)[0].':';
-            echo array_values($design_id)[0].'!important } ';
+            echo '#'. $key . ' {';
+            echo array_keys($design_id)[0].': ';
+            echo array_values($design_id)[0].' !important } ';
         }
 
         $design_classes=$design['class'];
@@ -76,29 +80,30 @@
             if($key == 'booking-info'){
                 echo '.booking-info, .booking-info > span {';
             } else {
-                echo '.'. $key . '{';
+                echo '.'. $key . ' {';
             }
-            echo array_keys($design_class)[0].':';
-            echo array_values($design_class)[0].'!important } ';
+            echo array_keys($design_class)[0].': ';
+            echo array_values($design_class)[0].' !important } ';
         }
     }
 
     ?>
     </style>
+   
     <script>
     function customDesignLoad() {
         <?php 
         if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['headerTitle'])){
             $headerTitles = unserialize($customDesign[0]['design'])['headerTitle'];
             foreach($headerTitles as $key => $headerTitle){
-                echo "$('.".$key."').text('" . $this->language->tLine($headerTitle) . "');";
+                echo "$('.".$key."').text('" . $headerTitle . "');";
             }
         }
 
         if(isset($customDesign[0]['design']) && isset(unserialize($customDesign[0]['design'])['tableTitle'])){
             $tableTitles = unserialize($customDesign[0]['design'])['tableTitle'];
             foreach($tableTitles as $key => $tableTitle){
-                echo "$('#".$key."').text('" . $this->language->tLine($tableTitle) . "');";
+                echo "$('#".$key."').text('" . $tableTitle . "');";
             }
         }
 
@@ -107,7 +112,7 @@
             $chooseTitles = unserialize($customDesign[0]['design'])['chooseTitle'];
             foreach($chooseTitles as $key => $chooseTitle){
                 echo "if(document.getElementById('".$key."') !== null){";
-                echo "document.getElementById('".$key."').textContent = '". $this->language->tLine($chooseTitle)."';";
+                echo "document.getElementById('".$key."').textContent = '". $chooseTitle."';";
                 echo "}";
             }
         }
