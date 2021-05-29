@@ -35,6 +35,25 @@
         }
 
         /**
+         * validateString
+         * 
+         * Method validates string. It returns true if argument is number
+         * or argument is a type of string and has at least one character that is not empty space,
+         * else it returns false.
+         * 
+         * @access public
+         * @static
+         * @param $string Argument is required.
+         * @param int $minLength Argument is optional, default value is 0.
+         * @return bool Method returns true or false.
+         */
+        public static function validateStringImproved($string, int $minLength = 0): bool
+        {
+            if (!is_string($string)) return false;            
+            return (strlen(trim($string)) >= $minLength) ? true : false;
+        }
+
+        /**
          * validateInteger
          * 
          * Method validates integer. It returns true if argument is integer or 0, else it returns false.
@@ -154,5 +173,16 @@
             $CI =& get_instance();
             $CI->load->config('custom');
             return strlen(trim($mobile)) >= $CI->config->item('minMobileLength') && is_numeric($mobile) ? true : false;
+        }
+
+        public static function filterDataArray(array $data): array
+        {
+            $filter = array_filter($data, function($value, $key) {
+                if (self::validateNumber($value) || $value) {
+                    return [$key => $value];
+                }
+            }, ARRAY_FILTER_USE_BOTH);
+
+            return $filter;
         }
     }
