@@ -40,6 +40,11 @@
     }
     .btn-primary {
         width: 130px !important;
+
+    label:hover {
+        color: #000 !important;
+		background: #ffffff;
+        cursor: pointer;
     }
     #booking-footer {
         padding: 0px !important;
