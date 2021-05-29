@@ -2,16 +2,16 @@
 <div class="col-12 step step-4 active">
     <form id="checkItem" class="w-100" action="<?php echo $this->baseUrl; ?>agenda_booking/pay?order=<?php echo $orderRandomKey; ?>" method="post">
         <div class="form-group w-100">
-            <label class="form-check-label" for="11"><strong>Name</strong></label>
-            <input class="form-control" type="text" id="username" name="username" placeholder="Your Name" required>
+            <label class="form-check-label" for="11"><strong>Naam</strong></label>
+            <input class="form-control" type="text" id="username" name="username" placeholder="" required>
         </div>
         <div class="form-group w-100">
-            <label class="form-check-label" for="11"><strong>Email</strong></label>
-            <input class="form-control" id="email" name="email" placeholder="Your Email" required>
+            <label class="form-check-label" for="11"><strong>Emial</strong></label>
+            <input class="form-control" id="email" name="email" placeholder="" required>
         </div>
         <div class="form-group w-100">
-            <label class="form-check-label" for="11"><strong>Phone Number</strong></label>
-            <input class="form-control" name="mobile" id="mobile" type="tel" placeholder="Your Phone Number" minlength="10" required>
+            <label class="form-check-label" for="11"><strong>Telefoonnumemr</strong></label>
+            <input class="form-control" name="mobile" id="mobile" type="tel" placeholder="" minlength="10" required>
         </div>
         <!-- end booking form inputs -->
         <div id="booking-footer" class="booking-form__result w-100">
