@@ -211,4 +211,19 @@
             return $this->db->affected_rows() ? true : false;
         }
 
+        public function customDeleteTest(array $where): bool
+        {
+            var_dump($where);
+            
+
+           	// $text = 'Abstract CRUD delete';
+           	// var_dump($where);
+			// echo $this->getThisTable();
+            $this->db->delete($this->getThisTable(), $where);
+            echo $this->db->last_query();
+            var_dump($this->db->affected_rows());
+			die();
+            return $this->db->affected_rows() ? true : false;
+        }
+
     }

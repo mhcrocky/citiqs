@@ -31,10 +31,10 @@
         public function cleanPrinterRequests_get(): void
         {
             $where = [
-                'conected<' => date('Y-m-d H:i:s', strtotime ( '-1 day' , strtotime(date('Y-m-d H:i:s'))) )
+                'conected<' => date('Y-m-d H:i:s', strtotime ( '-4 hours' , strtotime(date('Y-m-d H:i:s'))) )
             ];
 
-            $this->shopprinterrequest_model->customDelete($where);
+            $this->shopprinterrequest_model->customDeleteTest($where);
         }
 
         public function release_queue_get($buyers = '1'): void
