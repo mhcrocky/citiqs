@@ -15,7 +15,7 @@
         </div>
         <!-- end booking form inputs -->
         <div id="booking-footer" class="booking-form__result w-100">
-            <h4 id="footer-title" class="mb-3">Booking info </h4>
+            <h4 id="footer-title" class="mb-3">Reservatie info </h4>
 			<div id="booking-info" class="w-100 row bg-white p-2 pt-4">
 			<table class="w-100 text-left">
 
@@ -73,10 +73,10 @@
         </div>
 		</div>
 		<div class="w-100 text-right">
-		    <button data-brackets-id="2918" type="submit" class="btn-primary btn mt-3" id="button-submit">BOOK NOW</button>
+		    <button data-brackets-id="2918" type="submit" class="btn-primary btn mt-3" id="button-submit">reserveer nu</button>
 		</div>
         <div class="w-100 go-back-wrapper">
-            <a class="go-back-button" href="javascript:history.back()">Go Back</a>
+            <a class="go-back-button" href="javascript:history.back()">Terug</a>
         </div>
     </form>
 </div>

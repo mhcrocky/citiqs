@@ -35,8 +35,10 @@
             max-width: 100% !important;
         }
     }
+
     label:hover {
         color: #000 !important;
+		background: #ffffff;
         cursor: pointer;
     }
     #booking-footer {
