@@ -76,7 +76,7 @@
 		    <button data-brackets-id="2918" type="submit" class="btn-primary btn mt-3" id="button-submit">reserveer nu</button>
 		</div>
         <div class="w-100 go-back-wrapper">
-            <a class="go-back-button" href="javascript:history.back()"><?php echo $this->language->tLine('Reservation Info'); ?></a>
+            <a class="go-back-button" href="javascript:history.back()"><?php echo $this->language->tLine('Go Back'); ?></a>
         </div>
     </form>
 </div>
