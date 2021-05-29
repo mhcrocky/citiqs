@@ -76,7 +76,7 @@ li {
                 </div>
 
                 <div class="col-md-12" style="text-align:center">
-                    <div style="text-align:center">
+                    <div class="table-responsive" style="text-align:center">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -193,7 +193,6 @@ li {
                                             <label class="custom-control-label font-weight-bold text-dark"
                                                 for="visible">
                                             </label>
-                                            <input type="hidden" id="ticketVisible" name="ticketVisible" value="1">
                                         </div>
                                     </li>
                                 </ul>

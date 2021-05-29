@@ -103,7 +103,11 @@ p.p-title {
                             </div>
                             <div class="form-group has-feedback mt-35">
                                 <div style="text-align: center; ">
-                                    <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot['data']->id; ?>?order=<?php echo $orderRandomKey; ?>" class="button button-orange mb-25"><?= ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
+                                <?php if($spot['data']->send_to_email == 1): ?>
+                                    <a href="mailto:<?php echo $spot['data']->spot_email; ?>" class="button button-orange mb-25"> <?php echo $this->language->tLine('Send To Email'); ?> </a>
+                                <?php else: ?>
+                                    <a href="<?php echo $this->baseUrl; ?>booking_agenda/time_slots/<?php echo $spot['data']->id; ?>?order=<?php echo $orderRandomKey; ?>" class="button button-orange mb-25"><?php echo ($this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME")) ? $this->language->Line("SPOTS-BOOKING-0005", "CHOOSE A TIME") : 'Next'; ?> </a>
+                                <?php endif; ?>
                                 </div>
                             </div>
                         <?php else: ?>
