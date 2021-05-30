@@ -1,7 +1,6 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Agenda_booking extends BaseControllerWeb
@@ -147,6 +146,12 @@ class Agenda_booking extends BaseControllerWeb
         $allSpots = $this->bookandpayspot_model->getAllSpots($customer['id']);
         
         $agenda = $this->bookandpayagendabooking_model->getbookingagenda($customer['id']);
+        $agendaInfo = $this->bookandpayagendabooking_model->get_agenda_by_id($eventId);
+        $agendaReservations = $this->bookandpay_model->getBookingCountByAgenda($eventId);
+
+        if($agendaReservations >= intval($agendaInfo->max_spots)){
+            redirect('soldout');
+        }
 
         $spots = [];
 
@@ -169,7 +174,7 @@ class Agenda_booking extends BaseControllerWeb
 
             foreach ($allTimeSlots as $key => $timeSlot) {
                 $spotsReserved = $this->bookandpay_model->getBookingByTimeSlot($customer['id'], $eventDate, $timeSlot->id);
-                $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($customer['id'], $spot->id, $timeSlot->id, $timeSlot->fromtime);
+                $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($spot->id, $timeSlot->id, $timeSlot->fromtime, $timeSlot->totime);
                 $availableItems += $timeSlot->available_items;
 
                 if($spotsReserved) {
@@ -258,7 +263,7 @@ class Agenda_booking extends BaseControllerWeb
 
         foreach ($allTimeSlots as $timeSlot) {
             $spotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($timeSlot['id'], $timeSlot['fromtime'], $timeSlot['totime']);
-            $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($customer['id'], $spotId, $timeSlot['id'], $timeSlot['fromtime']);
+            $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($spotId, $timeSlot['id'], $timeSlot['fromtime'], $timeSlot['totime']);
             if($spotsReserved >= $timeSlot['available_items']){
                 $status = 'soldout';
             } else {
@@ -293,9 +298,8 @@ class Agenda_booking extends BaseControllerWeb
             //redirect('soldout');
         }
         */
-        
 
-        if ($spotReservations >= $availableItems) {
+        if ($spotReservations >= intval($availableItems)) {
             redirect('soldout');
         }
 

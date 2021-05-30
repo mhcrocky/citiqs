@@ -1,7 +1,6 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Booking_agenda extends BaseControllerWeb
@@ -123,6 +122,12 @@ class Booking_agenda extends BaseControllerWeb
 
         $allSpots = $this->bookandpayspot_model->getAllSpots($customer['id']);
         $agenda = $this->bookandpayagendabooking_model->getbookingagenda($customer['id']);
+        $agendaInfo = $this->bookandpayagendabooking_model->get_agenda_by_id($eventId);
+        $agendaReservations = $this->bookandpay_model->getBookingCountByAgenda($eventId);
+
+        if($agendaReservations >= intval($agendaInfo->max_spots)){
+            redirect('soldout');
+        }
 
         $spots = [];
 
@@ -224,7 +229,7 @@ class Booking_agenda extends BaseControllerWeb
 
         foreach ($allTimeSlots as $timeSlot) {
             $spotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($timeSlot['id'], $timeSlot['fromtime'], $timeSlot['totime']);
-            $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($customer['id'], $spotId, $timeSlot['id'], $timeSlot['fromtime']);
+            $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($spotId, $timeSlot['id'], $timeSlot['fromtime'], $timeSlot['totime']);
             if($spotsReserved >= $timeSlot['available_items']){
                 $status = 'soldout';
             } else {
