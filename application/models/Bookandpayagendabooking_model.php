@@ -1260,5 +1260,15 @@ class   Bookandpayagendabooking_model extends CI_Model
 		}
 		return $vendorCosts;
 	}
+
+	public function get_agenda_by_id($agendaId)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_bookandpayagenda');
+		$this->db->where('id', $agendaId);
+		$query = $this->db->get();
+		$result = $query->first_row();
+		return $result;
+	}
 	
 }
