@@ -516,6 +516,12 @@ $route['agenda_booking/replacebuttonstyle'] = "Agenda_booking/replaceButtonStyle
 $route['agenda_booking/iframe/(:any)'] = "Agenda_booking/iframe/$1";
 $route['agenda_booking/(:any)'] = "Agenda_booking/index/$1";
 
+$route['agenda_reservation/payment_proceed'] = "Agenda_reservation/payment_proceed";
+$route['agenda_reservation/select_payment_type'] = "Agenda_reservation/select_payment_type";
+$route['agenda_reservation/pay'] = "Agenda_reservationpay";
+$route['agenda_reservation/spot'] = "Agenda_reservationpay";
+$route['agenda_reservation/(:any)'] = "Agenda_reservation/index/$1";
+
 $route['customer_panel'] = "Customer_panel/index/";
 $route['customer_panel/agenda'] = "Customer_panel/agenda";
 $route['customer_panel/spots/(:num)'] = "Customer_panel/spots/$1";
