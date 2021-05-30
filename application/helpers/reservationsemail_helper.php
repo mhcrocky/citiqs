@@ -110,7 +110,7 @@
 							if($mailtemplate) {
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
-								$mailtemplate = str_replace('[voucherCoed]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[voucherCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
                                 $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
