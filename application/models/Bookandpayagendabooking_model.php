@@ -521,18 +521,18 @@ class   Bookandpayagendabooking_model extends CI_Model
 	///////////////////////////
 	public function getbookingagenda($customer)
 	{
-        $this->db->select('tbl_bookandpayagenda.*, tbl_email_templates.template_name');
-		$this->db->from('tbl_bookandpayagenda');
-        $this->db->join('tbl_email_templates', 'tbl_email_templates.id = tbl_bookandpayagenda.email_id', 'left');
-		$this->db->where('Customer', $customer);
-		$this->db->where('ReservationDateTime >=', date("Y-m-d") );
-		$this->db->where('online', 1);
-		$this->db->order_by('ReservationDateTime', 'ASC');
-		$query = $this->db->get();
+		$query = $this->db->query("SELECT `tbl_bookandpayagenda`.*, `tbl_email_templates`.`template_name`
+		FROM `tbl_bookandpayagenda`
+		LEFT JOIN `tbl_email_templates` ON `tbl_email_templates`.`id` = `tbl_bookandpayagenda`.`email_id`
+		WHERE `Customer` = '".$customer."'
+		AND `ReservationDateTime` >= '2021-05-30'
+		AND `online` = 1
+		ORDER BY `ReservationDateTime` ASC");
 
 //		echo $this->db->last_query();exit;
 
 		$result = $query->result();
+
 
 		return $result;
 	}
