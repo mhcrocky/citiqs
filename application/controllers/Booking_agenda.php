@@ -20,9 +20,6 @@ class Booking_agenda extends BaseControllerWeb
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpaytimeslots_model');
-        $this->load->model('sendreservation_model');
-        $this->load->model('email_templates_model');
-        $this->load->model('shopvendor_model');
         $this->load->model('shopsession_model');
         $this->load->library('language', array('controller' => $this->router->class)); 
     }

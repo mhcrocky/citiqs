@@ -13,17 +13,12 @@ class Agenda_booking extends BaseControllerWeb
         parent::__construct();
         $this->load->helper('url');
         $this->load->helper('jwt_helper');
-        $this->load->helper('utility_helper');
-
 
         $this->load->model('user_model');
         $this->load->model('bookandpay_model');
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpaytimeslots_model');
-        $this->load->model('sendreservation_model');
-        $this->load->model('email_templates_model');
-        $this->load->model('shopvendor_model');
         $this->load->model('shopsession_model');
         
         $this->load->library('language', array('controller' => $this->router->class)); 
@@ -643,25 +638,6 @@ class Agenda_booking extends BaseControllerWeb
     }
 
 
-    public function create_spots()
-    {
-        $this->load->model('Bookandpayspot_model');
-        $data = array(
-            'agenda_id' => $this->input->post('agenda_id'),
-            'email_id' => 0,
-            'numberofpersons' => $this->input->post('numberofpersons'),
-            'sort_order' => $this->input->post('order'),
-            'price' => $this->input->post('price'),
-            'descript' => $this->input->post('description'),
-            'soldoutdescript' => $this->input->post('soldoutdescript'),
-            'pricingdescript' => $this->input->post('pricingdescript'),
-            'feedescript' => $this->input->post('feedescript'),
-            'available_items' => $this->input->post('available_items'),
-            'image' => $this->input->post('image')
-        );
-        $this->Bookandpayspot_model->addSpot($data);
-    }
-
     public function get_agenda($shortUrl=false)
     {
         $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
@@ -742,6 +718,7 @@ class Agenda_booking extends BaseControllerWeb
 
     public function saveDesign()
     {
+        if(!$this->session->userdata('userId')) return;
         $data = [
             'vendor_id' => $this->session->userdata('userId'),
             'design' => serialize($this->input->post(null,true)),
