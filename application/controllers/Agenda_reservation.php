@@ -66,7 +66,7 @@ class Agenda_reservation extends BaseControllerWeb
 
         if(count($orderData) < 1){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
-            redirect(base_url() . 'agenda_booking/'.$shortUrl.'?order='.$orderData->randomKey);
+            redirect(base_url() . 'agenda_reservation/'.$shortUrl.'?order='.$orderData->randomKey);
             return ;
         }
 
