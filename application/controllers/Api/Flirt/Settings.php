@@ -148,11 +148,13 @@ class Settings extends REST_Controller
         {
             $data['status'] =  "1";
             $data['message'] = "Photo uploaded";
+            $data['imageuploadfolderfile'] = "https://tiqs.com/alfred/assets/images/chatImages/". $_FILES['file']['name'] ;
         }
         else
 		{
 			$data['status'] =  "0";
 			$data['message'] = "Photo not uploaded, try again";
+			$data['imageuploadfolderfile'] = "";
 		}
         $this->response($data, 200);
     }

@@ -1,6 +1,5 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
-
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Agenda_booking extends BaseControllerWeb
@@ -19,8 +18,7 @@ class Agenda_booking extends BaseControllerWeb
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpaytimeslots_model');
         $this->load->model('shopsession_model');
-        
-        $this->load->library('language', array('controller' => $this->router->class)); 
+        $this->load->library('language', array('controller' => $this->router->class));
     }
 
     public function index($shortUrl=false)

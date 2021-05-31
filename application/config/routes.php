@@ -501,6 +501,15 @@ $route['booking_agenda/(:any)'] = "Booking_agenda/index/$1";
 $route['booking/successbooking'] = "Booking/successBooking";
 $route['change_reservation'] = 'Booking_agenda/changeReservation';
 
+$route['booking_agenda2/reserved'] = "Booking_agenda2/reserved";
+$route['booking_agenda2/payment_proceed'] = "Booking_agenda2/payment_proceed";
+$route['booking_agenda2/select_payment_type'] = "Booking_agenda2/select_payment_type";
+$route['booking_agenda2/pay'] = "Booking_agenda2/pay";
+$route['booking_agenda2/delete_reservation/(:num)'] = "Booking_agenda2/delete_reservation/$1";
+$route['booking_agenda2/get_agenda/(:any)'] = "Booking_agenda2/get_agenda/$1";
+$route['booking_agenda2/get_agenda/spots/(:num)/(:num)'] = "Booking_agenda2/get_agenda/spots/$1/$1";
+$route['booking_agenda2/getAllAgenda/(:any)'] = "Booking_agenda2/getAllAgenda/$1";
+$route['booking_agenda2/(:any)'] = "Booking_agenda2/index/$1";
 
 $route['agenda_booking/reserved'] = "Agenda_booking/reserved";
 $route['agenda_booking/payment_proceed'] = "Agenda_booking/payment_proceed";
@@ -510,11 +519,21 @@ $route['agenda_booking/delete_reservation/(:num)'] = "Agenda_booking/delete_rese
 $route['agenda_booking/get_agenda/(:any)'] = "Agenda_booking/get_agenda/$1";
 $route['agenda_booking/get_agenda/spots/(:num)/(:num)'] = "Agenda_booking/get_agenda/spots/$1/$1";
 $route['agenda_booking/getAllAgenda/(:any)'] = "Agenda_booking/getAllAgenda/$1";
-$route['agenda_booking/design'] = "Agenda_booking/design";
-$route['agenda_booking/savedesign'] = "Agenda_booking/saveDesign";
-$route['agenda_booking/replacebuttonstyle'] = "Agenda_booking/replaceButtonStyle";
-$route['agenda_booking/iframe/(:any)'] = "Agenda_booking/iframe/$1";
 $route['agenda_booking/(:any)'] = "Agenda_booking/index/$1";
+
+//$route['agenda_booking/reserved'] = "Agenda_booking/reserved";
+//$route['agenda_booking/payment_proceed'] = "Agenda_booking/payment_proceed";
+//$route['agenda_booking/select_payment_type'] = "Agenda_booking/select_payment_type";
+//$route['agenda_booking/pay'] = "Agenda_booking/pay";
+//$route['agenda_booking/delete_reservation/(:num)'] = "Agenda_booking/delete_reservation/$1";
+//$route['agenda_booking/get_agenda/(:any)'] = "Agenda_booking/get_agenda/$1";
+//$route['agenda_booking/get_agenda/spots/(:num)/(:num)'] = "Agenda_booking/get_agenda/spots/$1/$1";
+//$route['agenda_booking/getAllAgenda/(:any)'] = "Agenda_booking/getAllAgenda/$1";
+//$route['agenda_booking/design'] = "Agenda_booking/design";
+//$route['agenda_booking/savedesign'] = "Agenda_booking/saveDesign";
+//$route['agenda_booking/replacebuttonstyle'] = "Agenda_booking/replaceButtonStyle";
+//$route['agenda_booking/iframe/(:any)'] = "Agenda_booking/iframe/$1";
+//$route['agenda_booking/(:any)'] = "Agenda_booking/index/$1";
 
 $route['agenda_reservation/payment_proceed'] = "Agenda_reservation/payment_proceed";
 $route['agenda_reservation/select_payment_type'] = "Agenda_reservation/select_payment_type";
