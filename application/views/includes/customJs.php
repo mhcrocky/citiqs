@@ -257,6 +257,7 @@
 	var fp = flatpickr(document.querySelector('#eventdate'), {
 		dateFormat: "d/m/Y",
 		minDate: "today",
+		disableMobile: true,
   //inline: true,
   //enableTime: true,
   //mode: "multiple",

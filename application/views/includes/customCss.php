@@ -660,6 +660,10 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         .column-center {
             width: 100% !important;
         }
+        .flatpickr-input {
+            border-radius: 50px !important;
+            background: #fff;
+        }
     }
     </style>
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
