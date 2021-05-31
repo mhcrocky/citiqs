@@ -229,7 +229,7 @@
                 $reservationsAmount = $totalAmount + ($percentCost*$totalAmount/100) + $amountCost;
             }
             
-            $amount = $reservationsAmount * 100;
+            $amount = round($reservationsAmount * 100);
 
             $arrArguments['serviceId'] = $serviceId;
             $arrArguments['amount'] = strval($amount);
