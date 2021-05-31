@@ -83,7 +83,7 @@ class Bookandpaytimeslots_model extends CI_Model
         $this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
         $this->db->where('tbl_bookandpayagenda.Customer', $customer_id);
         $this->db->where('tbl_bookandpaytimeslots.spot_id', $spotId);
-        $this->db->order_by('timefrom, timeto');
+        
         $query = $this->db->get();
 
         if($query) {
