@@ -392,6 +392,11 @@
 	<script src='https://cdn.jsdelivr.net/npm/@splidejs/splide@2.4.6/dist/js/splide.min.js'></script>
 	<script src='https://cdn.jsdelivr.net/npm/flatpickr'></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/flatpickrCalendar.js'></script>
+<?php  } elseif ($this->view === 'booking_agenda2/shop') { ?>
+	<script src="https://unpkg.com/izitoast@1.4.0/dist/js/iziToast.js"></script>
+	<script src='https://cdn.jsdelivr.net/npm/@splidejs/splide@2.4.6/dist/js/splide.min.js'></script>
+	<script src='https://cdn.jsdelivr.net/npm/flatpickr'></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/flatpickrCalendar.js'></script>
 <?php } elseif ($this->view === 'bookings/timeslot_booking') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/timeslotBooking.js'></script>
 <?php } elseif ($this->view === 'bookings/changeReservation') { ?>

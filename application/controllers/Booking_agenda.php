@@ -26,8 +26,6 @@ class Booking_agenda extends BaseControllerWeb
     public function index($shortUrl=false)
     {
 
-    	die();
-
         if (!$shortUrl) {
             redirect(base_url());
         }
