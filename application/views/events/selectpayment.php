@@ -12,7 +12,7 @@ $activePayments = array_values($activePayments);
 <div class="col-md-12 payOrderBackgroundColor">
     <div id="area-container" class="payOrderBackgroundColor">
         <div class="page-containe payOrderBackgroundColorr">
-            <div  id="choosePaymentMethod" class="bar"><!-- style="width:100 vw; height:100" -->
+            <div  id="choosePaymentMethod" class="bar text-center"><!-- style="width:100 vw; height:100" -->
                 <div class="bar-title">
                     <span data-trans="" data-trn-key="Kies een betaalmethode">
                             <?php echo $this->language->tline('Kies een betaalmethode');?>
