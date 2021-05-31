@@ -653,6 +653,9 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         display: inline-flex;
         width: 10%;
     }
+    #eventdate::placeholder {
+        color:#444;
+    }
     @media only screen and (max-width: 600px) {
         .column-center {
             width: 100% !important;
