@@ -670,6 +670,16 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
+	public function getReservationsByEmailAndDate($email, $eventDate)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('paid', '1');
+		$this->db->where('email', $email);
+		$this->db->like('eventdate', $eventDate);
+		$query = $this->db->get();
+        $result = $query->result();
+		return $result;
+	}
 
 	function getBookingByTimeSlot($customer, $eventDate, $timeSlot)
     {
