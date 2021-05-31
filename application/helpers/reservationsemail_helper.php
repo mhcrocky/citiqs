@@ -7,7 +7,7 @@
 
     class Reservationsemail_helper
     {
-        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false)
+        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false) : bool
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -18,6 +18,7 @@
             $CI->load->model('bookandpaytimeslots_model');
             $CI->load->model('email_templates_model');
             
+            $send_successfully = false;
 
             foreach ($reservations as $key => $reservation):
                 $result = $CI->sendreservation_model->getEventReservationData($reservation->reservationId);
@@ -165,6 +166,7 @@
                                         //$file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
 //                                        Utility_helper::logMessage($file, $mailtemplate);
+                                        $send_successfully = true;
                                         $CI->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                     }
@@ -175,6 +177,8 @@
                     }
                 }
             endforeach;
+
+            return $send_successfully;
         }
 
         public static function sendEmail($email, $subject, $message, $icsContent=false)
