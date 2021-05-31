@@ -640,6 +640,25 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         display: none;
     }
     </style>
+<?php  } elseif ($this->view === 'bookings/index') { ?>
+    <style>
+    .column-left {
+        display: initial;
+    }
+    .column-center {
+        display: flow-root;
+        width: 200px;
+    }
+    .column-right {
+        display: inline-flex;
+        width: 10%;
+    }
+    @media only screen and (max-width: 600px) {
+        .column-center {
+            width: 100% !important;
+        }
+    }
+    </style>
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <?php  } elseif ($this->view === 'appsettings/index') { ?>

@@ -1,26 +1,3 @@
-<!DOCTYPE html>
-<body>
-
-<style>
-
-    .column-left {
-        float: left;
-        width: 30%;
-    }
-
-    .column-center {
-        display: inline-block;
-        width: 40%;
-    }
-
-    .column-right {
-        display: inline-flex;
-        width: 10%;
-    }
-
-
-</style>
-
 <div class="main-wrapper">
     <div class="col-half background-blue height-100">
         <?php
@@ -38,7 +15,7 @@
 
                 <div class="timeline-block background-<?php echo $day->Background?>" height-25 >
 
-                    <div class="row" style="font-size: large; color:white" align="center">
+                    <div class="row" style="font-size: large; color:white; display: inline-flex;">
 
                         <div style="margin-right: 10px;" class="col-md-4 column-left">
 
@@ -53,7 +30,7 @@
                         </div>
                         
 
-                        <div class="col-md-8 column-center  ml-auto text-left">
+                        <div class="column-center text-left">
                             <div>
                                 <p>
                                     <img src="<?php echo base_url() . $logoUrl; ?>" alt="tiqs" width="150" height="auto" />
@@ -118,8 +95,4 @@
     </div>
 </div>
 </div>
-
-</body>
-
-</body>
 
