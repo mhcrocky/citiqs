@@ -1,4 +1,5 @@
-<div class="main-wrapper-nh">
+<div class="background-blue">
+<div class="main-wrapper-nh background-blue">
 	<div class="col-half width-650 background-blue height-100" style="margin-top: 30px">
 		<div class="flex-column align-start">
 			<div style="text-align:center">
@@ -362,17 +363,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="col background-blue" style="margin-left: 0px ;margin-right: 0px; padding: 0px; width: 100%; margin-top: 50px">
-		<ul class="nav nav-tabs" style="border-bottom: none;background-color: #131e3a; margin-top: 10px;margin-bottom: 10px " role="tablist">
-			<li class="nav-item">
-				<a style="color: #efd1ba; border-radius: 50px; margin-left:10px" class="nav-link active" data-toggle="tab" href="#manual"> <i class="ti-pencil-alt"> </i> HOW TO REGISTER</a>
-			</li>
-		</ul>
-
-		<div class="tab-content no-border" style="height: 90%; width: 100%">
-			<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">
-				<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
-			</div>
-		</div>
-	</div>
+<!--	<div class="col background-blue" style="margin-left: 0px ;margin-right: 0px; padding: 0px; width: 100%; margin-top: 50px">-->
+<!--		<ul class="nav nav-tabs" style="border-bottom: none;background-color: #131e3a; margin-top: 10px;margin-bottom: 10px " role="tablist">-->
+<!--			<li class="nav-item">-->
+<!--				<a style="color: #efd1ba; border-radius: 50px; margin-left:10px" class="nav-link active" data-toggle="tab" href="#manual"> <i class="ti-pencil-alt"> </i> HOW TO REGISTER</a>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!---->
+<!--		<div class="tab-content no-border" style="height: 90%; width: 100%">-->
+<!--			<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">-->
+<!--				<embed src="--><?php //echo base_url(); ?><!--/assets/home/documents/NL-manual.pdf" height=100% width="100%">-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+</div>
 </div>

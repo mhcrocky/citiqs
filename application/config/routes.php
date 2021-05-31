@@ -77,6 +77,7 @@ $route['questionnaire'] = "check424/questionnaire";
 
 $route['start'] = 'start';
 $route['loggedin'] = 'loggedin';
+$route['loggedinmanuals'] = 'loggedinmanuals';
 $route['info_spot'] = 'info_spot';
 $route['info_business'] = 'info_business';
 $route['testscreen'] = 'testscreen';

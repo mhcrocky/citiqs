@@ -19,7 +19,56 @@
 
 	</div><!-- end col half -->
 
+	<div class="col background-apricot" style="margin-left: 0px ;margin-right: 0px; padding: 0px; width: 100%">
+			<div style="margin-left: 0px ;margin-right: 0px; width: 100%" >
+				<ul class="nav " style=" background-color: #efd1ba;margin-top: 10px;margin-bottom: 10px " role="tablist">
+	<!--				<li class="nav-item">-->
+	<!--					<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#quick"> <i class="ti-pencil-alt"> </i> Quick setup</a>-->
+	<!--				</li>-->
+					<li class="nav-item">
+						<a style="border-radius: 50px; margin-left:10px" class="nav-link active" data-toggle="tab" href="#manual"> <i class="ti-pencil-alt"> </i> <?php echo $this->language->tLine('Manual'); ?></a>
+					</li>
+					<li class="nav-item">
+						<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#app"> <i class="ti-pencil-alt"> </i> VENDOR App</a>
+					</li>
+					<li class="nav-item">
+						<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#app"> <i class="ti-pencil-alt"> </i> SCAN App</a>
+					</li>
+					<li class="nav-item">
+						<a style="border-radius: 50px;margin-left:10px" class="nav-link" data-toggle="tab" href="#api"> <i class="ti-pencil-alt"> </i> Alfred API</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-content no-border" style="height: 100vh; width: 100%">
+				<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">
+					<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
+				</div>
+				<div id="app" class="tab-pane"style="background: none; height: 100%">
+					<embed src="<?php echo base_url(); ?>/assets/home/documents/EN-Manual VENDOR.pdf" height=100% width="100%">
+				</div>
+				<div id="api" class="tab-pane" style="background: none; height: 100%">
+					<embed src="<?php echo base_url(); ?>/assets/home/documents/EN-MANUAL Alfred-API.pdf" height=100% width="100%">
+				</div>
+				<div id="quick" class="tab-pane" style="background: none; height: 100%">
+					<div class="form-group has-feedback" >
+						<div style="text-align:left; margin-top: 30px; margin-right: 30px">
+							<div class="mt-50 mb-35" style="text-align: right ; color: black; ">
+								<?php echo $this->language->line('ALFRED-quick-ua001aa','FOR A QUICK START CLICK HERE FOR THE BASIC PORPERTIES');?>
+								<button type="button" class="button button-orange" data-toggle="modal" data-target="#quickModal" style="border: none"><?php echo $this->language->line("quickstart-A001",'QUICK setup');?></button>
+							</div>
 
+
+						</div>
+					</div>
+						<div id="manual" class="tab-pane active" style="background: none; height: 100%;margin-left: 0px ;margin-right: 0px; width:100%">
+							<embed src="<?php echo base_url(); ?>/assets/home/documents/NL-manual.pdf" height=100% width="100%">
+						</div>
+
+
+				</div>
+			</div>
+
+	</div>
 </div>
 
 

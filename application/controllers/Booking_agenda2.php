@@ -44,7 +44,6 @@ class Booking_agenda2 extends BaseControllerWeb
 			$orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 		}
 
-
 		$customer->logo = (property_exists($customer, 'logo')) ? $customer->logo : '';
 		$sessionData['customer'] = [
 			'id' => $customer->id,
@@ -61,10 +60,9 @@ class Booking_agenda2 extends BaseControllerWeb
 		$sessionData['reservations'] = [];
 		$sessionData['totalAmount'] = false;
 
-
 		if(count($orderData) < 1){
 			$orderData = $this->shopsession_model->insertSessionData($sessionData);
-			redirect(base_url() . 'booking_agenda2/'.$shortUrl.'?order='.$orderData->randomKey);
+			redirect(base_url() . 'booking_agenda/'.$shortUrl.'?order='.$orderData->randomKey);
 			return ;
 		}
 
@@ -80,8 +78,6 @@ class Booking_agenda2 extends BaseControllerWeb
 		$data['shortUrl'] = $shortUrl;
 		$data['orderRandomKey'] = $orderRandomKey;
 		$this->loadViews('bookings/index', $data, '', 'bookingfooter', 'bookingheader');
-
-
 
 	}
 

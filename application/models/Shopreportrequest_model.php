@@ -63,6 +63,8 @@
 
         public function checkRequests(string $printerMac): ?array
         {
+        	return null;
+
             $data = $this->readImproved([
                 'what' => [
                     $this->table . '.id',

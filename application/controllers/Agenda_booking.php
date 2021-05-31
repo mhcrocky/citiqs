@@ -42,7 +42,6 @@ class Agenda_booking extends BaseControllerWeb
             $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
         }
 
-
         $customer->logo = (property_exists($customer, 'logo')) ? $customer->logo : '';
         $sessionData['customer'] = [
             'id' => $customer->id,
@@ -66,11 +65,9 @@ class Agenda_booking extends BaseControllerWeb
         if(count($orderData) < 1){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
             redirect(base_url() . 'agenda_booking/'.$shortUrl.'?order='.$orderData->randomKey);
-            return ;
+//            return ;
         }
 
-
-        
         $agendas = $this->bookandpayagendabooking_model->getbookingagenda($customer->id);
         $agendas_calendar = [];
 
@@ -85,7 +82,6 @@ class Agenda_booking extends BaseControllerWeb
                 'spotLink' => base_url() . 'agenda_booking/spots/' . $dateFormat . '/' . $agenda->id . '?order=' . $orderRandomKey
             ];
         }
-
         $data['agendas_calendar'] = $agendas_calendar;
         $logoUrl = 'assets/user_images/no_logo.png';
         if ($customer->logo) {
@@ -101,9 +97,7 @@ class Agenda_booking extends BaseControllerWeb
         $this->global['spotId'] = $orderData['spotId'];
         $this->global['timeslot'] = $orderData['timeslot'];
         $this->loadViews('new_bookings/index', $this->global, $data, 'newbookingfooter', 'newbookingheader');
-        
 
-        
     }
 
     public function spots($eventDate = false, $eventId = false)
