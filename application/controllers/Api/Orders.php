@@ -41,7 +41,7 @@
         {
             $mac = $this->getMacNumber();
 
-            $this->printFinanceReport($mac);
+            // $this->printFinanceReport($mac);
 
             $order = $this->getOrder($mac);
             $vendorId = intval($order['vendorId']);
