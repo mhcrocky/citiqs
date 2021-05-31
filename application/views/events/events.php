@@ -35,7 +35,7 @@
                     <i style="color: #fff;font-size: 18px;" class="fa fa-file-text-o"></i></a>
             </div>
             <div class="input-group col-md-3 justify-content-center">
-                <a style="width: 80%" href="<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>">
+                <a style="width: 80%" href="<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>" target="_blank">
                     <input type="button" value="Go to Main Shop"
                         style="background: #10b997 !important;border-radius:0;height:45px;"
                         class="btn btn-success form-control mb-3 text-left">
