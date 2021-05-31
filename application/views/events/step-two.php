@@ -103,7 +103,7 @@
                         <div class="col-md-3 text-dark">Max Booking</div>
                         <div class="col-md-3">
                             <input type="number" id="maxBooking" name="maxBooking" class="form-control inp-height"
-                                min="1" value="1">
+                                min="1" value="10">
                         </div>
                     </div>
 
