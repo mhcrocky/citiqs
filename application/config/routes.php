@@ -490,6 +490,7 @@ $route['booking/successbooking'] = "Booking/successBooking";
 $route['change_reservation'] = 'Booking_agenda/changeReservation';
 
 
+$route['booking_agenda/resendReservation'] = "Booking_agenda/resendReservation";
 $route['booking_agenda/reserved'] = "Booking_agenda/reserved";
 $route['booking_agenda/payment_proceed'] = "Booking_agenda/payment_proceed";
 $route['booking_agenda/select_payment_type'] = "Booking_agenda/select_payment_type";
