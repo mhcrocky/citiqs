@@ -524,7 +524,7 @@ class Booking_events extends BaseControllerWeb
         // update payment method
         $this->event_model->updatePaymentMethod($orderData['reservationIds'], Pay_helper::returnPaymentMethod($paymentType));
         // release queue
-        Queue_helper::releaseQueue();
+        // Queue_helper::releaseQueue();
 
         $paymentType = strval($paymentType);
         $paymentOptionSubId = ($paymentOptionSubId) ? strval($paymentOptionSubId) : '0';
@@ -552,6 +552,13 @@ class Booking_events extends BaseControllerWeb
         }
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
+
+                
+        if ($orderData['vendorId'] === 49456) {
+            $file = FCPATH . 'application/tiqs_logs/payment_logs.txt';
+            Utility_helper::logMessage($file, serialize($arrArguments));
+            Utility_helper::logMessage($file, $strUrl);
+        }
 
         // destroy session in this place
         // because user maybe will not be redirected to $result->transaction->paymentURL
