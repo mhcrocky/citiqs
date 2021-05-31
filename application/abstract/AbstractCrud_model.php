@@ -131,7 +131,7 @@
             // echo $this->db->last_query(); die();
             $result = $this->db->get($this->getThisTable())->result_array();
 
-            $querylogging=0;
+            $querylogging=1;
             if ($querylogging === 1) {
                 $file = FCPATH . 'application/tiqs_logs/querylogging.txt';
                 $this->load->helper('utility_helper');

@@ -1,26 +1,21 @@
-<div style="margin-top: 0;" class="main-wrapper">
-	<div class="col-half width-650 background-apricot-blue height-100">
-		<div class="flex-column align-start">
-			<div class="mt-50" style="text-align:left; margin-left: -30px">
-				<img src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="300" height="auto" />
-			</div>
-			<div style="text-align:left; margin-top: 30px">
-				<h1 class="heading" style="font-size: 400%; margin-bottom: 20px">
-					DIGITALLY
-<!--					--><?php //echo $this->language->tline('DIGITALLY');?>
-				</h1>
-				<h3 class="heading">
-					CONNECT WITH YOUR VISITORS
-<!--					--><?php //echo $this->language->tline('CONNECT WITH YOUR VISITORS');?>
-				</h3>
-			</div>
-
-		</div>
-
-	</div><!-- end col half -->
-
-
+<div style="margin-top: 10%">
+	<div style="margin-left: 8%">
+		<h1 class="heading" style="font-size: 400%; color: #496183; margin-bottom: 20px">
+				OPTIMIZING
+		</h1>
+		<h3 class="heading" style="color:#717171">
+				VALUE FOR YOUR CUSTOMERS, FOR BETTER BUSINESS
+		</h3>
+		<h4 class="heading" style="font-size: 75%; color:#717171">
+			RESERVATION, TICKETING, DIGITAL MENU, DELIVERY, PICKUP, LOST & FOUND, FLIRT, BUY ME A DRINK, MARKETING & TARGETING
+		</h4>
+	</div>
 </div>
+<div class="mt-50" style="width: 100%; " align="center" >
+	<img src="<?php echo base_url(); ?>assets/home/images/tiqsbusiness.png" alt="tiqs" width="90%"  />
+</div>
+</div>
+
 
 
 <div class="modal" id="quickModal" role="dialog">
