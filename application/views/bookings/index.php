@@ -59,11 +59,11 @@
         <?php } ?>
     </div>
     <div id="time" class="col-half  background-yankee timeline-content" >
-        <form id="checkItem" action="<?php echo $this->baseUrl; ?>sendreservation/sendreservation" method="post" enctype="multipart/form-data"  >
+        <form id="checkItem" action="<?php echo $this->baseUrl; ?>booking_agenda/resendReservation?order=<?php echo $orderRandomKey; ?>" method="post" enctype="multipart/form-data"  >
             <div class="login-box background-yankee mt-50 " style="margin-left: 30px; margin-right: 30px">
                 <h2 style="font-family: caption-bold"><?php echo $this->language->Line("AGENDA-BOOKING-0001", "EMAIL NOT RECEIVED, SEND IT AGAIN"); ?></h2>
                 <div class="form-group has-feedback">
-                    <input type="date" id="eventdate" name="eventdate" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="eventid" />
+                    <input type="text" id="eventdate" name="eventdate" class="form-control rounded" style="font-family:'caption-light'; border-radius: 50px !important;background: #fff !important;" placeholder="dd/mm/yyyy" required/>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
 
@@ -73,7 +73,7 @@
                 <!--			</div>-->
 
                 <div class="form-group has-feedback">
-                    <input type="email" id="email" name="email" required class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="email" />
+                    <input type="email" id="email" name="email" class="form-control" style="font-family:'caption-light'; border-radius: 50px;" placeholder="email" required/>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
 
