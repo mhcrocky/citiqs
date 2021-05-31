@@ -1,7 +1,6 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-require APPPATH . '/libraries/phpqrcode/qrlib.php';
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class Booking_agenda extends BaseControllerWeb
@@ -20,9 +19,6 @@ class Booking_agenda extends BaseControllerWeb
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpaytimeslots_model');
-        $this->load->model('sendreservation_model');
-        $this->load->model('email_templates_model');
-        $this->load->model('shopvendor_model');
         $this->load->model('shopsession_model');
         $this->load->library('language', array('controller' => $this->router->class)); 
     }
@@ -68,7 +64,7 @@ class Booking_agenda extends BaseControllerWeb
 
         if(count($orderData) < 1){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
-            redirect(base_url() . 'booking_agenda/'.$shortUrl.'?order='.$orderData->randomKey);
+            redirect('/booking_agenda/'.$shortUrl.'?order='.$orderData->randomKey);
             return ;
         }
 
@@ -126,6 +122,12 @@ class Booking_agenda extends BaseControllerWeb
 
         $allSpots = $this->bookandpayspot_model->getAllSpots($customer['id']);
         $agenda = $this->bookandpayagendabooking_model->getbookingagenda($customer['id']);
+        $agendaInfo = $this->bookandpayagendabooking_model->get_agenda_by_id($eventId);
+        $agendaReservations = $this->bookandpay_model->getBookingCountByAgenda($eventId);
+
+        if($agendaReservations >= intval($agendaInfo->max_spots)){
+            redirect('soldout');
+        }
 
         $spots = [];
 
@@ -227,7 +229,7 @@ class Booking_agenda extends BaseControllerWeb
 
         foreach ($allTimeSlots as $timeSlot) {
             $spotsReserved = $this->bookandpay_model->getBookingCountByTimeSlot($timeSlot['id'], $timeSlot['fromtime'], $timeSlot['totime']);
-            $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($customer['id'], $spotId, $timeSlot['id'], $timeSlot['fromtime']);
+            $spotReservations = $spotReservations + $this->bookandpay_model->getBookingCountBySpot($spotId, $timeSlot['id'], $timeSlot['fromtime'], $timeSlot['totime']);
             if($spotsReserved >= $timeSlot['available_items']){
                 $status = 'soldout';
             } else {
@@ -757,6 +759,49 @@ class Booking_agenda extends BaseControllerWeb
         $data['pageTitle'] = 'TIQS : CHANGE RESERVATION';
 
         $this->loadViews('bookings/changeReservation', $data, '', 'bookingfooter', 'bookingheader');
+    }
+
+    public function resendReservation() : void
+	{
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+        
+        if(!$orderRandomKey){
+            redirect(base_url());
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            redirect(base_url());
+        }
+
+        $customer = $orderData['customer'];
+        $shortUrl = $customer['usershorturl'];
+
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[255]');
+        $this->form_validation->set_rules('eventdate', 'Event Date', 'trim|required|max_length[255]');
+
+        $eventdate = $this->input->post('eventdate');
+        $getDate = explode('/', $eventdate);
+
+        if (!$this->form_validation->run() && is_array($getDate) && count($getDate) !== 3) {
+            redirect('/booking_agenda/' . $shortUrl . '?order='. $orderRandomKey);
+        }
+
+		$email = strtolower($this->input->post('email'));
+        
+		$dateFormat = $getDate[2] . '-' . $getDate[1] . '-' . $getDate[0];
+
+        $this->load->helper('reservationsemail_helper');
+        $reservations = $this->bookandpay_model->getReservationsByEmailAndDate($email, $dateFormat);
+        if(Reservationsemail_helper::sendEmailReservation($reservations, true, true)){
+            redirect('/booking_agenda/' . $shortUrl . '?order='. $orderRandomKey);
+        } else {
+            redirect('/booking_agenda/' . $shortUrl . '?order='. $orderRandomKey);
+        }
+        
     }
 
 }

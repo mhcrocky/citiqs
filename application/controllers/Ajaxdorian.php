@@ -342,7 +342,7 @@ class Ajaxdorian extends CI_Controller
             }
             
 
-        }
+        } 
 
         $spotData = [
             'descript' => $this->input->post('descript'),
@@ -606,6 +606,33 @@ class Ajaxdorian extends CI_Controller
             ];
 
             
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    public function sendTestEmail(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $email = $this->input->post('email', true);
+        $templateHtml = $this->input->post('templateHtml');
+        $subject = "This is test!";
+
+        $this->load->helper('reservationsemail_helper');
+
+        if (Reservationsemail_helper::sendEmail($email, $subject, $templateHtml)) {
+            $response = [
+                'status' => '1',
+                'messages' => ['Email is sent successfully']
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Email is not sent successfully']
+            ];
+
         }
 
         echo json_encode($response);

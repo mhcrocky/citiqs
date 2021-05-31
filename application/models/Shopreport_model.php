@@ -149,7 +149,8 @@
 
 
             $data = $this->db->query($query)->result_array();
-
+//            var_dump($this->db->last_query());
+//            die();
             return empty($data) ? null : $data;
         }
 

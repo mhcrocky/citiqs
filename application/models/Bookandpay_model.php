@@ -588,14 +588,16 @@ class Bookandpay_model extends CI_Model
         return 0;
 	}
 	
-	function getBookingCountBySpot($customer, $spotId, $timeSlotId, $fromtime)
+	function getBookingCountBySpot($spotId, $timeSlotId, $fromtime, $totime)
     {
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
-		$this->db->where('timeslot', $timeSlotId);
+		$this->db->where('paid', '1');
+		$this->db->where('timeslotId', $timeSlotId);
 		$this->db->where('SpotId', $spotId);
-		$this->db->where('timefrom', $fromtime);
-		$this->db->where('customer', $customer);
+		$this->db->like('timefrom', $fromtime);
+		$this->db->like('timeto', $totime);
+		
 
         $query = $this->db->get();
 
@@ -605,6 +607,23 @@ class Bookandpay_model extends CI_Model
 
         return 0;
 	}
+
+	function getBookingCountByAgenda($agendaId)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_bookandpay');
+		$this->db->where('paid', '1');
+		$this->db->where('eventid', $agendaId);
+		
+        $query = $this->db->get();
+
+        if($query) {
+            return $query->num_rows();
+        }
+
+        return 0;
+	}
+
 
 	public function getReservationsByIds($reservationIds)
 	{
@@ -651,6 +670,16 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
+	public function getReservationsByEmailAndDate($email, $eventDate)
+	{
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('paid', '1');
+		$this->db->where('email', $email);
+		$this->db->like('eventdate', $eventDate);
+		$query = $this->db->get();
+        $result = $query->result();
+		return $result;
+	}
 
 	function getBookingByTimeSlot($customer, $eventDate, $timeSlot)
     {

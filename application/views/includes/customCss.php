@@ -521,7 +521,15 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900" rel="stylesheet">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'>
-
+<?php  } elseif ($this->view === 'booking_agenda2/shop') { ?>
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css'>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/splideShop.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/flatpickrCalendar.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900" rel="stylesheet">
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'>
 
 <?php  } elseif ($this->view === 'events/shop' || $this->view === 'events/tickets') { ?>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -630,6 +638,32 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <style>
     .legend {
         display: none;
+    }
+    </style>
+<?php  } elseif ($this->view === 'bookings/index') { ?>
+    <style>
+    .column-left {
+        display: initial;
+    }
+    .column-center {
+        display: flow-root;
+        width: 200px;
+    }
+    .column-right {
+        display: inline-flex;
+        width: 10%;
+    }
+    #eventdate::placeholder {
+        color:#444;
+    }
+    @media only screen and (max-width: 600px) {
+        .column-center {
+            width: 100% !important;
+        }
+        .flatpickr-input {
+            border-radius: 50px !important;
+            background: #fff;
+        }
     }
     </style>
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>

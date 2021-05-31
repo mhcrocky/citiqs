@@ -1,25 +1,26 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
-class Agenda_booking extends BaseControllerWeb
+class Agenda_reservation extends BaseControllerWeb
 {
-    private $data = array();
-
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct(); 
         $this->load->helper('url');
         $this->load->helper('jwt_helper');
 
+        
         $this->load->model('user_model');
         $this->load->model('bookandpay_model');
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpaytimeslots_model');
         $this->load->model('shopsession_model');
-        $this->load->library('language', array('controller' => $this->router->class));
+        $this->load->library('language', array('controller' => $this->router->class)); 
     }
+
 
     public function index($shortUrl=false)
     {
@@ -65,7 +66,7 @@ class Agenda_booking extends BaseControllerWeb
 
         if(count($orderData) < 1){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
-            redirect(base_url() . 'agenda_booking/'.$shortUrl.'?order='.$orderData->randomKey);
+            redirect(base_url() . 'agenda_reservation/'.$shortUrl.'?order='.$orderData->randomKey);
             return ;
         }
 
@@ -607,176 +608,6 @@ class Agenda_booking extends BaseControllerWeb
         $data['orderRandomKey'] = $orderRandomKey;
 
         $this->loadViews("new_bookings/select_payment_type", $this->global, $data,  'footerPayment', 'headerPayment');
-    }
-
-    public function delete_reservation($id = false)
-    {
-        if(!$id) {
-            redirect();
-        }
-
-        $reservation = $this->bookandpay_model->getReservationById($id);
-
-        if(!$reservation) {
-            redirect();
-        }
-
-        
-
-        $reservationIds = $this->session->userdata('reservations');
-        //var_dump($reservationIds);
-        
-        foreach ($reservationIds as $key=>$item) {
-            if($item == $reservation->reservationId) {
-                unset($reservationIds[$key]);
-                $this->bookandpay_model->deleteReservation($id);
-            }
-        }
-
-
-        $this->session->set_userdata('reservations', $reservationIds);
-
-        redirect('agenda_booking/reserved');
-    }
-
-
-    public function get_agenda($shortUrl=false)
-    {
-        $customer = $this->user_model->getUserInfoByShortUrl($shortUrl);
-        $date = $this->input->post('date');
-        $this->session->set_userdata('date', $date);
-        $data['agenda'] = $this->bookandpayagendabooking_model->getBookingAgendaByDate($customer->id, $date);
-        echo json_encode($data['agenda']);
-        
-    }
-
-    public function getAllAgenda($shortUrl=false)
-    {
-        $customer = $this->user_model->getUserInfoByUrlName($shortUrl);
-        $agendas = $this->bookandpayagendabooking_model->getAllCustomerAgenda($customer->id);
-        $allAgenda = [];
-        foreach($agendas as $agenda){
-            $status = $this->bookandpay_model->getBookingCountByAgenda($customer->id,$agenda->id);
-            $agenda->status = $status > 0 ? 1 : 0;
-            $allAgenda[] = $agenda;
-
-        }
-
-        echo json_encode($allAgenda);
-        
-    }
-
-    public static function explode_time($time){
-        $time = explode(':', $time);
-        $time = $time[0]*3600+$time[1]*60;
-        return $time;
-    }
-
-    public static function second_to_hhmm($time){
-        $hour = floor($time/3600);
-        $min = strval(floor(($time%3600)/60));
-        if($min <= 9){
-            $min = '0'.$min;
-        }
-        $time = $hour . ':' . $min; 
-        return $time;
-    }
-
-    public static function check_if_soldout($timeslotId, $fromtime, $totime, $availableItems) : bool
-    {
-        $CI =& get_instance();
-        $spotReserved = $CI->bookandpay_model->getBookingCountByTimeSlot($timeslotId, $fromtime, $totime);
-        if($spotReserved >= $availableItems){
-            return true;
-        }
-        return false;
-    }
-
-    public function design()
-    {
-        $this->load->model('user_modelpublic');
-        if(null === $this->session->userdata('userId')) return;
-        if(!$this->session->userdata('userId')) return;
-        $this->load->model('user_model');
-        $vendor_id = $this->session->userdata('userId');
-        $userShortUrl = $this->user_model->getUserShortUrlById($vendor_id);
-        $user = $this->user_modelpublic->getUserInfoById($vendor_id);
-        $iframeSrc = base_url() . 'agenda_booking/' . $user->usershorturl;
-        $design = $this->bookandpayagendabooking_model->get_agenda_booking_design($vendor_id);
-        $devices = $this->bookandpayagendabooking_model->get_devices();
-        $data = [
-                'iframeSrc' => $iframeSrc,
-                'id' => $user->userId,
-                'userShortUrl' => $userShortUrl,
-                'devices' => $devices,
-                'design' => unserialize($design[0]['design']),
-            ];
-
-
-        $this->global['pageTitle'] = 'TIQS : DESIGN';
-        $this->loadViews('new_bookings/agenda_booking_design', $this->global, $data, 'footerbusiness', 'headerbusiness');
-        return;
-    }
-
-    public function saveDesign()
-    {
-        if(!$this->session->userdata('userId')) return;
-        $data = [
-            'vendor_id' => $this->session->userdata('userId'),
-            'design' => serialize($this->input->post(null,true)),
-        ];
-
-        $this->bookandpayagendabooking_model->save_agenda_booking_design($this->session->userdata('userId'),$data);
-        redirect('agenda_booking/design');
-    }
-
-    public function iframeJson($shortUrl=false)
-    {
-        $data['shortUrl'] = $shortUrl;
-        $result = $this->load->view('popup', $data,true);
-        return $this->output
-					->set_content_type('application/json')
-					->set_status_header(200)
-					->set_output(json_encode($result));
-        
-    }
-
-    public function replaceButtonStyle()
-    {
-        
-        $cssFile = FCPATH.'assets/home/styles/popup-style.css';
-        $jsFile = FCPATH.'assets/home/js/popup.js';
-        //CSS FILE
-        $f = fopen($cssFile, 'r');
-        $newCssContent = '';
-        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
-            if($line == '#iframe-popup-open{'){
-                echo 'true';
-            }
-            if (strpos($line, '#iframe-popup-open') !== false) {
-                break;
-            }
-            $newCssContent.= $line;
-        }
-
-        $newCssContent .= $this->input->post('buttonStyle');
-        $f = fopen($cssFile, 'w');
-        fwrite($f,$newCssContent);
-        fclose($f);
-
-        //JS FILE
-        $f = fopen($jsFile, 'r');
-        $newJsContent = '';
-        $btnText = $this->input->post('btnText');
-        for ($i = 1; ($line = fgets($f)) !== false; $i++) {
-            if (strpos($line, "document.getElementById('iframe-popup-open').textContent") !== false) {
-                $line = "document.getElementById('iframe-popup-open').textContent = '$btnText'; \n";
-            }
-            $newJsContent .= $line;
-        }
-        $f = fopen($jsFile, 'w');
-        fwrite($f,$newJsContent);
-        fclose($f);
     }
 
 }

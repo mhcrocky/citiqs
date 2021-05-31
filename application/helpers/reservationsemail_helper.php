@@ -7,7 +7,7 @@
 
     class Reservationsemail_helper
     {
-        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false)
+        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false) : bool
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -18,6 +18,7 @@
             $CI->load->model('bookandpaytimeslots_model');
             $CI->load->model('email_templates_model');
             
+            $send_successfully = false;
 
             foreach ($reservations as $key => $reservation):
                 $result = $CI->sendreservation_model->getEventReservationData($reservation->reservationId);
@@ -110,7 +111,7 @@
 							if($mailtemplate) {
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
-								$mailtemplate = str_replace('[voucherCoed]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[voucherCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
                                 $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
@@ -165,6 +166,7 @@
                                         //$file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
 //                                        Utility_helper::logMessage($file, $mailtemplate);
+                                        $send_successfully = true;
                                         $CI->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                     }
@@ -175,9 +177,11 @@
                     }
                 }
             endforeach;
+
+            return $send_successfully;
         }
 
-        private static function sendEmail($email, $subject, $message, $icsContent=false)
+        public static function sendEmail($email, $subject, $message, $icsContent=false)
         {
             $configemail = array(
 			    'protocol' => PROTOCOL,
