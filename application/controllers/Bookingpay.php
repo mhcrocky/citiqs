@@ -397,7 +397,7 @@ class Bookingpay extends BaseControllerWeb
             redirect(base_url());
         }
 
-        
+         
 
         $paymentType = strval($this->uri->segment('3'));
         $paymentOptionSubId = ($this->uri->segment('4')) ? strval($this->uri->segment('4')) : '0';
@@ -716,29 +716,26 @@ class Bookingpay extends BaseControllerWeb
     
         public function successBooking()
         {
-            $statuscode = intval($this->input->get('orderStatusId'));
-            if ($statuscode == 100) {
-                if (ENVIRONMENT === 'development') {
-                    $transactionid = $this->input->get('orderId', true);
-                    $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
-                    $this->emailReservation($transactionid);
-                }
-                $data = array();
-                $this->global['pageTitle'] = 'TIQS : THANKS';
-                $this->loadViews("bookingsuccess", $this->global, $data, 'nofooter', "noheader");
-            } elseif ($statuscode <0) {
-                $data = array();
-                $this->global['pageTitle'] = 'TIQS : THANKS';
-                $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
-            } elseif ($statuscode >= 0) {
-                $data = array();
-			    $this->global['pageTitle'] = 'TIQS : THANKS';
-			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
-            } else {
-			    $data = array();
-			    $this->global['pageTitle'] = 'TIQS : THANKS';
-			    $this->loadViews("thuishavenerror", $this->global, $data, 'nofooter', "noheader");
+            $get = Utility_helper::sanitizeGet();
+            
+            if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
+                // need to do something with the facebook pixel.
+                $redirect = base_url() . 'reservation_success?orderid=' . $get['orderId'];
+            } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
+                $redirect = base_url() . 'reservation_pending?orderid=' . $get['orderId'];
+            } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
+                $redirect = base_url() . 'reservation_authorised?orderid=' . $get['orderId'];
+            } elseif ($get['orderStatusId'] === $this->config->item('payNlVerify')) {
+                $redirect = base_url() . 'reservation_verify?orderid=' . $get['orderId'];
+            } elseif ($get['orderStatusId'] === $this->config->item('payNlCancel')) {
+                $redirect = base_url() . 'reservation_cancel?orderid=' . $get['orderId'];
+            } elseif ($get['orderStatusId'] === $this->config->item('payNlDenied')) {
+                $redirect = base_url() . 'reservation_denied?orderid=' . $get['orderId'];
+            } elseif ($get['orderStatusId'] === $this->config->item('payNlPinCanceled')) {
+                $redirect = base_url() . 'reservation_pin_canceled?orderid=' . $get['orderId'];
             }
+            
+            redirect($redirect);
 
 	}
 
