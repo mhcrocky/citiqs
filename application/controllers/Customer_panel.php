@@ -733,7 +733,7 @@ class  Customer_panel extends BaseControllerWeb
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', $timeSlotId, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;

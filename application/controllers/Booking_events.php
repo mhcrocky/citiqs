@@ -809,7 +809,7 @@ class Booking_events extends BaseControllerWeb
                                 $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
                                 $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate); 
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
                                 //Pdf_helper::HtmlToPdf($mailtemplate);
                                 $mailtemplate = str_replace("font-family: 'arial black', sans-serif", 'font-weight: bold', $mailtemplate);

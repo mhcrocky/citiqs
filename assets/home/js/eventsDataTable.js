@@ -126,7 +126,7 @@ $(document).ready(function() {
                 data: null,
                 "render": function(data, type, row) {
                     
-                    let html = '<div style="display: inline-flex; width: 240px;justify-content: center;"><a title="Copy Link" class="event-icons mr-1" href="javascript:;" style="padding-top: 10px;padding-left: 12px;" onclick="openShopUrlModal('+data.id+')" target="_blank" data-toggle="modal" data-target="#copyUrlToClipboard"><i class="gg-copy"></i></a>';
+                    let html = '<div style="display: inline-flex; width: 240px;justify-content: center;"><a title="Copy Event" class="event-icons mr-1" href="javascript:;" style="padding-top: 10px;padding-left: 12px;" onclick="openShopUrlModal('+data.id+')" target="_blank" data-toggle="modal" data-target="#copyUrlToClipboard"><i class="gg-copy"></i></a>';
                     html += '<a class="event-icons ml-3" title="Edit Event" href="'+globalVariables.baseUrl+'events/edit/'+data.id+'"><i class="fa fa-pencil mx-auto"></i></a>';
                     html += '<a class="event-icons ml-3" title="Guestlist" style="font-size: 19px;" href="'+globalVariables.baseUrl+'events/guestlist/'+data.id+'"><i class="gg-user-list"></i></a>'
                     html += '<a class="event-icons ml-3" title="Tickets" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="ti-ticket ticket-icon"></i></a></div>';

@@ -506,8 +506,8 @@ function tinyMceInit(textAreaId, templateContent = '') {
 						onclick: function(){editor.insertContent('[voucherCode]')}
 					},
 					{
-						text: '[Voucher]',
-						onclick: function(){editor.insertContent('[voucher]')}
+						text: '[WalletCode]',
+						onclick: function(){editor.insertContent('[WalletCode]')}
 					},
                 ],
             });

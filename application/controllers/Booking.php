@@ -848,7 +848,7 @@ class Booking extends BaseControllerWeb
 								$mailtemplate = str_replace('[totime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeslot]', $timeSlotId, $mailtemplate);
 								$mailtemplate = str_replace('[TransactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								$subject = ($emailTemplate->template_subject) ? $emailTemplate->template_subject : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;

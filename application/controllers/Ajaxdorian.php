@@ -501,7 +501,7 @@ class Ajaxdorian extends CI_Controller
 		$totime = '01:00 PM';
         $paid = 1;
         $timeSlotId = 1;
-        $voucher = "TESTVOUCHER";
+        $voucher = "TESTWALLET";
         $TransactionId = "TESTTRANSACTIONID";
         $qrlink = base_url()."assets/images/qrcode_preview.png";
                         
@@ -519,7 +519,7 @@ class Ajaxdorian extends CI_Controller
 		$mailtemplate = str_replace('[totime]', $totime, $mailtemplate);
 		$mailtemplate = str_replace('[timeslot]', $timeSlotId, $mailtemplate);
 		$mailtemplate = str_replace('[TransactionId]', $TransactionId, $mailtemplate);
-        $mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+        $mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
         $mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 		$mailtemplate = str_replace('Image', '', $mailtemplate);
         $mailtemplate = str_replace('Text', '', $mailtemplate);

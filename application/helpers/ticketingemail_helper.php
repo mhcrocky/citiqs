@@ -134,7 +134,7 @@
                                 $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
                                 $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
                                 $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
                                 $download_pdf_link = base_url() . "booking_events/pdf/" . $emailId . "/" . $reservationId;

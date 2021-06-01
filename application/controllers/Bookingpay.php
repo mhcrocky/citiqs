@@ -700,7 +700,7 @@ class Bookingpay extends BaseControllerWeb
 								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
 								$mailtemplate = str_replace('[timeSlot]', $timeSlotId, $mailtemplate);
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[voucher]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 								//Pdf_helper::HtmlToPdf($mailtemplate);
                                 $data['mailtemplate'] = $mailtemplate;
