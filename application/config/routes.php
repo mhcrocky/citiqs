@@ -347,6 +347,15 @@ $route['ticketing_cancel']        = 'paylinkticketing/cancel';
 $route['ticketing_denied']        = 'paylinkticketing/denied';
 $route['ticketing_pin_canceled']  = 'paylinkticketing/pinCanceled';
 
+// reservation
+$route['reservation_success']       = 'paylinkticketing/index';
+$route['reservation_pending']       = 'paylinkticketing/pending';
+$route['reservation_authorised']    = 'paylinkticketing/authorised';
+$route['reservation_verify']        = 'paylinkticketing/verify';
+$route['reservation_cancel']        = 'paylinkticketing/cancel';
+$route['reservation_denied']        = 'paylinkticketing/denied';
+$route['reservation_pin_canceled']  = 'paylinkticketing/pinCanceled';
+
 
 
 $route['vendors'] = 'Api/Vendors/data';
