@@ -1047,5 +1047,29 @@ class Event_model extends CI_Model {
 		return false;
 	}
 
+	public function check_ticket_soldout($ticketId, $ticketQuantity, $maxTicketQuantity) : bool
+    {
+		//true => soldout
+		//false => available tickets
+        $this->db->select('COUNT(numberofpersons) as sold_tickets');
+        $this->db->from('tbl_bookandpay');
+		$this->db->where('tbl_bookandpay.eventid', $ticketId);
+		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'left');
+		
+        $query = $this->db->get();
+		$result = $query->first_row();
+
+        if($query->num_rows() > 0) {
+			$sold_tickets = intval($result->sold_tickets);
+			$maxTicketQuantity = intval($maxTicketQuantity);
+            $soldout = ($sold_tickets >= $maxTicketQuantity);
+			$available_tickets = $maxTicketQuantity - $sold_tickets;
+			$soldout = ($soldout === true) ? $soldout : ($ticketQuantity > $available_tickets);
+			return $soldout;
+        }
+
+        return false;
+	}
+
 
 }
