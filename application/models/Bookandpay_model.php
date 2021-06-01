@@ -574,7 +574,6 @@ class Bookandpay_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
-		$this->db->where('paid', '1');
 		$this->db->where('timeslotId', $timeSlotId);
 		$this->db->like('timefrom', $fromtime);
 		$this->db->like('timeto', $totime);
@@ -592,7 +591,6 @@ class Bookandpay_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
-		$this->db->where('paid', '1');
 		$this->db->where('timeslotId', $timeSlotId);
 		$this->db->where('SpotId', $spotId);
 		$this->db->like('timefrom', $fromtime);
@@ -612,7 +610,6 @@ class Bookandpay_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
-		$this->db->where('paid', '1');
 		$this->db->where('eventid', $agendaId);
 		
         $query = $this->db->get();
