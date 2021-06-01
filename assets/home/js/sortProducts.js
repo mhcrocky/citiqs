@@ -21,7 +21,10 @@ $(document).ready( function () {
             dataSrc: 'orderNo'
         },
         columnDefs: [
-            {orderable: false, targets: 0, visible: false }
+            {orderable: false, targets: 0, visible: false },
+            {orderable: false, targets: 1, visible: true },
+            {orderable: false, targets: 2, visible: true },
+            {orderable: false, targets: 3, visible: true }
         ],
         columns:[
             {
@@ -68,7 +71,6 @@ $(document).ready( function () {
 
 function sortProducts(products) {
     let url = globalVariables.ajax + 'sortProducts';
-    console.dir(products);
     let post = {
         'products': products,
     }
