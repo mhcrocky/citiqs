@@ -270,6 +270,26 @@
     }
 ?>
 
+<script>
+$(document).ready(function() {
+    var errorMessages = '<?php echo isset($errorMessages) ? json_encode($errorMessages) : ''; ?>';
+    errorMessages = (errorMessages == '') ? '' : JSON.parse(errorMessages);
+
+    if (errorMessages != '') {
+        for (let index in errorMessages) {
+
+            iziToast.error({
+               title: errorMessages[index ],
+               message: '',
+               position: 'topRight'
+            }); 
+        }
+    }
+
+
+});
+</script>
+
 </body>
 
 </html>
