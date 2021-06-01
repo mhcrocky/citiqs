@@ -68,7 +68,7 @@
 								</label>
 							</div>
 							<div>
-								<Label>Print reportes: </label>
+								<Label>Print receipts: </label>
 								<label>
 									<input
 										type="radio"
