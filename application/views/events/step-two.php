@@ -964,7 +964,7 @@
 -->
 <div id="result"></div>
 <script>
-const emailsTemplates = '<?php echo json_encode($emails); ?>';
+const emailsTemplates = `<?php echo json_encode($emails); ?>`;
 
 const templateGlobals = (function() {
     let globals = {
