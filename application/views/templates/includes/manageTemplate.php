@@ -283,7 +283,7 @@ const templateGlobals = (function() {
         globals['templateType'] = `<?php echo $templateType; ?>`
     <?php } ?>
     <?php if (!empty($templateContent)) { ?>
-        globals['templateContent'] = `<?php echo $templateContent; ?>`
+        globals['templateContent'] = decodeHtml(`<?php echo htmlentities($templateContent); ?>`)
     <?php } ?>
     <?php if (!empty($templateId)) { ?>
         globals['templateId'] = '<?php echo $templateId; ?>'
@@ -303,4 +303,11 @@ const templateGlobals = (function() {
     return globals;
 }());
 
+function decodeHtml(html) {
+    let txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    let decodeValue = txt.value;
+    txt.remove();
+    return decodeValue;
+}
 </script>
