@@ -189,7 +189,7 @@
 			    'smtp_user' => SMTP_USER, // change it to yours
 			    'smtp_pass' => SMTP_PASS, // change it to yours
 			    'mailtype' => 'html',
-			    'charset' => 'iso-8859-1',
+			    'charset' => 'utf-8',
 			    'smtp_crypto' => 'tls',
 			    'wordwrap' => TRUE,
 			    'newline' => "\r\n"
