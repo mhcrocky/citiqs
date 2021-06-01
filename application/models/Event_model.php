@@ -566,6 +566,7 @@ class Event_model extends CI_Model {
 	function save_guest_reservations($data, $ticketQuantity){
 		$reservationIds = [];
 		for($i = 0; $i < $ticketQuantity; $i++){
+			$data['voucher'] = $this->generateNewVoucher();
 			$reservationIds[] = $this->insertTicket($data);
 		}
 		return $reservationIds;
@@ -1069,6 +1070,13 @@ class Event_model extends CI_Model {
         }
 
         return false;
+	}
+
+	private function generateNewVoucher()
+	{
+		$set = '3456789ABCDEFGHJKLMNPQRSTVWXY';
+		$voucher = 'V-' . substr(str_shuffle($set), 0, 6);
+        return $voucher;
 	}
 
 
