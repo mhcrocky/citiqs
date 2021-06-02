@@ -52,16 +52,19 @@
 
         public function updateTemplate($id, $isLandingPage = ''): void
         {
+            $this->load->model('email_templates_model');
             $data = [
                 'vendorId' => intval($_SESSION['userId']),
                 'tiqsId' => $this->config->item('tiqsId'),
+                'defaultTemplates' => $this->email_templates_model->getDefaultTemplate(),
             ];
-
+   
             if (empty($isLandingPage)) {
                 $this->setEmailTemplateUpdate($data, intval($id));
             } else {
                 $this->setLandingPageUpdate($data, intval($id));
             }
+
 
             $this->global['pageTitle'] = 'TIQS : UPDATE TEMPLATE';
             $this->loadViews('templates/updateTemplate', $this->global, $data, 'footerbusiness', 'headerbusiness');
