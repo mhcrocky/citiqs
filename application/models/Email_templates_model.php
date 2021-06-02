@@ -76,6 +76,7 @@ class Email_templates_model extends CI_Model
     public function getDefaultTemplate () {
         $this->db->from('tbl_email_templates');
         $this->db->where('user_id', '1');
+        $this->db->not_like('template_type', 'general');
         $query = $this->db->get();
         $result = $query->result_array();
         return $result;
