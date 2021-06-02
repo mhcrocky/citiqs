@@ -42,7 +42,8 @@
                 'urlType' => $this->config->item('urlLanding'),
                 'templateType' => $this->config->item('templateLanding'),
                 'emailTemplatesEdit' => true,
-                'landingPagesEdit' => true
+                'landingPagesEdit' => true,
+                'defaultTemplates' => $this->email_templates_model->getDefaultTemplate(),
             ];
 
             $this->global['pageTitle'] = 'TIQS : ADD TEMPLATE';
