@@ -58,8 +58,10 @@ class Floorplan {
 	scaleAndPositionCanvas(scaleRatio = null) {
 		if (!this.bgImage) return false;
 
-		var elWidth = this.imgEl.width();
-		var elHeight = this.imgEl.innerHeight();
+		// var elWidth = this.imgEl.width();
+		// var elHeight = this.imgEl.innerHeight();
+		var elWidth = 800; //this.imgEl.width();
+		var elHeight = 600; //this.imgEl.innerHeight();
 		var canvasScale = elWidth / this.canvasOriginalWidth <= elHeight / this.canvasOriginalHeight ? elWidth / this.canvasOriginalWidth : elHeight / this.canvasOriginalHeight;
 		// if (scaleRatio) {
 		// 	var scaleFactor = this.scaleFactor * scaleRatio;

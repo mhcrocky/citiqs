@@ -2,11 +2,13 @@
     declare(strict_types=1);
 
     require_once APPPATH . 'interfaces/InterfaceCrud_model.php';
+    require_once APPPATH . 'interfaces/InterfaceValidate_model.php';
     require_once APPPATH . 'abstract/AbstractSet_model.php';
+
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-    Class Floorplanareas_model extends AbstractSet_model implements InterfaceCrud_model
+    Class Floorplanareas_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
         public $floorplanID;
@@ -40,6 +42,23 @@
             return $this->table;
         }
 
+        public function insertValidate(array $data): bool
+        {
+            // TO DO ADD CONDITIONS
+
+            return $this->updateValidate($data);
+        }
+
+        public function updateValidate($data): bool
+        {
+            if (!count($data)) return false;
+
+            // TO DO ADD CONDITIONS
+
+            return true;
+        }
+
+
         public function get_floorplan_areas($floor_plan_id)
         {
             $this->db->where('floorplanID', $floor_plan_id);
@@ -53,5 +72,14 @@
             $this->db->delete($this->table);
             var_dump($this->db->last_query());
             return $this->db->affected_rows();
+        }
+
+        public function deleteFloorplanAreas(): bool
+        {
+            $where = [
+                $this->table . '.floorplanID' => $this->floorplanID
+            ];
+
+            return $this->customDelete($where);
         }
     }

@@ -10,9 +10,9 @@
 		<div class="col-md-8" style="height: calc(100vh - 20px);">
 			<div class="row mb-4">
 				<div class="col-md-2 col-xl-1 p-3" style="background-color:#ff7f50">
-					<a href="" class='btn w-100 h-100 d-flex align-items-center justify-content-center'>
+					<span class='btn w-100 h-100 d-flex align-items-center justify-content-center'  data-toggle="modal" data-target="#floorplan">
 						<img src="/assets/home/images/twoontable.png" alt="" class='w-100'>
-					</a>
+					</span>
 				</div>
 				
 				<div class="col-md-10 col-xl-11">
@@ -182,6 +182,27 @@
 
 			return globals;
 		}());
+
+		var showFloorPlanGloabals = (function(){
+			let globals = {
+				floorplanID: '<?php echo $floorplan['id']; ?>',
+				floor_name: '<?php echo $floorplan['floorplanName']; ?>',
+				areas: $.parseJSON('<?php echo json_encode($areas); ?>'),
+				canvasJSON: '<?php echo $floorplan['canvas']; ?>'
+			}
+        	Object.freeze(globals);
+        	return globals;
+    	})();
+
+		$('#zoomIn').click(function () {
+			floorplan.scaleAndPositionCanvas(1.25);
+		})
+
+		$('#zoomOut').click(function () {
+			floorplan.scaleAndPositionCanvas(0.75);
+		})
+
+		console.dir(showFloorPlanGloabals);
 
 	</script>
 <?php } else { ?>

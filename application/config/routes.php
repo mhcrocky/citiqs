@@ -691,6 +691,11 @@ $route['appsettings/save_appsettings'] = 'Appsettings/save_appsettings';
 $route['appsettings/update_appsettings'] = 'Appsettings/update_appsettings';
 $route['appsettings/delete_appsettings'] = 'Appsettings/delete_appsettings';
 
+$route['floorplans'] = 'Floorplans/index';
+$route['add_floorplan'] = 'Floorplans/addFloorplan';
+$route['edit_floorplan/(:num)'] = 'Floorplans/editFloorplan/$1';
+
+
 // connections api routes
 
 //buyer

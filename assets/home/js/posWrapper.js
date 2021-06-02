@@ -496,7 +496,7 @@ function checkActivity() {
                 lockPos();
             }
         }
-    }, 10000);
+    }, 20000);
 }
 
 function clearActivtiyInterval() {
