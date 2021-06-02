@@ -37,6 +37,9 @@
         <div id="events" style="box-shadow: 0 0 70px 30px #00000014;background: #00000014;padding: 0px 0px;"
             class="row single-item__grid">
             <?php foreach ($events as $key => $event): 
+                if(!$get_by_event_id && $event['visibleToShop'] == '0'){
+                    continue;
+                }
                   $event_start =  date_create($event['StartDate'] . " " . $event['StartTime']);
                   $eventDate = date_format($event_start, "d M - H:i");
                   if($key == array_key_first($events)):
