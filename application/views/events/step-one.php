@@ -30,7 +30,7 @@
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
                                     <h3>
-                                        <strong>Create event</strong>
+                                        <strong><?php echo $this->language->tLine('Create event'); ?></strong>
                                     </h3>
                                 </label>
                                 <div class="col-md-6">
@@ -56,7 +56,7 @@
                                     <input id="eventdescript" type="hidden" name="eventdescript">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row upload-image">
                                 <label for="image" class="col-md-4 col-form-label text-md-left">Upload Event
                                     Image</label>
                                 <div class="col-md-8">
@@ -177,6 +177,21 @@
 
                             -->
 
+                            <div class="form-group row">
+                                <label for="visibleToShop" class="col-md-4 col-form-label text-md-left">
+                                Show To Main Shop
+                                </label>
+                                <div class="col-md-6">
+                                    <select id="visibleToShop" name="visibleToShop"
+                                        class="form-control input-w border-50 field" required>
+                                        <option value="">Select option</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
                             <div class="form-group row wideField">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div id="locationField" class="col-md-6">
@@ -188,7 +203,7 @@
                             <div class="form-group row wideField">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="autocomplete" onFocus="geolocate()"
+                                    <input type="text" id="autocomplete"
                                         class="field form-control input-w border-50" name="eventAddress" placeholder=""
                                         required>
                                 </div>

@@ -10,7 +10,7 @@
                         <div class="col-md-2 ml-auto">
                             <a href="<?php echo base_url(); ?>events">
                                 <div class="input-group">
-                                    <input type="button" value="<?php echo $this->language->tline('Go Back'); ?>"
+                                    <input type="button" value="<?php echo $this->language->tLine('Go Back'); ?>"
                                         style="background: #10b981 !important;border-radius:0;height:45px;"
                                         class="btn btn-primary form-control mb-3 text-left" data-toggle="modal"
                                         data-target="#guestlistModal">
@@ -30,7 +30,7 @@
                             <div class="form-group row">
                                 <label for="full_name" class="col-md-4 col-form-label text-md-left">
                                     <h3 style="margin-top: 0px !important">
-                                        <strong>Create event</strong>
+                                        <strong><?php echo $this->language->tLine('Edit event'); ?></strong>
                                     </h3>
                                 </label>
                                 <div class="col-md-6">
@@ -57,8 +57,8 @@
                                         name="eventdescript">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Image</label>
+                            <div class="form-group row upload-image">
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Upload Event Image</label>
                                 <div class="col-md-8">
 
 
@@ -116,7 +116,6 @@
 
                                 </div>
                             </div>
-
                             <hr class="w-100 mt-5 mb-5">
 
                             <!--
@@ -195,6 +194,23 @@
 
                             -->
 
+
+                            <div class="form-group row">
+                                <label for="visibleToShop" class="col-md-4 col-form-label text-md-left">
+                                Show To Main Shop
+                                </label>
+                                <div class="col-md-6">
+                                    <select id="visibleToShop" name="visibleToShop"
+                                        class="form-control input-w border-50 field" required>
+                                        <option value="">Select option</option>
+                                        <option value="1" <?php if($event->visibleToShop == '1'){ ?> selected <?php } ?>>Yes</option>
+                                        <option value="0" <?php if($event->visibleToShop == '0'){ ?> selected <?php } ?>>No</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+
                             <div class="form-group row">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div class="col-md-6">
@@ -207,7 +223,7 @@
                             <div class="form-group row wideField">
                                 <label for="address" class="col-md-4 col-form-label text-md-left">Address</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="autocomplete" onFocus="geolocate()"
+                                    <input type="text" id="autocomplete"
                                         class="field form-control border-50 input-w" name="eventAddress"
                                         value="<?php echo $event->eventAddress; ?>" required>
                                 </div>
