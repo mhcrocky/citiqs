@@ -44,7 +44,7 @@
 
         <label for="templateType">Template Type</label>
         <select class="form-control w-100" id="templateType" name="templateType" onchange="checkiIsLandingPage(this, 'landingPage', 'emailTemplate', 'landingPage')">
-            <option value="" disabled>Select type</option>
+            <option value="" disabled>Select template</option>
             <?php if ($emailTemplatesEdit === true) { ?>
                 <option
                     value="general"
