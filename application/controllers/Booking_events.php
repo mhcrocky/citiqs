@@ -236,7 +236,7 @@ class Booking_events extends BaseControllerWeb
         if($ticket_quantity > $ticket_available){
             $response = [
                 'status' => 'error',
-                'message' => 'SOLD OUT!',
+                'message' => $this->language->tLine('SOLD OUT') . '!',
                 'quantity' => $ticket_available,
                 'amount' => floatval($ticket['amount']) - (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))
             ];
