@@ -32,6 +32,7 @@
 
         public function addTemplate(): void
         {
+            $this->load->model('email_templates_model');
             $data = [
                 'emailTemplates' => $this->config->item('emailTemplates'),
                 'vendorId' => intval($_SESSION['userId']),
