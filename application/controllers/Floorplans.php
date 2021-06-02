@@ -28,7 +28,7 @@ class  Floorplans extends BaseControllerWeb
     {
 
 		$data = [
-			'floorplans' =>	$this->floorpan_model->setProperty('vendorId', intval($_SESSION['userId']))->fetchVendorFloorplans(),
+			'floorplans' =>	$this->floorplan_model->setProperty('vendorId', intval($_SESSION['userId']))->fetchVendorFloorplans(),
 		];
 
 		$this->global['pageTitle'] = 'TIQS : FLOORPLANS';
