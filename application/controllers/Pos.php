@@ -37,6 +37,8 @@
             $this->load->model('shopposorder_model');
             $this->load->model('employee_model');
             $this->load->model('shopemployee_model');
+            $this->load->model('floorplan_model');
+            $this->load->model('floorplanareas_model');
 
             $this->load->config('custom');
 
@@ -102,9 +104,34 @@
             $data['pinMachinePayment'] = $this->config->item('pinMachinePayment');
             $data['voucherPayment'] = $this->config->item('voucherPayment');
 
+            $this->getFloorplan($data);
+
             $this->global['pageTitle'] = 'TIQS : POS';
             $this->loadViews('pos/pos', $this->global, $data, null, 'headerWarehouse');
             return;
+        }
+
+        private function getFloorplan(array &$data): void
+        {
+            // TO DO improve, JUST QUICK VCERSION TO SHOW FLOORPLAN IN POS
+            $this->load->model('floorplan_model');
+            $this->load->model('shopspot_model');
+            $floorplan = $this->floorplan_model->readImproved([
+                'what' => ['*'],
+                'where' => [
+                    'vendorId' => $_SESSION['userId']
+                ],
+                'conditions' => [
+                    'limit' => ['1']
+                ]
+            ]);
+
+            if (empty($floorplan)) return;
+            $floorplan = reset($floorplan);
+            $areas = $this->floorplanareas_model->get_floorplan_areas($floorplan['id']);
+
+            $data['floorplan'] = $floorplan;
+            $data['areas'] = $areas;
         }
 
         public function redirectToFirstLocalSpot(): void

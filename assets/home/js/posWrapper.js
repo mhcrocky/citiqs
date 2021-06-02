@@ -421,6 +421,8 @@ function countOrderedToZero(countOrdered) {
 }
 
 function showLoginModal() {
+    $('#posLoginModal').modal('hide');
+    return;
     if (!posGlobals['unlock']) {
         $('#posLoginModal').modal('show');
     }

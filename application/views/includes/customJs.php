@@ -116,6 +116,13 @@
 <?php } elseif ($this->view === 'pos/pos') { ?>
 	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-url-hash@latest/dist/js/splide-extension-url-hash.min.js"></script>
+
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorplan.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorplanShow.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/manageFloorPlan.js"></script>
+
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/makeOrderFunctions.js"></script>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/posWrapper.js"></script>
 	<script src="<?php echo $this->baseUrl ?>assets/home/js/posSplide.js"></script>
