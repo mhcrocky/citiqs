@@ -37,7 +37,7 @@
         <tr>
             <?php if($timeSlot['status'] != "soldout"): ?>
             <td class="text-center">
-                <form id="form-<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>"
+                <form style="padding-left: 16px;" id="form-<?php echo $timeSlot['id']; ?>_<?php echo $i; ?>"
                     action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>?order=<?php echo $orderRandomKey; ?>"
                     method="post" enctype="multipart/form-data">
 
@@ -60,7 +60,7 @@
         <?php else: ?>
         <tr>
             <td class="text-center">
-            <label class="radioLabel btn btn-primary">
+                <label class="radioLabel btn btn-primary">
                     <?php echo Agenda_booking::second_to_hhmm($start_time).' - '.Agenda_booking::second_to_hhmm($end_time); ?>
                 </label>
             </td>
@@ -73,7 +73,7 @@
             <?php if($timeSlot['status'] != "soldout"): ?>
         <tr>
             <td class="text-center">
-                <form id="form-<?php echo $timeSlot['id']; ?>"
+                <form style="padding-left: 16px;" id="form-<?php echo $timeSlot['id']; ?>"
                     action="<?php echo $this->baseUrl; ?>agenda_booking/time_slots/<?php echo $spot->id; ?>?order=<?php echo $orderRandomKey; ?>"
                     method="post" enctype="multipart/form-data">
 
@@ -99,13 +99,13 @@
         <?php else: ?>
         <tr>
             <td class="text-center">
-                <a href="javascript:;" class="btn btn-primary">
+                <label class="radioLabel btn btn-primary">
                     <?php $dt1 = new DateTime($timeSlot['fromtime']);
                 $fromtime = $dt1->format('H:i');
                 $dt2 = new DateTime($timeSlot['totime']);
                 $totime = $dt2->format('H:i');
                 echo $fromtime.' - '.$totime; ?>
-                </a>
+                </label>
 
             </td>
             <td>Sold Out</td>

@@ -317,6 +317,19 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <style>
+    @media only screen and (max-width: 400px) {
+        .upload-image {
+            margin-top: 125px;
+        }
+    }
+
+    @media only screen and (max-width: 600px) and (min-width: 401px)  {
+        .upload-image {
+            margin-top: 90px;
+        }
+    }
+    </style>
 <?php } elseif ($this->view === 'events/reports') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">

@@ -105,6 +105,8 @@ class Booking_events extends BaseControllerWeb
 
 
         $data['events'] = $events;
+        $data['get_by_event_id'] = $get_by_event_id;
+        
         $where = [
             'vendorId' => $customer->id,
             'eventId' => ($eventId == '') ? '0' : strval($eventId)
@@ -236,7 +238,7 @@ class Booking_events extends BaseControllerWeb
         if($ticket_quantity > $ticket_available){
             $response = [
                 'status' => 'error',
-                'message' => 'SOLD OUT!',
+                'message' => $this->language->tLine('SOLD OUT') . '!',
                 'quantity' => $ticket_available,
                 'amount' => floatval($ticket['amount']) - (floatval($ticketInfo->ticketPrice) + floatval($ticketInfo->ticketFee))
             ];
