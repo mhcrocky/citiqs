@@ -421,8 +421,6 @@ function countOrderedToZero(countOrdered) {
 }
 
 function showLoginModal() {
-    $('#posLoginModal').modal('hide');
-    return;
     if (!posGlobals['unlock']) {
         $('#posLoginModal').modal('show');
     }
@@ -498,7 +496,7 @@ function checkActivity() {
                 lockPos();
             }
         }
-    }, 10000);
+    }, 20000);
 }
 
 function clearActivtiyInterval() {
