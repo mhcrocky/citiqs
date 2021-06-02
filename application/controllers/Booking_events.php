@@ -105,6 +105,8 @@ class Booking_events extends BaseControllerWeb
 
 
         $data['events'] = $events;
+        $data['get_by_event_id'] = $get_by_event_id;
+        
         $where = [
             'vendorId' => $customer->id,
             'eventId' => ($eventId == '') ? '0' : strval($eventId)
