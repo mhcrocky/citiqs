@@ -47,8 +47,8 @@
             <h5 class="text-dark mb-4 mt-5 h-div"><?php echo ucwords($event['eventVenue']) .' ' . $eventDate; ?></h5>
             
             <input type="hidden" id="background_img_<?php echo $event['id']; ?>" value="<?php echo $event['backgroundImage']; ?>">
-            <div id="event_<?php echo $event['id']; ?>"
-                class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4">
+            <div style="display: grid !important;" id="event_<?php echo $event['id']; ?>"
+                class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4 d-table-cell">
                 <a href="#tickets" onclick="getTicketsView('<?php echo $event['id']; ?>')"
                     class="single-item btn-ticket">
                     <div class="single-item__image">
@@ -62,16 +62,42 @@
                         alt="<?php echo $event['eventname']; ?>">
                         <p class='single-item__promotion'>Order Now</p>
                     </div>
+                </a>
                     <div class="single-item__content">
                         <p class='mb-0'><?php echo $event['eventname']; ?></p>
                         <div class="scroll-descript" >
                             <span class='single-item__price'>
-                                <?php echo $event['eventdescript']; ?>
+                                <?php echo (strlen($event['eventdescript']) > 57) ? substr($event['eventdescript'], 0, 54) . '...' : $event['eventdescript']; ?>
+                                
                             </span>
                         </div>
                     </div>
                 </a>
+                <div style="align-items: end;" class="w-100 mt-4 bg-white pr-4 text-center">
+                    <a href="javascript:;" type="button" class="btn btn-info mb-1" data-toggle="modal" data-target="#eventModal<?php echo $event['id']; ?>">
+                        <?php echo $this->language->tLine('Show Info'); ?>
+                    </a>
+                </div>
             </div>
+            <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="eventModal<?php echo $event['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="eventModal<?php echo $event['id']; ?>Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div style="min-height: 100px" class="modal-body">
+      <?php echo $event['eventdescript']; ?>
+      </div>
+    </div>
+  </div>
+</div>
 
             <?php endforeach; ?>
         </div>
