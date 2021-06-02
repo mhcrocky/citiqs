@@ -45,63 +45,73 @@ class FloorEditor extends Floorplan {
 	}
 
 	async uploadFile (file) {
-		let result;
 		let fd = new FormData();
 		fd.append('image', file);
 
 		try {
-			result = await $.ajax({
-				url: BASE_URL + 'ajax/uploadFloorPlan/' + OBJECT_ID,
+			let result = await $.ajax({
+				url: globalVariables.baseUrl + 'ajax/uploadFloorPlan',
 				method: 'POST',
 				data: fd,
 				cache: false,
 				contentType: false,
 				processData: false
 			});
-			console.dir(result);
 			return result;
 		} catch (error) {
 			console.error(error);
 		}
 	}
 
-	async saveFloor () {
-		var canvas = JSON.stringify(this.canvas.toJSON([ 'options', 'area_id', 'label_id', 'label', 'id']));
-		var areas_data = [];
-		var _this = this;
+	getAreas() {
+		let areas_data = [];
+		let key;
 		this.canvas.getObjects().forEach(function (object, index) {
-			if (object.get('type') != 'text') {
-				var area_data = {
+			if (object.get('type') !== 'text') {
+				let area_data = {
 					area_id: object.area_id
 				};
 				if (object.id) {
 					area_data.id = object.id;
 				}
-				for (var key in object.options) {
+				for (key in object.options) {
 					area_data[key] = object.options[key];
 				}
 				areas_data.push(area_data);
 			}
 		});
+		return areas_data;
+	}
+
+	async saveFloor () {
+		let floorplanName = this.getFloorPlanName();
+
+		if (!floorplanName) return;
+
+		let canvas = JSON.stringify(this.canvas.toJSON([ 'options', 'area_id', 'label_id', 'label', 'id']));
+		let areas_data = this.getAreas();
+		let _this = this;
 
 		var data = {
-			canvas: canvas,
-			floorimageID: this.floorimageID,
-			floorplanID: this.floorplanID,
-			areas_data: areas_data,
-			floor_name: document.getElementById('floor_plan_name').value,
-			deleteAreas: this.deleteAreas,
+			'floorplan' : {
+				'floorplanName' : floorplanName,
+				'floorplanImage' : this.img_name,
+				'canvas': canvas,
+			},
+			'areas': areas_data,
+			'deleteAreas': this.deleteAreas,
 		};
+
 		try {
 			return await $.ajax({
-				url: BASE_URL + 'ajax/save_floor',
+				url: globalVariables.baseUrl + 'ajax/save_floor',
 				method: 'POST',
 				data: data,
 				success: function(response){
 					var result = $.parseJSON(response);
 					_this.floorplanID = result.floorplanID;
 					_this.updateAreasData(result.areas_data);
-					alert(result.msg);
+					alertifyAjaxResponse(result);
 				}
 			});
 		} catch (error) {
@@ -120,17 +130,23 @@ class FloorEditor extends Floorplan {
 		}
 	}
 
-	async addImage (image) {
-		if (this.imageUploaded) {
-			alert('You already have image, for new one create please new floor plan');
-			return false;
-		}
-		var upload_data = await this.uploadFile(image);
-		upload_data = $.parseJSON(upload_data);
-		this.img_src = BASE_URL + 'uploads/floorPlans/' + upload_data.result.file;
-		this.floorplanID = upload_data.result.floorplanID;
-		this.imageUploaded = true;
-		console.log('this.img_src', this.img_src);
+	setImgName(imageName) {
+		this.img_name = imageName;
+		return;
+	}
+	setImageSrc() {
+		this.img_src = globalVariables.baseUrl + 'uploads/floorPlans/' + this.img_name;
+		return;
+	}
+	handleUploadImageResponse(response) {
+		let upload_data = $.parseJSON(response);
+
+		this.setImgName(upload_data.result.file);
+		this.setImageSrc();
+		
+		alertifyAjaxResponse(upload_data);
+
+		if (upload_data['status'] === '0') return;
 
 		$("<img/>")
 			.attr("src", this.img_src)
@@ -152,8 +168,26 @@ class FloorEditor extends Floorplan {
 			});
 	}
 
+	getFloorPlanName() {
+		let floorPlan = document.getElementById('floor_plan_name');
+		let floorPlanName = floorPlan.value.trim();
+		if (!floorPlanName) {
+			alertify.error('Floorplan name is requried');
+			floorPlan.style.border = '1px solid #f00';
+			return null;
+		} else {
+			floorPlan.style.border = 'initial';
+			return floorPlanName;
+		}
+	}
+
+	async addImage (image) {
+		let upload_data = await this.uploadFile(image);
+		this.handleUploadImageResponse(upload_data);
+	}
+
 	addObjectImage (category, file) {
-		var img_src = BASE_URL + FLOOR_IMAGES_PATH + category + '/' + file;
+		var img_src = globalVariables.baseUrl + FLOOR_IMAGES_PATH + category + '/' + file;
 		var _this = this;
 		$("<img/>")
 			.attr("src", img_src)
@@ -322,7 +356,6 @@ class FloorEditor extends Floorplan {
 					area.transforming = false;
 					return false
 				}
-				console.log('area', area);
 				_this.editObject(area);
 			},
 

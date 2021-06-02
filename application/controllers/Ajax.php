@@ -47,6 +47,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopreport_model');
         $this->load->model('shopreportemail_model');
         $this->load->model('bookandpay_model');
+        $this->load->model('floorplan_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -309,12 +310,8 @@ class Ajax extends CI_Controller
         var_dump($data);
     }
 
-    public function uploadFloorPlan($objectId): void
+    private function uploadFloorplanImage(): bool
     {
-        if (!$this->input->is_ajax_request()) return;
-        if (!is_dir($this->config->item('floorPlansFolder'))) {
-            mkdir($this->config->item('floorPlansFolder'), 0775, TRUE);
-        }
         $config = [
             'upload_path' => $this->config->item('floorPlansFolder'),
             'allowed_types' => 'jpg|png',
@@ -324,123 +321,112 @@ class Ajax extends CI_Controller
 
         $this->load->library('upload', $config);
 
-		if (!$this->upload->do_upload('image')) {
-			$status = 'error';
-            $msg = $this->upload->display_errors('', '');
-            echo json_encode(array('status' => $status, 'msg' => $msg));
+        return $this->upload->do_upload('image');
+    }
+
+    public function uploadFloorPlan(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+		if (!$this->uploadFloorplanImage()) {
+            $response = [
+                'status' => '0',
+                'messages' => [$this->upload->display_errors('', '')]
+            ];
 		} else {
             $file = array('upload_data' => $this->upload->data());
-			$data = array (
-				'file_name' => $file['upload_data']['file_name'],
-				'file_type' => $file['upload_data']['file_type'],
-				'orig_name' => $file['upload_data']['orig_name'],
-                'raw_name'  => $file['upload_data']['raw_name'],
-                'spot_object_id' => $objectId,
-            );
-
-			if ($this->floorplandetails_model->setObjectFromArray($data)->create()) {
-                $status = "success";
-				$msg = "File successfully uploaded";
-                $result = ['file' => $file['upload_data']['file_name'], 'floorplanID' => $this->floorplandetails_model->id];
-                $this->session->set_userdata('unsaved_floorplan_id', $this->floorplandetails_model->id);
-                echo json_encode(array('status' => $status, 'msg' => $msg, 'result' => $result));
-			} else {
-				$status = "error";
-                $msg = "Error while saving to database";
-                echo json_encode(array('status' => $status, 'msg' => $msg));
-			}
+            $response = [
+                'status' => '1',
+                'messages' => ['File successfully uploaded'],
+                'result' => [
+                    'file' => $file['upload_data']['file_name']
+                ]
+            ];
         }
-        
+
+        echo json_encode($response);
+
         return;
     }
 
-    public function save_floor () {
+    public function save_floor ($floorPlanId = null): void
+    {
         if (!$this->input->is_ajax_request()) return;
 
-		$floorplanData = [
-			'canvas' => $this->input->post('canvas'),
-			'floor_name' => $this->input->post('floor_name')
-		];
-        $floorplanID = intval($this->input->post('floorplanID'));
-        if ($this->session->userdata('unsaved_floorplan_id')) {
-            $unsaved_floorplan_id = $this->session->userdata('unsaved_floorplan_id');
-            if ($floorplanID == $unsaved_floorplan_id) {
-                $this->session->unset_userdata('unsaved_floorplan_id');
-            } else {
-                $unsaved_floorplan = $this->floorplandetails_model->read(
-                    ['*'],
-                    ['id=' => $unsaved_floorplan_id]
-                    );
-                unlink($this->config->item('floorPlansFolder') . DIRECTORY_SEPARATOR . $unsaved_floorplan[0]['file_name']);
-                $this->floorplandetails_model->id = $unsaved_floorplan[0]['id'];
-                $this->floorplandetails_model->delete();
-                $this->session->unset_userdata('unsaved_floorplan_id');
-            }
-        }
+        $post = $this->security->xss_clean($_POST);
 
+        $floorplan = $post['floorplan'];
+        $areas = empty($post['areas']) ? null : $post['areas'];
+        $areas_result = [];
 
-		// first do updated
-		if ($floorplanID) {
-            if ($this->floorplandetails_model->setObjectId($floorplanID)->setObjectFromArray($floorplanData)->update())
-			$msg = 'Floor plan updated';
-			$status = 'success';
+        if (!$this->manageFloorplan($floorplan, intval($floorPlanId))) return;
+        if (!$this->insertFloorplanAreas($areas, $this->floorplan_model->id, $areas_result)) return;
+
+        $response = [
+            'status' => '1',
+			'messages' => ['Success'],
+			'floorplanID' => $this->floorplan_model->id,
+			'areas_data' => $areas_result
+        ];
+
+		echo json_encode($response);
+    }
+    
+    private function manageFloorplan(array $floorplan, int $floorPlanId): bool
+    {
+        if ($floorPlanId) {
+            if (!$this->floorplandetails_model->setObjectId(intval($floorPlanId))->setObjectFromArray($floorplan)->update()) {
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Floorplan did not update']
+                ];
+                echo json_encode($response);
+                return false;
+            };
 		} else {
-		    $this->floorplandetails_model->setObjectFromArray($floorplanData)->create();
-            $floorplanID = $this->floorplandetails_model->id;
-            // insert failed
-            if (!$floorplanID) {
-                $msg = "Floor plan didn't create";
-                $status = 'error';
-                echo json_encode(array('status' => $status, 'msg' => $msg));
-                return;
+		    if (!$this->floorplan_model->setProperty('vendorId', $_SESSION['userId'])->setObjectFromArray($floorplan)->create()) {
+                $response = [
+                    'status' => '0',
+                    'messages' => ['Floorplan did not create']
+                ];
+                echo json_encode($response);
+                return false;
             }
-            $msg = 'Floor Plan Saved!';
-            $status = 'success';
-		}
-
-		$areas = $this->input->post('areas_data');
-		$areas_result = [];
-
-		//Remove deleted areas
-        $deleteAreasIDs = $this->input->post('deleteAreas');
-        if ($deleteAreasIDs) {
-            $this->floorplanareas_model->remove_floorplan_areas($floorplanID, $deleteAreasIDs);
         }
 
-		if ($areas) {
-			foreach ($areas as $area_data) {
-				$area_data['floorplanID'] = $floorplanID;
-				unset($area_data['status']);
-				unset($area_data['opacity']);
-				if (isset($area_data['id']) AND $area_data['id']) {
-					$this->floorplanareas_model->setObjectFromArray($area_data)->update();
-                    $floor_areaID = $this->floorplanareas_model->id;
-				} else {
-					$this->floorplanareas_model->setObjectFromArray($area_data)->create();
-                    $floor_areaID = $this->floorplanareas_model->id;
-				}
+        return true;
+    }
 
-				if (!$floor_areaID) {
-					$status = 'error';
-					$msg .= " Error while saving area to database. Please try again";
-					break;
+    private function insertFloorplanAreas(?array $areas, int $floorplanId, array &$areas_result): bool
+    {
+		if ($areas) {
+            $this->floorplanareas_model->setProperty('floorplanID', $floorplanId)->deleteFloorplanAreas();
+            
+			foreach ($areas as $area_data) {
+                unset($area_data['status']);
+				unset($area_data['opacity']);
+                $area_data['floorplanID'] = $floorplanId;
+
+				if (!$this->floorplanareas_model->setObjectFromArray($area_data)->create()) {
+                    $response =  [
+                        'status' => '0',
+                        'messages' => ['Error while saving area to database. Please try again'],
+                    ];
+                    $this->floorplanareas_model->setProperty('floorplanID', $floorplanId)->deleteFloorplanAreas();
+                    $this->floorplan_model->delete();
+                    echo json_encode($response);
+					return false;
 				}
 
 				$areas_result[] = array(
 					'area_id' => $area_data['area_id'],
-					'id' => $floor_areaID
+					'id' => $this->floorplanareas_model->id
 				);
 			}
 		}
 
-		echo json_encode(array(
-			'status' => $status,
-			'msg' => $msg,
-			'floorplanID' => $floorplanID,
-			'areas_data' => $areas_result)
-		);
+        return true;
     }
-    
     public function updateSpot($id): void
     {
         if (!$this->input->is_ajax_request()) return;
@@ -466,11 +452,11 @@ class Ajax extends CI_Controller
             'tbl_shop_orders.paid=' => $post['paid'],
             'tbl_shop_orders.created>=' => date('Y-m-d H:i:s', strtotime('-48 hours', time()))
         ];
-//        if (isset($post['orderStatus'])) {
-//            $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
-//        } else {
-//            $where['tbl_shop_orders.orderStatus!='] = $this->config->item('orderFinished');
-//        }
+        // if (isset($post['orderStatus'])) {
+        //     $where['tbl_shop_orders.orderStatus='] = $post['orderStatus'];
+        // } else {
+        //     $where['tbl_shop_orders.orderStatus!='] = $this->config->item('orderFinished');
+        // }
         $selectedPrinter = (isset($post['selectedPrinter'])) ? $post['selectedPrinter'] : '';
 
 

@@ -516,7 +516,8 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 									<li data-menuid="7">
                                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-home"></i><span><?php echo $this->language->tLine('Floorplan'); ?></span></a>
                                         <ul class="collapse">
-                                            <li data-menuid="7.1"><a href="<?php echo $this->baseUrl;?>settingsmenu"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('Create your floorplans'); ?></span></a></li>
+                                            <li data-menuid="7.1"><a href="<?php echo $this->baseUrl;?>floorplans"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('Floorplans'); ?></span></a></li>
+                                            <li data-menuid="7.2"><a href="<?php echo $this->baseUrl;?>add_floorplan"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('Add floorplan'); ?></span></a></li>
                                         </ul>
                                     </li>
 									<li data-menuid="8">

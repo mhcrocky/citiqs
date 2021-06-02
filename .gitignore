@@ -31,6 +31,7 @@ spot.iml
 tiqsimg
 ##Uploads
 uploads/qrcodes/*
+uploads/floorPlans
 
 ## vendor logos
 assets/images/vendorLogos
