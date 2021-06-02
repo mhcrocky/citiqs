@@ -566,6 +566,7 @@ class Event_model extends CI_Model {
 	function save_guest_reservations($data, $ticketQuantity){
 		$reservationIds = [];
 		for($i = 0; $i < $ticketQuantity; $i++){
+			$data['voucher'] = $this->generateNewVoucher();
 			$reservationIds[] = $this->insertTicket($data);
 		}
 		return $reservationIds;
@@ -1045,6 +1046,37 @@ class Event_model extends CI_Model {
 			return true;
 		}
 		return false;
+	}
+
+	public function check_ticket_soldout($ticketId, $ticketQuantity, $maxTicketQuantity) : bool
+    {
+		//true => soldout
+		//false => available tickets
+        $this->db->select('COUNT(numberofpersons) as sold_tickets');
+        $this->db->from('tbl_bookandpay');
+		$this->db->where('tbl_bookandpay.eventid', $ticketId);
+		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'left');
+		
+        $query = $this->db->get();
+		$result = $query->first_row();
+
+        if($query->num_rows() > 0) {
+			$sold_tickets = intval($result->sold_tickets);
+			$maxTicketQuantity = intval($maxTicketQuantity);
+            $soldout = ($sold_tickets >= $maxTicketQuantity);
+			$available_tickets = $maxTicketQuantity - $sold_tickets;
+			$soldout = ($soldout === true) ? $soldout : ($ticketQuantity > $available_tickets);
+			return $soldout;
+        }
+
+        return false;
+	}
+
+	private function generateNewVoucher()
+	{
+		$set = '3456789ABCDEFGHJKLMNPQRSTVWXY';
+		$voucher = 'V-' . substr(str_shuffle($set), 0, 6);
+        return $voucher;
 	}
 
 

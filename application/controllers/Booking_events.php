@@ -115,6 +115,17 @@ class Booking_events extends BaseControllerWeb
         $this->global['expTime'] = $orderData['expTime'];
         $this->global['totalAmount'] = $orderData['totalAmount'];
         $this->global['logoUrl'] = $orderData['logoUrl'];
+
+        if(isset($orderData['errorMessages']) && !$orderData['displayedErrorMessages']){
+            $orderData['displayedErrorMessages'] = true;
+            $this->global['errorMessages'] = $orderData['errorMessages'];
+            $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+        }
+
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
@@ -239,6 +250,7 @@ class Booking_events extends BaseControllerWeb
             'descript' => $ticketInfo->ticketDescription,
             'quantity' => $ticket['quantity'],
             'price' => $ticketInfo->ticketPrice,
+            'maxTicketQuantity' => $ticketInfo->ticketQuantity,
             'ticketType' => $ticketType,
             'ticketFee' => $ticketInfo->ticketFee,
             'ticketGroupId' => $ticketInfo->ticketGroupId,
@@ -307,9 +319,15 @@ class Booking_events extends BaseControllerWeb
         $ids = [$result['id']];
 
         if($this->shopsession_model->multipleDelete($ids, $where)){
-            $this->session->set_flashdata('expired', 'Session Expired!');
-            redirect('/events/shop/'. $shortUrl);
+            $orderData['totalAmount'] = false;
+            $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+                $this->redirectToShop($orderData, $orderRandomKey);
         }
+        
 
         return ;
         
@@ -372,9 +390,30 @@ class Booking_events extends BaseControllerWeb
             redirect(base_url());
         }
         
+        
         $tickets = $orderData['tickets'];
         $customer = $orderData['vendorId'];
         $tag = $orderData['tag'];
+
+        foreach($tickets as $key => $ticket){
+            if($this->event_model->check_ticket_soldout($ticket['id'], $ticket['quantity'], $ticket['maxTicketQuantity'])){
+                $orderData['displayedErrorMessages'] = false;
+                $orderData['errorMessages'][$key] = 'Sorry! ' . $ticket['descript'] . ' ticket is sold out.';
+                unset($tickets[$key]);
+            }
+        }
+
+        if(count($tickets) === 0){
+            $orderData['tickets'] = [];
+            $orderData['totalAmount'] = false;
+            $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+            $this->redirectToShop($orderData, $orderRandomKey);
+        }
+        
 
         if (!isset($orderData['reservationIds'])) {
             $reservationIds = $this->event_model->save_event_reservations($buyerInfo, $tickets, $customer, $tag);
@@ -498,6 +537,16 @@ class Booking_events extends BaseControllerWeb
             'logoUrl'        => $orderData['logoUrl']
         ];
 
+        if(isset($orderData['errorMessages']) && !$orderData['displayedErrorMessages']){
+            $orderData['displayedErrorMessages'] = true;
+            $this->global['errorMessages'] = $orderData['errorMessages'];
+            $this
+                ->shopsession_model
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
+        }
+
         //$this->loadViews('events/selectpayment', $this->global, $data, null, 'headerWarehousePublic');
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
@@ -594,7 +643,7 @@ class Booking_events extends BaseControllerWeb
 
         return;
     }
-
+ 
     private function processPaymenttype(string $strUrl, array $reservationIds)
 	{
 		# Get API result
