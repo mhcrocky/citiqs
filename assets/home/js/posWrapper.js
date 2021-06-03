@@ -421,6 +421,9 @@ function countOrderedToZero(countOrdered) {
 }
 
 function showLoginModal() {
+    // TO DO COMMENT NEXT TWO LINES BEFORE PUSH !!!!!!!!!!!!!!!!!!!!!!!
+    // $('#posLoginModal').modal('hide');
+    // return;
     if (!posGlobals['unlock']) {
         $('#posLoginModal').modal('show');
     }

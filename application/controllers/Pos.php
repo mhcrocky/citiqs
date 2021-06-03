@@ -122,11 +122,13 @@
                     'vendorId' => $_SESSION['userId']
                 ],
                 'conditions' => [
+                    'order_by' => ['id', 'DESC'],
                     'limit' => ['1']
                 ]
             ]);
 
-            if (empty($floorplan)) return;
+            if (is_null($floorplan)) return;
+
             $floorplan = reset($floorplan);
             $areas = $this->floorplanareas_model->get_floorplan_areas($floorplan['id']);
 
