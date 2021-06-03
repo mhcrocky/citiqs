@@ -127,18 +127,31 @@ $(document).ready( function () {
     footerCallback: function( tfoot, data, start, end, display ) {
       var api = this.api(), data;
            
-      let amountTotalData = api.column( 7,{ search: 'applied' } ).cache('search');
+      let amountTotalData = api.column( 8,{ search: 'applied' } ).cache('search');
       let amountTotal = amountTotalData.length ? 
          amountTotalData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-      $(tfoot).find('th').eq(6).html(round_up(amountTotal));
+      $(tfoot).find('th').eq(7).html(round_up(amountTotal));
     },
     rowId: function(a) {
       return 'row_id_' + a.id;
     },
     columns:[
+    {
+      title: "",
+      data: null,
+      render: function (data, type, row) {
+        return (
+          '<a href="javascript:;" onclick="confirmResendTicket(\'' +
+            data.reservationId +
+            "', '" +
+            data.email +
+            '\')" class="btn btn-primary">Resend Ticket</a>'
+        );
+      },
+    },
     {
       title: 'ID',
       data: 'id'
@@ -211,7 +224,7 @@ $(document).ready( function () {
         var date = full_timestamp.split(" - ");
         var min = moment(date[0]);
         var max = moment(date[1]);
-        var startDate = moment(data[9]);
+        var startDate = moment(data[10]);
         if (min == '' && max == '') { min = todayDate; }
         if (min == '' && startDate <= max) { return true;}
         if(max == '' && startDate >= min) {return true;}
@@ -344,4 +357,42 @@ $(el).val(num.toFixed(2));
 $(el).val(total_amount.toFixed(2))
 }
 
+}
+
+function confirmResendTicket(reservationId, email){
+  bootbox.confirm({
+    message: "Do you  to send the mail to support@tiqs.com as well?",
+    buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-success'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-danger'
+        }
+    },
+    callback: function (result) {
+      if(result == true){
+        resendTicket(reservationId, email, 1);
+      } else {
+        resendTicket(reservationId, email);
+      }
+    }
+});
+}
+
+function resendTicket(reservationId, email, sendTo = 0) {
+  let data = {
+    reservationId: reservationId,
+    email: encodeURI(email),
+    sendTo: sendTo
+  };
+  $.post(
+    globalVariables.baseUrl + "customer_panel/resend_reservation",
+    data,
+    function (data) {
+      alertify.success("Reservation is resend successfully!");
+    }
+  );
 }
