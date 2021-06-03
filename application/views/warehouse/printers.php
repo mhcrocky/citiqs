@@ -116,7 +116,7 @@
 									maxlength="128"
 									rows="3"
 									style="border-radius:10px"
-								><?php echo $messageToBuyerTags; ?></textarea>
+								><?php echo implode(' ', $messageToBuyerTags); ?></textarea>
 							</div>
 						</form>
 					</div>
@@ -362,7 +362,7 @@
 														rows="3"
 														style="border-radius:10px"
 													><?php
-														echo is_null($printer['messageToBuyer']) ? $messageToBuyerTags : $printer['messageToBuyer'];
+														echo is_null($printer['messageToBuyer']) ? implode(' ', $messageToBuyerTags) : $printer['messageToBuyer'];
 													?></textarea>
 												</div>
 											</form>

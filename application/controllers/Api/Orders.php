@@ -50,9 +50,6 @@
             //get order to print
             $order = $this->getOrder($mac);
 
-            // var_dump($order);
-            // die();
-
             // get utility data
             list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
 
@@ -62,6 +59,10 @@
             // final updates
             $this->doFinalUpdates($order, $orderExtendedIds);
 
+            // send sms to a buyer
+            $this->sendBuyerSms($order);
+
+            return;
             // $this->callOrderCopy($order, $fodUser);
         }
 
@@ -346,5 +347,17 @@
             if ($order['paidStatus'] === '1') {
                 $this->shoporder_model->updatePrintedStatus();
             }
+        }
+
+        private function sendBuyerSms(array $order): void
+        {
+            if ($this->shopprinters_model->sendSmsToBuyer === '0') return;
+
+            $search = $this->config->item('messageToBuyerTags');
+            $replace = [$order['orderId'], $order['buyerUserName']];
+            $message = str_replace ($search, $replace, $this->shopprinters_model->messageToBuyer);
+
+            Curl_helper::sendSmsNew($order['buyerMobile'], $message);
+            return;
         }
     }

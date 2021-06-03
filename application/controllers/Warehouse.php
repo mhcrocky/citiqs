@@ -615,7 +615,7 @@
             $data = [
                 'userId' => $userId,
                 'printers' => $this->shopprinters_model->setProperty('userId', $userId)->fetchPrinters(),
-                'messageToBuyerTags' => '{orderId} {buyerName}'
+                'messageToBuyerTags' => $this->config->item('messageToBuyerTags'),
             ];
 
             $this->loadViews('warehouse/printers', $this->global, $data, 'footerbusiness', 'headerbusiness');
