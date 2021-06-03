@@ -288,12 +288,10 @@
 
 
 <div id="floorplan" class="modal" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" >
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content" style="width:840px">
             <div class="modal-body" style="text-align:center">
-
-
                 <div class="row mb-5 canvas_row" id="canvas_row">
                     <div class="col-md-12 mh-100" id="floor_image">
                         <canvas id="canvas" width="700" height="700"></canvas>

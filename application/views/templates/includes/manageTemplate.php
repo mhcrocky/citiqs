@@ -1,11 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div style="margin-left:20px">
-<div class="input-group mt-5 mb-3 col-lg-8 col-sm-12">
-  <input type="email" name="email" id="email" class="form-control" placeholder="Email">
-  <div class="input-group-append">
-    <button class="btn btn-success" onclick="sendTestEmail('email', 'templateHtml')" type="button">Send Test Email</button>
-  </div>
-</div>
+
     <br/>
     <div class="form-grop col-lg-8 col-sm-12">
         <?php if ($emailTemplatesEdit === true && $tiqsId === $vendorId && !empty($emailTemplates)) { ?>
@@ -33,7 +28,7 @@
         <?php } ?>
         <label for="templateType">Copy Template</label>
         <select class="form-control w-100" id="copyTemplate" onchange="copyTemplate()">
-            <option value="" disabled selected>Select type</option>
+            <option value="" disabled selected>Select default template</option>
             <?php if(is_array($defaultTemplates) && count($defaultTemplates) > 0) { 
                     foreach($defaultTemplates as $defaultTemplate){ 
             ?>
@@ -246,6 +241,7 @@
             <!-- end url editor -->
         <?php } ?>
 
+
         <!-- editor -->
         <label class="editTemplate" for="templateHtml">Edit template</label>
         <textarea id="templateHtml" name="templateHtml"></textarea>
@@ -283,6 +279,13 @@
             </div>
         <?php } ?>
     </div>
+
+	<div class="input-group mt-5 mb-3 col-lg-8 col-sm-12">
+		<input type="email" name="email" id="email" class="form-control" placeholder="Email">
+		<div class="input-group-append">
+			<button class="btn btn-success" onclick="sendTestEmail('email', 'templateHtml')" type="button">Send Test Email</button>
+		</div>
+	</div>
 </div>
 <script>
 const templateGlobals = (function() {

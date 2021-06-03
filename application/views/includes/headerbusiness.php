@@ -255,14 +255,14 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 												<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Transactions'); ?></span></a>
 												<ul class="collapse">
 													<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('QR Menu'); ?></span></a></li>
-													<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Reservations'); ?></span></a></li>
-													<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>events/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('E-Tickets'); ?></span></a></li>
+													<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>customer_panel/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Reservations'); ?></span></a></li>
+													<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>events/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('E-Tickets'); ?></span></a></li>
 												</ul>
 											</li>
-											<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-layout"></i> <span><?php echo $this->language->tLine('Invoices'); ?></span></a></li>
+											<li data-menuid="3.4"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-layout"></i> <span><?php echo $this->language->tLine('Invoices'); ?></span></a></li>
 											<li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-credit-card"></i><span><?php echo $this->language->tLine('Payment methods'); ?></span></a></li>
 											<?php if (intval($_SESSION['userId']) === $this->tiqsMainId) { ?>
-												<li data-menuid="3.4"><a href="<?php echo $this->baseUrl; ?>all_payment_methods"><i class="ti-pencil-alt"></i><span><?php echo $this->language->tLine('All payment methods'); ?></span></a></li>
+												<li data-menuid="3.5"><a href="<?php echo $this->baseUrl; ?>all_payment_methods"><i class="ti-pencil-alt"></i><span><?php echo $this->language->tLine('All payment methods'); ?></span></a></li>
 											<?php } ?>
 
                                             <!--											<li><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>Payment links</span></a></li>-->
@@ -373,7 +373,7 @@ $userShortUrl = $this->session->userdata('userShortUrl');
 											<li data-menuid="5.3"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
                                             <!--                                            <li data-menuid="5.3"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/reservations_report"><i class="ti-write"></i> <span>--><?php //echo $this->language->tLine('Reservations Report'); ?><!--</span></a></li>-->
                                             <!--                                            <li data-menuid="5.4"><a href="--><?php //echo $this->baseUrl; ?><!--customer_panel/report"><i class="ti-clipboard"></i> <span>--><?php //echo $this->language->tLine('Report'); ?><!--</span></a></li>-->
-                                            <li data-menuid="5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/pivot"><i class="ti-bar-chart"></i> <span><?php echo $this->language->tLine('Export'); ?></span></a></li>
+                                            <li data-menuid="5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/financial_report2"><i class="ti-bar-chart"></i> <span><?php echo $this->language->tLine('Sales'); ?></span></a></li>
                                             <li data-menuid="5.6">
                                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('Settings'); ?></span></a>
                                                 <ul class="collapse">
