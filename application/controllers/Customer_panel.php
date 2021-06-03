@@ -313,7 +313,7 @@ class  Customer_panel extends BaseControllerWeb
     public function booking_tickets()
     {
         $data['pageTitle'] = 'Booking & Tickets';
-        $this->load->model('Bookandpayagenda_model');
+        $this->load->model('bookandpayagenda_model');
         $data['bookings_graphs'] = DrillDown::create(array(
             "name" => "saleDrillDown",
             "title" => "Reservation Report",
