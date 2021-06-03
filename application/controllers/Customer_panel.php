@@ -11,7 +11,6 @@ use idcheckio\Configuration;
 require APPPATH . "/reports/Pivot/ReservationsReport.php";
 require APPPATH."/reports/Pivot/PivotReport.php";
 require APPPATH . '/libraries/BaseControllerWeb.php';
-require APPPATH . '/libraries/phpqrcode/qrlib.php';
 
 class  Customer_panel extends BaseControllerWeb
 {
@@ -22,7 +21,7 @@ class  Customer_panel extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->helper('email_helper');
+        $this->load->helper('reservationsemail_helper');
         $this->load->model('user_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpayagenda_model');
@@ -634,142 +633,9 @@ class  Customer_panel extends BaseControllerWeb
 	{
         
         $reservations = $this->bookandpay_model->getReservationsById($id);
-        $eventdate = '';
-        foreach ($reservations as $key => $reservation):
-            $result = $this->sendreservation_model->getEventReservationData($reservation->reservationId);
-            
-            foreach ($result as $record) {
-                $customer = $record->customer;
-				$eventid = $record->eventid;
-				$eventdate = $record->eventdate;
-				$reservationId = $record->reservationId;
-				$spotId = $record->SpotId;
-				$price = $record->price;
-				$Spotlabel = $record->Spotlabel;
-				$numberofpersons = $record->numberofpersons;
-				$name = $record->name;
-				$email = $record->email;
-				$mobile = $record->mobilephone;
-				$reservationset = $record->reservationset;
-				$fromtime = $record->timefrom;
-				$totime = $record->timeto;
-				$paid = $record->paid;
-				$timeSlotId = $record->timeslot;
-				$TransactionId = $record->TransactionID;
-				$voucher = $record->voucher;
-                $evenDescript = $record->ReservationDescription;
-                
-                    if ($paid = 1) {
-                        
-                        $qrtext = $reservationId;
-
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$file = 'C:/wamp64/www/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-						}
-
-						$SERVERFILEPATH = $file;
-						$text = $qrtext;
-						$folder = $SERVERFILEPATH;
-						$file_name1 = $qrtext . ".png";
-						$file_name = $folder . $file_name1;
-
-						QRcode::png($text, $file_name);
-
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
-
-                        $timeSlot = $this->bookandpaytimeslots_model->getTimeSlot($timeSlotId);
-
-                        $spot = $this->bookandpayspot_model->getSpot($spotId);
-                        $agenda = $this->bookandpayagenda_model->getBookingAgendaById($spot->agenda_id);
-
-                        
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
-
-                        
-						if($emailId) {
-                            $emailTemplate = $this->email_templates_model->get_emails_by_id($emailId);
-                            
-                            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
-                            $qrlink = $SERVERFILEPATH . $file_name1;
-							if($mailtemplate) {
-                                $mailtemplate = str_replace('[buyerName]', $name, $mailtemplate);
-                                $mailtemplate = str_replace('[buyerEmail]', $email, $mailtemplate);
-                                $mailtemplate = str_replace('[buyerMobile]', $mobile, $mailtemplate);
-								$mailtemplate = str_replace('[customer]', $customer, $mailtemplate);
-								$mailtemplate = str_replace('[eventDate]', date('d.m.Y', strtotime($eventdate)), $mailtemplate);
-								$mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
-								$mailtemplate = str_replace('[spotId]', $spotId, $mailtemplate);
-								$mailtemplate = str_replace('[price]', $price, $mailtemplate);
-                                $mailtemplate = str_replace('[ticketPrice]', $price, $mailtemplate);
-								$mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
-                                $mailtemplate = str_replace('[ticketQuantity]', $numberofpersons, $mailtemplate);
-								$mailtemplate = str_replace('[numberOfPersons]', $numberofpersons, $mailtemplate);
-								$mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
-								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
-								$mailtemplate = str_replace('[timeSlot]', $timeSlotId, $mailtemplate);
-								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
-								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
-								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
-								$datachange['mailsend'] = 1;
-
-                                //'dtstart' => '2021-10-16 9:00AM',
-                                //'dtend' => '2022-1-16 9:00AM',
-                                /*
-                                $ics = new ICS(array(
-                                    'organizer' => 'TIQS:malito:support@tiqs.com',
-                                    'description' => strip_tags($evenDescript),
-                                    'dtstart' => $eventdate .' '. $fromtime,
-                                    'dtend' => $eventdate .' '. $totime,
-                                    'summary' => strip_tags($evenDescript),
-                                    'url' => base_url()
-                                ));
-                                */
-
-
-                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .' '. $fromtime)));
-                               // var_dump(date('Y-m-d H:m:s',strtotime($eventdate .'T'. $totime)));
-
-                              
-                                //$icsContent = $ics->to_string();
-                                
-								Email_helper::sendEmail("pnroos@icloud.com", $subject, $mailtemplate, false);
-								if(Email_helper::sendEmail($email, $subject, $mailtemplate, false)) {
-                                    $this->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
-                                    
-                                }
-                            
-                        }
-                    }
-                }
-            }
-            endforeach;
-        }
+        Reservationsemail_helper::sendEmailReservation($reservations, true);
+       
+    }
 
     public function financial_report() : void
     {
@@ -783,6 +649,16 @@ class  Customer_panel extends BaseControllerWeb
         $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
         $report = $this->bookandpay_model->get_financial_report($vendorId, $sql);
         echo json_encode($report);
+    }
+
+    public function resend_reservation()
+	{
+        $reservationId = $this->input->post('reservationId');
+        $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
+        $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
+        Reservationsemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport);
+        return ;
+
     }
 
 }
