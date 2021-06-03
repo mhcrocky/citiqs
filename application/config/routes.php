@@ -565,6 +565,7 @@ $route['customer_panel/list_templates'] = "Customer_panel/listTemplates";
 $route['customer_panel/get_email_template'] = "Customer_panel/get_email_template";
 $route['customer_panel/spots_order'] = "Customer_panel/spots_order";
 $route['customer_panel/financial_report'] = "Customer_panel/financial_report";
+$route['customer_panel/financial_report2'] = "Customer_panel/financial_report";
 $route['customer_panel/get_financial_report'] = "Customer_panel/get_financial_report";
 $route['customer_panel/resend_reservation']="Customer_panel/resend_reservation";
 
