@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
-class  Paylinkreservation extends BaseControllerWeb
+class  Paylinkreservations extends BaseControllerWeb
 {
     /**
      * This is default constructor of the class
