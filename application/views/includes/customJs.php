@@ -411,6 +411,7 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
 	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/reservationsFinancialDataTable.js"></script>
 <?php } elseif ($this->view === 'warehouse/productsOrder') { ?>
 	<script src='<?php echo base_url(); ?>assets/home/js/sortProducts.js'></script>

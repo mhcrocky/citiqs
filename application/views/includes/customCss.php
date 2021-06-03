@@ -759,6 +759,11 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css" />
+    <style>
+    .modal-body {
+        overflow: hidden !important;
+    }
+    </style>
 <?php } elseif ($this->view === 'scanner/scanner') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/scanner.css" />
 <?php } elseif ($this->view === 'bookings/timeslot_booking') { ?>
