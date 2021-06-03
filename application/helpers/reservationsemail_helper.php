@@ -49,7 +49,7 @@
                     $orderId = $record->orderId;
                     $mailsend = $record->mailsend;
                     
-                    if ($paid == 1 || $paid == 3) {
+                    if ($paid == 1 || $paid == 2) {
                         
                         $qrtext = $reservationId;
 
