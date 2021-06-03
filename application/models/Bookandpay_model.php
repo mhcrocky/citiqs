@@ -611,6 +611,7 @@ class Bookandpay_model extends CI_Model
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
 		$this->db->where('eventid', $agendaId);
+		$this->db->where('isTicket', '0');
 		
         $query = $this->db->get();
 
