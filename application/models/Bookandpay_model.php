@@ -611,7 +611,7 @@ class Bookandpay_model extends CI_Model
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
 		$this->db->where('eventid', $agendaId);
-		$this->db->where('isTicket', '0');
+		$this->db->where('SpotId <>', '0');
 		
         $query = $this->db->get();
 
@@ -801,7 +801,7 @@ class Bookandpay_model extends CI_Model
 	{
 		$query = $this->db->query("SELECT id, reservationId, reservationtime, price, numberofpersons, name, email, mobilephone, Spotlabel, timefrom, timeto
 		FROM tbl_bookandpay
-		WHERE paid = '1' AND isTicket = '0' AND customer = ".$vendorId." $sql
+		WHERE paid = '1' AND SpotId <> '0' AND customer = ".$vendorId." $sql
 		ORDER BY reservationtime DESC");
 		$result = $query->result_array();
 		return empty($result) ? [] : $result;
