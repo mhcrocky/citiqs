@@ -29,7 +29,9 @@
             $this->load->helper('orderprint_helper');
 
             $this->load->config('custom');
+
             $this->load->library('language', array('controller' => $this->router->class));
+            $this->load->library('notificationvendor');
         }
 
 		public function index_delete()
@@ -59,8 +61,8 @@
             // final updates
             $this->doFinalUpdates($order, $orderExtendedIds);
 
-            // send sms to a buyer
-            $this->sendBuyerSms($order);
+            // send message
+            $this->sendMessages($order);
 
             return;
             // $this->callOrderCopy($order, $fodUser);
@@ -349,7 +351,7 @@
             }
         }
 
-        private function sendBuyerSms(array $order): void
+        private function sendMessages(array $order): void
         {
             if ($this->shopprinters_model->sendSmsToBuyer === '0') return;
 
@@ -357,7 +359,15 @@
             $replace = [$order['orderId'], $order['buyerUserName']];
             $message = str_replace ($search, $replace, $this->shopprinters_model->messageToBuyer);
 
+            // send buyer sms
             Curl_helper::sendSmsNew($order['buyerMobile'], $message);
+
+            // send message to vendor
+            if ($order['oneSignalId']) {
+                $this->notificationvendor->sendVendorMessageImproved($order['oneSignalId'], $order['orderId'], $message);
+            }
             return;
         }
+
+
     }

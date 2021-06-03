@@ -13,6 +13,13 @@
 			// die('line number 10 notification');
 			$message = 'You have a new order at ' . date('Y-m-d H:i:s') . ' Order id is: ' . $orderId . '.';
 
+			return $this->sendVendorMessageImproved($oneSignalId, $orderId, $message);
+
+		}
+
+		public function sendVendorMessageImproved(string $oneSignalId, int $orderId, string $message)
+		{
+
 			$content = array(
 				"en" => $message
 			);
@@ -59,7 +66,6 @@
 			// var_dump($response);
 			return $response;
 		}
-
 		//	$response = sendMessage();
 		//	$return["allresponses"] = $response;
 		//	$return = json_encode( $return);

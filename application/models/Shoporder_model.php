@@ -395,7 +395,8 @@
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
                         vendorOne.receiptEmail as receiptEmail,
-                        vendorOne.email as vendorEmail
+                        vendorOne.email as vendorEmail,
+                        vendorOne.oneSignalId as oneSignalId
                     FROM
                         tbl_shop_orders
                     INNER JOIN
@@ -503,7 +504,8 @@
                         vendorOne.vat_number as vendorVAT,
                         vendorOne.country as vendorCountry,
                         vendorOne.receiptEmail as receiptEmail,
-                        vendorOne.email as vendorEmail
+                        vendorOne.email as vendorEmail,
+                        vendorOne.oneSignalId as oneSignalId
                     FROM 
                         tbl_shop_orders
                     INNER JOIN
