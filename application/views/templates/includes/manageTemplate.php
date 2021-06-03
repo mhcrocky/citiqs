@@ -334,7 +334,7 @@ function readTextFile(url)
             tempData = data;
         }
     });
-    tinymce.get(templateGlobals.templateHtmlId).setContent(tempData);
+    tinymce.get(templateGlobals.templateHtmlId).setContent(tempData.replaceAll('[QRlink]', '<?php echo base_url(); ?>assets/images/qrcode_preview.png'));
     return ;
 }
 
