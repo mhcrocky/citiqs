@@ -10,7 +10,7 @@
 
 <input type="hidden" id="shop" value="shop">
 <section id="main-content" class='hero-section position-relative'>
-    <div class="d-none d-md-flex col-6 px-0 hero__background">
+    <div <?php if(isset($events[0])) { ?> style="clip-path: none !important" <?php } ?> class="d-none d-md-flex col-6 px-0 hero__background">
     <?php if(isset($events[0]) && $events[0]['backgroundImage'] != ''): ?>
         <img id="background-image" src="<?php echo base_url(); ?>assets/images/events/<?php echo $events[0]['backgroundImage']; ?>"
             alt="">
@@ -50,7 +50,7 @@
             <?php endif; ?>
             <h5 class="text-dark mb-4 mt-5 h-div"><?php echo ucwords($event['eventVenue']) .' ' . $eventDate; ?></h5>
             
-            <input type="hidden" id="background_img_<?php echo $event['id']; ?>" value="<?php echo $event['backgroundImage']; ?>">
+            <input type="hidden" id="background_img_<?php echo $event['id']; ?>" data-isSquared="<?php echo $event['isSquared']; ?>" value="<?php echo $event['backgroundImage']; ?>">
             <div style="display: grid !important;" id="event_<?php echo $event['id']; ?>"
                 class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4 d-table-cell">
                 <a href="#tickets" onclick="getTicketsView('<?php echo $event['id']; ?>')"

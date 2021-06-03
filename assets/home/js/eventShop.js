@@ -144,6 +144,7 @@ function getTicketsView(eventId, first = false) {
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + eventId).addClass('bg-light').removeClass('bg-white');
     let img_src = $('#background_img_' + eventId).val();
+    let isSquared = $('#background_img_' + eventId).attr('data-isSquared');
     $.post(globalVariables.baseUrl + "events/tickets/" + eventId, {
         isAjax: isAjax,
         order: globalKey.orderRandomKey
@@ -154,6 +155,12 @@ function getTicketsView(eventId, first = false) {
             $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/default_background.webp");
         } else {
             $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/" + img_src);
+        }
+
+        if(isSquared == '1'){
+            $('.hero__background').attr('style', 'clip-path: none !important');
+        } else {
+            $('.hero__background').attr('style', '');
         }
         
         $("#tickets").fadeIn("slow", function() {

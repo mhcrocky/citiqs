@@ -98,6 +98,20 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="image" class="col-md-4 col-form-label text-md-left">Square Background
+                                    Image</label>
+                                <div class="col-md-4">
+                                    <select id="isSquared" name="isSquared"
+                                        class="form-control input-w border-50 field">
+                                        <option value="">Select option</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
 
                             <hr class="w-100 mt-5 mb-5">
 
