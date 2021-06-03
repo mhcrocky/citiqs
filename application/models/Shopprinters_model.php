@@ -135,7 +135,13 @@
             return $result ? $result : null;
         }
 
-        public function printMacNumber()
+        /**
+         * printMacNumber
+         *
+         * Returns masterMac if printer is slave status else return printer mac number
+         * @return void
+         */
+        public function printMacNumber(): string
         {
             $masterMac = $this->readImproved([
                 'what' => ['masterMac'],
@@ -144,12 +150,8 @@
                 ]
             ]);
 
-            if (empty($masterMac)) {
-                return $this->macNumber;
-            }
-
-            $macNumber = $masterMac[0]['masterMac'];
-            return $macNumber === '0' ? $this->macNumber : $macNumber;
+            // second condition is if user sets master mac number to 0
+            return (empty($masterMac) || empty($masterMac[0]['masterMac'])) ? $this->macNumber : $masterMac[0]['masterMac'];
         }
 
 
@@ -272,4 +274,22 @@
 
             return $this->create();
         }
+
+        public function setPrinterIdFromMacNumber(string $macNumber): Shopprinters_model
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.macNumber' => $macNumber,
+                ]
+            ]);
+
+            if (!is_null($id)) {
+                $this->id = intval(reset($id)['id']);
+            }
+
+            return $this;
+        }
+
+        
     }

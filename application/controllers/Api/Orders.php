@@ -41,40 +41,26 @@
         {
             $mac = $this->getMacNumber();
 
-            // $this->printFinanceReport($mac);
+            // first set printer from mac number
+            $this->shopprinters_model->setPrinterIdFromMacNumber($mac)->setObject();
 
+            // print finance report
+            $this->printFinanceReport($mac);
+
+            //get order to print
             $order = $this->getOrder($mac);
-            $vendorId = intval($order['vendorId']);
-            $fodUser = $this->shopvendorfod_model->isFodVendor($vendorId);
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            $printReceipts = $this->shopprinters_model->checkIsPrintReceipts();
-            $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
 
-            $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
+            // var_dump($order);
+            // die();
+
+            // get utility data
+            list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
 
             // do printing job
-            if (
-                $printOnlyReceipt
-                && $order['paidStatus'] ===  $this->config->item('orderPaid')
-                && $printReceipts
-                && $this->isCashpayment($order)
-            ) {
-                header('Content-type: image/png');
-                echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
-            } else {
-                if ($printReceipts) {
-                    $this->handlePrePostPaid($order, $fodUser);
-                    $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
-                }
-                Receiptprint_helper::printPrinterReceipt($order);
-            }
+            $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
 
-            $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
-            $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
-
-            if ($order['paidStatus'] === '1') {
-                $this->shoporder_model->updatePrintedStatus();
-            }
+            // final updates
+            $this->doFinalUpdates($order, $orderExtendedIds);
 
             // $this->callOrderCopy($order, $fodUser);
         }
@@ -141,6 +127,9 @@
             $order = reset($order);
 
             $this->checkoOrderTime($order);
+
+            // if we have an order, update shopprinterrequest_model
+            $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
             return $order;
         }
@@ -291,6 +280,9 @@
 
         private function printFinanceReport($mac): void
         {
+            return;
+
+            if ($this->shopprinters_model->printReports === '0') return;
             $data = $this->shopreportrequest_model->checkRequests($mac);
             if (!$data) return;
 
@@ -315,5 +307,44 @@
             }
 
             return;
+        }
+
+        private function getRequiredInfo(array $order): array
+        {
+            $vendorId = intval($order['vendorId']);
+            $fodUser = $this->shopvendorfod_model->isFodVendor($vendorId);
+            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+            $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
+
+            return [$fodUser, $orderExtendedIds, $printOnlyReceipt];
+        }
+
+        private function printOrderAndReceipts(array $order, bool $fodUser, array $orderExtendedIds, bool $printOnlyReceipt): void
+        {
+            if (
+                $printOnlyReceipt
+                && $order['paidStatus'] ===  $this->config->item('orderPaid')
+                && $this->shopprinters_model->printReceipts === '1'
+                && $this->isCashpayment($order)
+            ) {
+                header('Content-type: image/png');
+                echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
+            } else {
+                if ($this->shopprinters_model->printReceipts === '1') {
+                    $this->handlePrePostPaid($order, $fodUser);
+                    $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
+                }
+                Receiptprint_helper::printPrinterReceipt($order);
+            }
+        }
+
+        private function doFinalUpdates(array $order, array $orderExtendedIds): void
+        {
+            $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
+            $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '1');
+
+            if ($order['paidStatus'] === '1') {
+                $this->shoporder_model->updatePrintedStatus();
+            }
         }
     }
