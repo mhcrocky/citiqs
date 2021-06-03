@@ -38,6 +38,7 @@
             class="row single-item__grid">
             <?php foreach ($events as $key => $event): 
                 if(!$get_by_event_id && $event['visibleToShop'] == '0'){
+                    unset($events[$key]);
                     continue;
                 }
                   $event_start =  date_create($event['StartDate'] . " " . $event['StartTime']);
@@ -66,6 +67,8 @@
                         <p class='single-item__promotion'>Order Now</p>
                     </div>
                 </a>
+                <a href="#tickets" onclick="getTicketsView('<?php echo $event['id']; ?>')"
+                    class="single-item btn-ticket">
                     <div class="single-item__content">
                         <p class='mb-0'><?php echo $event['eventname']; ?></p>
                         <div class="scroll-descript" >
