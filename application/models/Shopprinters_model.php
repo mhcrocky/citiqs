@@ -24,6 +24,9 @@
         public $printReceipts;
         public $isApi;
         public $contactPhone;
+        public $sendSmsToBuyer;
+        public $messageToBuyer;
+
 
         private $table = 'tbl_shop_printers';
 
@@ -64,14 +67,16 @@
             if (isset($data['numberOfCopies']) 
                 && (!Validate_data_helper::validateInteger($data['numberOfCopies']) || intval($data['numberOfCopies']) < 1)
             ) return false;
-            // if (isset($data['masterMac']) && !Validate_data_helper::validateString($data['masterMac'])) return false;
+            if (isset($data['masterMac']) && !Validate_data_helper::validateStringImproved($data['masterMac'])) return false;
             if (isset($data['archived']) && !($data['archived'] === '1' || $data['archived'] === '0')) return false;
             if (isset($data['isFod']) && !($data['isFod'] === '1' || $data['isFod'] === '0')) return false;
             if (isset($data['isFodHardLock']) && !($data['isFodHardLock'] === '1' || $data['isFodHardLock'] === '0')) return false;
             if (isset($data['printReports']) && !($data['printReports'] === '1' || $data['printReports'] === '0')) return false;
             if (isset($data['printReceipts']) && !($data['printReceipts'] === '1' || $data['printReceipts'] === '0')) return false;
             if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
-            // if (isset($data['contactPhone']) && !Validate_data_helper::validateString($data['contactPhone'])) return false;
+            if (isset($data['contactPhone']) && !Validate_data_helper::validateStringImproved($data['contactPhone'])) return false;
+            if (isset($data['sendSmsToBuyer']) && !($data['sendSmsToBuyer'] === '1' || $data['sendSmsToBuyer'] === '0')) return false;
+            if (isset($data['messageToBuyer']) && !Validate_data_helper::validateStringImproved($data['messageToBuyer'])) return false;
 
             return true;
         }
@@ -84,7 +89,7 @@
                     $this->table . '.printer AS printer',
                     $this->table . '.active AS printerActive',
                     $this->table . '.isFod AS isFod',
-                    $this->table . '.isFodHardLock AS isFodHardLock',
+                    $this->table . '.isFodHardLock AS isFodHardLock'
                 ],
                 [
                     'tbl_shop_product_printers.productId=' => $productId,

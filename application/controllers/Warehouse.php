@@ -614,7 +614,8 @@
             $userId = intval($_SESSION['userId']);
             $data = [
                 'userId' => $userId,
-                'printers' => $this->shopprinters_model->setProperty('userId', $userId)->fetchPrinters()
+                'printers' => $this->shopprinters_model->setProperty('userId', $userId)->fetchPrinters(),
+                'messageToBuyerTags' => '{orderId} {buyerName}'
             ];
 
             $this->loadViews('warehouse/printers', $this->global, $data, 'footerbusiness', 'headerbusiness');

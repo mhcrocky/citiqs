@@ -47,7 +47,7 @@
 									</select>
 								</div>
 							<?php } ?>
-							<div>
+							<div style="margin-bottom:10px">
 								<Label>Print reportes: </label>
 								<label>
 									<input
@@ -67,7 +67,7 @@
 									No
 								</label>
 							</div>
-							<div>
+							<div style="margin-bottom:10px">
 								<Label>Print receipts: </label>
 								<label>
 									<input
@@ -87,8 +87,37 @@
 									No
 								</label>
 							</div>
-
-							
+							<div style="margin-bottom:10px">
+								<Label>Send SMS to buyer: </label>
+								<label>
+									<input
+										type="radio"
+										name="sendSmsToBuyer"
+										value="1"
+									/>
+									Yes
+								</label>
+								<label>
+									<input
+										type="radio"
+										name="sendSmsToBuyer"
+										value="0"
+										checked
+									/>
+									No
+								</label>
+							</div>
+							<div style="margin-bottom:10px">
+								<label for="messageToBuyer">Message to buyer: </label>
+								<textarea
+									class="form-control"
+									id="messageToBuyer"
+									name="messageToBuyer"
+									maxlength="128"
+									rows="3"
+									style="border-radius:10px"
+								><?php echo $messageToBuyerTags; ?></textarea>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -145,6 +174,7 @@
 							<?php } ?>
 							<p class="item-description" style="white-space: initial;">Print reports: <?php echo ($printer['printReports'] === '1') ? 'Yes' : 'No'; ?></p>
 							<p class="item-description" style="white-space: initial;">Print receipts: <?php echo ($printer['printReceipts'] === '1') ? 'Yes' : 'No'; ?></p>
+							<p class="item-description" style="white-space: initial;">Send SMS to buyer: <?php echo ($printer['sendSmsToBuyer'] === '1') ? 'Yes' : 'No'; ?></p>
 							<p
 								style="color:#ff3333; font-weight:900; font-size:16px; visibility:hidden"
 								data-printer-id="<?php echo $printer['id']; ?>"
@@ -205,20 +235,20 @@
 													<input type="text" class="form-control" id="printer<?php echo $printer['id']; ?>" name="printer" required value="<?php echo $printer['printer']; ?>" />
 												</div>
 												<div>
-													<label for="printerMac<?php echo $printer['macNumber']; ?>">MAC number:</label>
-													<input type="text" class="form-control" id="printerMac<?php echo $printer['macNumber']; ?>" name="macNumber" required value="<?php echo $printer['macNumber']; ?>" />
+													<label for="printerMac<?php echo $printer['id']; ?>">MAC number:</label>
+													<input type="text" class="form-control" id="printerMac<?php echo $printer['id']; ?>" name="macNumber" required value="<?php echo $printer['macNumber']; ?>" />
 												</div>
 												<div>
-													<label for="contactPhone<?php echo $printer['macNumber']; ?>">Mobile phone for alerts (country code + number):</label>
-													<input type="text" class="form-control" id="contactPhone<?php echo $printer['macNumber']; ?>" name="contactPhone" required value="<?php echo $printer['contactPhone']; ?>" />
+													<label for="contactPhone<?php echo $printer['id']; ?>">Mobile phone for alerts (country code + number):</label>
+													<input type="text" class="form-control" id="contactPhone<?php echo $printer['id']; ?>" name="contactPhone" required value="<?php echo $printer['contactPhone']; ?>" />
 												</div>
 												<!-- <div>
 													<label for="numberOfCopies<?php #echo $printer['numberOfCopies']; ?>">Number of copies:</label>
 													<input type="number" min="1" step="1" class="form-control" id="numberOfCopies<?php #echo $printer['numberOfCopies']; ?>" name="numberOfCopies" required value="<?php #echo $printer['numberOfCopies']; ?>" />
 												</div> -->
 												<div>
-													<label for="masterMac<?php echo $printer['macNumber']; ?>">Select master printer (only for slave printer): </label>
-													<select class="form-control" id="masterMac<?php echo $printer['macNumber']; ?>" name="masterMac">
+													<label for="masterMac<?php echo $printer['id']; ?>">Select master printer (only for slave printer): </label>
+													<select class="form-control" id="masterMac<?php echo $printer['id']; ?>" name="masterMac">
 														<option value="0">None</option>
 														<?php
 															foreach ($printers as $master) {													
@@ -259,7 +289,7 @@
 														</label>
 													</div>
 												<?php } ?>
-												<div>
+												<div style="margin-bottom:10px">
 													<Label>Print reportes: </label>
 													<label>
 														<input
@@ -280,7 +310,7 @@
 														No
 													</label>
 												</div>
-												<div>
+												<div style="margin-bottom:10px">
 													<Label>Print receipts: </label>
 													<label>
 														<input
@@ -300,6 +330,40 @@
 														/>
 														No
 													</label>
+												</div>
+												<div style="margin-bottom:10px">
+													<Label>Send SMS to buyer: </label>
+													<label>
+														<input
+															type="radio"
+															name="sendSmsToBuyer"
+															value="1"
+															<?php if ($printer['sendSmsToBuyer'] === '1') echo 'checked'; ?>
+														/>
+														Yes
+													</label>
+													<label>
+														<input
+															type="radio"
+															name="sendSmsToBuyer"
+															value="0"
+															<?php if ($printer['sendSmsToBuyer'] === '0') echo 'checked'; ?>
+														/>
+														No
+													</label>
+												</div>
+												<div style="margin-bottom:10px">
+													<label for="messageToBuyer<?php echo $printer['id']; ?>">Message to buyer: </label>
+													<textarea
+														class="form-control"
+														id="messageToBuyer<?php echo $printer['id']; ?>"
+														name="messageToBuyer"
+														maxlength="128"
+														rows="3"
+														style="border-radius:10px"
+													><?php
+														echo is_null($printer['messageToBuyer']) ? $messageToBuyerTags : $printer['messageToBuyer'];
+													?></textarea>
 												</div>
 											</form>
 										</div>
