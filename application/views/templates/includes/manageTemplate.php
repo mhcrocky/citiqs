@@ -31,9 +31,20 @@
         <?php } else { ?>
             <input type="hidden" id="selectTemplateName" value="">
         <?php } ?>
+        <label for="templateType">Copy Template</label>
+        <select class="form-control w-100" id="copyTemplate" onchange="copyTemplate()">
+            <option value="" disabled selected>Select type</option>
+            <?php if(is_array($defaultTemplates) && count($defaultTemplates) > 0) { 
+                    foreach($defaultTemplates as $defaultTemplate){ 
+            ?>
+                <option value="<?php echo $defaultTemplate['template_file']; ?>"><?php echo ucfirst($defaultTemplate['template_type']) ?> - <?php echo ucfirst($defaultTemplate['template_name']) ?></option>
+            <?php } } ?>
+        </select>
+        <br/>
+
         <label for="templateType">Template Type</label>
         <select class="form-control w-100" id="templateType" name="templateType" onchange="checkiIsLandingPage(this, 'landingPage', 'emailTemplate', 'landingPage')">
-            <option value="" disabled>Select type</option>
+            <option value="" disabled>Select template</option>
             <?php if ($emailTemplatesEdit === true) { ?>
                 <option
                     value="general"
@@ -309,5 +320,27 @@ function decodeHtml(html) {
     let decodeValue = txt.value;
     txt.remove();
     return decodeValue;
+}
+
+function readTextFile(url)
+{
+    var tempData = '';
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        async: false, //blocks window close
+        success: function(data) {
+            tempData = data;
+        }
+    });
+    tinymce.get(templateGlobals.templateHtmlId).setContent(tempData.replaceAll('[QRlink]', '<?php echo base_url(); ?>assets/images/qrcode_preview.png'));
+    return ;
+}
+
+function copyTemplate() {
+    let filename = $('#copyTemplate option:selected').val();
+    let url = '<?php echo base_url(); ?>assets/email_templates/1/' + filename + '.txt';
+    readTextFile(url);
 }
 </script>
