@@ -771,5 +771,19 @@ class  Customer_panel extends BaseControllerWeb
             endforeach;
         }
 
+    public function financial_report() : void
+    {
+        $this->global['pageTitle'] = 'TIQS : FINANCIAL REPORT';
+        $this->loadViews('customer_panel/financial_report', $this->global, '', 'footerbusiness', 'headerbusiness');
+    }
+
+    public function get_financial_report()
+    {
+        $vendorId = $this->session->userdata('userId');
+        $sql = ($this->input->post('sql') == 'AND%20()') ? "" : rawurldecode($this->input->post('sql'));
+        $report = $this->bookandpay_model->get_financial_report($vendorId, $sql);
+        echo json_encode($report);
+    }
+
 }
 
