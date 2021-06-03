@@ -150,7 +150,8 @@ class Events extends BaseControllerWeb
 			'ticketDescription' => $ticket->ticketDescription,
 			'ticketType' => $ticket->ticketType,
             'guestlist' => 1,
-            'TransactionID' => $transactionId
+            'TransactionID' => $transactionId,
+            'isTicket' => 1
         ];
         
         if (empty($this->event_model->save_guest_reservations($booking, $ticketQuantity))) {
@@ -209,7 +210,8 @@ class Events extends BaseControllerWeb
 			'ticketDescription' => $ticket->ticketDescription,
 			'ticketType' => $ticket->ticketType,
             'guestlist' => 1,
-            'TransactionID' => $transactionId
+            'TransactionID' => $transactionId,
+            'isTicket' => 1
         ];
 
         $this->event_model->save_guest_reservations($booking);
