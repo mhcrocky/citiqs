@@ -535,7 +535,8 @@ class Event_model extends CI_Model {
 					'ticketDescription' => $ticket['descript'],
 					'ticketType' => ($ticket['ticketType'] != null) ? $ticket['ticketType'] : 0,
 					'paid' => '0',
-					'tag' => $tag
+					'tag' => $tag,
+					'isTicket' => '1'
 					
 				];
 				
@@ -1048,13 +1049,15 @@ class Event_model extends CI_Model {
 		return false;
 	}
 
-	public function check_ticket_soldout($ticketId, $ticketQuantity, $maxTicketQuantity) : bool
+	public function check_ticket_soldout($customer, $ticketId, $ticketQuantity, $maxTicketQuantity) : bool
     {
 		//true => soldout
 		//false => available tickets
         $this->db->select('COUNT(numberofpersons) as sold_tickets');
         $this->db->from('tbl_bookandpay');
+		$this->db->where('tbl_bookandpay.customer', $customer);
 		$this->db->where('tbl_bookandpay.eventid', $ticketId);
+		$this->db->where('tbl_bookandpay.isTicket', '1');
 		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'left');
 		
         $query = $this->db->get();
