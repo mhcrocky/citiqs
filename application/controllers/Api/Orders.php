@@ -353,14 +353,14 @@
 
         private function sendMessages(array $order): void
         {
-            if ($this->shopprinters_model->sendSmsToBuyer === '0') return;
-
             $search = $this->config->item('messageToBuyerTags');
             $replace = [$order['orderId'], $order['buyerUserName']];
             $message = str_replace ($search, $replace, $this->shopprinters_model->messageToBuyer);
 
             // send buyer sms
-            Curl_helper::sendSmsNew($order['buyerMobile'], $message);
+            if ($this->shopprinters_model->sendSmsToBuyer === '1') {
+                Curl_helper::sendSmsNew($order['buyerMobile'], $message);
+            }
 
             // send message to vendor
             if ($order['oneSignalId']) {
