@@ -398,7 +398,7 @@ class Booking_events extends BaseControllerWeb
         $tag = $orderData['tag'];
 
         foreach($tickets as $key => $ticket){
-            if($this->event_model->check_ticket_soldout($ticket['id'], $ticket['quantity'], $ticket['maxTicketQuantity'])){
+            if($this->event_model->check_ticket_soldout($customer, $ticket['id'], $ticket['quantity'], $ticket['maxTicketQuantity'])){
                 $orderData['displayedErrorMessages'] = false;
                 $orderData['errorMessages'][$key] = 'Sorry! ' . $ticket['descript'] . ' ticket is sold out.';
                 unset($tickets[$key]);
