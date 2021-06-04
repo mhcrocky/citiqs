@@ -1059,6 +1059,7 @@ class Event_model extends CI_Model {
 		$this->db->where('tbl_bookandpay.eventid', $ticketId);
 		$this->db->where('SpotId', '0');
 		$this->db->where('timeslotId', '0');
+		$this->db->where('paid', '1');
 		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'left');
 		
         $query = $this->db->get();
