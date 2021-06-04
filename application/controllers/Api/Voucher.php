@@ -89,7 +89,7 @@ class Voucher extends REST_Controller
             } else { 
                 $response = [
                 'status' => "error",
-                'message' => "Something went wrong!",
+                'message' => "Something went wrong! Check is voucher code unique",
                 ];
                 $this->set_response($response, 400);
                 return;
