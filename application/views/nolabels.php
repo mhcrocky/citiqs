@@ -1,6 +1,6 @@
-<div style="margin-top: 10%">
+<div style="margin-top: 10%" class="col-sm-12">
 	<div style="margin-left: 8%">
-		<h1 class="heading" style="font-size: 400%; color: #496183; margin-bottom: 20px">
+		<h1 class="heading" id="backOfficeMainH1">
 				OPTIMIZING
 		</h1>
 		<h3 class="heading" style="color:#717171">
@@ -11,7 +11,7 @@
 		</h4>
 	</div>
 </div>
-<div class="mt-50" style="width: 100%; " align="center" >
+<div class="mt-50" style="width: 100%; text-align:center" >
 	<img src="<?php echo base_url(); ?>assets/home/images/tiqsbusiness.png" alt="tiqs" width="90%"  />
 </div>
 </div>

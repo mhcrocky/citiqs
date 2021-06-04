@@ -11,6 +11,7 @@
         </div>
     <?php } ?>
     <?php if ($_SESSION['businessTypeId'] != 26) { ?>
+        <li data-menuid="0"><a href="<?php echo $this->baseUrl;?>loggedin"><i class="ti-home"></i><span><?php echo $this->language->tLine('Homepage'); ?></span></a></li>
         <li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-dashboard"></i><span><?php echo $this->language->tLine('Dashboard'); ?></span></a></li>
     <?php } ?>
     <?php if ($_SESSION['businessTypeId'] != 26) { ?>

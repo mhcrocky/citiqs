@@ -69,9 +69,31 @@ img {
     margin: 0px;
 }
 
+#backOfficeMainH1 {
+    font-size: 400% !important;
+    color: #496183 !important;
+    margin-bottom: 20px !important;
+}
+
+
 @media screen and (max-width: 680px) {
     .columns .column {
         flex-basis: 100%;
         margin: 0 0 5px 0;
     }
+    #backOfficeMainH1 {
+        font-size: 300% !important;
+    }
+
+    #userNameAndId {
+        display: none !important;
+    }
+    #navElement {
+        width:70%;
+    }
+
+    .navElements {
+        width: 30%;
+    }
+
 }
