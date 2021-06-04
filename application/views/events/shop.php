@@ -10,7 +10,7 @@
 
 <input type="hidden" id="shop" value="shop">
 <section id="main-content" class='hero-section position-relative'>
-    <div <?php if(isset($events[0])) { ?> style="clip-path: none !important" <?php } ?> class="d-none d-md-flex col-6 px-0 hero__background">
+    <div <?php if(isset($events[0])) { ?> style="clip-path: none !important;width: auto !important" <?php } ?> class="d-none d-md-flex px-0 hero__background">
     <?php if(isset($events[0]) && $events[0]['backgroundImage'] != ''): ?>
         <img id="background-image" src="<?php echo base_url(); ?>assets/images/events/<?php echo $events[0]['backgroundImage']; ?>"
             alt="">
