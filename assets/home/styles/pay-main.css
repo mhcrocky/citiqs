@@ -426,7 +426,7 @@ select.input100 {
 .header__checkout {
     position: fixed;
     right: 0px;
-    z-index: 9999;
+    z-index: 1;
     border-top-right-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
 }

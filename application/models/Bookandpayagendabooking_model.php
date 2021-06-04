@@ -85,9 +85,9 @@ class   Bookandpayagendabooking_model extends CI_Model
 			}, $_GET["Spotlabels"] ));
 		}
 		// where ".$datefromquery.$datetoquery." AND timeslot!=0 AND paid !=0 AND NOT(timefrom ='00:00:00' AND timeto ='00:00:00') 
-		$sql="SELECT eventdate, count(numberofpersons) as numberofpersons FROM tbl_bookandpay  ".
+		$sql="SELECT DATE(`ReservationDateTime`) as eventdate, COUNT(tbl_bookandpay.numberofpersons) as numberofpersons FROM tbl_bookandpayagenda LEFT JOIN tbl_bookandpay ON tbl_bookandpayagenda.id = tbl_bookandpay.eventid  ".
 			// "where ".$datefromquery.$datetoquery." AND timeslot!=0 AND paid !=0 AND NOT(timefrom ='00:00:00' AND timeto ='00:00:00') ".
-			"where customer=$customer ".
+			"where tbl_bookandpayagenda.Customer=$customer ".
 			((isset($queryeventdate))?" and eventdate in ($queryeventdate)":"").
 			((isset($querySpotlabels))?" and Spotlabel in ($querySpotlabels)":"").
 			$this->generalquery().
@@ -200,7 +200,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 		
 		$query = $this->db->query($sql);
 		$result = $query->row();
-		return $result->timeslot_max;
+		return isset($result->timeslot_max) ? $result->timeslot_max : 0;
 
 	}
 
