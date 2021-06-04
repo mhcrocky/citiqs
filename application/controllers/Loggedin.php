@@ -23,14 +23,17 @@ class Loggedin extends BaseControllerWeb
 	{
 		$this->global['pageTitle'] = 'TIQS : DASHBOARD';
 
-		if (empty($_SESSION['userId'])) {
+		if (empty($_SESSION['isLoggedIn'])) {
 			redirect('login');
 		}
 
-		$data = [
-			'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getVendorData(),
-		];
-		$this->loadViews("nolabels", $this->global, $data, "footerbusiness", "headerbusiness");
+		if ($this->isBuyer()) {
+			redirect('buyer');
+		} else {
+			$data = [
+				'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getVendorData(),
+			];
+			$this->loadViews("nolabels", $this->global, $data, "footerbusiness", "headerbusiness");
+		}
 	}
-
 }

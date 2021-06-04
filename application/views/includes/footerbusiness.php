@@ -55,7 +55,7 @@
 <?php
     include_once FCPATH . 'application/views/includes/customJs.php';
     include_once FCPATH . 'application/views/includes/alertifySessionMessage.php'; 
-    if (!$_SESSION['payNlServiceIdSet']) { 
+    if (isset($_SESSION['payNlServiceIdSet']) && !$_SESSION['payNlServiceIdSet']) {
         include_once FCPATH . 'application/views/includes/payNlRegistration.php';
     }
     include_once FCPATH . 'application/views/includes/selectlanguage.php'; 

@@ -1,10 +1,12 @@
 <?php 
-$loginUrl = base_url() . "loginMe";
-$employeeUrl = base_url() . "loginEmployee";
-$current_url = current_url();
-if($current_url == $employeeUrl || $current_url == $employeeUrl){
-	$loginUrl = $employeeUrl;
-}
+	if (!defined('BASEPATH')) exit('No direct script access allowed');
+	$loginUrl = $this->baseUrl . 'loginMe';
+	$employeeUrl = $this->baseUrl . 'loginEmployee';
+	$customerUrl = $this->baseUrl . 'loginCustomer';
+	$current_url = current_url();
+	if($current_url == $employeeUrl || $current_url == $employeeUrl){
+		$loginUrl = $employeeUrl;
+	}
 ?>
 <div class="main-wrapper">
 
@@ -110,14 +112,14 @@ if($current_url == $employeeUrl || $current_url == $employeeUrl){
 			</div>
 
 			<div >
-				<div style="margin-top:-10%" align="right">
+				<div style="margin-top:-10%; text-align:right">
 					<img src="<?php echo $this->baseUrl; ?>assets/home/images/girl.png" alt="tiqs" width="50%"/>
 					<form action="<?php echo $employeeUrl; ?>" method="post">
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
 						<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
 					</p>
 					<div class="form-group has-feedback" style="text-align:center;">
-						<input id="personEmail"type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<input id="personEmail" type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
 						<div class="virtual-keyboard-hook" data-target-id="personEmail" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					</div>
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
@@ -144,6 +146,71 @@ if($current_url == $employeeUrl || $current_url == $employeeUrl){
 			</div>
 			<div class="mobile-hide" style="text-align:center; margin-top: 0px; margin-bottom: 50px; margin-left: 100px">
 
+			</div>
+				<div class="text-left mt-50 mobile-hide" style="margin-left: 100px; margin-bottom: 100px;  margin-top: -30px">
+			</div>
+		</div>
+		<div class="flex-column align-start">
+			<div class="col-md-4">
+				<?php
+				$error = $this->session->flashdata('error');
+				if ($error) {
+					?>
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<?php echo $this->language->Line($this->session->flashdata('error'), $this->session->flashdata('error')); ?>
+					</div>
+				<?php } ?>
+				<?php
+				$success = $this->session->flashdata('success');
+				if ($success) {
+					?>
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<?php echo $this->language->Line($this->session->flashdata('success'), $this->session->flashdata('success')); ?>
+					</div>
+				<?php } ?>
+				<div class="row">
+					<div class="col-md-12">
+						<?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
+					</div>
+				</div>
+			</div>
+
+			<div style="text-align:left; margin-bottom:10px">
+				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
+					<?php echo $this->language->tLine('CUSTOMER LOGIN.'); ?>
+				</p>
+			</div>
+
+			<div >
+				<div style="text-align:right">
+					<form action="<?php echo $customerUrl; ?>" method="post">
+						<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
+							<?php echo $this->language->Line("registerbusiness-3500",'Use your e-mail to login');?>
+						</p>
+						<div class="form-group has-feedback" style="text-align:center;">
+							<input id="customerEmail" type="email" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+							<div class="virtual-keyboard-hook" data-target-id="customerEmail" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+						</div>
+						<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">
+							<?php echo $this->language->Line("registerbusiness-3800",'Password');?>
+						</p>
+						<div class="form-group has-feedback">
+							<input id="customerPassword" type="password" class="form-control" style="font-family:'caption-light';border:none; border-radius: 50px" placeholder="<?php echo $this->language->Line("registerbusiness-3900",'Your Password');?>" name="password" required />
+							<div class="virtual-keyboard-hook" style="text-align:center" data-target-id="customerPassword" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+						</div>
+						<br>
+						<div style="text-align: center; margin-bottom: 30px ">
+							<input type="submit" class="button button-orange" value="<?php echo $this->language->Line('registerbusiness-4100','LOGIN');?>" style="border: none" />
+						</div>
+					</form>
+					<div>
+						<a style="color: orange" href="forgotPassword" ><?php echo $this->language->Line('registerbusiness-F4100A', 'REQUEST OR RESET YOUR PASSWORD');?></a>
+					</div>
+				</div>
+			</div>
+			<div class="mobile-hide" style="text-align:center; margin-top: 0px; margin-bottom: 50px; margin-left: 100px">
 			</div>
 				<div class="text-left mt-50 mobile-hide" style="margin-left: 100px; margin-bottom: 100px;  margin-top: -30px">
 			</div>

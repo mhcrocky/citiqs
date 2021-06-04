@@ -143,6 +143,7 @@ $route['alfred_ambasador'] = 'login/registerAmbasador';
 $route['ambasador_activate/(:any)'] = 'login/ambasadorActivate/$1';
 $route['loginMe'] = 'login/loginMe';
 $route['loginEmployee'] = 'login/loginEmployee';
+$route['loginCustomer'] = 'login/loginCustomer';
 $route['logout'] = 'user/logout';
 $route['userListing'] = 'user/userListing';
 $route['lostandfoundlist'] = 'user/lostandfoundlist';
@@ -720,5 +721,13 @@ $route['printer_sms_alert'] = 'Api/Cronjobs/smsAlert';
 $route['send_reportes'] = 'Api/Cronjobs/sendReportes';
 
 $route['update_payment_method'] = 'Api/Cronjobs/updatePaymentMethod';
+
+// byuer
+
+$route['buyer'] = 'Buyer/index';
+$route['buyer_orders'] = 'Buyer/buyerOrders';
+$route['buyer_tickets'] = 'Buyer/buyerTickets';
+$route['buyer_reservations'] = 'Buyer/buyerReservations';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

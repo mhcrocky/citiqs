@@ -44,11 +44,13 @@ class BaseControllerWeb extends CI_Controller
     }
 
     /**
-     * This function used to check the user is logged in or not
+     * This function used to check the vendor is logged in or not
      */
     public function isLoggedIn()
     {
-        if (!$_SESSION['userId'] || !$_SESSION['role']) {
+        // prevent buyer to have access to vendor backoffice
+        if (empty($_SESSION['userId']) || empty($_SESSION['role']) || $this->isBuyer()) {
+            session_destroy();
             redirect ('login');
             exit();
         } else {
@@ -62,6 +64,11 @@ class BaseControllerWeb extends CI_Controller
             $this->global['role_text'] = $this->roleText;
             $this->global['last_login'] = $this->lastLogin;
         }
+    }
+
+    public function isBuyer(): bool
+    {
+        return !empty($_SESSION['buyerId']);
     }
 
     /**

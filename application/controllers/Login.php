@@ -62,9 +62,9 @@ class Login extends BaseControllerWeb
 	{
 		$isLoggedIn = $this->session->userdata('isLoggedIn');
 
-		if (!isset($isLoggedIn) || $isLoggedIn != TRUE) {
+		if (!isset($isLoggedIn) || !$isLoggedIn) {
 			$this->global['pageTitle'] = 'TIQS : LOGIN';
-			$this->loadViews("login", $this->global, NULL, 'headerpublic');
+			$this->loadViews("login", $this->global, NULL, NULL, 'headerpublic');
 		} else {
 			redirect('/loggedin');
 		}
@@ -214,6 +214,33 @@ class Login extends BaseControllerWeb
 
 	}
 
+	public function loginCustomer()
+	{
+		$this->form_validation->set_rules('email', 'Email', 'valid_email|max_length[128]|trim');
+		$this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->index();
+		}  else { // check login credentials at employee table
+
+			$email = strtolower($this->security->xss_clean($this->input->post('email')));
+			$password = $this->security->xss_clean($this->input->post('password'));
+			$result = $this->login_model->loginMe($email, $password);
+
+			if (empty($result)) {
+				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register.');
+				redirect('login');
+			} else {
+				$sessionArray = array(
+					'buyerId' => $result->userId,
+					'isLoggedIn' => TRUE,
+					'name' => $result->name,
+				);
+				$this->session->set_userdata($sessionArray);
+				redirect('/loggedin');
+			}
+		}
+	}
 
 	public function logout()
 	{
