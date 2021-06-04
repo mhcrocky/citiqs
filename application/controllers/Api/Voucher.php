@@ -36,7 +36,7 @@ class Voucher extends REST_Controller
         $voucher_fields = ['vendorId', 'percentUsed', 'expire'];
         $error = false;
         $error_message = '';
-        
+
         foreach($voucher_fields as $voucher_field){
             if(!in_array('vendorId', $data_keys)) {
                 $error = true;

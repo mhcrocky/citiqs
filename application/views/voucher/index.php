@@ -92,43 +92,59 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
-                    onsubmit="return saveVoucher(event)" novalidate>
-                    <button style="display: none;" id="submitForm" type="submit" class="btn btn-primary">Save
-                        Voucher</button>
-
-                    <input type="hidden" id="vendorId" name="vendorId" value="<?php echo $vendorId; ?>">
-                    <input type="hidden" id="active" name="active" value="1">
-
-
+                <form
+                    name="my-form"
+                    id="my-form"
+                    class="needs-validation"
+                    action="#"
+                    method="POST"
+                    onsubmit="return saveVoucher(event)"
+                    novalidate
+                >
+                    <button style="display: none;" id="submitForm" type="submit" class="btn btn-primary">Save Voucher</button>
+                    <input type="hidden" id="vendorId" name="vendorId" value="<?php echo $vendorId; ?>" />
+                    <input type="hidden" id="active" name="active" value="1" />
                     <div class="form-group row">
-                        <label for="event-name" class="col-md-4 col-form-label text-md-left">Number of Voucher to
-                            make</label>
+                        <label for="productGroup" class="col-md-4 col-form-label text-md-left">Select product group</label>
                         <div class="col-md-6">
-
-                            <input type="number" id="codes" class="input-w border-50 form-control" name="codes"
-                                required>
-
+                            <select id="productGroup" name="productGroup" class="form-control input-w border-50 field">
+                                <option value="">Select option</option>
+                                <?php foreach ($productGroups as $group) { ?>
+                                <option value="<?php echo $group; ?>"><?php echo $group; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
-
+                    <div class="form-group row">
+                        <label
+                            for="event-name"
+                            class="col-md-4 col-form-label text-md-left"
+                        >
+                            Number of Voucher to make
+                        </label>
+                        <div class="col-md-6">
+                            <input type="number" id="codes" class="input-w border-50 form-control" name="codes" required />
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label for="description" class="col-md-4 col-form-label text-md-left">
                             Voucher Description
                         </label>
                         <div class="col-md-6">
-
-                            <input type="text" id="description" class="input-w border-50 form-control"
-                                name="description" required>
+                            <input
+                                type="text"
+                                id="description"
+                                class="input-w border-50 form-control"
+                                name="description"
+                                required
+                            />
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="status" class="col-md-4 col-form-label text-md-left">Voucher Code
-                        </label>
+                        <label for="status" class="col-md-4 col-form-label text-md-left">Voucher Code</label>
                         <div class="col-md-6">
-                            <select id="status" onchange="voucherCode()" name="status"
-                                class="form-control input-w border-50 field">
+                            <select id="status" onchange="voucherCode()" name="status" class="form-control input-w border-50 field">
                                 <option value="" disabled>Select option</option>
                                 <option value="unique" selected>Unique</option>
                                 <option value="same">Same</option>
@@ -137,35 +153,22 @@
                     </div>
 
                     <div style="display: none" id="voucher_code" class="form-group row">
-                        <label for="status" class="col-md-4 col-form-label text-md-left">Code
-                        </label>
-                        <div class="col-md-6" id="code_input">
-
-                        </div>
+                        <label for="status" class="col-md-4 col-form-label text-md-left">Code </label>
+                        <div class="col-md-6" id="code_input"></div>
                     </div>
 
                     <div class="form-group row">
                         <label for="percent" class="col-md-4 col-form-label text-md-left">Percent</label>
                         <div class="col-md-6">
-
-                            <input type="number" id="percent" class="input-w border-50 form-control" name="percent"
-                                onchange="disabledField(this, 'amount')" required>
-
+                            <input
+                                type="number"
+                                id="percent"
+                                class="input-w border-50 form-control"
+                                name="percent"
+                                onchange="disabledField(this, 'amount')" required
+                            />
                         </div>
                     </div>
-
-                    <div class="form-group row">
-                        <label for="percentUsed" class="col-md-4 col-form-label text-md-left">Percent
-                            Used</label>
-                        <div class="col-md-6">
-                            <select id="percentUsed" name="percentUsed" class="form-control input-w border-50 field">
-                                <option value="" disabled>Select option</option>
-                                <option value="1" selected>Yes</option>
-                                <option value="0">No</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="form-group row">
                         <label for="expire" class="col-md-4 col-form-label text-md-left">Expire</label>
                         <div class="col-md-6">

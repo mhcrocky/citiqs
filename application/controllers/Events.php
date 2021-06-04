@@ -78,7 +78,11 @@ class Events extends BaseControllerWeb
 				'right'
 			]
 		];
-		$where = ["tbl_shop_voucher.vendorId" => $this->vendor_id];
+		$where = [
+            "tbl_shop_voucher.vendorId" => $this->vendor_id,
+            "tbl_shop_voucher.productGroup" => $this->config->item('eTicketing')
+        ];
+
         $data = [
             'event' => $this->event_model->get_event($this->vendor_id,$eventId),
             'eventId' => $eventId,
