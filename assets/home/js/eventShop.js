@@ -158,7 +158,7 @@ function getTicketsView(eventId, first = false) {
         }
 
         if(isSquared == '1'){
-            $('.hero__background').attr('style', 'clip-path: none !important');
+            $('.hero__background').attr('style', 'clip-path: none !important; width: auto !important');
         } else {
             $('.hero__background').attr('style', '');
         }
