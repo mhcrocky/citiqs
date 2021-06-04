@@ -26,6 +26,7 @@
         public $voucherused;
         public $productId;
         public $emailId;
+        public $productGroup;
 
         private $table = 'tbl_shop_voucher';
 
@@ -60,6 +61,8 @@
         public function updateValidate(array $data): bool
         {
             if (!count($data)) return false;
+
+            $this->load->config('custom');
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return true;
             if (isset($data['code']) && !Validate_data_helper::validateString($data['code'])) return false;
             #if (isset($data['description']) && !Validate_data_helper::validateString($data['description'])) return false;
@@ -73,6 +76,7 @@
             if (isset($data['voucherused']) && !Validate_data_helper::validateInteger($data['voucherused'])) return false;
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
             if (isset($data['emailId']) && !Validate_data_helper::validateInteger($data['emailId'])) return false;
+            if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
 
             return true;
         }

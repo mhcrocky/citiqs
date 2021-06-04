@@ -117,6 +117,10 @@ $(document).ready(function () {
       {
         title: "Product Id",
         data: "productId",
+      },
+      {
+        title: "Product group",
+        data: "productGroup",
       }
     ],
     drawCallback: function(settings){
@@ -222,17 +226,17 @@ function saveVoucher(e) {
   if ($('.form-control:invalid').length > 0) {
       return;
   }
-
   let data = {
       vendorId: $('#vendorId').val(),
       codes: $('#codes').val(),
       description: $('#description').val(),
       status: $('#status option:selected').val(),
-      percentUsed: $('#percentUsed option:selected').val(),
+      percentUsed: '0',
       expire: $('#expire').val(),
       active: $('#active').val(),
       productId: $('#productId').find(':selected').val(),
-      emailId: $('#emailId option:selected').val()
+      emailId: $('#emailId option:selected').val(),
+      productGroup: $('#productGroup option:selected').val(),
   }
 
   if ($('#code').length > 0) {

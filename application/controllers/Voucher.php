@@ -43,6 +43,8 @@ class Voucher extends BaseControllerWeb
 			];
 			
 		$data['products'] = $this->shopproduct_model->read($what,$where, $join, 'group_by', ['tbl_shop_products.id']);
+		$data['productGroups'] = $this->config->item('productGroups');
+
 		$this->loadViews("voucher/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); 
 	}
 
