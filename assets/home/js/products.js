@@ -65,6 +65,21 @@ function populateClassElements(className, string) {
 }
 
 
+function deleteProduct(productId, productName) {
+    let message = 'Are you sure you want delete product "' + productName + '" ?' ;
+    alertify.confirm(
+        message,
+        '',
+        function(){
+            let url = globalVariables.baseUrl + 'warehouse/editProduct/'  + productId + '/1?delete=1';
+            window.location.href = url;
+        },
+        function(){
+            alertify.error('Cancel')
+        }
+    );
+}
+
 $(document).ready(function(){
     $('.productTimePickers').datetimepicker({
         dayOfWeekStart : 1,

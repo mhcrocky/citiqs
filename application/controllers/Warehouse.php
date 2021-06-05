@@ -394,22 +394,7 @@
             $productId = intval($this->uri->segment(3));
             $userId = intval($_SESSION['userId']);
 
-            if ($this->uri->segment(4) === '1' || $this->uri->segment(4) === '0' ) {
-                $update = $this
-                            ->shopproduct_model
-                            ->setObjectId($productId)
-                            ->setObjectFromArray(['active' => $this->uri->segment(4)])
-                            ->update();
-                if ($update) {
-                    $newStatus = ($this->uri->segment(4) === '1') ? 'activated' : 'blocked';
-                    $this->session->set_flashdata('success', 'Procuct ' . $newStatus);
-                } else {
-                    $this->session->set_flashdata('error', 'Update failed');
-                }
-                $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
-                redirect($redirect);
-                return;
-            }
+            $this->changeProductStatus($productId);
 
             // CHECK PRODUCT NAME
             if ($this->shopproductex_model->checkProductNameNew($userId, $data['productExtended']['name'], intval($data['productExtended']['productId']))) {
@@ -502,6 +487,32 @@
             return;
         }
 
+        private function changeProductStatus(int $productId): void
+        {
+            if ($this->uri->segment(4) === '1' || $this->uri->segment(4) === '0' ) {
+                $isDelete = (isset($_GET['delete']) && $_GET['delete'] === '1');
+                $property = $isDelete ? 'archived' : 'active';
+                $update = $this
+                            ->shopproduct_model
+                            ->setObjectId($productId)
+                            ->setObjectFromArray([$property => $this->uri->segment(4)])
+                            ->update();
+                if ($update) {
+                    if ($isDelete) {
+                        $newStatus = 'deleted';
+                    } else {
+                        $newStatus = ($this->uri->segment(4) === '1') ? 'activated' : 'blocked';
+                    }
+
+                    $this->session->set_flashdata('success', 'Procuct ' . $newStatus);
+                } else {
+                    $this->session->set_flashdata('error', 'Update failed');
+                }
+                $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+                redirect($redirect);
+                return;
+            }
+        }
         /**
          * Add times to product
          *
