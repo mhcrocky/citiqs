@@ -179,9 +179,9 @@ class Bookandpay_model extends CI_Model
 		$this->db->where('eventdate', $eventdate);
 		$query = $this->db->get();
 		$result = $query->row();
-//				$testquery = $this->db->last_query();
-//				var_dump($testquery);
-//				die();
+		// $testquery = $this->db->last_query();
+		// var_dump($testquery);
+		// die();
 		return $result;
 	}
  
@@ -649,8 +649,11 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
-	public function getReservationsByTransactionId($TransactionId)
+	public function getReservationsByTransactionId($TransactionId, $what = [])
 	{
+		if ($what) {
+			$this->db->select(implode(',', $what));
+		}
 		$this->db->from('tbl_bookandpay');
 		$this->db->where('TransactionId', $TransactionId);
 		$query = $this->db->get();
@@ -805,5 +808,18 @@ class Bookandpay_model extends CI_Model
 		ORDER BY reservationtime DESC");
 		$result = $query->result_array();
 		return empty($result) ? [] : $result;
+	}
+
+	public function getReservationsByTransactionIdImproved(string $TransactionId, $what = []): ?array
+	{
+		if ($what) {
+			$this->db->select(implode(',', $what));
+		}
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('TransactionId', $TransactionId);
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return empty($result) ? null : $result;
 	}
 }
