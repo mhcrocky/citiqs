@@ -1,5 +1,6 @@
 
 <div class="main-content-inner ui-sortable">
+<?php /*
     <!--
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
         <div id="sortable" style="visibility: hidden;" class="row ui-sortable">
@@ -451,6 +452,10 @@
         </div>
     </div>
 -->
+<?php */
+ ?>
+
+
 
     <div style="" class="w-100 mt-4 row-sort ui-sortable mx-auto" data-rowposition="2" data-rowsort="1">
         <div style="flex-wrap: unset;" class="row mx-auto text-center">
@@ -736,8 +741,8 @@ window.onload = function() {
 function drawChart() {
 
     var i = 0;
-    var event_orders = '<?php echo is_array($event_orders) ? json_encode($event_orders) : ''; ?>';
-    var tickets_gender = '<?php echo is_array($tickets_gender) ? json_encode($tickets_gender) : ''; ?>';
+    var event_orders = '<?php echo is_array($tags) ? json_encode($tags) : ''; ?>';
+    var tickets_gender = '<?php echo is_array($gender_tags) ? json_encode($gender_tags) : ''; ?>';
     event_orders = (event_orders == '') ? '' : JSON.parse(event_orders);
     tickets_gender = (tickets_gender == '') ? '' : JSON.parse(tickets_gender);
 
@@ -762,37 +767,35 @@ function drawChart() {
             var thirdTotal = 0;
             var fourthTotal = 0;
             $.each(tickets, function(index, ticket) {
-                if ($.isNumeric(index) && ticket !== '') {
-                    firstTotal = firstTotal + parseFloat(ticket.booking_number);
-                    secondTotal = secondTotal + parseFloat(ticket.amount);
-                }
+                firstTotal = firstTotal + parseFloat(ticket.booking_number);
+                secondTotal = secondTotal + parseFloat(ticket.amount);
+                
             });
 
             $.each(tickets, function(index, ticket) {
-                if ($.isNumeric(index) && ticket !== '') {
                     let bookingTotal = parseFloat(parseFloat(ticket.booking_number) / firstTotal) * 100;
                     let amountTotal = parseFloat(parseFloat(ticket.amount) / secondTotal) * 100;
-                    window['firstArr' + key].push([ticket.ticketDescription, bookingTotal]);
-                    window['secondArr' + key].push([ticket.ticketDescription, amountTotal]);
-                }
+                    window['firstArr' + key].push([index, bookingTotal]);
+                    window['secondArr' + key].push([index, amountTotal]);
+                
 
             });
 
 
             $.each(tickets_gender[key1], function(index, ticket) {
-                if ($.isNumeric(index) && ticket !== '') {
-                    thirdTotal = thirdTotal + ticket.male.length;
-                    fourthTotal = fourthTotal + ticket.female.length;
-                }
+                
+                thirdTotal = thirdTotal + ticket.male_tag.length;
+                fourthTotal = fourthTotal + ticket.female_tag.length;
+                
             });
 
             $.each(tickets_gender[key1], function(index, ticket) {
-                if ($.isNumeric(index) && ticket !== '') {
-                    let maleTotal = parseFloat(parseFloat(ticket.male.length) / thirdTotal) * 100;
-                    let femaleTotal = parseFloat(parseFloat(ticket.female.length) / fourthTotal) * 100;
-                    window['thirdArr' + key].push([ticket.ticketDescription, maleTotal]);
-                    window['fourthArr' + key].push([ticket.ticketDescription, femaleTotal]);
-                }
+                
+                    let maleTotal = parseFloat(parseFloat(ticket.male_tag.length) / thirdTotal) * 100;
+                    let femaleTotal = parseFloat(parseFloat(ticket.female_tag.length) / fourthTotal) * 100;
+                    window['thirdArr' + key].push([index, maleTotal]);
+                    window['fourthArr' + key].push([index, femaleTotal]);
+                
 
             });
 
