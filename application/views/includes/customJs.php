@@ -166,6 +166,7 @@
 	<script type="text/javascript" src="<?php echo $this->baseUrl; ?>assets/js/jquery.table2excel.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/query-builder.standalone.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/dashboard.js"></script>
+	<script src="https://www.google.com/jsapi"></script>
 <?php } elseif ($this->view === 'businessreport/reports') { ?>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
