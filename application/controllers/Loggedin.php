@@ -33,7 +33,7 @@ class Loggedin extends BaseControllerWeb
 			$data = [
 				'vendor' => $this->shopvendor_model->setProperty('vendorId', $_SESSION['userId'])->getVendorData(),
 			];
-			$this->loadViews("nolabels", $this->global, $data, "footerbusiness", "headerbusiness");
+			$this->loadViews('nolabels', $this->global, $data, 'footerbusiness', 'headerbusiness');
 		}
 	}
 }

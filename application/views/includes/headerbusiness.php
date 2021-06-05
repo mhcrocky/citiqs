@@ -198,9 +198,11 @@
                             <nav>
                                 <div class="sidebar-header">
                                     <div class="profile">
-                                        <div class="profile-name text-center">
-                                            <img class="logo-img" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="logo">
-                                        </div>                            
+                                        <a href="<?php echo $this->baseUrl;?>loggedin">
+                                            <div class="profile-name text-center">
+                                                <img class="logo-img" src="<?php echo $this->baseUrl; ?>assets/home/images/tiqslogowhite.png" alt="logo">
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                                 <?php
@@ -229,73 +231,86 @@
                     <div class="header-area">
                         <div class="row align-items-center">
                             <!-- nav and search button -->
-                            <div id="collapse-item" class="col-md-12 col-sm-12 clearfix">
-                                <div class="nav-btn pull-left">
+                            <div id="collapse-item" class="row">
+                                <div class="nav-btn col-md-1 col-sm-1" style="width:50px;">
                                     <span></span>
                                     <span></span>
                                     <span></span>
                                 </div>
-                                <div class="pull-left user-title">
-                                    <p style="font-weight: 100; font-size: 100%;padding-top:10px;color: #000;">
-                                        <?php
-                                            echo ($this->session->userdata('userId')) ? $this->session->userdata('userId') : '';
-                                            echo $this->session->userdata('name');
-                                        ?>
-                                        <?php if (($this->session->userdata('userId'))) { ?>
-                                            <a href="https://tiqs.com/alfred/loggedinmanuals">
-                                                <img src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" alt="" />
-                                            </a>
+                                <div class="col-md-10 user-title" id="navElement">
+                                    <div class="row">
+                                        <p
+                                            id="userNameAndId"
+                                            style="font-weight: 100; font-size: 100%; padding-top:10px; color: #000;"
+                                            class="col-md-4 col-sm-4"
+                                        >
+                                            <?php
+                                                if (($this->session->userdata('userId'))) {
+                                                    echo $this->session->userdata('userId') . '&nbsp;' . $this->session->userdata('name');
+                                                } else {
+                                                    echo $this->session->userdata('name');
+                                                }
+                                            ?>
+                                        </p>
+                                        <?php if ($this->session->userdata('userId')) { ?>
+                                            <p
+                                                style="font-weight: 100; font-size: 100%; padding-top:10px; color: #000;"
+                                                class="col-md-1 navElements"
+                                            >
+                                                <a href="https://tiqs.com/alfred/loggedinmanuals">
+                                                    <img src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" alt="" />
+                                                </a>                                        
+                                            </p>
                                         <?php } ?>
-									</p>
-
-                                </div>
-
-								<div class="pull-left user-title">
-									<p style="font-weight: 100; font-size: 100%;padding-top:10px;color: #000;">
-                                        <!--										--><?php //echo $this->session->userdata('userId');?><!-- --><?php //echo $this->session->userdata('name');?>
-                                                                                    <a style="color: #E25F2A; margin-left: 20px" href="#" data-toggle="modal" data-target="#myModal" id='modal-button'> <img width="30" height="30" src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"/></a>
-                                        <!--										<a href="https://tiqs.com/alfred/loggedin">-->
-                                        <!--											<img src="--><?php //echo $this->baseUrl; ?><!--assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" >-->
-                                        <!--										</a>-->
-									</p>
-								</div>
-                                <div id="search-box" class="search-box pull-right">
-                                    <!-- <input
-                                        style="background: white;font-size:14px !important;font-family: inherit !important;"
-                                        type="text"
-                                        name="search" placeholder="Search..."
-                                        required=""
-                                    />
-                                    <i class="ti-search"></i> -->
-                                    <?php if (isset($_SESSION['masterAccounts']) && count($_SESSION['masterAccounts']) > 1) { ?>
-                                        <form action="<?php echo base_url() . 'login/switchAccount'; ?>" method="post">
-                                            <div class="form-group">
-                                                <!--                                                <label for="masterAccountId">--><?php //echo $this->language->tLine('Change account'); ?><!--</label>-->
-                                                <select
-                                                    class="form-control"
-                                                    id="masterAccountId"
-                                                    name="masterAccountId"
-                                                    required
-                                                    onchange="submitSwitchAccountForm(this)"
-													style="border-radius: 50px;margin-top: 7px"
-                                                >
-                                                    <option value=""><?php echo $this->language->tLine('Select'); ?></option>
-                                                    <?php foreach ($_SESSION['masterAccounts'] as $masterAccount) { ?>
-                                                        <option
-                                                            value="<?php echo $masterAccount['id']; ?>"
-                                                            <?php if ($masterAccount['id'] === $_SESSION['userId'] ) echo 'selected';
-                                                            ?>
+                                        <p
+                                            class="col-md-1 navElements"
+                                            style="color: #E25F2A; margin-left: 20px"
+                                            data-toggle="modal"
+                                            data-target="#myModal"
+                                            id='modal-button'
+                                        >
+                                            <img
+                                                width="30"
+                                                height="30"
+                                                src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"
+                                                style="margin-top:6px"
+                                            />
+                                        </p>
+                                        <?php if (isset($_SESSION['masterAccounts']) && count($_SESSION['masterAccounts']) > 1) { ?>
+                                            <div
+                                                id="search-box"
+                                                class="search-box col-md-5 navElements"
+                                            >
+                                                <form action="<?php echo base_url() . 'login/switchAccount'; ?>" method="post">
+                                                    <div class="form-group">
+                                                        <!--                                                <label for="masterAccountId">--><?php //echo $this->language->tLine('Change account'); ?><!--</label>-->
+                                                        <select
+                                                            class="form-control"
+                                                            id="masterAccountId"
+                                                            name="masterAccountId"
+                                                            required
+                                                            onchange="submitSwitchAccountForm(this)"
+                                                            style="border-radius: 50px;margin-top: 7px"
                                                         >
-                                                            <?php
-                                                                echo $masterAccount['username'];
-                                                                if ($masterAccount['id'] === $_SESSION['masterAccountId'] ) echo '&nbsp;(' . $this->language->tLine('MASTER ACCOUNT') . ')';
-                                                            ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                </select>
+                                                            <option value=""><?php echo $this->language->tLine('Select'); ?></option>
+                                                            <?php foreach ($_SESSION['masterAccounts'] as $masterAccount) { ?>
+                                                                <option
+                                                                    value="<?php echo $masterAccount['id']; ?>"
+                                                                    <?php if ($masterAccount['id'] === $_SESSION['userId'] ) echo 'selected';
+                                                                    ?>
+                                                                >
+                                                                    <?php
+                                                                        echo $masterAccount['username'];
+                                                                        if ($masterAccount['id'] === $_SESSION['masterAccountId'] ) echo '&nbsp;(' . $this->language->tLine('MASTER ACCOUNT') . ')';
+                                                                    ?>
+                                                                </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
-                                    <?php } ?>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                             <!-- profile info & task notification -->
