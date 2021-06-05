@@ -398,7 +398,17 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         tr.shown td.details-control {
 		  background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
         }
-    </style> 
+
+        .pie-chart {
+            width: 220px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+    </style>
 <?php  } elseif ($this->view === 'events/step-two') { ?>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
     <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
