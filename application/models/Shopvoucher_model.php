@@ -145,5 +145,40 @@
         {
             return  ($this->active === '0' || $this->expire < date('Y-m-d') || $this->percentUsed === '1' || ($this->amount <= 0 && $this->percent === 0)) ? false : true;
         }
-        
+
+        public function getTicketVoucherId(int $ticketId): ?int
+        {
+            $id = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    'tbl_ticket_options.ticketId' => $ticketId
+                ],
+                'joins' => [
+                    ['tbl_ticket_options', 'tbl_ticket_options.voucherId = ' . $this->table . '.id', 'INNER']
+                ],
+            ]);
+
+            return is_null($id) ? null : intval($id[0]['id']);
+        }
+
+        public function createTicektFromVoucherTemplate(array $voucherTemplate, string $voucherBlueprint): bool
+        {
+            $voucherTemplate['code'] = $voucherBlueprint;
+            $voucherTemplate['numberOfTimes'] = 1;
+
+            return $this->setObjectFromArray($voucherTemplate)->create();
+        }
+
+        public function getVoucher(): ?array
+        {
+            $voucher = $this->readImproved([
+                'what' => [$this->table . '.*'],
+                'where' => [
+                    $this->table .'.id' => $this->id
+                ]
+            ]);
+
+            return is_null($voucher) ? null : reset($voucher);
+        }
+
     }

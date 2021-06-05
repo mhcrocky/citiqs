@@ -21,6 +21,7 @@ class Booking_events extends BaseControllerWeb
         $this->load->model('user_model');
         $this->load->model('shopvendor_model');
         $this->load->model('shopsession_model');
+        $this->load->model('shopvoucher_model');
 
         $this->load->model('sendreservation_model');
         $this->load->model('email_templates_model');
@@ -669,25 +670,15 @@ class Booking_events extends BaseControllerWeb
 
     public function ExchangePay()
 	{
-
-        $get = $this->input->get(null, true);
         $transactionid = $this->input->get('order_id'); 
         $action = $this->input->get('action', true);
 
-        if ($get['action'] === 'new_ppt') {
-            // WE HAVE SUCCESS
-            // transactionId ID IS UNIQUE SO YOU CAN UPDATE paid STATUS TO 1 tbl_bookandpay
-            // 
-            //$query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
-            //$this->db->queyr($query);
-
-            $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
-            echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
-            $this->emailReservation($transactionid);
+        if ($action === 'new_ppt') {
+            $this->exchangeSideJobs($transactionid);
+            echo('TRUE| ' . $transactionid . '-status-' . $action . '-date-' . date('Y-m-d H:i:s'));
         } else {
-			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
+			echo('TRUE| NOT FIND ' . $transactionid . '-status-' . $action.'-date-'.date('Y-m-d H:i:s'));
         }
-
 
         return;
     }
@@ -879,6 +870,10 @@ class Booking_events extends BaseControllerWeb
         // uncomment for landing pages if you like and think it is ok
         $get = Utility_helper::sanitizeGet();
 
+        if (ENVIRONMENT === 'development') {
+            $this->exchangeSideJobs($get['orderId']);
+        }
+
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
             // need to do something with the facebook pixel.
             $redirect = base_url() . 'ticketing_success?orderid=' . $get['orderId'];
@@ -925,5 +920,37 @@ class Booking_events extends BaseControllerWeb
 
 	}
 
+    private function createTicketVoucher(string $orderTransactionId): bool
+    {
+        $data = $this->bookandpay_model->getReservationsByTransactionIdImproved($orderTransactionId, ['eventid', 'voucher']);
 
+        if (is_null($data)) return false;
+
+        $ticketId = intval($data[0]->eventid);
+        $voucherId = $this->shopvoucher_model->getTicketVoucherId($ticketId);
+
+        if (is_null($voucherId)) return false;
+
+        $voucherBlueprint = $this->shopvoucher_model->setObjectId($voucherId)->getVoucher();
+
+        foreach($data as $voucherInfo) {
+            if (!$this->shopvoucher_model->createTicektFromVoucherTemplate($voucherBlueprint, $voucherInfo->voucher)) return false;
+        }
+
+        return true;
+
+    }
+
+
+    private function exchangeSideJobs($transactionId): void
+    {
+        $this->bookandpay_model->updateBookandpayByTransactionId($transactionId);
+        
+        $this->createTicketVoucher($transactionId);
+
+        $this->emailReservation($transactionId);
+        return;
+    }
+
+            
 }
