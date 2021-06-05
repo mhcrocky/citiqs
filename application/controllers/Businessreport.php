@@ -39,7 +39,14 @@ class Businessreport extends BaseControllerWeb
 		$data['day_orders'] = $this->businessreport_model->get_day_orders($vendor_id);
 		$data['week_orders'] = $this->businessreport_model->get_this_week_orders($vendor_id);
 		$data['last_week_orders'] = $this->businessreport_model->get_last_week_orders($vendor_id);
-		$data['event_orders'] = $this->event_model->get_events_stats($vendor_id);
+		$event_orders = $this->event_model->get_events_stats($vendor_id);
+		$tickets_gender = $this->event_model->get_tickets_gender($vendor_id);
+		$data['tags'] = $event_orders['tag'];
+		$data['gender_tags'] = $tickets_gender['tag'];
+		
+		unset($event_orders['tag']);
+		unset($tickets_gender['tag']);
+		$data['event_orders'] = $event_orders;
 		$data['tickets_gender'] = $this->event_model->get_tickets_gender($vendor_id);
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
 
