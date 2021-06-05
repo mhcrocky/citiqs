@@ -1,3 +1,4 @@
+
 <div class="main-content-inner ui-sortable">
     <!--
     <div class="sales-report-area mt-5 mb-5 row-sort ui-sortable" data-rowposition="1" data-rowsort="1">
@@ -571,70 +572,73 @@
 
 
 
-<?php foreach($event_orders as $key => $event_order): 
+    <?php foreach($event_orders as $key => $event_order): 
     $sold_tickets =  $event_order['booking_number']; 
     $total_amount = $event_order['amount'];
+    $unique = str_replace(' ', '', $key);
     unset($event_order['booking_number']);
     unset($event_order['amount']);
     ?>
 
-<div class="d-flex row w-100 mt-4 mx-auto row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
-    <div class="col-md-4 dash-card first b-purple">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c">
-                    <i class="fa fa-ticket" aria-hidden="true"></i>
-                </span>
-                Total tickets sold
+    <div class="d-flex row w-100 mt-4 mx-auto row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
+        <div class="col-md-4 dash-card first b-purple">
+            <div class="d-table">
+                <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                    <span class="icon-c">
+                        <i class="fa fa-ticket" aria-hidden="true"></i>
+                    </span>
+                    Total tickets sold
+                </div>
+                <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                    <?php echo $sold_tickets; ?>
+                </div>
             </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-            <?php echo $sold_tickets; ?>
+            <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
+                <div id="firstChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <?php foreach($event_order as $ticket): ?>
+                <div class="d-table">
+                    <div class="w-100 f-12 pr-2 d-table-cell">
+                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                    </div>
+                    <div class="f-12 pr-2 d-table-cell text-right">
+                        <?php echo $ticket['booking_number']; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+
             </div>
-        </div>
-        <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
-        <?php foreach($event_order as $ticket): ?>
-        <div class="d-table">
-            <div class="w-100 f-12 pr-2 d-table-cell">
-            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
-            </div>
-            <div class="f-12 pr-2 d-table-cell text-right">
-                <?php echo $ticket['booking_number']; ?>
-            </div>
-        </div>
-        <?php endforeach; ?>
 
         </div>
+        <div class="col-md-4 dash-card b-red">
+            <div class="d-table">
+                <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                    <span style="display: inline-flex;flex-wrap: unset;" class="icon-c">
+                        <i class="gg-euro"></i>
+                    </span>
+                    Total amount
+                </div>
+                <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                    €<?php echo number_format($total_amount, 2); ?>
+                </div>
+            </div>
 
-    </div>
-    <div class="col-md-4 dash-card b-red">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span style="display: inline-flex;flex-wrap: unset;" class="icon-c">
-                    <i class="gg-euro"></i>
-                </span>
-                Total amount
+            <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
+                <div id="secondChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <?php foreach($event_order as $ticket): ?>
+                <div class="d-table">
+                    <div class="w-100 f-12 pr-2 d-table-cell">
+                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                    </div>
+                    <div class="f-12 pr-2 d-table-cell text-right">
+                        €<?php echo number_format($ticket['amount'], 2); ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
             </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-            €<?php echo number_format($total_amount, 2); ?>
-            </div>
+
+
         </div>
-
-        <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
-        <?php foreach($event_order as $ticket): ?>
-        <div class="d-table">
-            <div class="w-100 f-12 pr-2 d-table-cell">
-            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
-            </div>
-            <div class="f-12 pr-2 d-table-cell text-right">
-            €<?php echo number_format($ticket['amount'], 2); ?>
-            </div>
-        </div>
-        <?php endforeach; ?>
-        </div>
-
-
-    </div>
-<?php 
+        <?php 
 
 $total_male = 0;
 $total_female = 0;
@@ -645,67 +649,202 @@ foreach($tickets as $ticket){
 } 
 
 ?>
-    <div class="col-md-4 dash-card b-green">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c">
-                <i class="fa fa-male" aria-hidden="true"></i>
-                </span>
-                Male
+        <div class="col-md-4 dash-card b-green">
+            <div class="d-table">
+                <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                    <span class="icon-c">
+                        <i class="fa fa-male" aria-hidden="true"></i>
+                    </span>
+                    Male
+                </div>
+                <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                    <?php echo number_format(($total_male/$sold_tickets) * 100, 2); ?>%
+                </div>
             </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                <?php echo number_format(($total_male/$sold_tickets) * 100, 2); ?>%
+
+            <div class="w-100 pt-25 mb-2 ticket-info-card">
+                <div id="thirdChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <?php foreach($tickets as $ticket): ?>
+                <div class="d-table">
+                    <div class="w-100 f-12 pr-2 d-table-cell">
+                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                    </div>
+                    <div class="f-12 pr-2 d-table-cell text-right">
+                        <?php echo count($ticket['male']) ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
             </div>
+
         </div>
 
-        <div class="w-100 pt-25 mb-2 ticket-info-card">
-        <?php foreach($tickets as $ticket): ?>
-        <div class="d-table">
-            <div class="w-100 f-12 pr-2 d-table-cell">
-            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+
+        <div class="col-md-4 dash-card last b-green">
+            <div class="d-table">
+                <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+                    <span class="icon-c font-weight-bold">
+                        <i class="fa fa-female" aria-hidden="true"></i>
+                    </span>
+                    Female
+                </div>
+                <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+                    <?php echo number_format($total_female/$sold_tickets * 100, 2); ?>%
+                </div>
             </div>
-            <div class="f-12 pr-2 d-table-cell text-right">
-            <?php echo count($ticket['male']) ?>
+
+            <div class="w-100 pt-25 mb-2 ticket-info-card">
+                <div id="fourthChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <?php foreach($tickets as $ticket): ?>
+                <div class="d-table">
+                    <div class="w-100 f-12 pr-2 d-table-cell">
+                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                    </div>
+                    <div class="f-12 pr-2 d-table-cell text-right">
+                        <?php echo count($ticket['female']); ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
             </div>
+
         </div>
-        <?php endforeach; ?>
-        </div>
+
+
 
     </div>
 
 
-    <div class="col-md-4 dash-card last b-green">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c font-weight-bold">
-                <i class="fa fa-female" aria-hidden="true"></i>
-                </span>
-                Female
-            </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                <?php echo number_format($total_female/$sold_tickets * 100, 2); ?>%
-            </div>
-        </div>
-
-        <div class="w-100 pt-25 mb-2 ticket-info-card">
-        <?php foreach($tickets as $ticket): ?>
-        <div class="d-table">
-            <div class="w-100 f-12 pr-2 d-table-cell">
-            <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
-            </div>
-            <div class="f-12 pr-2 d-table-cell text-right">
-            <?php echo count($ticket['female']); ?>
-            </div>
-        </div>
-        <?php endforeach; ?>
-        </div>
-
-    </div>
-
+    <?php endforeach; ?>
 
 
 </div>
-<?php endforeach; ?>
+
+<script type="text/javascript">
+window.onload = function() {
+
+    google.load("visualization", "1.1", {
+
+        packages: ["corechart"],
+
+        callback: 'drawChart'
+
+    });
+
+};
 
 
-</div>
+
+function drawChart() {
+
+    var i = 0;
+    var event_orders = '<?php echo is_array($event_orders) ? json_encode($event_orders) : ''; ?>';
+    var tickets_gender = '<?php echo is_array($tickets_gender) ? json_encode($tickets_gender) : ''; ?>';
+    event_orders = (event_orders == '') ? '' : JSON.parse(event_orders);
+    tickets_gender = (tickets_gender == '') ? '' : JSON.parse(tickets_gender);
+
+    if (typeof event_orders === 'object') {
+        for (const [key1, tickets] of Object.entries(event_orders)) {
+            var key = i;
+            i++;
+
+            var id = key1.replaceAll(' ', '');
+            console.log(id);
+
+            window['firstArr' + key] = [];
+            window['secondArr' + key] = [];
+            window['thirdArr' + key] = [];
+            window['fourthArr' + key] = [];
+            window['firstArr' + key].push(['Country', 'Popularity']);
+            window['secondArr' + key].push(['Country', 'Popularity']);
+            window['thirdArr' + key].push(['Country', 'Popularity']);
+            window['fourthArr' + key].push(['Country', 'Popularity']);
+            var firstTotal = 0;
+            var secondTotal = 0;
+            var thirdTotal = 0;
+            var fourthTotal = 0;
+            $.each(tickets, function(index, ticket) {
+                if ($.isNumeric(index) && ticket !== '') {
+                    firstTotal = firstTotal + parseFloat(ticket.booking_number);
+                    secondTotal = secondTotal + parseFloat(ticket.amount);
+                }
+            });
+
+            $.each(tickets, function(index, ticket) {
+                if ($.isNumeric(index) && ticket !== '') {
+                    let bookingTotal = parseFloat(parseFloat(ticket.booking_number) / firstTotal) * 100;
+                    let amountTotal = parseFloat(parseFloat(ticket.amount) / secondTotal) * 100;
+                    window['firstArr' + key].push([ticket.ticketDescription, bookingTotal]);
+                    window['secondArr' + key].push([ticket.ticketDescription, amountTotal]);
+                }
+
+            });
+
+
+            $.each(tickets_gender[key1], function(index, ticket) {
+                if ($.isNumeric(index) && ticket !== '') {
+                    thirdTotal = thirdTotal + ticket.male.length;
+                    fourthTotal = fourthTotal + ticket.female.length;
+                }
+            });
+
+            $.each(tickets_gender[key1], function(index, ticket) {
+                if ($.isNumeric(index) && ticket !== '') {
+                    let maleTotal = parseFloat(parseFloat(ticket.male.length) / thirdTotal) * 100;
+                    let femaleTotal = parseFloat(parseFloat(ticket.female.length) / fourthTotal) * 100;
+                    window['thirdArr' + key].push([ticket.ticketDescription, maleTotal]);
+                    window['fourthArr' + key].push([ticket.ticketDescription, femaleTotal]);
+                }
+
+            });
+
+
+            window['data' + key] = google.visualization.arrayToDataTable(window['firstArr' + key]);
+
+
+            var options = {
+
+                pieHole: 0.4,
+
+                title: '',
+
+            };
+
+
+            window['chart' + key] = new google.visualization.PieChart(document.getElementById('firstChart_' + id));
+
+            window['chart' + key].draw(window['data' + key], options);
+
+            window['secondData' + key] = google.visualization.arrayToDataTable(window['secondArr' + key]);
+
+            window['secondChart' + key] = new google.visualization.PieChart(document.getElementById('secondChart_' +
+                id));
+
+            window['secondChart' + key].draw(window['secondData' + key], options);
+
+
+            //third chart
+
+            window['thirdData' + key] = google.visualization.arrayToDataTable(window['thirdArr' + key]);
+
+
+            window['thirdChart' + key] = new google.visualization.PieChart(document.getElementById('thirdChart_' + id));
+
+            window['thirdChart' + key].draw(window['thirdData' + key], options);
+
+            //fourth chart
+
+            window['fourthData' + key] = google.visualization.arrayToDataTable(window['fourthArr' + key]);
+
+
+            window['fourthChart' + key] = new google.visualization.PieChart(document.getElementById('fourthChart_' +
+                id));
+
+            window['fourthChart' + key].draw(window['fourthData' + key], options);
+
+        }
+    }
+
+
+
+
+}
+</script>
