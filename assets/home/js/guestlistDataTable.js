@@ -130,7 +130,7 @@ function importExcelFile(){
 
 function confirmResendTicket(transactionId){
   bootbox.confirm({
-    message: "Do you  to send the mail to support@tiqs.com as well?",
+    message: "Do you want to send in the following email as well? <input class='form-control mt-2' type='email' id='supportEmail' name='supportEmail' value='support@tiqs.com' required>",
     buttons: {
         confirm: {
             label: 'Yes',
@@ -143,7 +143,12 @@ function confirmResendTicket(transactionId){
     },
     callback: function (result) {
       if(result == true){
-        resendTicket(transactionId, 1);
+        let email = $('#supportEmail').val();
+        if(!validateEmail(email)){
+          alertify.error('Please enter a valid email!');
+          return false;
+        }
+        resendTicket(transactionId, email, 1);
       } else {
         resendTicket(transactionId);
       }
@@ -151,16 +156,26 @@ function confirmResendTicket(transactionId){
 });
 }
 
-function resendTicket(transactionId, sendTo = 0) {
+function resendTicket(transactionId, email = '', sendTo = 0) {
   let data = {
     transactionId: transactionId,
+    email: encodeURI(email),
     sendTo: sendTo
   };
   $.post(
     globalVariables.baseUrl + "events/resend_reservation",
     data,
     function (data) {
-      alertify.success("Ticket is resend successfully!");
+      if(data != 'false'){
+        alertify.success("Ticket is resent successfully!");
+      } else {
+        alertify.error("Something went wrong!");
+      }
     }
   );
+}
+
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
 }

@@ -7,7 +7,7 @@
 
     class Reservationsemail_helper
     {
-        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false) : bool
+        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false, $supportEmail = 'support@tiqs.com') : bool
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -157,7 +157,7 @@
 
                                 if($mailsend == 0 || $resend == true){
                                     if($sendToSupport){
-                                        self::sendEmail("support@tiqs.com", $subject, $mailtemplate, $icsContent );
+                                        self::sendEmail($supportEmail, $subject, $mailtemplate, $icsContent );
                                     }
 
                                     

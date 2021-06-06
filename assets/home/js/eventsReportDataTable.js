@@ -141,11 +141,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<a href="javascript:;" onclick="confirmResendTicket(\'' +
-            data.reservationId +
-            "', '" +
-            data.email +
-            '\')" class="btn btn-primary">Resend Ticket</a>'
+            '<a href="javascript:;" onclick="confirmResendTicket(\'' + data.reservationId + '\')" class="btn btn-primary">Resend Ticket</a>'
           );
         },
       },
@@ -447,7 +443,7 @@ function freeAmountValidate(el) {
 
 function confirmResendTicket(reservationId, email){
   bootbox.confirm({
-    message: "Do you  to send the mail to support@tiqs.com as well?",
+    message: "Do you want to send in the following email as well? <input class='form-control mt-2' type='email' id='supportEmail' name='supportEmail' value='support@tiqs.com' required>",
     buttons: {
         confirm: {
             label: 'Yes',
@@ -460,25 +456,42 @@ function confirmResendTicket(reservationId, email){
     },
     callback: function (result) {
       if(result == true){
+        let email = $('#supportEmail').val();
+        if(!validateEmail(email)){
+          alertify.error('Please enter a valid email!');
+          return false;
+        }
+
         resendTicket(reservationId, email, 1);
       } else {
-        resendTicket(reservationId, email);
+        resendTicket(reservationId);
       }
     }
 });
 }
 
-function resendTicket(reservationId, email, sendTo = 0) {
+function resendTicket(reservationId, email = '', sendTo = 0) {
   let data = {
     reservationId: reservationId,
     email: encodeURI(email),
     sendTo: sendTo
   };
+
   $.post(
     globalVariables.baseUrl + "events/resend_ticket",
     data,
     function (data) {
-      alertify.success("Ticket is resend successfully!");
+      if(data != 'false'){
+        alertify.success("Ticket is resent successfully!");
+      } else {
+        alertify.error("Something went wrong!");
+      }
+      
     }
   );
+}
+
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
 }

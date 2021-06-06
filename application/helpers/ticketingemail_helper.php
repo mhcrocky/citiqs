@@ -7,13 +7,15 @@
 
     class Ticketingemail_helper
     {
-        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false)
+        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false, $supportEmail = "support@tiqs.com") : bool
         {
             $CI =& get_instance();
             $CI->load->config('custom');
             $CI->load->helper('utility_helper');
             $CI->load->model('sendreservation_model');
             $CI->load->model('email_templates_model');
+
+            $send_successfully = false;
             
 
             foreach ($reservations as $key => $reservation):
@@ -161,13 +163,14 @@
 
                                 if($mailsend == 0 || $resend == true){
                                     if($sendToSupport){
-                                        self::sendEmail("support@tiqs.com", $subject, $mailtemplate, $icsContent );
+                                        self::sendEmail($supportEmail, $subject, $mailtemplate, $icsContent );
                                     }
 
 								    if(self::sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
                                         $file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
 //                                        Utility_helper::logMessage($file, $mailtemplate);
+                                        $send_successfully = true;
                                         $CI->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     
                                     }
@@ -178,6 +181,9 @@
                     }
                 }
             endforeach;
+
+            return $send_successfully;
+            
         }
 
         private static function sendEmail($email, $subject, $message, $icsContent=false)

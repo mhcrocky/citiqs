@@ -655,7 +655,7 @@ class Bookandpay_model extends CI_Model
 			$this->db->select(implode(',', $what));
 		}
 		$this->db->from('tbl_bookandpay');
-		$this->db->where('TransactionId', $TransactionId);
+		$this->db->where('TransactionID', $TransactionId);
 		$query = $this->db->get();
         $result = $query->result();
 		return $result;

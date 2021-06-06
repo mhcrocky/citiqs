@@ -239,8 +239,13 @@ class Events extends BaseControllerWeb
     {
         $transactionId = $this->input->post('transactionId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
+        $supportEmail = ($this->input->post('sendTo') == 1) ? urldecode($this->input->post('email')) : 'support@tiqs.com';
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
-        Ticketingemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport);
+        if(Ticketingemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport, $supportEmail)){
+            echo 'true';
+        } else {
+            echo 'false';
+        }
         return ;
     }
 
@@ -949,8 +954,14 @@ class Events extends BaseControllerWeb
 	{
         $reservationId = $this->input->post('reservationId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
+        $supportEmail = ($this->input->post('sendTo') == 1) ? urldecode($this->input->post('email')) : 'support@tiqs.com';
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
-        Ticketingemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport);
+        if(Ticketingemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport, $supportEmail)){
+            echo 'true';
+        } else {
+            echo 'false';
+        }
+        
         return ;
 
     }

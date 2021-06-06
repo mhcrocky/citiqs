@@ -591,7 +591,7 @@ class Event_model extends CI_Model {
 
 	public function get_events_report($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_events.id, reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, eventname, TransactionID, tag
+		$query = $this->db->query("SELECT tbl_bookandpay.id, reservationId, reservationtime, price,numberofpersons,(price*numberofpersons) as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, eventname, TransactionID, tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql
@@ -601,9 +601,10 @@ class Event_model extends CI_Model {
 
 	public function get_events_stats($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount
+		$query = $this->db->query("SELECT tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql
 		GROUP BY tbl_events.id, tbl_event_tickets.id");
 		$results = $query->result_array();
@@ -611,6 +612,7 @@ class Event_model extends CI_Model {
 		$tickets = [];
 		foreach($results as $result){
 			$eventname = $result['eventname'];
+			$tag = ($result['tag'] == '' || $result['tag'] == null) ? 'no tag' : $result['tag'];
 			
 			if(isset($tickets[$eventname])){
 				$tickets[$eventname]['booking_number'] = $tickets[$eventname]['booking_number'] + intval($result['booking_number']);
@@ -618,9 +620,22 @@ class Event_model extends CI_Model {
 			} else {
 				$tickets[$eventname]['booking_number'] = intval($result['booking_number']);
 				$tickets[$eventname]['amount'] = floatval($result['amount']);
+	
 			}
 
+			
+
 			$tickets[$eventname][] = $result;
+
+			if(isset($tickets['tag'][$eventname][$tag])){
+				$tickets['tag'][$eventname][$tag]['booking_number'] += intval($result['booking_number']);
+				$tickets['tag'][$eventname][$tag]['amount'] += floatval($result['amount']);
+			} else {
+				$tickets['tag'][$eventname][$tag]['booking_number'] = intval($result['booking_number']);
+				$tickets['tag'][$eventname][$tag]['amount'] = floatval($result['amount']);
+			}
+
+			
 			
 		}
 
@@ -629,22 +644,28 @@ class Event_model extends CI_Model {
 
 	public function get_tickets_gender($vendorId)
 	{
-		$query = $this->db->query("SELECT tbl_event_tickets.id, tbl_event_tickets.ticketDescription, eventname, gender
+		$query = $this->db->query("SELECT tbl_event_tickets.id, tbl_event_tickets.ticketDescription, eventname, gender, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId."
 		GROUP BY tbl_events.id, tbl_event_tickets.id ");
 		$results = $query->result_array();
 		$tickets = [];
 		foreach($results as $result){
 			$eventname = $result['eventname'];
+			$tag = ($result['tag'] == '' || $result['tag'] == null) ? 'no tag' : $result['tag'];
 			$ticketId = $result['id'];
+			$tickets['tag'][$eventname][$tag]['male_tag'] = [];
+			$tickets['tag'][$eventname][$tag]['female_tag'] = [];
 			$tickets[$eventname][$ticketId]['ticketDescription'] = $result['ticketDescription'];
 			if($result['gender'] == 'male'){
 				$tickets[$eventname][$ticketId]['male'][] = $result['gender'];
+				$tickets['tag'][$eventname][$tag]['male_tag'][] = $result['gender'];
 				$tickets[$eventname][$ticketId]['female'] = [];
 			} else if($result['gender'] == 'female'){
 				$tickets[$eventname][$ticketId]['female'][] = $result['gender'];
+				$tickets['tag'][$eventname][$tag]['female_tag'][] = $result['gender'];
 				$tickets[$eventname][$ticketId]['male'] = [];
 			} else {
 				$tickets[$eventname][$ticketId]['male'] = [];

@@ -123,6 +123,24 @@
 			background-color: whitesmoke;
 			}
 
+            #collapse-item, #navItems, #navRowElement {
+                -ms-flex-wrap: unset !important;
+                flex-wrap: unset !important;
+            }
+
+            @media only screen and (max-width: 600px) {
+                #img-world {
+                    margin-top: 10px !important;
+                }
+                #userNameAndId {
+                    display: none !important;
+                }
+            }
+
+            .modal-backdrop {
+                z-index: 99 !important;
+            }
+
 
         </style>
         <?php if($this->session->userdata('menuOptions')): ?>
@@ -229,16 +247,16 @@
                 <!-- Main Header -->
                 <div class="header-top">
                     <div class="header-area">
-                        <div class="row align-items-center">
+                        <div id="navItems" class="row align-items-center">
                             <!-- nav and search button -->
-                            <div id="collapse-item" class="row">
+                            <div style="flew-wrap: unset !important" id="collapse-item" class="row">
                                 <div class="nav-btn col-md-1 col-sm-1" style="width:50px;">
                                     <span></span>
                                     <span></span>
                                     <span></span>
                                 </div>
                                 <div class="col-md-10 user-title" id="navElement">
-                                    <div class="row">
+                                    <div id="navRowElement" class="row">
                                         <p
                                             id="userNameAndId"
                                             style="font-weight: 100; font-size: 100%; padding-top:10px; color: #000;"
@@ -272,8 +290,9 @@
                                             <img
                                                 width="30"
                                                 height="30"
+                                                id="img-world"
                                                 src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"
-                                                style="margin-top:6px"
+                                                style="margin-top:14px"
                                             />
                                         </p>
                                         <?php if (isset($_SESSION['masterAccounts']) && count($_SESSION['masterAccounts']) > 1) { ?>
