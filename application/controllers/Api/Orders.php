@@ -364,7 +364,7 @@
 
             // send message to vendor
             if ($order['oneSignalId']) {
-                $this->notificationvendor->sendVendorMessageImproved($order['oneSignalId'], $order['orderId'], $message);
+                $this->notificationvendor->sendVendorMessageImproved($order['oneSignalId'], intval($order['orderId']), $message);
             }
             return;
         }
