@@ -123,7 +123,7 @@
 			background-color: whitesmoke;
 			}
 
-            #collapse-item {
+            #collapse-item, #navItems, #navRowElement {
                 -ms-flex-wrap: unset !important;
                 flex-wrap: unset !important;
             }
@@ -132,6 +132,13 @@
                 #img-world {
                     margin-top: 10px !important;
                 }
+                #userNameAndId {
+                    display: none !important;
+                }
+            }
+
+            .modal-backdrop {
+                z-index: 99 !important;
             }
 
 
@@ -240,7 +247,7 @@
                 <!-- Main Header -->
                 <div class="header-top">
                     <div class="header-area">
-                        <div class="row align-items-center">
+                        <div id="navItems" class="row align-items-center">
                             <!-- nav and search button -->
                             <div style="flew-wrap: unset !important" id="collapse-item" class="row">
                                 <div class="nav-btn col-md-1 col-sm-1" style="width:50px;">
@@ -249,7 +256,7 @@
                                     <span></span>
                                 </div>
                                 <div class="col-md-10 user-title" id="navElement">
-                                    <div class="row">
+                                    <div id="navRowElement" class="row">
                                         <p
                                             id="userNameAndId"
                                             style="font-weight: 100; font-size: 100%; padding-top:10px; color: #000;"
