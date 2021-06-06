@@ -400,8 +400,8 @@ function resendTicket(reservationId, email = '', sendTo = 0) {
     globalVariables.baseUrl + "events/resend_ticket",
     data,
     function (data) {
-      if(data == 'success'){
-        alertify.success("Ticket is resend successfully!");
+      if(data != 'false'){
+        alertify.success("Ticket is resent successfully!");
       } else {
         alertify.error("Something went wrong!");
       }
