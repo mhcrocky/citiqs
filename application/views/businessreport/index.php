@@ -738,10 +738,10 @@ window.onload = function() {
 function drawChart() {
 
     var i = 0;
-    var event_orders = '<?php echo is_array($tags) ? json_encode($tags) : ''; ?>';
-    var tickets_gender = '<?php echo is_array($gender_tags) ? json_encode($gender_tags) : ''; ?>';
+    var event_orders = '<?php echo (isset($tags) && is_array($tags)) ? json_encode($tags) : ''; ?>';
+    //var tickets_gender = '<?php //echo is_array($gender_tags) ? json_encode($gender_tags) : ''; ?>';
     event_orders = (event_orders == '') ? '' : JSON.parse(event_orders);
-    tickets_gender = (tickets_gender == '') ? '' : JSON.parse(tickets_gender);
+    //tickets_gender = (tickets_gender == '') ? '' : JSON.parse(tickets_gender);
 
     if (typeof event_orders === 'object') {
         for (const [key1, tickets] of Object.entries(event_orders)) {
@@ -765,12 +765,10 @@ function drawChart() {
             $.each(tickets, function(index, ticket) {
                 if (!isNaN(ticket.booking_number)) {
                     firstTotal = firstTotal + parseFloat(ticket.booking_number);
-                    console.log(firstTotal);
                 }
 
                 if (!isNaN(ticket.amount)) {
                     secondTotal = secondTotal + parseFloat(ticket.amount);
-                    console.log(secondTotal);
                 }
 
 
@@ -779,7 +777,6 @@ function drawChart() {
 
             });
 
-            console.log(tickets);
 
             $.each(tickets, function(index, ticket) {
                 if (!isNaN(ticket.booking_number)) {
@@ -795,6 +792,8 @@ function drawChart() {
             });
 
 
+            /*
+
             $.each(tickets_gender[key1], function(index, ticket) {
 
                 thirdTotal = thirdTotal + ticket.male_tag;
@@ -802,8 +801,7 @@ function drawChart() {
 
             });
 
-            /*
-
+            
             $.each(tickets_gender[key1], function(index, ticket) {
                 
                     let maleTotal = parseFloat(parseFloat(ticket.male_tag) / thirdTotal) * 100;
