@@ -100,11 +100,11 @@
                                     <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
                                         <span class="label-input100">Repeat Email</span>
                                         <input class="input100 emails" type="email" id="repeatEmail" name="repeatEmail"
-                                            placeholder="Email Address" required>
+                                            placeholder="Retype Email Address" required>
                                         <span class="focus-input100"></span>
                                     </div>
                                     <div id="emailMatchError" class="m-b-26 d-none">
-                                        <span class="label-input100">&amp;nbsp</span>
+                                        <span style="min-width: 10px;" class="label-input100"></span>
                                         <p class="input100 pt-3 pb-2 text-danger">Email and repeat email doesn't match!</p>
                                         <span class="focus-input100"></span>
                                     </div>
@@ -153,8 +153,8 @@
                                     <div id="mobileNumber" class="wrap-input100 validate-input m-b-18 d-none"
                                         data-validate="Phone Number is required">
                                         <span class="label-input100">Phone Number</span>
-                                        <input class="input100" type="tel" name="mobileNumber"
-                                            placeholder="Phone Number (Optional)">
+                                        <input class="input100" type="tel" id="phoneNumber" name="mobileNumber"
+                                            placeholder="Phone Number">
                                         <span class="focus-input100"></span>
                                     </div>
                                     <?php if(isset($inputs) && !empty($inputs)): ?>
@@ -257,11 +257,11 @@
                 var shopsettings = '<?php echo json_encode($shopsettings); ?>';
                 shopsettings = JSON.parse(shopsettings);
                 if(typeof shopsettings === 'object' && shopsettings !== null){
-                    if(shopsettings.showAddress == "1") { $('#address').closest('div').removeClass('d-none'); }
-                    if(shopsettings.showCountry == "1") { $('#country').closest('div').removeClass('d-none'); }
-                    if(shopsettings.showZipcode == "1") { $('#zipcode').closest('div').removeClass('d-none'); }
-                    if(shopsettings.showMobileNumber == "1") { $('#mobileNumber').closest('div').removeClass('d-none'); }
-                    if(shopsettings.showAge == "1") { $('#age').closest('div').removeClass('d-none'); }
+                    if(shopsettings.showAddress == "1") { $('#address').closest('div').removeClass('d-none'); $('#address').prop('required', true); }
+                    if(shopsettings.showCountry == "1") { $('#country').closest('div').removeClass('d-none'); $('#country').prop('required', true); }
+                    if(shopsettings.showZipcode == "1") { $('#zipcode').closest('div').removeClass('d-none'); $('#zipcode').prop('required', true); }
+                    if(shopsettings.showMobileNumber == "1") { $('#phoneNumber').closest('div').removeClass('d-none'); $('#phoneNumber').prop('required', true); }
+                    if(shopsettings.showAge == "1") { $('#age').closest('div').removeClass('d-none'); $('#age').prop('required', true); }
                     if(shopsettings.labels == "0") { $('.label-input100').hide(); $('.login100-form').attr('style','padding: 10px 1px 1px 0px !important;'); }
                 }
             }());
