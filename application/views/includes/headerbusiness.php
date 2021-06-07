@@ -141,8 +141,35 @@
                 z-index: 99 !important;
             }
 
+            @media only screen and (min-width: 600px) {
+                #manualImg {
+                    margin-left: 0px !important;
+                    min-width: 25px !important;
+                    max-width: 25px !important;
+                    width: 25px !important;
+                }
 
+                #img-world {
+                    margin-top: 10px !important;
+                    min-width: 25px !important;
+                    max-width: 25px !important;
+                    width: 25px !important;
+                }
+            }
+
+            
         </style>
+        <?php if (!isset($_SESSION['masterAccounts'])) { ?>
+        <style>
+        @media only screen and (min-width: 600px) {
+            #navRowElement {
+                width: 550px;
+            }
+        }
+        </style>
+        <?php } ?>
+
+
         <?php if($this->session->userdata('menuOptions')): ?>
         
         <style>
@@ -249,7 +276,7 @@
                     <div class="header-area">
                         <div id="navItems" class="row align-items-center">
                             <!-- nav and search button -->
-                            <div style="flew-wrap: unset !important" id="collapse-item" class="row">
+                            <div style="flew-wrap: unset !important" id="collapse-item" class="row w-100">
                                 <div class="nav-btn col-md-1 col-sm-1" style="width:50px;">
                                     <span></span>
                                     <span></span>
@@ -276,7 +303,7 @@
                                                 class="col-md-1 navElements"
                                             >
                                                 <a href="https://tiqs.com/alfred/loggedinmanuals">
-                                                    <img src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px" alt="" />
+                                                    <img id="manualImg" src="<?php echo $this->baseUrl; ?>assets/home/images/manualicon.png" style="width:28px; margin-left: 30px; min-width: 25px !important;" alt="" />
                                                 </a>                                        
                                             </p>
                                         <?php } ?>
@@ -292,7 +319,7 @@
                                                 height="30"
                                                 id="img-world"
                                                 src="<?php echo $this->baseUrl; ?>assets/home/images/world.png" title="LANGUAGE"
-                                                style="margin-top:14px"
+                                                style="margin-top:14px;min-width: 25px !important;"
                                             />
                                         </p>
                                         <?php if (isset($_SESSION['masterAccounts']) && count($_SESSION['masterAccounts']) > 1) { ?>
