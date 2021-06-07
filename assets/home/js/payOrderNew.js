@@ -56,7 +56,7 @@ function voucherResponse(data) {
         $("#voucher .closeModal").click()
         return;
     }
-    redirect(data['redirect']);
+    window.location.href = data['redirect'];
 }
 
 function addTargetBlank() {

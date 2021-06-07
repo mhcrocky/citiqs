@@ -453,6 +453,15 @@
                                             </a>
                                         </div>
                                     <?php } ?>
+                                    <div class="iconWrapper">
+                                        <span
+                                            class="fa-stack fa-2x edit-icon btn-edit-item"
+                                            title="Click to delete product"
+                                            onclick="deleteProduct('<?php echo $product['productId']; ?>', '<?php echo $details['name']; ?>')"
+                                        >
+                                            <i class="fa fa-trash"></i>
+                                        </span>
+                                    </div>
                                 </div>
                                 <!--TIME MODAL -->
                                 <div class="modal" id="timeModal<?php echo $product['productId']; ?>" role="dialog">
