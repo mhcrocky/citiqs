@@ -42,7 +42,7 @@
 				<div class="form-group text-center">
 					<button class="btn btn-success" style="border-radius: 50px; background-color: #72b19f"><i class="glyphicon glyphicon-refresh"></i> LOAD</button>
 				</div>
-				<button type="submit" formaction="<?php echo base_url() . 'Report_table/export/' . $_SESSION['userId']; ?>" class="btn btn-primary">Download EXCEL</button>
+<!--				<button type="submit" formaction="--><?php //echo base_url() . 'Report_table/export/' . $_SESSION['userId']; ?><!--" class="btn btn-primary">Download EXCEL</button>-->
 			</form>
 		</div>
 

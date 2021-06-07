@@ -566,11 +566,6 @@
 
 </div>
 
-
-
-
-
-
 <?php foreach($event_orders as $key => $event_order): 
     $sold_tickets =  $event_order['booking_number']; 
     $total_amount = $event_order['amount'];
@@ -578,146 +573,140 @@
     unset($event_order['amount']);
     ?>
 
-<div class="d-flex row w-100 mt-4 mx-auto row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
-    <div class="col-md-4 dash-card first b-purple">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c">
-                    <i class="fa fa-ticket" aria-hidden="true"></i>
-                </span>
-                Total tickets sold
-            </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                <?php echo $sold_tickets; ?>
-            </div>
-        </div>
-        <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
-            <div id="firstChart_<?php echo $key; ?>" class="pie-chart"></div>
-            <?php foreach($event_order as $ticket): ?>
-            <div class="d-table">
-                <div class="w-100 f-12 pr-2 d-table-cell">
-                    <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
-                </div>
-                <div class="f-12 pr-2 d-table-cell text-right">
-                    <?php echo $bookings_number[$ticket['id']]; ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
+	<div class="d-flex row w-100 mt-4 mx-auto row-sort ui-sortable" data-rowposition="3" data-rowsort="1">
+		<div class="col-md-4 dash-card first b-purple">
+			<div class="d-table">
+				<div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+					<span class="icon-c">
+						<i class="fa fa-ticket" aria-hidden="true"></i>
+					</span>
+					Total tickets sold
+				</div>
+				<div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+					<?php echo $sold_tickets; ?>
+				</div>
+			</div>
+			<div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
+				<div style="width: 100%" id="firstChart_<?php echo $key; ?>" class="pie-chart"></div>
+				<?php foreach($event_order as $ticket): ?>
+				<div class="d-table">
+					<div class="w-100 f-12 pr-2 d-table-cell">
+						<?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
+					</div>
+					<div class="f-12 pr-2 d-table-cell text-right">
+						<?php echo $bookings_number[$ticket['id']]; ?>
+					</div>
+				</div>
+				<?php endforeach; ?>
 
-        </div>
+			</div>
+		</div>
 
-    </div>
-    <div class="col-md-4 dash-card b-red">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span style="display: inline-flex;flex-wrap: unset;" class="icon-c">
-                    <i class="gg-euro"></i>
-                </span>
-                Total amount
-            </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                €<?php echo number_format($total_amount, 2); ?>
-            </div>
-        </div>
+		<div class="col-md-4 dash-card b-red">
+			<div class="d-table">
+				<div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+					<span style="display: inline-flex;flex-wrap: unset;" class="icon-c">
+						<i class="gg-euro"></i>
+					</span>
+					Total amount
+				</div>
+				<div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+					€<?php echo number_format($total_amount, 2); ?>
+				</div>
+			</div>
 
-        <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
-            <div id="secondChart_<?php echo $key; ?>" class="pie-chart"></div>
-            <?php foreach($event_order as $ticket): ?>
-            <div class="d-table">
-                <div class="w-100 f-12 pr-2 d-table-cell">
-                    <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
-                </div>
-                <div class="f-12 pr-2 d-table-cell text-right">
-                    €<?php echo number_format($amounts[$ticket['id']], 2); ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-
-
-    </div>
-    <?php 
-
-$total_male = 0;
-$total_female = 0;
-$tickets = $tickets_gender[$key];
-foreach($tickets as $ticket){
-    $total_male += intval($ticket['male']);
-    $total_female += intval($ticket['female']);
-} 
-
-?>
-    <div class="col-md-4 dash-card b-green">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c">
-                    <i class="fa fa-male" aria-hidden="true"></i>
-                </span>
-                Male
-            </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                <?php echo number_format(($total_male/$sold_tickets) * 100, 2); ?>%
-            </div>
-        </div>
-
-        <div class="w-100 pt-25 mb-2 ticket-info-card">
-            <div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
-                AGE AVG: <?php echo isset($avg_age['male'][$key]) ? number_format($avg_age['male'][$key], 2) : '-'; ?>
-            </div>
-            <?php foreach($tickets as $ticket): ?>
-            <div class="d-table">
-                <div class="w-100 f-12 pr-2 d-table-cell">
-                    <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
-                </div>
-                <div class="f-12 pr-2 d-table-cell text-right">
-                    <?php echo intval($ticket['male']) ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-
-    </div>
+			<div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
+				<div style="width: 100%" id="secondChart_<?php echo $key; ?>" class="pie-chart"></div>
+				<?php foreach($event_order as $ticket): ?>
+				<div class="d-table">
+					<div class="w-100 f-12 pr-2 d-table-cell">
+						<?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
+					</div>
+					<div class="f-12 pr-2 d-table-cell text-right">
+						€<?php echo number_format($amounts[$ticket['id']], 2); ?>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
 
 
-    <div class="col-md-4 dash-card last b-green">
-        <div class="d-table">
-            <div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
-                <span class="icon-c font-weight-bold">
-                    <i class="fa fa-female" aria-hidden="true"></i>
-                </span>
-                Female
-            </div>
-            <div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
-                <?php echo number_format($total_female/$sold_tickets * 100, 2); ?>%
-            </div>
-        </div>
+		</div>
+		<?php
 
-        <div class="w-100 pt-25 mb-2 ticket-info-card">
-        <div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
-            AGE AVG: <?php echo isset($avg_age['female'][$key]) ? number_format($avg_age['female'][$key], 2) : '-'; ?>
-            </div>
-            <?php foreach($tickets as $ticket): ?>
-            <div class="d-table">
-                <div class="w-100 f-12 pr-2 d-table-cell">
-                    <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
-                </div>
-                <div class="f-12 pr-2 d-table-cell text-right">
-                    <?php echo intval($ticket['female']); ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
+		$total_male = 0;
+		$total_female = 0;
+		$tickets = $tickets_gender[$key];
+		foreach($tickets as $ticket){
+			$total_male += intval($ticket['male']);
+			$total_female += intval($ticket['female']);
+		}
 
-    </div>
+		?>
+		<div class="col-md-4 dash-card b-green">
+			<div class="d-table">
+				<div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+					<span class="icon-c">
+						<i class="fa fa-male" aria-hidden="true"></i>
+					</span>
+					Male
+				</div>
+				<div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+					<?php echo number_format(($total_male/$sold_tickets) * 100, 2); ?>%
+				</div>
+			</div>
+
+			<div class="w-100 pt-25 mb-2 ticket-info-card">
+				<div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
+					AGE AVG: <?php echo isset($avg_age['male'][$key]) ? number_format($avg_age['male'][$key], 2) : '-'; ?>
+				</div>
+				<?php foreach($tickets as $ticket): ?>
+				<div class="d-table">
+					<div class="w-100 f-12 pr-2 d-table-cell">
+						<?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
+					</div>
+					<div class="f-12 pr-2 d-table-cell text-right">
+						<?php echo intval($ticket['male']) ?>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+
+		</div>
 
 
+		<div class="col-md-4 dash-card last b-green">
+			<div class="d-table">
+				<div class="w-100 f-16 pr-2 pt-3 font-weight-bold d-table-cell">
+					<span class="icon-c font-weight-bold">
+						<i class="fa fa-female" aria-hidden="true"></i>
+					</span>
+					Female
+				</div>
+				<div class="f-16 pr-2 pt-3 font-weight-bold d-table-cell text-right">
+					<?php echo number_format($total_female/$sold_tickets * 100, 2); ?>%
+				</div>
+			</div>
 
-</div>
+			<div class="w-100 pt-25 mb-2 ticket-info-card">
+			<div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
+				AGE AVG: <?php echo isset($avg_age['female'][$key]) ? number_format($avg_age['female'][$key], 2) : '-'; ?>
+				</div>
+				<?php foreach($tickets as $ticket): ?>
+				<div class="d-table">
+					<div class="w-100 f-12 pr-2 d-table-cell">
+						<?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
+					</div>
+					<div class="f-12 pr-2 d-table-cell text-right">
+						<?php echo intval($ticket['female']); ?>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
 
+		</div>
+	</div>
 
 <?php endforeach; ?>
-
-
 </div>
 
 <script type="text/javascript">

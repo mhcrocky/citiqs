@@ -417,7 +417,7 @@
 								<i class="fa fa-whatsapp" style="font-size:48px;color:darkorange"></i>
 							</a>
 
-							<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://check424.com&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">
+							<a style="margin-right: 10px" href="https://www.facebook.com/sharer/sharer.php?u=https://tiqs.com/alfred/loggedin&t=Very handy for restaurants, bars, Visitors Check for 24Hours to avoid queuing, check-in check-out... https://check424.com" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on Facebook">
 								<i class="fa fa-facebook" style="font-size:48px;color:darkorange"></i>
 							</a>
 

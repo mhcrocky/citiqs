@@ -96,6 +96,7 @@ $activePayments = array_values($activePayments);
                         </a>
                     <?php } ?>
 
+
                     <div class="clearfix"></div>
                 </div>
 

@@ -699,15 +699,16 @@ class Event_model extends CI_Model {
 				$tickets['tag'][$eventId][$tag]['female_tag'] += 1;
 			}
 
-			$tickets['avg_age'] = [
-				'male' => [
-					$eventId => $this->get_age_avg($eventId, 'male')
-				],
-				'female' => [
-					$eventId => $this->get_age_avg($eventId, 'female')
-				]
-			];
+
 		}
+		$tickets['avg_age'] = [
+			'male' => [
+				$eventId => $this->get_age_avg($eventId, 'male')
+			],
+			'female' => [
+				$eventId => $this->get_age_avg($eventId, 'female')
+			]
+		];
 		return $tickets;
 	}
 
