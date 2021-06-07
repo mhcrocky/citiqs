@@ -26,6 +26,8 @@ class  Floorplans extends BaseControllerWeb
 
     public function index(): void
     {
+//    	var_dump(intval($_SESSION['userId']));
+
 
 		$data = [
 			'floorplans' =>	$this->floorplan_model->setProperty('vendorId', intval($_SESSION['userId']))->fetchVendorFloorplans(),

@@ -48,7 +48,15 @@
     <li data-menuid="3">
         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Finance'); ?></span></a>
         <ul class="collapse">
-            <li data-menuid="3.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-wallet"></i> <span><?php echo $this->language->tLine('Pay-out'); ?></span></a></li>
+			<li data-menuid="3.1">
+				<a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Pay-out'); ?></span></a>
+				<ul class="collapse">
+					<li data-menuid="3.1.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-wallet"></i> <span><?php echo $this->language->tLine('QR Menu'); ?></span></a></li>
+					<li data-menuid="3.1.2"><a href="<?php echo $this->baseUrl; ?>clearingreservations"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Reservations'); ?></span></a></li>
+					<li data-menuid="3.1.3"><a href="<?php echo $this->baseUrl; ?>clearingtickets"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('E-Tickets'); ?></span></a></li>
+				</ul>
+			</li>
+
             <li data-menuid="3.2">
                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bag"></i><span><?php echo $this->language->tLine('Transactions'); ?></span></a>
                 <ul class="collapse">
