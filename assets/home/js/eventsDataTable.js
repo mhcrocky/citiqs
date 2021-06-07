@@ -126,7 +126,7 @@ $(document).ready(function() {
                 data: null,
                 "render": function(data, type, row) {
                     
-                    let html = '<div style="display: inline-flex; width: 240px;justify-content: center;"><a title="Copy Event" class="event-icons mr-1" href="javascript:;" style="padding-top: 10px;padding-left: 12px;" onclick="openShopUrlModal('+data.id+')" target="_blank" data-toggle="modal" data-target="#copyUrlToClipboard"><i class="gg-copy"></i></a>';
+                    let html = '<div style="display: inline-flex; width: 240px;justify-content: center;"><a title="Copy Event" class="event-icons mr-1" href="javascript:;" style="padding-top: 10px;padding-left: 12px;" onclick="openShopUrlWithTagModal('+data.id+')" target="_blank" data-toggle="modal" data-target="#copyUrlToClipboard"><i class="gg-copy"></i></a>';
                     html += '<a class="event-icons ml-3" title="Edit Event" href="'+globalVariables.baseUrl+'events/edit/'+data.id+'"><i class="fa fa-pencil mx-auto"></i></a>';
                     html += '<a class="event-icons ml-3" title="Guestlist" style="font-size: 19px;" href="'+globalVariables.baseUrl+'events/guestlist/'+data.id+'"><i class="gg-user-list"></i></a>'
                     html += '<a class="event-icons ml-3" title="Tickets" href="'+globalVariables.baseUrl+'events/event/'+data.id+'"><i class="ti-ticket ticket-icon"></i></a></div>';
@@ -139,7 +139,7 @@ $(document).ready(function() {
                 title: 'Shop',
                 data: null,
                 "render": function(data, type, row) {
-                    return '<a id="shop_url_'+data.id+'" href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" target="_blank">Go To Shop</a>';
+                    return '<a id="shop_url_'+data.id+'" href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" onclick="openShopUrlWithoutTagModal('+data.id+')" data-toggle="modal" data-target="#copyUrlToClipboard">Go To Shop</a>';
                 },
                 createdCell: function (td, cellData, rowData, row, col) {
                     $(td).closest('tr').addClass('eventRow'+ rowData.id);
@@ -203,7 +203,17 @@ $(document).ready(function() {
     });
 
         
-});
+}); 
+
+function openShopUrlWithTagModal(id){
+    $('#tag_url').removeClass('d-none');
+    openShopUrlModal(id);
+}
+
+function openShopUrlWithoutTagModal(id){
+    $('#tag_url').removeClass('d-none').addClass('d-none');
+    openShopUrlModal(id);
+}
 
 function openShopUrlModal(id) {
     let url = $('#shop_url_'+id).attr('href');

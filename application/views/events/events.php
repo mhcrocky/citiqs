@@ -35,11 +35,11 @@
                     <i style="color: #fff;font-size: 18px;" class="fa fa-file-text-o"></i></a>
             </div>
             <div class="input-group col-md-3 justify-content-center">
-                <a style="width: 80%" href="<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>" target="_blank">
+                <a style="width: 80%" href="<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>" data-toggle="modal" data-target="#copyMainShopUrlModal">
                     <input type="button" value="Go to Main Shop"
                         style="background: #10b997 !important;border-radius:0;height:45px;"
                         class="btn btn-success form-control mb-3 text-left">
-                    <a style="background: #0a6661;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3">
+                    <a style="background: #0a6661;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3" data-toggle="modal" data-target="#copyMainShopUrlModal">
                         <i style="color: #fff;font-size: 18px;" class="fa fa-shopping-cart"></i></a>
                 </a>
             </div>
@@ -345,6 +345,31 @@
 </div>
 
 
+<!-- Copy Main Shop Url Modal -->
+<div class="modal fade" id="copyMainShopUrlModal" tabindex="-1" role="dialog" aria-labelledby="copyMainShopUrlModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="overflow: auto !important;" class="modal-body">
+                <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
+                    <div class="col-md-9 text-center"><?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?></div>
+                    <div id="shopUrlText" class="col-md-3 text-left">
+                        <button class="btn btn-clear text-primary" onclick="textToClipboard('<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>')">Copy URL</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <!-- Copy Shop Url Modal -->
 <div class="modal fade" id="copyShopUrlModal" tabindex="-1" role="dialog" aria-labelledby="copyShopUrlModalLabel"
     aria-hidden="true">
@@ -366,7 +391,7 @@
                 </div>
 
                 <?php if(count($tags) > 0): ?>
-                <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="row text-center align-items-center mt-3">
+                <div id="tag_url" style="flex-wrap: unset;-ms-flex-wrap: unset;" class="row text-center align-items-center mt-3">
 
                     <div class="col-md-9 text-center"><span class="shopUrlText"><?php echo base_url(); ?></span>?tag=
                         <select style="width: auto; padding-right: 25px;" id="tagUrl" name="tag"
