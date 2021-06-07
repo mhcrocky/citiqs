@@ -580,7 +580,6 @@
     <?php foreach($event_orders as $key => $event_order): 
     $sold_tickets =  $event_order['booking_number']; 
     $total_amount = $event_order['amount'];
-    $unique = str_replace(' ', '', $key);
     unset($event_order['booking_number']);
     unset($event_order['amount']);
     ?>
@@ -599,11 +598,11 @@
                 </div>
             </div>
             <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
-                <div id="firstChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <div id="firstChart_<?php echo $key; ?>" class="pie-chart"></div>
                 <?php foreach($event_order as $ticket): ?>
                 <div class="d-table">
                     <div class="w-100 f-12 pr-2 d-table-cell">
-                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                        <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
                     </div>
                     <div class="f-12 pr-2 d-table-cell text-right">
                         <?php echo $ticket['booking_number']; ?>
@@ -628,11 +627,11 @@
             </div>
 
             <div class="w-100 pt-25 mb-2 ticket-card ticket-info-card">
-                <div id="secondChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <div id="secondChart_<?php echo $key; ?>" class="pie-chart"></div>
                 <?php foreach($event_order as $ticket): ?>
                 <div class="d-table">
                     <div class="w-100 f-12 pr-2 d-table-cell">
-                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                        <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
                     </div>
                     <div class="f-12 pr-2 d-table-cell text-right">
                         €<?php echo number_format($ticket['amount'], 2); ?>
@@ -649,8 +648,8 @@ $total_male = 0;
 $total_female = 0;
 $tickets = $tickets_gender[$key];
 foreach($tickets as $ticket){
-    $total_male += count($ticket['male']);
-    $total_female += count($ticket['female']);
+    $total_male += intval($ticket['male']);
+    $total_female += intval($ticket['female']);
 } 
 
 ?>
@@ -668,14 +667,14 @@ foreach($tickets as $ticket){
             </div>
 
             <div class="w-100 pt-25 mb-2 ticket-info-card">
-                <div id="thirdChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <div id="thirdChart_<?php echo $key; ?>" class="pie-chart"></div>
                 <?php foreach($tickets as $ticket): ?>
                 <div class="d-table">
                     <div class="w-100 f-12 pr-2 d-table-cell">
-                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                        <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
                     </div>
                     <div class="f-12 pr-2 d-table-cell text-right">
-                        <?php echo count($ticket['male']) ?>
+                        <?php echo intval($ticket['male']) ?>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -698,14 +697,14 @@ foreach($tickets as $ticket){
             </div>
 
             <div class="w-100 pt-25 mb-2 ticket-info-card">
-                <div id="fourthChart_<?php echo $unique; ?>" class="pie-chart"></div>
+                <div id="fourthChart_<?php echo $key; ?>" class="pie-chart"></div>
                 <?php foreach($tickets as $ticket): ?>
                 <div class="d-table">
                     <div class="w-100 f-12 pr-2 d-table-cell">
-                        <?php echo $key; ?> - <?php echo $ticket['ticketDescription']; ?>
+                        <?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
                     </div>
                     <div class="f-12 pr-2 d-table-cell text-right">
-                        <?php echo count($ticket['female']); ?>
+                        <?php echo intval($ticket['female']); ?>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -784,15 +783,15 @@ function drawChart() {
 
             $.each(tickets_gender[key1], function(index, ticket) {
                 
-                thirdTotal = thirdTotal + ticket.male_tag.length;
-                fourthTotal = fourthTotal + ticket.female_tag.length;
+                thirdTotal = thirdTotal + ticket.male_tag;
+                fourthTotal = fourthTotal + ticket.female_tag;
                 
             });
 
             $.each(tickets_gender[key1], function(index, ticket) {
                 
-                    let maleTotal = parseFloat(parseFloat(ticket.male_tag.length) / thirdTotal) * 100;
-                    let femaleTotal = parseFloat(parseFloat(ticket.female_tag.length) / fourthTotal) * 100;
+                    let maleTotal = parseFloat(parseFloat(ticket.male_tag) / thirdTotal) * 100;
+                    let femaleTotal = parseFloat(parseFloat(ticket.female_tag) / fourthTotal) * 100;
                     window['thirdArr' + key].push([index, maleTotal]);
                     window['fourthArr' + key].push([index, femaleTotal]);
                 
