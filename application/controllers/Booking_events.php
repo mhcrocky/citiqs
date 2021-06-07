@@ -573,6 +573,11 @@ class Booking_events extends BaseControllerWeb
             redirect(base_url());
         }
 
+        if(!isset($orderData['reservationIds']) && !is_array($orderData['reservationIds'])){
+            $this->redirectToShop($orderData, $orderRandomKey);
+            return ;
+        }
+
         // update payment method
         if(isset($orderData['reservationIds']) && is_array($orderData['reservationIds'])){
             $this->event_model->updatePaymentMethod($orderData['reservationIds'], Pay_helper::returnPaymentMethod($paymentType));
