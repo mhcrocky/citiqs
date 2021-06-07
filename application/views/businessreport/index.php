@@ -662,7 +662,7 @@ foreach($tickets as $ticket){
 
         <div class="w-100 pt-25 mb-2 ticket-info-card">
             <div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
-                AGE AVG: <?php echo isset($avg_age['male'][$key]) ? number_format($avg_age['male'][$key], 2) : '-'; ?>
+                AGE AVG: <?php echo isset($avg_age['male'][$key]) ? $avg_age['male'][$key] : '-'; ?>
             </div>
             <?php foreach($tickets as $ticket): ?>
             <div class="d-table">
@@ -694,7 +694,7 @@ foreach($tickets as $ticket){
 
         <div class="w-100 pt-25 mb-2 ticket-info-card">
         <div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
-            AGE AVG: <?php echo isset($avg_age['female'][$key]) ? number_format($avg_age['female'][$key], 2) : '-'; ?>
+            AGE AVG: <?php echo isset($avg_age['female'][$key]) ? $avg_age['female'][$key] : '-'; ?>
             </div>
             <?php foreach($tickets as $ticket): ?>
             <div class="d-table">

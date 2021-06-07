@@ -659,7 +659,7 @@ class Event_model extends CI_Model {
 
 	public function get_tickets_gender($vendorId)
 	{
-		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, tbl_event_tickets.ticketDescription, eventname, gender, tbl_event_shop_tags.tag
+		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, tbl_event_tickets.ticketDescription, eventname, gender, tbl_event_shop_tags.tag, TIMESTAMPDIFF(YEAR, age, CURDATE()) AS age
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
@@ -699,15 +699,10 @@ class Event_model extends CI_Model {
 				$tickets['tag'][$eventId][$tag]['female_tag'] += 1;
 			}
 
-			$tickets['avg_age'] = [
-				'male' => [
-					$eventId => $this->get_age_avg($eventId, 'male')
-				],
-				'female' => [
-					$eventId => $this->get_age_avg($eventId, 'female')
-				]
-			];
+
 		}
+		$tickets['avg_age']['male'] = $this->get_age_avg($vendorId, 'male');
+		$tickets['avg_age']['female'] = $this->get_age_avg($vendorId, 'female');
 		return $tickets;
 	}
 
@@ -1140,19 +1135,29 @@ class Event_model extends CI_Model {
         return $voucher;
 	}
 
-	private function get_age_avg($eventId, $gender)
+	public function get_age_avg($vendorId, $gender)
 	{
-		$query = $this->db->query("SELECT AVG(TIMESTAMPDIFF(YEAR, age, CURDATE())) AS age_avg
+		$query = $this->db->query("SELECT tbl_event_tickets.eventId, AVG(TIMESTAMPDIFF(YEAR, age, CURDATE())) AS age_avg, gender
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
-		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.age <> '' AND tbl_bookandpay.gender = '".$gender."' AND tbl_events.id = ".$eventId." 
+		WHERE paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND age <> '' AND gender = '".$gender."' AND tbl_bookandpay.customer = '".$vendorId."'
+		GROUP BY tbl_event_tickets.eventId
 		");
-		$result = $query->first_row();
-		if(isset($result->age_avg)){
-			return intval($result->age_avg);
+		$results = $query->result_array();
+		$tickets = [];
+		if(is_array($results) && count($results)){
+			foreach($results as $result){
+				$eventId = $result['eventId'];
+				$age = intval($result['age_avg']);
+				if($age == 0){
+					continue;
+				}
+				$tickets[$eventId] = intval($result['age_avg']);
+			}
+			
 		}
-		return 0;
+
+		return $tickets;
 	}
 
 
