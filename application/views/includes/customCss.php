@@ -401,7 +401,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 
         .pie-chart {
             width: 220px;
-            height: 100px;
+            height: 200px;
             margin: 0 auto;
         }
         

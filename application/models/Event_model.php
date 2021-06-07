@@ -601,38 +601,53 @@ class Event_model extends CI_Model {
 
 	public function get_events_stats($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, COUNT(tbl_events.id) as booking_number, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount, tbl_event_shop_tags.tag
+		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, (tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount, tbl_event_shop_tags.tag, paymentMethod
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
-		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql
-		GROUP BY tbl_events.id, tbl_event_tickets.id");
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql");
 		$results = $query->result_array();
 		
 		$tickets = [];
-		foreach($results as $result){
+		foreach($results as $key => $result){
 			$eventId = $result['eventId'];
+			$ticketId = $result['id'];
 			$tag = empty($result['tag']) ? 'directly' : $result['tag'];
+			$paymentMethod = empty($result['paymentMethod']) ? 'not saved' : $result['paymentMethod'];
 			
 			if(isset($tickets[$eventId])){
-				$tickets[$eventId]['booking_number'] = $tickets[$eventId]['booking_number'] + intval($result['booking_number']);
-				$tickets[$eventId]['amount'] = $tickets[$eventId]['amount'] + floatval($result['amount']);
+				$tickets[$eventId]['booking_number'] += 1;
+				$tickets[$eventId]['amount'] += floatval($result['amount']);
 			} else {
-				$tickets[$eventId]['booking_number'] = intval($result['booking_number']);
+				$tickets[$eventId]['booking_number'] = 1;
 				$tickets[$eventId]['amount'] = floatval($result['amount']);
 	
 			}
 
 			
+			if(isset($tickets['booking_number'][$ticketId])){
+				$tickets['booking_number'][$ticketId] += 1;
+				$tickets['amount'][$ticketId] += floatval($result['amount']);
+			} else {
+				$tickets['booking_number'][$ticketId] = 1;
+				$tickets['amount'][$ticketId] = floatval($result['amount']);
+	
+			}
 
-			$tickets[$eventId][] = $result;
+			$tickets[$eventId][$ticketId] = $result;
+
+			
 
 			if(isset($tickets['tag'][$eventId][$tag])){
-				$tickets['tag'][$eventId][$tag]['booking_number'] += intval($result['booking_number']);
-				$tickets['tag'][$eventId][$tag]['amount'] += floatval($result['amount']);
+				$tickets['tag'][$eventId][$tag]['booking_number'] += 1;
 			} else {
-				$tickets['tag'][$eventId][$tag]['booking_number'] = intval($result['booking_number']);
-				$tickets['tag'][$eventId][$tag]['amount'] = floatval($result['amount']);
+				$tickets['tag'][$eventId][$tag]['booking_number'] = 1;
+			}
+
+			if(isset($tickets['tag'][$eventId][$paymentMethod])){
+				$tickets['tag'][$eventId][$paymentMethod]['amount'] += 1;
+			} else {
+				$tickets['tag'][$eventId][$paymentMethod]['amount'] = 1;
 			}
 
 			
@@ -683,6 +698,15 @@ class Event_model extends CI_Model {
 				$tickets[$eventId][$ticketId]['female'] += 1;
 				$tickets['tag'][$eventId][$tag]['female_tag'] += 1;
 			}
+
+			$tickets['avg_age'] = [
+				'male' => [
+					$eventId => $this->get_age_avg($eventId, 'male')
+				],
+				'female' => [
+					$eventId => $this->get_age_avg($eventId, 'female')
+				]
+			];
 		}
 		return $tickets;
 	}
@@ -1114,6 +1138,21 @@ class Event_model extends CI_Model {
 		$set = '3456789ABCDEFGHJKLMNPQRSTVWXY';
 		$voucher = 'V-' . substr(str_shuffle($set), 0, 6);
         return $voucher;
+	}
+
+	private function get_age_avg($eventId, $gender)
+	{
+		$query = $this->db->query("SELECT AVG(TIMESTAMPDIFF(YEAR, age, CURDATE())) AS age_avg
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.age <> '' AND tbl_bookandpay.gender = '".$gender."' AND tbl_events.id = ".$eventId." 
+		");
+		$result = $query->first_row();
+		if(isset($result->age_avg)){
+			return $result->age_avg;
+		}
+		return 0;
 	}
 
 

@@ -43,9 +43,17 @@ class Businessreport extends BaseControllerWeb
 		$tickets_gender = $this->event_model->get_tickets_gender($vendor_id);
 		$data['tags'] = $event_orders['tag'];
 		$data['gender_tags'] = $tickets_gender['tag'];
+		$data['bookings_number'] = $event_orders['booking_number'];
+		$data['amounts'] = $event_orders['amount'];
+		$data['amounts'] = $event_orders['amount'];
+		$data['avg_age'] = $tickets_gender['avg_age'];
+		//var_dump($data['avg_age']); exit();
 		
 		unset($event_orders['tag']);
+		unset($event_orders['booking_number']);
+		unset($event_orders['amount']);
 		unset($tickets_gender['tag']);
+		unset($tickets_gender['avg_age']);
 		$data['event_orders'] = $event_orders;
 		$data['tickets_gender'] = $this->event_model->get_tickets_gender($vendor_id);
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
