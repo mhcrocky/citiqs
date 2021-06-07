@@ -41,19 +41,21 @@ class Businessreport extends BaseControllerWeb
 		$data['last_week_orders'] = $this->businessreport_model->get_last_week_orders($vendor_id);
 		$event_orders = $this->event_model->get_events_stats($vendor_id);
 		$tickets_gender = $this->event_model->get_tickets_gender($vendor_id);
-		$data['tags'] = $event_orders['tag'];
-		$data['gender_tags'] = $tickets_gender['tag'];
-		$data['bookings_number'] = $event_orders['booking_number'];
-		$data['amounts'] = $event_orders['amount'];
-		$data['amounts'] = $event_orders['amount'];
-		$data['avg_age'] = $tickets_gender['avg_age'];
-		//var_dump($data['avg_age']); exit();
+		if(is_array($event_orders) && count($event_orders) > 0){
+			$data['tags'] = $event_orders['tag'];
+			$data['bookings_number'] = $event_orders['booking_number'];
+			$data['amounts'] = $event_orders['amount'];
+			unset($event_orders['tag']);
+			unset($event_orders['booking_number']);
+			unset($event_orders['amount']);
+		}
+		if(is_array($tickets_gender) && count($tickets_gender) > 0){
+			$data['gender_tags'] = $tickets_gender['tag'];
+			$data['avg_age'] = $tickets_gender['avg_age'];
+			unset($tickets_gender['tag']);
+			unset($tickets_gender['avg_age']);
+		}
 		
-		unset($event_orders['tag']);
-		unset($event_orders['booking_number']);
-		unset($event_orders['amount']);
-		unset($tickets_gender['tag']);
-		unset($tickets_gender['avg_age']);
 		$data['event_orders'] = $event_orders;
 		$data['tickets_gender'] = $this->event_model->get_tickets_gender($vendor_id);
 		$this->loadViews("businessreport/index", $this->global, $data, 'footerbusiness', 'headerbusiness'); // payment screen
