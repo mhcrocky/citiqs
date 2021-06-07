@@ -1151,7 +1151,7 @@ class Event_model extends CI_Model {
 		");
 		$result = $query->first_row();
 		if(isset($result->age_avg)){
-			return $result->age_avg;
+			return intval($result->age_avg);
 		}
 		return 0;
 	}
