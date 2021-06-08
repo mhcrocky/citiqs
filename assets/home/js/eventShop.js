@@ -314,9 +314,10 @@ function removeTicket(id, price, ticketFee, totalClass) {
         var eventName = data['eventName'];
         var groupId = data['groupId'];
         var bundle = data['bundleMax'];
+        let descriptionTitle = data['descriptionTitle'];
         let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
-            '<b class="menu-list__title">Description</b>'+
+            '<b class="menu-list__title">'+descriptionTitle+'</b>'+
             '<div>'+
                 '<p class="menu-list__ingredients descript_'+id+'">'+eventName+' - '+descript_data+'</p>'+
             '</div>'+
@@ -460,9 +461,10 @@ function addTicket(id, limit, price, ticketfee, totalClass, bundleMax) {
         var eventName = data['eventName'];
         var groupId = data['groupId'];
         let bundle = data['bundleMax'];
+        let descriptionTitle = data['descriptionTitle'];
         let html = '<div class="menu-list__item ticket_item ticket_'+id+'">'+
         '<div class="menu-list__name">'+
-            '<b class="menu-list__title">Description</b>'+
+            '<b class="menu-list__title">'+descriptionTitle+'</b>'+
             '<div>'+
                 '<p class="menu-list__ingredients descript_'+id+'">'+eventName+' - '+descript_data+'</p>'+
             '</div>'+
