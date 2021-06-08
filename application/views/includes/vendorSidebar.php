@@ -1,4 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
 <ul class="metismenu" id="menu">
     <?php if (!$_SESSION['payNlServiceIdSet']) { ?>
         <div style="background-color: orangered" >
@@ -197,11 +198,11 @@
                 </ul>
             </li>
             <li data-menuid="5.6">
-                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('URL Link'); ?></span></a>
+                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-settings"></i> <span><?php echo $this->language->tLine('URL Link'); ?></span></a> 
                 <ul class="collapse">
-                    <li data-menuid="12.3"><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" target="_blank"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Agenda reservations'); ?></span></a></li>
+                    <li data-menuid="12.3"><a href="<?php echo $this->baseUrl. 'agenda_booking/' . $userShortUrl; ?>" data-toggle="modal" data-target="#copyAgendaBookingUrlModal"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Agenda reservations'); ?></span></a></li>
 
-                    <li data-menuid="12.4"><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" target="_blank"><i class="ti-clipboard"></i> <span><?php echo $this->language->tLine('Reservation Agenda'); ?></span></a></li>
+                    <li data-menuid="12.4"><a href="<?php echo $this->baseUrl. 'booking_agenda/' . $userShortUrl; ?>" data-toggle="modal" data-target="#copyBookingAgendaUrlModal"><i class="ti-clipboard"></i> <span><?php echo $this->language->tLine('Reservation Agenda'); ?></span></a></li>
 
                 </ul>
             </li>
