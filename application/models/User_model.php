@@ -433,7 +433,7 @@ class User_model extends CI_Model
     {
         $this->db->where('id', $userId);
         $this->db->update('tbl_user', $userInfo);
-        return $this->db->error();
+        // return $this->db->error();
 		$effectedrows =$this->db->affected_rows();
         return ($effectedrows > 0) ? true : false;
     }
@@ -903,23 +903,23 @@ class User_model extends CI_Model
 	{
 		return '';
 
-		if (!$this->isDuplicate($user['email'])) {
-			$password = Utility_helper::shuffleString(12);
-			$user['password'] = getHashedPassword($password);
-			$user['code'] = Utility_helper::shuffleString(5);
-			$user['createdDtm'] = date('Y-m-d H:i:s');
-			$this->getGeoCoordinates($user);
-			$this->insertUser($user);
-			$this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
-			// must return non hashed password for activation link
-			$this->password = $password;
-			$this->created = true;
+		// if (!$this->isDuplicate($user['email'])) {
+		// 	$password = Utility_helper::shuffleString(12);
+		// 	$user['password'] = getHashedPassword($password);
+		// 	$user['code'] = Utility_helper::shuffleString(5);
+		// 	$user['createdDtm'] = date('Y-m-d H:i:s');
+		// 	$this->getGeoCoordinates($user);
+		// 	$this->insertUser($user);
+		// 	$this->setUniqueValue($user['email'])->setWhereCondtition()->setUser();
+		// 	// must return non hashed password for activation link
+		// 	$this->password = $password;
+		// 	$this->created = true;
 
-		} else {
-			// update user - maybe it was register as finder and now is claimer or user insert new mobile
-			$this->updated = true;
-			$this->setUniqueValue($user['email'])->setWhereCondtition()->updateUser($user)->setUser();
-		}
+		// } else {
+		// 	// update user - maybe it was register as finder and now is claimer or user insert new mobile
+		// 	$this->updated = true;
+		// 	$this->setUniqueValue($user['email'])->setWhereCondtition()->updateUser($user)->setUser();
+		// }
 
 		return $this;
 	}
@@ -994,49 +994,77 @@ class User_model extends CI_Model
     public function manageAndSetBuyer(array $buyer): object
     {
         if (
-            !isset($buyer['username']) || !$buyer['username']
-            || !isset($buyer['email']) || !$buyer['email'] || !filter_var($buyer['email'], FILTER_VALIDATE_EMAIL)
+            !isset($buyer['username'])
+            || !$buyer['username']
+            || !isset($buyer['email'])
+            || !$buyer['email']
+            || !filter_var($buyer['email'], FILTER_VALIDATE_EMAIL)
         ) {
             return $this;
         }
 
+        $confirmTiqsAccount = false;
+
         if (!$this->isDuplicate($buyer['email'])) {
+            $confirmTiqsAccount = ($buyer['buyerConfirmed'] === '1');
             $password = Utility_helper::shuffleString(12);
+
             $buyer['password'] = getHashedPassword($password);
             $buyer['code'] = Utility_helper::shuffleString(5);
             $buyer['createdDtm'] = date('Y-m-d H:i:s');
+            // buyerConfirmed is set when user create password
+            unset($buyer['buyerConfirmed']);
+
             $this->getGeoCoordinates($buyer);
             $this->insertBuyer($buyer);
-
-            // must return non hashed password for activation link
-            $this->password = $password;
         } else {
             $this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
-            if ($this->roleid === $this->config->item('owner')) return $this;
+            $confirmTiqsAccount = ($this->buyerConfirmed === '0' && $buyer['buyerConfirmed'] === '1');
+            if ($this->roleid === $this->config->item('owner')) {
+                if ($confirmTiqsAccount) {
+                    $newData['buyerConfirmed'] = $buyer['buyerConfirmed'];
+                    $this->editUser($newData, $this->id);
 
-            
-            // new data to prevent update of some buyer data (roleId for example)
-            $newData = [
-                'username' => $buyer['username'],
-                'email' => $buyer['email'],
-            ];
-            if (!empty($buyer['mobile'])) {
-                $newData['mobile'] = $buyer['mobile'];
+                }
+                return $this;
+            } else {
+                // new data to prevent update of some buyer data (roleId for example)
+                $newData = [
+                    'username' => $buyer['username'],
+                    'email' => $buyer['email'],
+                ];
+                // buyer sent request for cerating tiqs account, we need to set new password and send
+                if ($confirmTiqsAccount) {
+                    $password = Utility_helper::shuffleString(12);
+                    $newData['password'] = getHashedPassword($password);
+                    // $newData['buyerConfirmed'] = $buyer['buyerConfirmed'];
+                }
+                if (!empty($buyer['mobile'])) {
+                    $newData['mobile'] = $buyer['mobile'];
+                }
+                if (!empty($buyer['newsletter'])) {
+                    $newData['newsletter'] = $buyer['newsletter'];
+                }
+                if (isset($buyer['address']) && isset($buyer['zipcode']) && isset($buyer['city'])) {
+                    $newData['address'] = $buyer['address'];
+                    $newData['zipcode'] = $buyer['zipcode'];
+                    $newData['city'] = $buyer['city'];
+                    $this->getGeoCoordinates($newData);
+                }
+                $this->editUser($newData, $this->id);
             }
-            if (!empty($buyer['newsletter'])) {
-                $newData['newsletter'] = $buyer['newsletter'];
-            }
-            if (isset($buyer['address']) && isset($buyer['zipcode']) && isset($buyer['city'])) {
-                $newData['address'] = $buyer['address'];
-                $newData['zipcode'] = $buyer['zipcode'];
-                $newData['city'] = $buyer['city'];
-                $this->getGeoCoordinates($newData);
-            }
-            $this->editUser($newData, $this->id);
         }
-		$this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
+
+        $this->setUniqueValue($buyer['email'])->setWhereCondtition()->setUser();
+        if ($confirmTiqsAccount) {
+            // must return non hashed password for activation link
+            $this->password = $password;
+            $this->load->helper('email_helper');
+            Email_helper::sendBuyerCreatePasswordEmail($this->email, $this->code);
+        }
         return $this;
     }
+
 
     public function checkIsAdmin(string $email, string $userPassword)
     {
@@ -1176,5 +1204,20 @@ class User_model extends CI_Model
 		$this->db->where('tbl_app_routes.vendorid <>', 0);
 		$result = $this->db->get('tbl_app_routes')->result_array();
 		return $result;
-	}
+    }
+
+    public function createBuyerPassword(string $email, string $code, string $password): bool
+    {
+        $this->setUniqueValue($email)->setWhereCondtition()->setUser();
+
+        if (empty($this->id) || $this->code !== $code) return false;
+
+        $data = [
+            'password' => getHashedPassword($password),
+            'buyerConfirmed' => '1',
+            'active' => '1'
+        ];
+
+        return $this->editUser($data, $this->id);
+    }
 }

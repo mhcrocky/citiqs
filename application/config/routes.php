@@ -243,6 +243,7 @@ $route['PdfDesigner/print/(:any)'] = "PdfDesigner/print/$1";
 
 $route['forgotPassword'] = "login/forgotPassword";
 $route['resetPasswordUser'] = "login/resetPasswordUser";
+$route['create_password/(:any)'] = 'login/buyerCreatePassword/$1';
 $route['resetPasswordConfirmUser'] = "login/resetPasswordConfirmUser";
 $route['resetPasswordConfirmUser/(:any)'] = "login/resetPasswordConfirmUser/$1";
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = "login/resetPasswordConfirmUser/$1/$2";
