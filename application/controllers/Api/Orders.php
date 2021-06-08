@@ -7,7 +7,8 @@
 
     class Orders extends REST_Controller
     {
-        private $trackPrinterFile = FCPATH . 'application/tiqs_logs/track_printer.txt';
+        //if slave printer send request this will be value of masterMacNumber
+        private $macToFetchOrder;
 
         function __construct()
         {
@@ -39,18 +40,24 @@
 			return;
         }
 
+        /**
+         * CHECK PRINTER POST REQUEST WHEN WORK ON THIS METHOD
+         *
+         * @see data_post
+         * @return void
+         */
         public function data_get()
         {
-            $mac = $this->getMacNumber();
+            $mac = $this->input->get('mac', true);
+            if (!$mac) exit;
 
-            // first set printer from mac number
-            $this->shopprinters_model->setPrinterIdFromMacNumber($mac)->setObject();
+            $this->setPrinterAndMacToFetchOrder($mac);
 
             // print finance report
             $this->printFinanceReport($mac);
 
             //get order to print
-            $order = $this->getOrder($mac);
+            $order = $this->getOrder();
 
             // get utility data
             list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
@@ -108,22 +115,22 @@
         }
 
 
-        private function getMacNumber(): string
+        // private function getMacNumber(): string
+        // {
+        //     $mac = $this->input->get('mac', true);
+        //     if (!$mac) exit;
+
+        //     if (
+        //         !$this->shopprinters_model->setProperty('macNumber', $mac)->checkIsPrinterActive()
+        //         || !$this->shopprinterrequest_model->insertPrinterRequest($mac)
+        //     ) exit;
+
+        //     return $this->shopprinters_model->setProperty('macNumber', $mac)->printMacNumber();
+        // }
+
+        private function getOrder(): array
         {
-            $mac = $this->input->get('mac', true);
-            if (!$mac) exit;
-
-            if (
-                !$this->shopprinters_model->setProperty('macNumber', $mac)->checkIsPrinterActive()
-                || !$this->shopprinterrequest_model->insertPrinterRequest($mac)
-            ) exit;
-
-            return $this->shopprinters_model->setProperty('macNumber', $mac)->printMacNumber();
-        }
-
-        private function getOrder(string $mac): array
-        {
-            $order = $this->shoporder_model->fetchOrdersForPrint($mac);
+            $order = $this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder);
 
             if (!$order) exit;
 
@@ -147,19 +154,19 @@
             }
         }
 
-        private function callOrderCopy(array $order, bool $fodUser): void
-        {
-            if (
-                !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
-                && !$fodUser
-            ) {
-                file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
-            }
-        }
+        // private function callOrderCopy(array $order, bool $fodUser): void
+        // {
+        //     if (
+        //         !($order['paymentType'] === $this->config->item('prePaid') || $order['paymentType'] === $this->config->item('postPaid'))
+        //         && !$fodUser
+        //     ) {
+        //         file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
+        //     }
+        // }
 
         /**
          * 
-         * PRINTER FIRST SEND POST REQUEST TO CHECK IS ANY JOB TO PRINT
+         * PRINTER FIRST SENDS POST REQUEST TO CHECK IS ANY JOB TO PRINT
          * 
          * IF JOB IS TRUE, HE SEND GET REQUEST
          *
@@ -201,7 +208,8 @@
 				// Utility_helper::logMessage($file, 'printer send post request passed MAC ERROR');
 				return;
             } else {
-                $this->shopprinterrequest_model->insertPrinterRequest($parsedJson['printerMAC']);
+                // $this->shopprinterrequest_model->insertPrinterRequest($parsedJson['printerMAC']);
+                $this->setPrinterAndMacToFetchOrder($parsedJson['printerMAC']);
             };
 
 
@@ -229,7 +237,9 @@
                 // ordernr
                 // vullen onderdelen
                 // printed op 1 zetten.
-                if ($this->shoporder_model->fetchOrdersForPrint($parsedJson['printerMAC'])) {
+
+
+                if ($this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder)) {
                     $arr = [
                         "jobReady" => true,
                         // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));
@@ -369,5 +379,15 @@
             return;
         }
 
+        private function setPrinterAndMacToFetchOrder(string $mac): void
+        {
+            $this->shopprinters_model->setPrinterIdFromMacNumber($mac)->setObject();
+            if ($this->shopprinters_model->active === '0') exit;
+
+            $this->shopprinterrequest_model->insertPrinterRequest($mac);
+            $this->macToFetchOrder = empty($this->shopprinters_model->masterMac) ? $mac : $this->shopprinters_model->masterMac;
+
+            return;
+        }
 
     }

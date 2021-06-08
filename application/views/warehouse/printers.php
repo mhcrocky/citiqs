@@ -173,9 +173,9 @@
 							<p class="item-description" style="white-space: initial;">Master is: <?php echo $printer['master']; ?></p>
 							<?php } else { ?>
 							<p class="item-description" style="white-space: initial;">Print reports: <?php echo ($printer['printReports'] === '1') ? 'Yes' : 'No'; ?></p>
+							<?php } ?>
 							<p class="item-description" style="white-space: initial;">Print receipts: <?php echo ($printer['printReceipts'] === '1') ? 'Yes' : 'No'; ?></p>
 							<p class="item-description" style="white-space: initial;">Send SMS to buyer: <?php echo ($printer['sendSmsToBuyer'] === '1') ? 'Yes' : 'No'; ?></p>
-							<?php } ?>
 							<p
 								style="color:#ff3333; font-weight:900; font-size:16px; visibility:hidden"
 								data-printer-id="<?php echo $printer['id']; ?>"
@@ -333,41 +333,41 @@
 															No
 														</label>
 													</div>
-													<div style="margin-bottom:10px">
-														<Label>Send SMS to buyer: </label>
-														<label>
-															<input
-																type="radio"
-																name="sendSmsToBuyer"
-																value="1"
-																<?php if ($printer['sendSmsToBuyer'] === '1') { echo 'checked'; } ?>
-															/>
-															Yes
-														</label>
-														<label>
-															<input
-																type="radio"
-																name="sendSmsToBuyer"
-																value="0"
-																<?php if ($printer['sendSmsToBuyer'] === '0') { echo 'checked'; } ?>
-															/>
-															No
-														</label>
-													</div>
-													<div style="margin-bottom:10px">
-														<label for="messageToBuyer<?php echo $printer['id']; ?>">Message to buyer: </label>
-														<textarea
-															class="form-control"
-															id="messageToBuyer<?php echo $printer['id']; ?>"
-															name="messageToBuyer"
-															maxlength="128"
-															rows="3"
-															style="border-radius:10px"
-														><?php
-                                                            echo is_null($printer['messageToBuyer']) ? implode(' ', $messageToBuyerTags) : $printer['messageToBuyer'];
-                                                        ?></textarea>
-													</div>
 												<?php } ?>
+												<div style="margin-bottom:10px">
+													<Label>Send SMS to buyer: </label>
+													<label>
+														<input
+															type="radio"
+															name="sendSmsToBuyer"
+															value="1"
+															<?php if ($printer['sendSmsToBuyer'] === '1') { echo 'checked'; } ?>
+														/>
+														Yes
+													</label>
+													<label>
+														<input
+															type="radio"
+															name="sendSmsToBuyer"
+															value="0"
+															<?php if ($printer['sendSmsToBuyer'] === '0') { echo 'checked'; } ?>
+														/>
+														No
+													</label>
+												</div>
+												<div style="margin-bottom:10px">
+													<label for="messageToBuyer<?php echo $printer['id']; ?>">Message to buyer: </label>
+													<textarea
+														class="form-control"
+														id="messageToBuyer<?php echo $printer['id']; ?>"
+														name="messageToBuyer"
+														maxlength="128"
+														rows="3"
+														style="border-radius:10px"
+													><?php
+														echo is_null($printer['messageToBuyer']) ? implode(' ', $messageToBuyerTags) : $printer['messageToBuyer'];
+													?></textarea>
+												</div>
 											</form>
 										</div>
 									</div>
