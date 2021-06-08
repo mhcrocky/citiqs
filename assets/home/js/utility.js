@@ -8,7 +8,9 @@ function submitForm(formId) {
 function inIframe () {
     try {
         if (window.self !== window.top && payOrderGlobals) {
-            setInterval(checkIsIframeOrderPaid, 1000);
+            if (!payOrderGlobals.hasOwnProperty('tickecting')) {
+                setInterval(checkIsIframeOrderPaid, 1000);
+            }
         }
         return window.self !== window.top;
     } catch (e) {
@@ -18,7 +20,7 @@ function inIframe () {
 
 function checkIsIframeOrderPaid() {
     let url = globalVariables.ajax + 'checkIsIframeOrderPaid?' + payOrderGlobals['orderDataGetKey'] + '=' + payOrderGlobals['orderRandomKey'];
-    sendUrlRequest(url, 'checkIsIframeOrderPaid', checkIsIframeOrderPaidResponse)
+    sendUrlRequest(url, 'checkIsIframeOrderPaid', checkIsIframeOrderPaidResponse);    
 }
 
 function checkIsIframeOrderPaidResponse(response) {
