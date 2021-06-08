@@ -251,6 +251,7 @@ class Booking_events extends BaseControllerWeb
             'id' => $ticketId,
             'eventName' => $eventInfo->eventname,
             'descript' => $ticketInfo->ticketDescription,
+            'descriptionTitle' => ($ticketInfo->descriptionTitle == null) ? 'description' : $ticketInfo->descriptionTitle,
             'quantity' => $ticket['quantity'],
             'price' => $ticketInfo->ticketPrice,
             'maxTicketQuantity' => $ticketInfo->ticketQuantity,
@@ -291,6 +292,7 @@ class Booking_events extends BaseControllerWeb
         $response = [
             'status' => 'success',
             'descript' => $ticket['descript'],
+            'descriptionTitle' => ($ticketInfo->descriptionTitle == null) ? 'description' : $ticketInfo->descriptionTitle,
             'price' => $ticketInfo->ticketPrice, 
             'ticketFee' => $ticketInfo->ticketFee,
             'groupId' => $ticketInfo->ticketGroupId,

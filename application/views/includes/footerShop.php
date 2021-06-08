@@ -30,7 +30,7 @@
                         <input type="hidden" name="price[]" value="<?php echo $ticket['price']; ?>">
                         <div class="menu-list__item ticket_item ticket_<?php echo $ticket['id']; ?>">
                             <div class="menu-list__name">
-                                <b class="menu-list__title">Description</b>
+                                <b class="menu-list__title"><?php echo $ticket['descriptionTitle']; ?></b>
                                 <div>
                                     <p class="menu-list__ingredients descript_<?php echo $ticket['id']; ?>">
                                     <?php echo $ticket['eventName'];?> - <?php echo $ticket['descript']; ?></p>

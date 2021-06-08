@@ -51,7 +51,7 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
             && isset($data['email'])
             && isset($data['password'])
             && isset($data['uniquenumber'])
-            && isset($data['INSZnumber'])
+            //&& isset($data['INSZnumber'])
             && isset($data['ownerId'])
             && isset($data['validitytime'])
             && isset($data['expiration_time'])
@@ -393,6 +393,10 @@ class Employee_model extends AbstractSet_model implements InterfaceCrud_model, I
     public function addNewEmployeeImproved(array $employee): bool
     {
         // TO DO => check is email unique for this vendor and pin pos number (if is set);
+        if(isset($employee['INSZnumber']) && (empty($employee['INSZnumber']) ||  $employee['INSZnumber'] == '')){
+            unset($employee['INSZnumber']);
+        }
+        
         return $this->setObjectFromArray($employee)->create();
     }
 

@@ -33,7 +33,7 @@
                         <div class="menu-list__item">
 
                             <div class="menu-list__name">
-                                <b class="menu-list__title">Description</b>
+                                <b class="menu-list__title"><?php echo ($ticket['descriptionTitle'] == null) ? 'description' : $ticket['descriptionTitle']; ?></b>
                                 <div>
                                     <p class="menu-list__ingredients">
                                         <?php echo $ticket['ticketDescription']; ?>

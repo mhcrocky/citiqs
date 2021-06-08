@@ -1,4 +1,4 @@
-<!-- Edit Modal -->
+<!-- Ticket Options Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -95,6 +95,14 @@
                                 <?php endforeach; ?>
                                 <?php endif; ?>
                             </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-2">
+                        <div class="col-md-3 text-dark">Description Title</div>
+                        <div class="col-md-3">
+                            <input type="text" id="descriptionTitle" name="descriptionTitle" class="form-control inp-height" value="description">
                         </div>
                     </div>
 
