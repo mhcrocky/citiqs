@@ -376,6 +376,7 @@ class Ajaxdorian extends CI_Controller
         if ($spot_id) {
             $this->bookandpayspot_model->updateSpot($spotData, $spot_id);
         } else {
+            $spotData['send_to_email'] = empty($spotData['send_to_email']) ? '0' : $spotData['send_to_email'];
             $spot_id = $this->bookandpayspot_model->addSpot($spotData);
             if(!empty($this->input->post('spots')) && $this->input->post('spots')  != 'null' && $this->input->post('spots')  != null){
                 
