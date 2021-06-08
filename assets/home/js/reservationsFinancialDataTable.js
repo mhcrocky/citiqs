@@ -182,7 +182,7 @@ $(document).ready( function () {
       data: 'email'
     },
     {
-      title: 'Buyer Email',
+      title: 'Buyer Phone',
       data: 'mobilephone'
     },
     {
