@@ -62,6 +62,7 @@
                             src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
                             <?php endif; ?> alt="<?php echo $event['eventname']; ?>">
                         <p class='single-item__promotion'>Order Now</p>
+                        <p class='single-item__bottom'><?php echo date('d/m/y', strtotime($event['StartDate'])); ?></p>
                     </div>
                 </a>
                 <a href="#tickets" onclick="getTicketsView('<?php echo $event['id']; ?>')"
@@ -71,7 +72,7 @@
                         <div class="scroll-descript">
                             <span class='single-item__price'>
                                 <?php echo (strlen($event['eventdescript']) > 57) ? substr($event['eventdescript'], 0, 54) . '...' : $event['eventdescript']; ?>
-
+                                
                             </span>
                         </div>
                     </div>
