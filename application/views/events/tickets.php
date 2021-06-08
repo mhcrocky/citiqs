@@ -56,7 +56,7 @@
                                 <div class="menu-list__price">
                                     <b class="menu-list__price--discount ticket_price"><?php echo $ticket['ticketPrice']; ?>€</b>
                                 </div>
-                                <b class="menu-list__type">quantity</b>
+                                <b class="menu-list__type"><?php echo $this->language->tline('quantity'); ?></b>
 
                                 <div class="quantity-section">
                                     
