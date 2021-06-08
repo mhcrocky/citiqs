@@ -63,8 +63,6 @@
 
         public function checkRequests(string $printerMac): ?array
         {
-        	return null;
-
             $data = $this->readImproved([
                 'what' => [
                     $this->table . '.id',
@@ -87,9 +85,7 @@
                 ]
             ]);
 
-            if (is_null($data)) return null;
-
-            return reset($data);
+            return is_null($data) ? null : reset($data);
         }
 
     }
