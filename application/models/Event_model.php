@@ -92,6 +92,7 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('archived', '0');
 		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
+		$this->db->order_by('StartDate');
 		$query = $this->db->get();
 		$this->db->trans_complete();
 		return $query->result_array();
