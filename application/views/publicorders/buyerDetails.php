@@ -16,13 +16,13 @@
                 <div class="row">
                     <?php if ($vendor['requireName'] === '1') { ?>
                         <div class="form-group col-sm-12">
-                            <label class="labelColorBuyer" for="firstNameInput"><?php echo $this->language->line("PAYMENT-805",'Name');?> (<sup>*</sup>)</label>
+                            <label class="labelColorBuyer" for="firstNameInput"><?php echo $this->language->tLine('Name');?> (<sup>*</sup>)</label>
                             <input
                                 id="firstNameInput"
                                 class="form-control inputFieldsBuyer"
                                 name="user[username]"
                                 value="<?php echo $username; ?>"
-                                type="text" placeholder="<?php echo $this->language->line("PAYMENT-805",'Name');?> "
+                                type="text" placeholder="<?php echo $this->language->tLine('Name');?> "
                                 required
                                 data-name="Name"
                             />
@@ -30,14 +30,14 @@
                     <?php } ?>
                     <?php if ($vendor['requireEmail'] === '1' || intval($spot['spotTypeId']) !== $local) { ?>
                         <div class="form-group col-sm-12">
-                            <label class="labelColorBuyer" for="emailAddressInput"><?php echo $this->language->line("PAYMENT-810",'Email address');?>  <sup>*</sup></label>
+                            <label class="labelColorBuyer" for="emailAddressInput"><?php echo $this->language->tLine('Email address');?>  <sup>*</sup></label>
                             <input
                                 type="email"
                                 id="emailAddressInput"
                                 class="form-control inputFieldsBuyer"
                                 name="user[email]"
                                 value="<?php echo $email; ?>"
-                                placeholder="<?php echo $this->language->line("PAYMENT-810",'Email address');?>"
+                                placeholder="<?php echo $this->language->tLine('Email address');?>"
                                 required
                                 oninput="checkUserNewsLetter(this.id)"
                                 data-name="Email"
@@ -66,7 +66,7 @@
                     </div> -->
                     <?php if ($vendor['requireMobile'] === '1' || intval($spot['spotTypeId']) !== $local ) { ?>
                         <div class="form-group col-sm-6">
-                            <label class="labelColorBuyer" for="phoneInput"><?php echo $this->language->line("PAYMENT-I0010",'Phone');?><sup>*</sup></label>
+                            <label class="labelColorBuyer" for="phoneInput"><?php echo $this->language->tLine('Phone');?><sup>*</sup></label>
                             <div>
                                 <select class="form-control inputFieldsBuyer" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
                                     <?php foreach ($countryCodes as $code => $data) { ?>                                
@@ -91,7 +91,7 @@
                                     name="user[mobile]"
                                     value="<?php echo $mobile; ?>"
                                     type="text"
-                                    placeholder="<?php echo $this->language->line("PAYMENT-I0010",'Phone');?>"
+                                    placeholder="<?php echo $this->language->tLine('Phone');?>"
                                     required
                                     data-name="Mobile"
                                 />
@@ -100,17 +100,24 @@
                     <?php } ?>
                     <?php if ($vendor['requireNewsletter'] === '1') { ?>
                         <div class="form-group col-sm-12">
-                            <label class="labelColorBuyer" ><?php echo $this->language->line("PAYMENT-Q0001",'Receive our newsletter');?></label>
+                            <label class="labelColorBuyer" ><?php echo $this->language->tLine('Receive our newsletter');?></label>
                             <label class="radio-inline" for="newsLetterYes">
                                 <input type="radio" id="newsLetterYes" name="user[newsletter]" value="1" />
-								<?php echo $this->language->line("PAYMENT-0001",'YES');?>
+								<?php echo $this->language->tLine('YES');?>
 							</label>
                             <label class="radio-inline" for="newsLetterNo">
                                 <input type="radio" id="newsLetterNo" name="user[newsletter]"  value="0" checked />
-								<?php echo $this->language->line("PAYMENT-0002",'NO');?>
+								<?php echo $this->language->tLine('NO');?>
                             </label>
                         </div>
                     <?php } ?>
+                    <div class="form-group col-sm-12">
+                        <label class="labelColorBuyer" ><?php echo $this->language->tLine('Create TIQS account');?></label>
+                        <label class="radio-inline" for="buyerConfirmedYes">
+                            <input type="checkbox" id="buyerConfirmedYes" name="user[buyerConfirmed]" value="1" />
+                            <?php echo $this->language->tLine('YES');?>
+                        </label>
+                    </div>
                 </div>
                 <div class="checkout-btns">
                     <a
@@ -120,10 +127,10 @@
                         class="button"
                     >
                         <i class="fa fa-arrow-left"></i>
-						<?php echo $this->language->line("PAYMENT-9100",'Back to list');?>
+						<?php echo $this->language->tLine('Back to list');?>
                     </a>
                     <a id="payButton" href="javascript:void(0);" style="background-color: #349171" class="button" onclick="submitBuyerDetails();">
-						<?php echo $this->language->line("PAYMENT-9110",'Pay');?>
+						<?php echo $this->language->tLine('Pay');?>
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </div>

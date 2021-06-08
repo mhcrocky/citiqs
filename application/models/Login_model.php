@@ -24,6 +24,7 @@ class Login_model extends CI_Model
             BaseTbl.lat AS lat,
             BaseTbl.lng AS lng,
             BaseTbl.business_type_id,
+            BaseTbl.buyerConfirmed,
             Roles.role
         ');
         $this->db->from('tbl_user as BaseTbl');

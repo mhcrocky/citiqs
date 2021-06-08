@@ -37,7 +37,7 @@ class Login extends BaseControllerWeb
 		$this->load->helper('country_helper');
 		$this->load->helper('pay_helper');
 		$this->load->helper('jwt_helper');
-
+		$this->load->helper('form');
 		$this->load->library('google');
 		$this->load->library('language', array('controller' => $this->router->class));
 		$this->load->library('form_validation');
@@ -138,7 +138,7 @@ class Login extends BaseControllerWeb
 					//redirect('/dashboard');
 				}
 			} else {
-				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register. ');
+				$this->session->set_flashdata('error', 'Are you using the right credentials, or did you not register yet? Please try again or register. ');
 				redirect('login');
 				// $this->index();
 			}
@@ -170,7 +170,7 @@ class Login extends BaseControllerWeb
 
 			if (empty($result)) {
 				// go back
-				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register. ');
+				$this->session->set_flashdata('error', 'Are you using the right credentials, or did you not register yet? Please try again or register. ');
 				redirect('login');
 				//	$this->index(); 
 			} else {
@@ -228,16 +228,19 @@ class Login extends BaseControllerWeb
 			$result = $this->login_model->loginMe($email, $password);
 
 			if (empty($result)) {
-				$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register.');
+				$this->session->set_flashdata('error', 'Are you using the right credentials, or did you not register yet? Please try again or register.');
+				redirect('login');
+			} elseif ($result->buyerConfirmed === '0') {
+				$this->session->set_flashdata('error', 'Your TIQS account is not created. Please confirm create TIQS account it during next shop');
 				redirect('login');
 			} else {
-				$sessionArray = array(
-					'buyerId' => $result->userId,
-					'isLoggedIn' => TRUE,
-					'name' => $result->name,
-				);
-				$this->session->set_userdata($sessionArray);
-				redirect('/loggedin');
+                $sessionArray = array(
+                    'buyerId' => $result->userId,
+                    'isLoggedIn' => true,
+                    'name' => $result->name,
+                );
+                $this->session->set_userdata($sessionArray);
+                redirect('/loggedin');
 			}
 		}
 	}
@@ -304,7 +307,7 @@ class Login extends BaseControllerWeb
 				//redirect('/dashboard');
 			}
 		} else {
-			$this->session->set_flashdata('error', 'Are you using the right credentials?, or did you not register yet? Please try again or register.');
+			$this->session->set_flashdata('error', 'Are you using the right credentials, or did you not register yet? Please try again or register.');
 			$this->index();
 		}
 	}
@@ -1060,4 +1063,34 @@ class Login extends BaseControllerWeb
 		return;
 	}
 
+
+	public function buyerCreatePassword($code): void
+	{
+		$data = [
+			'code' => $code
+		];
+
+		$this->global['pageTitle'] = 'TIQS : REGISTER';
+		$this->load->view('buyerPassword', $data);
+	}
+
+	public function createBuyerPassword(): void
+	{
+		$post = $this->security->xss_clean($_POST);
+		if ($post['password'] !== $post['cpassword']) {
+			$this->session->set_flashdata('error', 'Password and repeat password does not mnatch');
+			$redirect = base_url() . 'create_password' . DIRECTORY_SEPARATOR . $post['code'];
+		} else {
+			if ($this->user_model->createBuyerPassword($post['email'], $post['code'], $post['password'])) {
+				$this->session->set_flashdata('success', 'Password created');
+				$redirect = base_url() . 'login#customerLogin' ;
+			} else {
+				$this->session->set_flashdata('error', 'Failed. Please check your email');
+				$redirect = base_url() . 'create_password' . DIRECTORY_SEPARATOR . $post['code'];
+			}
+		}
+
+		redirect($redirect);
+		return;
+	}
 }

@@ -31,17 +31,17 @@
                 'newline' => "\r\n"
             ];
         }
-        
-        /*  Old sendUserActivationEmail
-        public static function sendUserActivationEmail(object $user): bool
-        {
 
-            $link = base_url() . 'login/activate/' . $user->id . '/' . $user->code;
-            $message = '<p>Click on <a href="' . $link .'" target="_blank">link</a> to activate your account</p>';
-            $subject = 'Activation link';
-            return self::sendEmail($user->email, $subject, $message);
+        public static function sendBuyerCreatePasswordEmail(string $email, string $code): bool
+        {
+            $link = base_url() . 'create_password' . DIRECTORY_SEPARATOR . $code;
+            $message  = '<p>Your account is created</p>';
+            $message .= '<p>Go to this link <a href="' . $link .'" target="_blank">link</a> to set your password</p>';
+            $message .= '<p>If link does not work, copy this  url "' . $link .'" in your browser</p>';
+            $subject = 'TIQS account';
+
+            return self::sendEmail($email, $subject, $message);
         }
-        */
 
         public static function sendUserActivationEmail(object $user): bool
         {
