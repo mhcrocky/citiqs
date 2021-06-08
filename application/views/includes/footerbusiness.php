@@ -1,5 +1,59 @@
 </div>
 <!-- End Main Content -->
+
+
+
+<!-- Copy Agenda Booking Url Modal -->
+<div class="modal fade" id="copyAgendaBookingUrlModal" tabindex="-1" role="dialog" aria-labelledby="copyAgendaBookingUrlModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="overflow: auto !important;" class="modal-body">
+                <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
+                    <div class="col-md-9 text-center"><?php echo base_url(); ?>agenda_booking/<?php echo $this->session->userdata('userShortUrl'); ?></div>
+                    <div id="shopUrlText" class="col-md-3 text-left">
+                        <button class="btn btn-clear text-primary" onclick="copyToClipboard('<?php echo base_url(); ?>agenda_booking/<?php echo $this->session->userdata('userShortUrl'); ?>')">Copy URL</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Copy Booking Agenda Url Modal -->
+<div class="modal fade" id="copyBookingAgendaUrlModal" tabindex="-1" role="dialog" aria-labelledby="copyBookingAgendaUrlModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="overflow: auto !important;" class="modal-body">
+                <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
+                    <div class="col-md-9 text-center"><?php echo base_url(); ?>booking_agenda/<?php echo $this->session->userdata('userShortUrl'); ?></div>
+                    <div id="shopUrlText" class="col-md-3 text-left">
+                        <button class="btn btn-clear text-primary" onclick="copyToClipboard('<?php echo base_url(); ?>booking_agenda/<?php echo $this->session->userdata('userShortUrl'); ?>')">Copy URL</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 <footer>
     <div class="footer-area">
         <p>© Copyright 2018-<?php echo date("Y"); ?>. All right reserved.</p>
@@ -34,6 +88,20 @@
 
 }());
 
+window.copyToClipboard = function(copyText) {
+    var textarea = document.createElement('textarea');
+    textarea.textContent = copyText;
+    document.body.appendChild(textarea);
+    var selection = document.getSelection();
+    var range = document.createRange();
+    range.selectNode(textarea);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    console.log('copy success', document.execCommand('copy'));
+    selection.removeAllRanges();
+    document.body.removeChild(textarea);
+
+}
 </script>
 <!-- bootstrap 4 js -->
 <script src="<?php echo base_url(); ?>assets/js/owl.carousel.min.js"></script>
