@@ -3,6 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
+require APPPATH . '/libraries/phpqrcode/qrlib.php';
 
 class Employee extends BaseControllerWeb {
 
@@ -29,6 +30,7 @@ class Employee extends BaseControllerWeb {
             'ownerId' => $_SESSION['userId'],
             'time' => time(),
         ];
+
         $this->global['pageTitle'] = 'TIQS : ACCESS';
         $this->loadViews("employeenew", $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
@@ -169,6 +171,23 @@ class Employee extends BaseControllerWeb {
 
     public function generateEmployeeCode() {
         echo $this->generateUniqueToken(8);
+    }
+
+    public static function generateEmployeeQRCode($qrtext) : string
+    {
+		$path = FCPATH . 'uploads/qrcodes/employee/';
+
+        if(!is_dir($path)){
+            mkdir($path);
+        }
+
+		$file_name = $qrtext . ".png";
+		$file_path = $path . $file_name;
+        if(!file_exists($file_path)){
+            QRcode::png($qrtext, $file_path, QR_ECLEVEL_H, 10);
+        }
+        $qrlink = base_url() . 'uploads/qrcodes/employee/' . $file_name;
+        return $qrlink;
     }
 
     private function checkIfEmployeeisDuplicate($username, $code, $ownerId, $employeeId) {
