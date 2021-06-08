@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </a>
-                <div style="align-items: end;" class="w-100 mt-4 bg-white pr-4 text-center">
+                <div style="align-items: end;background: transparent !important;" class="w-100 mt-4 bg-white pr-4 text-center">
                     <a href="javascript:;" type="button" class="btn btn-info mb-1" data-toggle="modal"
                         data-target="#eventModal<?php echo $event['id']; ?>">
                         <?php echo $this->language->tLine('Show Info'); ?>
