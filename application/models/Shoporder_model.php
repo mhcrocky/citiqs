@@ -746,9 +746,21 @@
             return $this->db->affected_rows() ? true : false;
         }
 
+        private function updateFailedSendEmail(string $transactionId): void
+        {
+            $this->load->helper('email_helper');
+            $this->load->config('custom');
+            $message = 'Pay update failed for order with transaction id: ' . $transactionId;
+            Email_helper::sendEmail($this->config->item('tiqsEmail'), 'Paynl err', $message);
+        }
         public function updatePaidStatus(object $shopOrderPaynl, array $what): bool
         {
-            $shopOrderPaynl->setAlfredOrderId();            
+            $shopOrderPaynl->setAlfredOrderId();
+
+            if (empty($shopOrderPaynl->orderId)) {
+                $this->updateFailedSendEmail($shopOrderPaynl->transactionId);
+                return false;
+            }
             $this->setObjectId($shopOrderPaynl->orderId);
 
             $update = $this->db->where('id', $this->id)->update($this->table, $what);
