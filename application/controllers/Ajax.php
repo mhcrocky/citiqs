@@ -1520,6 +1520,12 @@ class Ajax extends CI_Controller
         foreach ($user as $key => $value) {
             $orderData['user'][$key] = $value;
         }
+
+        // user can click create tiqs account and after change his mind
+        if (empty($user['buyerConfirmed'])) {
+            $orderData['user']['buyerConfirmed'] = '0';
+        }
+
         $this->shopsession_model->updateSessionData($orderData);
         return ($this->shopsession_model->id && $this->shopsession_model->randomKey) ? true : false;
     }
