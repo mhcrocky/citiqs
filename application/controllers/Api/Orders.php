@@ -293,11 +293,11 @@
 
         private function printFinanceReport($mac): void
         {
-            return;
 
             if ($this->shopprinters_model->printReports === '0') return;
             $data = $this->shopreportrequest_model->checkRequests($mac);
-            if (!$data) return;
+
+            if (is_null($data)) return;
 
             $this->shopreportrequest_model->id = intval(Utility_helper::getAndUnsetValue($data, 'id'));
 
@@ -310,7 +310,7 @@
             if (!$content) return;
             $response = json_decode($content);
 
-            if ($response->status === '1') {
+            if ($response && $response->status === '1') {
                 $report = $this->config->item('financeReportes') . $data['vendorid'] . '_' . $data['report'] . '.png';
                 header('Content-type: image/png');
                 echo file_get_contents($report);
