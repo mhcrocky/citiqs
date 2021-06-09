@@ -329,8 +329,10 @@
             $fodUser = $this->shopvendorfod_model->isFodVendor($vendorId);
             if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
                 echo '<pre>';
+                print_r($order);
+                reset($order);
+                print_r($order);
                 var_dump($order['orderExtendedIds']);
-                var_dump(explode(',', $order['orderExtendedIds']));
                 echo '</pre>';
             }
 
