@@ -78,26 +78,33 @@ class Login extends REST_Controller
 		$code = $this->security->xss_clean($this->input->post('code'));
 		// $password = $_POST["password"];
 //		$password = $this->security->xss_clean($this->input->post('password'));
-		if ($code==='123456'){
-			$email="demo@tiqs.com";
-			$password="tiqs01";
-		}
+//		if ($code==='123456'){
+//			$email="demo@tiqs.com";
+//			$password="tiqs01";
+//		}
 
 		//		var_dump($code);
 //		var_dump($user);
 //		die();
 
+		$this->db->select('ownerId');
+		$this->db->from('tbl_employee');
+		$this->db->where('uniquenumber', $code);
+		$query = $this->db->get();
+		$owner = $query->row();
+
 		$this->db->select('id as userId, password');
 		$this->db->from('tbl_user');
-		$this->db->where('email', $email);
+		$this->db->where('id',$owner->ownerId );
 		$this->db->where('isDeleted', 0);
 		$this->db->where('IsDropOffPoint', 1);
 		$query = $this->db->get();
 		$user = $query->row();
 
-//		var_dump($code);
+//		var_dump($owner);
 //		var_dump($user);
 //		die();
+
 
 		if(!empty($user))
 		{
