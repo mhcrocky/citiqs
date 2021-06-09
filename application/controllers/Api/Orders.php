@@ -137,9 +137,13 @@
                 exit($message);
             }
 
-            // echo '<pre>';
-            // print_r($order);
-            // echo '</pre>';
+            if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
+                echo '<pre>';
+                print_r($order);
+                echo '</pre>';
+                die("kkk");
+            }
+            
             $this->checkoOrderTime($order);
 
             // if we have an order, update shopprinterrequest_model
