@@ -8,8 +8,10 @@ function submitForm(formId) {
 function inIframe () {
     try {
         if (window.self !== window.top && payOrderGlobals) {
-            if (!payOrderGlobals.hasOwnProperty('tickecting')) {
+            if (!payOrderGlobals.hasOwnProperty('ticketing')) {
                 setInterval(checkIsIframeOrderPaid, 1000);
+            } else if(payOrderGlobals.hasOwnProperty('ticketing')){
+                setInterval(checkIsIframeTicketingPaid, 1000);
             }
         }
         return window.self !== window.top;
@@ -21,6 +23,21 @@ function inIframe () {
 function checkIsIframeOrderPaid() {
     let url = globalVariables.ajax + 'checkIsIframeOrderPaid?' + payOrderGlobals['orderDataGetKey'] + '=' + payOrderGlobals['orderRandomKey'];
     sendUrlRequest(url, 'checkIsIframeOrderPaid', checkIsIframeOrderPaidResponse);    
+}
+
+function checkIsIframeTicketingPaid() {
+    var url = globalVariables.baseUrl + 'Ajaxdorian/checkPaidStatus?order=' + payOrderGlobals['orderRandomKey'];
+    $.ajax({
+        url: url,
+        type: 'POST',
+        success: function(response){
+            response = JSON.parse(response);
+            if (response['status'] == 'true') {
+                let success = globalVariables.baseUrl + 'ticketing_success?orderid=' + response['transactionId'];
+                window.self.location.href = success;
+            }
+        }
+    }); 
 }
 
 function checkIsIframeOrderPaidResponse(response) {
