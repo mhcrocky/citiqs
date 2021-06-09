@@ -49,6 +49,7 @@
                 class="form-control custom-select custom-select-sm form-control-sm">
                 <option value="all">All</option>
                 <option value="past">Past</option>
+                <option value="today">Today</option>
                 <option value="future" selected>Future</option>
                 <option value="archived">Archived</option>
             </select>
