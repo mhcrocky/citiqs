@@ -385,6 +385,11 @@
             $this->shopprinters_model->setPrinterIdFromMacNumber($mac)->setObject();
             if ($this->shopprinters_model->active === '0') exit;
 
+            if ($this->shopprinters_model->active === '0') {
+                $message = 'Printer mac ' . $this->macToFetchOrder . ' is not active';
+                exit($message);
+            }
+
             $this->shopprinterrequest_model->insertPrinterRequest($mac);
             $this->macToFetchOrder = empty($this->shopprinters_model->masterMac) ? $mac : $this->shopprinters_model->masterMac;
 
