@@ -385,6 +385,7 @@
                 'where' => ['vendorId' => $this->vendorId]
             ]);
 
+            if (empty($printTimeConstraint)) return;
             $printTimeConstraint = reset($printTimeConstraint)['printTimeConstraint'];
             return date('Y-m-d H:i:s', strtotime( '-' . $printTimeConstraint . ' hours', time() ));
         }

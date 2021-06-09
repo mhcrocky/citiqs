@@ -149,7 +149,7 @@
         {
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
             // order expiration settings
-            if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
+            if ($printTimeConstraint && strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
                 $this->shoporder_model->setObjectId(intval($order['orderId']))->updateExpired('1');
                 exit;
             }
