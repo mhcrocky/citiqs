@@ -689,8 +689,8 @@ class Bookandpay_model extends CI_Model
 		$this->db->where('paid', '1');
 		$this->db->where('TransactionID', $transactionId);
 		$query = $this->db->get();
-        $result = $query->first_row();
-		if(isset($result->TransactionID)){
+
+		if($query->num_rows() > 0){
 			return true;
 		}
 		return false;

@@ -669,6 +669,7 @@ class Ajaxdorian extends CI_Controller
 
         if(!isset($orderData['transactionId'])){
             $data['status'] = 'false';
+            $data['message'] = '1';
             echo json_encode($data);
             return '';
         }
@@ -678,6 +679,7 @@ class Ajaxdorian extends CI_Controller
 
         if(!$isPaid){
             $data['status'] = 'false';
+            $data['message'] = '2';
             echo json_encode($data);
             return '';
         }

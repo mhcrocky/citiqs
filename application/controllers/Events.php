@@ -81,7 +81,7 @@ class Events extends BaseControllerWeb
 		$where = [
             "tbl_shop_voucher.vendorId" => $this->vendor_id,
             "tbl_shop_voucher.productGroup" => $this->config->item('eTicketing')
-        ];
+        ]; 
 
         $data = [
             'event' => $this->event_model->get_event($this->vendor_id,$eventId),
@@ -972,6 +972,10 @@ class Events extends BaseControllerWeb
         Ticketingemail_helper::sendEmailReservation($reservations, true);
         return ;
 
+    }
+
+    public function testIframe(){
+        echo '<iframe style="width:100%; height: 100%;" src="http://127.0.0.1/alfred/alfred/events/shop/demotiqs"></iframe>';
     }
 
     private function generateTransactionId(){
