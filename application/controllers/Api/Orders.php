@@ -62,6 +62,12 @@
             // get utility data
             list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
 
+            if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
+                echo '<pre>';
+                print_r($order);
+                echo '</pre>';
+                die("kkkqqq");
+            }
             // do printing job
             $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
 
@@ -135,13 +141,6 @@
             if (!$order) {
                 $message = 'No order for printer mac: ' . $this->macToFetchOrder;
                 exit($message);
-            }
-
-            if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
-                echo '<pre>';
-                print_r($order);
-                echo '</pre>';
-                die("kkk");
             }
             
             $this->checkoOrderTime($order);
