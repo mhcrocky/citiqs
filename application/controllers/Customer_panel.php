@@ -30,6 +30,7 @@ class  Customer_panel extends BaseControllerWeb
         $this->load->model('bookandpay_model');
         $this->load->model('bookandpaytimeslots_model');
         $this->load->model('email_templates_model');
+        $this->load->model('shopvoucher_model');
         $this->isLoggedIn();
     }
 
@@ -60,10 +61,26 @@ class  Customer_panel extends BaseControllerWeb
         $this->global['page'] = 'agenda';
 
         $emails = $this->email_templates_model->get_emails_by_user($this->user_model->id);
+        $what = ['tbl_shop_voucher.id' ,'tbl_shop_voucher.description', 'tbl_email_templates.template_name'];
+        $join = [
+			0 => [
+				'tbl_email_templates',
+				'tbl_email_templates.id = tbl_shop_voucher.emailId',
+				'right'
+			]
+		];
+		$where = [
+            "tbl_shop_voucher.vendorId" => $this->user_model->id,
+            "tbl_shop_voucher.productGroup" => $this->config->item('reservations')
+        ];
+        $vouchers = $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']);
+        $vouchers = ($vouchers == null) ? [] : $vouchers;
+
         $data = [
             'user' => $this->user_model,
             'agendas' => $this->bookandpayagendabooking_model->getbookingagendaall($this->user_model->id),
-            'emails' => $emails
+            'emails' => $emails,
+            'vouchers' => $vouchers
         ]; 
 
 		$this->global['pageTitle'] = 'TIQS : RESERVATIONS';
@@ -92,6 +109,23 @@ class  Customer_panel extends BaseControllerWeb
         $this->global['page'] = 'spots';
 
         $emails = $this->email_templates_model->get_emails_by_user($this->user_model->id);
+
+        $what = ['tbl_shop_voucher.id' ,'tbl_shop_voucher.description', 'tbl_email_templates.template_name'];
+        $join = [
+			0 => [
+				'tbl_email_templates',
+				'tbl_email_templates.id = tbl_shop_voucher.emailId',
+				'right'
+			]
+		];
+		$where = [
+            "tbl_shop_voucher.vendorId" => $this->user_model->id,
+            "tbl_shop_voucher.productGroup" => $this->config->item('reservations')
+        ];
+        $vouchers = $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']);
+        $vouchers = ($vouchers == null) ? [] : $vouchers;
+
+
         //there should be at least one email template
         if(!$emails) {
             redirect('customer_panel/agenda');
@@ -101,7 +135,8 @@ class  Customer_panel extends BaseControllerWeb
             'user' => $this->user_model,
             'spots' => $this->bookandpayspot_model->getSpotsByCustomer($this->user_model->id, $agendaId),
             'emails' => $emails,
-            'spotsLabel' => $this->bookandpayspot_model->getSpotsLabel($this->user_model->id)
+            'spotsLabel' => $this->bookandpayspot_model->getSpotsLabel($this->user_model->id),
+            'vouchers' => $vouchers
         ];
         if($agendaId){
             $data['agendas'] = $this->bookandpayagendabooking_model->getbookingspotagenda($this->user_model->id, $agendaId);
@@ -136,6 +171,20 @@ class  Customer_panel extends BaseControllerWeb
 
         $emails = $this->email_templates_model->get_emails_by_user($this->user_model->id);
         $spot = $this->bookandpayspot_model->getSpot($spotId);
+        $what = ['tbl_shop_voucher.id' ,'tbl_shop_voucher.description', 'tbl_email_templates.template_name'];
+        $join = [
+			0 => [
+				'tbl_email_templates',
+				'tbl_email_templates.id = tbl_shop_voucher.emailId',
+				'right'
+			]
+		];
+		$where = [
+            "tbl_shop_voucher.vendorId" => $this->user_model->id,
+            "tbl_shop_voucher.productGroup" => $this->config->item('reservations')
+        ];
+        $vouchers = $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']);
+        $vouchers = ($vouchers == null) ? [] : $vouchers;
 
         //there should be at least one email template
         if(!$emails) {
@@ -145,7 +194,8 @@ class  Customer_panel extends BaseControllerWeb
         $data = [
             'user' => $this->user_model,
             'emails' => $emails,
-            'agendaId' => isset($spot) ? $spot->agenda_id : ''
+            'agendaId' => isset($spot) ? $spot->agenda_id : '',
+            'vouchers' => $vouchers
         ];
 
         if($spotId){
