@@ -134,7 +134,8 @@
 
             if (!$order) exit;
 
-            $order = reset($order);
+            $message = 'No order for printer mac: ' . $this->macToFetchOrder;
+            if (!$order) exit($message);
 
             $this->checkoOrderTime($order);
 
