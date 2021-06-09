@@ -68,7 +68,7 @@
                         <div class="form-group col-sm-6">
                             <label class="labelColorBuyer" for="phoneInput"><?php echo $this->language->tLine('Phone');?><sup>*</sup></label>
                             <div>
-                                <select class="form-control inputFieldsBuyer" style="width:22% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
+                                <select class="form-control inputFieldsBuyer" style="width:35% !important; display:inline-block !important" name="phoneCountryCode" style="text-align:center">
                                     <?php foreach ($countryCodes as $code => $data) { ?>                                
                                         <option
                                             value="<?php $value = '00' . $data['code']; echo $value ?>"0
@@ -87,7 +87,7 @@
                                 <input
                                     id="phoneInput"
                                     class="form-control inputFieldsBuyer"
-                                    style="width:76% !important; display:inline-block !important"
+                                    style="width:63% !important; display:inline-block !important"
                                     name="user[mobile]"
                                     value="<?php echo $mobile; ?>"
                                     type="text"

@@ -271,8 +271,30 @@
 		}
 
 
-
 		public static function getCountryPhoneCodes(): array
+		{
+			return array(
+				'BE +32'=>array('name'=>'BELGIUM','code'=>'0032'),
+				'FR +33'=>array('name'=>'FRANCE','code'=>'0033'),
+				'NL +31'=>array('name'=>'NETHERLANDS','code'=>'0031'),
+				'GR +49'=>array('name'=>'GERMANY','code'=>'0049'),
+				'UK +44'=>array('name'=>'UNITED KINGDOM','code'=>'0044'),
+				'IR +353'=>array('name'=>'IRELAND','code'=>'00353'),
+				'IT +39'=>array('name'=>'ITALY','code'=>'0039'),
+				'ES +34'=>array('name'=>'SPAIN','code'=>'0034'),
+				'USA +1'=>array('name'=>'UNITED STATES','code'=>'001'),
+				'AU +43'=>array('name'=>'AUSTRIA','code'=>'0043'),
+				'CH +41'=>array('name'=>'SWITZERLAND','code'=>'0041'),
+				'GR +30'=>array('name'=>'GREECE','code'=>'0030'),
+				'CR +385'=>array('name'=>'CROATIA','code'=>'00385'),
+				'HU +36'=>array('name'=>'HUNGARY','code'=>'0036'),
+				'LU +352'=>array('name'=>'LUXEMBOURG','code'=>'00352'),
+				'PO +48'=>array('name'=>'POLAND','code'=>'0048'),
+
+			);
+		}
+
+		public static function getCountryPhoneCodesOld(): array
 		{
 			return array(
 				'NL'=>array('name'=>'NETHERLANDS','code'=>'31'),
