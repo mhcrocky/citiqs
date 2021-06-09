@@ -136,20 +136,22 @@
                 $message = 'No order for printer mac: ' . $this->macToFetchOrder;
                 exit($message);
             }
-            
+
+            $order = reset($order);
+
             $this->checkoOrderTime($order);
 
             // if we have an order, update shopprinterrequest_model
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
-            return reset($order);
+            return $order;
         }
 
         private function checkoOrderTime(array $order): void
         {
             $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
             // order expiration settings
-            if ($printTimeConstraint && strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
+            if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
                 $this->shoporder_model->setObjectId(intval($order['orderId']))->updateExpired('1');
                 exit;
             }
