@@ -62,14 +62,14 @@
             // get utility data
             list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
 
+            // send message
+            $this->sendMessages($order);
+
             // do printing job
             $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
 
             // final updates
             $this->doFinalUpdates($order, $orderExtendedIds);
-
-            // send message
-            $this->sendMessages($order);
 
             return;
             // $this->callOrderCopy($order, $fodUser);
@@ -371,6 +371,14 @@
             $replace = [$order['orderId'], $order['buyerUserName']];
             $message = str_replace ($search, $replace, $this->shopprinters_model->messageToBuyer);
 
+            if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
+                echo '<pre>';
+                print_r($this->shopprinters_model);
+                print_r($order);
+                echo '</pre>';
+                var_dump(Curl_helper::sendSmsNew($order['buyerMobile'], $message));
+                die('222');
+            }
             // send buyer sms
             if ($this->shopprinters_model->sendSmsToBuyer === '1') {
                 Curl_helper::sendSmsNew($order['buyerMobile'], $message);
