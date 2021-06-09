@@ -974,10 +974,6 @@ class Events extends BaseControllerWeb
 
     }
 
-    public function testIframe(){
-        echo '<iframe style="width:100%; height: 100%;" src="http://127.0.0.1/alfred/alfred/events/shop/demotiqs"></iframe>';
-    }
-
     private function generateTransactionId(){
         $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
         $transactionId = '14';
