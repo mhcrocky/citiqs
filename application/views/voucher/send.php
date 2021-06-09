@@ -1,4 +1,3 @@
-
 <div class="row mt-5 p-4">
     <div class="col-md-4 mb-3">
         <div class="input-group">
@@ -32,8 +31,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
-                    onsubmit="return save_vouchersend(event)" novalidate>
+                <form
+                    name="my-form"
+                    id="my-form"
+                    class="needs-validation"
+                    action="#"
+                    method="POST"
+                    onsubmit="return save_vouchersend(event)"
+                    novalidate
+                >
                     <button style="display: none;" id="submitForm" type="submit" class="btn btn-primary">Save
                         Voucher</button>
 
@@ -64,11 +70,14 @@
                         <label for="status" class="col-md-4 col-form-label text-md-left">Voucher
                         </label>
                         <div class="col-md-6">
-                            <select id="voucherId" name="voucherId" class="form-control input-w border-50 field">
-                                <option value="">Select option</option>
+                            <select id="voucherId" name="voucherId[]" class="form-control input-w border-50 field" multiple>
                                 <?php foreach($vouchers as $voucher): ?>
-                                <option id="option_<?php echo $voucher['id']; ?>" value="<?php echo $voucher['id']; ?>"  data-times="<?php echo intval($voucher['numberOfTimes']) - intval($voucher['voucherused']); ?>">
-                                <?php echo $voucher['description']; ?>
+                                <option
+                                    id="option_<?php echo $voucher['id']; ?>"
+                                    value="<?php echo $voucher['id']; ?>"
+                                    data-times="<?php echo intval($voucher['numberOfTimes']) - intval($voucher['voucherused']); ?>"
+                                >
+                                    <?php echo $voucher['description']; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -90,4 +99,3 @@
         </div>
     </div>
 </div>
-
