@@ -1105,16 +1105,22 @@ class Event_model extends CI_Model {
     {
 		//true => soldout
 		//false => available tickets
+
+		$dt = new DateTime( 'now');
+		$current_timestamp = $dt->format('Y-m-d H:i:s');
+
+
         $this->db->select('COUNT(numberofpersons) as sold_tickets');
         $this->db->from('tbl_bookandpay');
 		$this->db->where('tbl_bookandpay.customer', $customer);
 		$this->db->where('tbl_bookandpay.eventid', $ticketId);
 		$this->db->where('SpotId', '0');
 		$this->db->where('timeslotId', '0');
-		$this->db->where('paid', '1');
+		$this->db->where('(paid="1" OR DATE_ADD(bookdatetime, INTERVAL 10 MINUTE) >= "'.$current_timestamp.'")', NULL, false);
 		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'left');
 		
         $query = $this->db->get();
+		var_dump($this->db->error());
 		$result = $query->first_row();
 
         if($query->num_rows() > 0) {

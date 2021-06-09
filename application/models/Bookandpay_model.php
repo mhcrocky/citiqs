@@ -572,11 +572,15 @@ class Bookandpay_model extends CI_Model
 
 	function getBookingCountByTimeSlot($timeSlotId, $fromtime, $totime)
     {
-        $this->db->select('*');
+		$dt = new DateTime( 'now');
+		$current_timestamp = $dt->format('Y-m-d H:i:s');
+
+		$this->db->select('*');
         $this->db->from('tbl_bookandpay');
 		$this->db->where('timeslotId', $timeSlotId);
 		$this->db->like('timefrom', $fromtime);
 		$this->db->like('timeto', $totime);
+		$this->db->where('(paid="1" OR DATE_ADD(bookdatetime, INTERVAL 10 MINUTE) >= "'.$current_timestamp.'")', NULL, false);
 
         $query = $this->db->get();
 
@@ -589,13 +593,16 @@ class Bookandpay_model extends CI_Model
 	
 	function getBookingCountBySpot($spotId, $timeSlotId, $fromtime, $totime)
     {
+		$dt = new DateTime( 'now');
+		$current_timestamp = $dt->format('Y-m-d H:i:s');
+
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
 		$this->db->where('timeslotId', $timeSlotId);
 		$this->db->where('SpotId', $spotId);
 		$this->db->like('timefrom', $fromtime);
 		$this->db->like('timeto', $totime);
-		
+		$this->db->where('(paid="1" OR DATE_ADD(bookdatetime, INTERVAL 10 MINUTE) >= "'.$current_timestamp.'")', NULL, false);
 
         $query = $this->db->get();
 
@@ -608,10 +615,14 @@ class Bookandpay_model extends CI_Model
 
 	function getBookingCountByAgenda($agendaId)
     {
+		$dt = new DateTime( 'now');
+		$current_timestamp = $dt->format('Y-m-d H:i:s');
+
         $this->db->select('*');
         $this->db->from('tbl_bookandpay');
 		$this->db->where('eventid', $agendaId);
 		$this->db->where('SpotId <>', '0');
+		$this->db->where('(paid="1" OR DATE_ADD(bookdatetime, INTERVAL 10 MINUTE) >= "'.$current_timestamp.'")', NULL, false);
 		
         $query = $this->db->get();
 
