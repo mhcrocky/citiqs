@@ -368,13 +368,6 @@
             $search = $this->config->item('messageToBuyerTags');
             $replace = [$order['orderId'], $order['buyerUserName']];
             $message = str_replace ($search, $replace, $this->shopprinters_model->messageToBuyer);
-            if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
-                echo '<pre>';
-                print_r($order);
-                echo '</pre>';
-                var_dump(Curl_helper::sendSmsNew($order['buyerMobile'], $message));
-                die('111');
-            }
 
             // send buyer sms
             if ($this->shopprinters_model->sendSmsToBuyer === '1') {
