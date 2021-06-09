@@ -308,7 +308,7 @@ class Booking_events extends BaseControllerWeb
         
         $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : '';
         
-        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();;
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
 
         if(count($orderData) < 1){
             redirect(base_url());
@@ -640,7 +640,7 @@ class Booking_events extends BaseControllerWeb
         // remove order ids because user update same orders when go back from payments
         $this->removeOrderIds($orderData, $orderRandomKey);
 
-        $this->processPaymenttype($strUrl, $reservationIds);
+        $this->processPaymenttype($strUrl, $orderRandomKey, $reservationIds);
     }
 
     private function removeOrderIds(array $orderData, string $orderRandomKey): void
@@ -654,7 +654,7 @@ class Booking_events extends BaseControllerWeb
         return;
     }
  
-    private function processPaymenttype(string $strUrl, array $reservationIds)
+    private function processPaymenttype(string $strUrl, string $orderRandomKey, array $reservationIds)
 	{
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
@@ -663,6 +663,14 @@ class Booking_events extends BaseControllerWeb
         if ($result->request->result == '1') {
 			//Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'updating transactionid');
             $transactionId = $result->transaction->transactionId;
+
+            $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+            $orderData['transactionId'] = $transactionId;
+            $this
+                ->shopsession_model
+                ->setProperty('randomKey', $orderRandomKey)
+                ->updateSessionData($orderData);
+
             $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
 			//Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', $result->transaction->paymentURL );
 			redirect($result->transaction->paymentURL);
