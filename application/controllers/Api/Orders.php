@@ -62,6 +62,8 @@
             // get utility data
             list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
 
+            // send message
+            $this->sendMessages($order);
 
             // do printing job
             $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
@@ -69,8 +71,6 @@
             // final updates
             $this->doFinalUpdates($order, $orderExtendedIds);
 
-            // send message
-            $this->sendMessages($order);
             return;
             // $this->callOrderCopy($order, $fodUser);
         }
