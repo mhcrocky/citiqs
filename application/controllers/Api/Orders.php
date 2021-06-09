@@ -137,9 +137,9 @@
                 exit($message);
             }
 
-            echo '<pre>';
-            print_r($order);
-            echo '</pre>';
+            // echo '<pre>';
+            // print_r($order);
+            // echo '</pre>';
             $this->checkoOrderTime($order);
 
             // if we have an order, update shopprinterrequest_model
