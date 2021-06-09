@@ -47,11 +47,11 @@
 			$longDescription = '';
 		}
 
-//        if ($product['longDescription']) {
-//            $longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="' . $product['longDescription'] . '"></i>';
-//        } else {
-//            $longDescription = '';
-//        }
+        // if ($product['longDescription']) {
+        //     $longDescription = '<i class="fa fa-info-circle" aria-hidden="true" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="' . $product['longDescription'] . '"></i>';
+        // } else {
+        //     $longDescription = '';
+        // }
 
 
             
