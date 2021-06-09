@@ -336,13 +336,7 @@
             //     echo '</pre>';
             // }
 
-            // $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            // if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
-            //     echo '2<br>';
-            //     echo '<pre>';
-            //     print_r($order);
-            //     echo '</pre>';
-            // }
+            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
             $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
 
             return [$fodUser, $orderExtendedIds, $printOnlyReceipt];
