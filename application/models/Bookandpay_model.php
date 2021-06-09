@@ -682,6 +682,20 @@ class Bookandpay_model extends CI_Model
 		return $result;
 	}
 
+	public function checkPaidStatus($transactionId) : bool
+	{
+		$this->db->select('TransactionID');
+		$this->db->from('tbl_bookandpay');
+		$this->db->where('paid', '1');
+		$this->db->where('TransactionID', $transactionId);
+		$query = $this->db->get();
+        $result = $query->first_row();
+		if(isset($result->TransactionID)){
+			return true;
+		}
+		return false;
+	}
+
 	function getBookingByTimeSlot($customer, $eventDate, $timeSlot)
     {
         $this->db->select('*');
