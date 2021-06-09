@@ -168,6 +168,12 @@
                                            placeholder="Select Email Template"></search-select>
                         </div>
                         <div class="form-group">
+                            <label for="voucher">Voucher</label>
+                            <search-select :options="vouchersOptions"
+                                           v-model="agendaModalData.voucherId"
+                                           placeholder="Select Voucher"></search-select>
+                        </div>
+                        <div class="form-group">
                             <label for="online"><?php echo $this->language->tLine('Status'); ?></label>
                             <select class="form-control" id="online" name="online"
                                     v-model="agendaModalData.online">
@@ -323,6 +329,12 @@
                                            placeholder="Select Email Template"></search-select>
                         </div>
                         <div class="form-group">
+                            <label for="voucher"><?php echo $this->language->tLine('Voucher'); ?></label>
+                            <search-select :options="vouchersOptions"
+                                           v-model="agendaModalData.voucherId"
+                                           placeholder="Select Voucher"></search-select>
+                        </div>
+                        <div class="form-group">
                             <label for="online">Status</label>
                             <select class="form-control" id="online" name="online"
                                     v-model="agendaModalData.online">
@@ -439,6 +451,7 @@ const templateGlobals = (function() {
         data: {
             agendas: JSON.parse('<?php echo json_encode($agendas);?>'),
             emails: JSON.parse('<?php echo json_encode($emails); ?>'),
+            vouchers: JSON.parse('<?php echo json_encode($vouchers); ?>'),
             method: 'create',
             baseURL: "<?php echo base_url(); ?>",
             agendaModalData: {
@@ -447,6 +460,7 @@ const templateGlobals = (function() {
                 ReservationDateTime: '',
                 Background: 'blue-light',
                 email_id: null,
+                voucherId: null,
                 agendaImage: '',
                 backgroundImage: '',
                 max_spots: '',
@@ -523,7 +537,8 @@ const templateGlobals = (function() {
                     ReservationDescription: '',
                     ReservationDateTime: '',
                     Background: 'blue-light',
-                    email_id: null
+                    email_id: null,
+                    voucherId: null,
                 };
                 $('#add_agenda_modal').modal('show');
             },
@@ -546,6 +561,7 @@ const templateGlobals = (function() {
                 formData.append("imgDeleted", $('.imgDeleted').val());
                 formData.append("backgroundImgDeleted", $('.backgroundImgDeleted').val());
                 formData.append("max_spots", this.agendaModalData.max_spots);
+                formData.append("voucherId", this.agendaModalData.voucherId);
                 formData.append("agendas", $('#agendas').val());
                 if (this.agendaModalData.id) {
                     formData.append("id", this.agendaModalData.id);
@@ -583,6 +599,7 @@ const templateGlobals = (function() {
                 formData.append("agendaImage", $("#agendaImage-2")[0].files[0]);
                 formData.append("backgroundImage", $("#backgroundImage-2")[0].files[0]);
                 formData.append("max_spots", this.agendaModalData.max_spots);
+                formData.append("voucherId", this.agendaModalData.voucherId);
                 formData.append("agendas", this.agendaModalData.id);
 
 
@@ -647,6 +664,16 @@ const templateGlobals = (function() {
                     });
                 })
                 return emailsOptions;
+            },
+            vouchersOptions: function () {
+                let vouchersOptions = [];
+                this.vouchers.forEach((voucher) => {
+                    vouchersOptions.push({
+                        value: voucher.id,
+                        text: voucher.template_name + '(' + voucher.description +  ')'
+                    });
+                })
+                return vouchersOptions;
             }
         },
         mounted: function () {
