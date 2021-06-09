@@ -75,6 +75,32 @@ if ( isset($design['shop']['eventDescript']) ) {
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
+            Show info button background color:
+            <input class="form-control colorInput" name="shop[class][show-info][background]"
+                data-jscolor="" data-css-selector="class" data-css-selector-value="show-info"
+                data-css-property="background" style="border-radius: 50px" onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['shop']['class']['show-info']['background']) ) { ?>
+                value="<?php echo $design['shop']['class']['show-info']['background']?>" data-value="1"
+                <?php } else{ ?> value="#17a2b8" <?php } ?> />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
+            Show info button font color:
+            <input class="form-control colorInput" name="shop[class][show-info][color]"
+                data-jscolor="" data-css-selector="class" data-css-selector-value="show-info"
+                data-css-property="color" style="border-radius: 50px" onfocus="styleELements(this)"
+                oninput="styleELements(this)"
+                <?php if ( isset($design['shop']['class']['show-info']['color']) ) { ?>
+                value="<?php echo $design['shop']['class']['show-info']['color']?>" data-value="1"
+                <?php } else{ ?> value="#fff" <?php } ?> />
+        </label>
+    </div>
+
+    <div class="form-group col-sm-12">
+        <label style="display:block;">
             Checkout button background color:
             <input class="form-control colorInput" name="shop[class][header__checkout][background-color]"
                 data-jscolor="" data-css-selector="class" data-css-selector-value="header__checkout"
