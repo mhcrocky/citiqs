@@ -531,6 +531,7 @@ class Voucher extends REST_Controller
         $voucherDescription = $data[0]['description'];
         $voucherAmount = $data[0]['amount'];
         $voucherPercent = $data[0]['percent'];
+        $file = FCPATH . '/uploads/qrcodes/';
         switch (strtolower($_SERVER['HTTP_HOST'])) {
             case 'tiqs.com':
 				$file = '/home/tiqs/domains/tiqs.com/public_html/alfred/uploads/qrcodes/';
@@ -644,5 +645,50 @@ class Voucher extends REST_Controller
 //		return $CI->email->send();
 //    }
 
+    public function createAndSendVoucher_post(): void
+    {
+        $data = $this->input->post(null, true);
+        $data['email'] = urldecode($data['email']);
+        $what = ['*'];
+        $voucherIds = [];
+        $response = [];
+
+        (is_array($data['voucherId'])) ? $voucherIds = $data['voucherId'] : array_push($voucherIds, $data['voucherId']);
+
+        foreach($voucherIds as $voucherId ) {
+            $where = ["id" => $voucherId];
+            $voucher = $this->shopvoucher_model->read($what,$where);
+            $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher, $voucherId);
+            $data['voucherId'] = $voucherId;
+            if ($this->vouchersend_model->setObjectFromArray($data)->create()) {
+                if($data['send'] == 1){
+                    $voucherused = intval($voucher[0]['voucherused'])+1;
+                    $this->shopvoucher_model->setProperty('voucherused', $voucherused)->customUpdate($where);
+                    if (empty($response['success'])) {
+                        $response['success'] = [
+                            'status' => '1',
+                            'messages' => ['Voucher(s) sent'],
+                            'ids' => []
+                        ];
+                    }
+                    array_push($response['success']['ids'], $voucherId);
+                } else {
+                    if (empty($response['failed'])) {
+                        $response['failed'] = [
+                            'status' => 0,
+                            'messages' => []
+                        ];
+                    }
+                    $message = 'Voucher with id "' . $voucherId . '" is not sent to given email';
+                    array_push($response['failed']['messages'], $message);
+                }                
+            }
+        }
+
+		
+
+        echo json_encode($response);
+        return;
+    }
 
 }
