@@ -215,7 +215,7 @@ class Ajaxdorian extends CI_Controller
         } else {
             $upload_data = $this->upload->data();;
 			$imgName = $upload_data['file_name'];
-            if(!empty($this->input->post('oldImage'))){
+            if(!empty($this->input->post('oldImage')) && $this->input->post('oldImage') != 'undefined'){
                 unlink(FCPATH . 'assets/home/images/'. $this->input->post('oldImage'));
             }
             
@@ -243,7 +243,7 @@ class Ajaxdorian extends CI_Controller
         } else {
             $upload_data = $this->upload->data();;
 			$backgroundImgName = $upload_data['file_name'];
-            if(!empty($this->input->post('backgroundOldImage'))){
+            if(!empty($this->input->post('backgroundOldImage')) && $this->input->post('backgroundOldImage') != 'undefined' ){
                 unlink(FCPATH . 'assets/home/images/'. $this->input->post('backgroundOldImage'));
             }
             
@@ -259,9 +259,10 @@ class Ajaxdorian extends CI_Controller
             'Customer' => $this->session->userdata('userId'),
             'email_id' => $this->input->post('email_id'),
             'online' => intval($this->input->post('online')),
-            'agendaImage' => ($imgName == null) ? '' : $imgName,
-            'backgroundImage' => ($backgroundImgName == null) ? '' : $backgroundImgName,
-            'max_spots' => intval($this->input->post('max_spots'))
+            'agendaImage' => ($imgName == null || $imgName == 'undefined') ? '' : $imgName,
+            'backgroundImage' => ($backgroundImgName == null || $backgroundImgName == 'undefined') ? '' : $backgroundImgName,
+            'max_spots' => intval($this->input->post('max_spots')),
+            'voucherId' => $this->input->post('voucherId')
         ];
 
         $agenda_id = $this->input->post('id');
@@ -338,7 +339,7 @@ class Ajaxdorian extends CI_Controller
         } else {
             $upload_data = $this->upload->data();;
 			$imgName = $upload_data['file_name'];
-            if(!empty($this->input->post('oldImage'))){
+            if(!empty($this->input->post('oldImage')) && $this->input->post('oldImage') != 'undefined'){
                 unlink(FCPATH . 'assets/home/images/'. $this->input->post('oldImage'));
             }
             
@@ -354,7 +355,7 @@ class Ajaxdorian extends CI_Controller
             'numberofpersons' => $this->input->post('numberofpersons'),
             'sort_order' => $this->input->post('sort_order'),
             'price' => $this->input->post('price'),
-            'image' => $imgName,
+            'image' => ($imgName == null || $imgName == 'undefined') ? '' : $imgName,
             'maxBooking' => $this->input->post('maxBooking'),
             'background_color' => $this->input->post('background_color'),
             'send_to_email' => $this->input->post('send_to_email'),
@@ -362,6 +363,7 @@ class Ajaxdorian extends CI_Controller
             'agenda_id' => $this->input->post('agenda_id'),
             'email_id' => $this->input->post('email_id'),
             'spotLabelId' => $this->input->post('spotLabelId'),
+            'voucherId' => $this->input->post('voucherId')
         ];
 
         $spot_id = $this->input->post('id');
@@ -434,7 +436,8 @@ class Ajaxdorian extends CI_Controller
             'price' => $this->input->post('price'),
             'reservationFee' => $this->input->post('reservationFee'),
             'spot_id' => $this->input->post('spot_id'),
-            'email_id' => $this->input->post('email_id')
+            'email_id' => $this->input->post('email_id'),
+            'voucherId' => $this->input->post('voucherId')
         ];
 
         $timeslot_id = $this->input->post('id');

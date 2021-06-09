@@ -238,6 +238,12 @@ li {
                                 <search-select :options="emailsOptions" v-model="spotModalData.email_id"
                                     placeholder="Select Email Template"></search-select>
                             </div>
+                            <div class="form-group">
+                                <label for="voucher"><?php echo $this->language->tLine('Voucher'); ?></label>
+                                <search-select :options="vouchersOptions"
+                                           v-model="spotModalData.voucherId"
+                                           placeholder="Select Voucher"></search-select>
+                            </div>
                             <div style="display: flex;" class="form-group">
                                 <label style="margin-right:20px;" for="totime"><?php echo $this->language->tLine('Send To Email'); ?></label>
                                 <ul>
@@ -347,6 +353,7 @@ li {
             spots: JSON.parse('<?php echo json_encode($spots);?>'),
             agendas: JSON.parse('<?php echo json_encode($agendas);?>'),
             emails: JSON.parse('<?php echo json_encode($emails); ?>'),
+            vouchers: JSON.parse('<?php echo json_encode($vouchers); ?>'),
             spotsLabel: JSON.parse(`<?php echo json_encode($spotsLabel); ?>`),
             baseURL: "<?php echo base_url(); ?>",
             method: 'create',
@@ -366,7 +373,8 @@ li {
                 maxBooking: 1,
                 agenda_id: null,
                 email_id: null,
-                spotLabelId: null
+                spotLabelId: null,
+                voucherId: null,
             },
             test: '',
             spot_images: [
@@ -409,7 +417,8 @@ li {
                     maxBooking: 1,
                     agenda_id: null,
                     email_id: null,
-                    spotLabelId: null
+                    spotLabelId: null,
+                    voucherId: null
                 }
                 this.method = 'create';
                 $('#add_spot_modal').modal('show');
@@ -496,6 +505,7 @@ li {
                 formData.append("spot_email", this.spotModalData.spot_email);
                 formData.append("email_id", this.spotModalData.email_id);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
+                formData.append("voucherId", this.spotModalData.voucherId);
                 formData.append("spots", $('#spots').val());
                 if (this.spotModalData.id) {
                     formData.append("id", this.spotModalData.id);
@@ -552,6 +562,7 @@ li {
                 formData.append("maxBooking", this.spotModalData.maxBooking);
                 formData.append("background_color", this.spotModalData.background_color);
                 formData.append("spotLabelId", this.spotModalData.spotLabelId);
+                formData.append("voucherId", this.spotModalData.voucherId);
                 formData.append("spots", this.spotModalData.id);
                 
 
@@ -698,6 +709,16 @@ li {
                     });
                 })
                 return emailsOptions;
+            },
+            vouchersOptions: function () {
+                let vouchersOptions = [];
+                this.vouchers.forEach((voucher) => {
+                    vouchersOptions.push({
+                        value: voucher.id,
+                        text: voucher.template_name + '(' + voucher.description +  ')'
+                    });
+                })
+                return vouchersOptions;
             }
         },
         mounted: function() {

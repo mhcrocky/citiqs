@@ -127,13 +127,13 @@ $(document).ready( function () {
     footerCallback: function( tfoot, data, start, end, display ) {
       var api = this.api(), data;
            
-      let amountTotalData = api.column( 8,{ search: 'applied' } ).cache('search');
+      let amountTotalData = api.column( 9,{ search: 'applied' } ).cache('search');
       let amountTotal = amountTotalData.length ? 
          amountTotalData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-      $(tfoot).find('th').eq(7).html(round_up(amountTotal));
+      $(tfoot).find('th').eq(8).html(round_up(amountTotal));
     },
     rowId: function(a) {
       return 'row_id_' + a.id;
@@ -163,6 +163,10 @@ $(document).ready( function () {
     {
       title: 'Spot Label',
       data: 'Spotlabel'
+    },
+    {
+      title: 'Date',
+      data: 'eventdate'
     },
     {
       title: 'Timeslot',
@@ -224,7 +228,7 @@ $(document).ready( function () {
         var date = full_timestamp.split(" - ");
         var min = moment(date[0]);
         var max = moment(date[1]);
-        var startDate = moment(data[10]);
+        var startDate = moment(data[11]);
         if (min == '' && max == '') { min = todayDate; }
         if (min == '' && startDate <= max) { return true;}
         if(max == '' && startDate >= min) {return true;}

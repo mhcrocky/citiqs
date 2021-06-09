@@ -157,35 +157,35 @@ li {
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label for="descript">Spot</label>
+                                <label for="descript"><?php echo $this->language->tLine('Spot'); ?></label>
                                 <search-select :options="spotsOptions" v-model="modalSpotId" placeholder="Select Spot">
                                 </search-select>
                             </div>
 
                             <div class="form-group">
-                                <label for="timeslotdescript">Name</label>
+                                <label for="timeslotdescript"><?php echo $this->language->tLine('Name'); ?></label>
                                 <input type="text" name="timeslotdescript" v-model="timeSlotModalData.timeslotdescript"
                                     class="form-control" id="descript">
                             </div>
 
                             <div class="form-group">
-                                <label for="available_items">Maximum available SPOTS</label>
+                                <label for="available_items"><?php echo $this->language->tLine('Maximum available SPOTS'); ?></label>
                                 <input type="text" name="available_items" v-model="timeSlotModalData.available_items"
-                                    class="form-control" id="available_items" placeholder="Maximum available SPOTS">
+                                    class="form-control" id="available_items" placeholder="<?php echo $this->language->tLine('Maximum available SPOTS'); ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="fromtime">From Time</label>
+                                <label for="fromtime"><?php echo $this->language->tLine('From Time'); ?></label>
                                 <input type="time" name="fromtime" id="fromtime" class="form-control"
-                                    placeholder="From Time" onfocus="checkField(this)" required>
+                                    placeholder="<?php echo $this->language->tLine('From Time'); ?>" onfocus="checkField(this)" required>
                             </div>
                             <div class="form-group">
-                                <label for="totime">To Time</label>
+                                <label for="totime"><?php echo $this->language->tLine('To Time'); ?></label>
                                 <input type="time" name="totime" id="totime" class="form-control"
-                                    placeholder="To Time" onfocus="checkField(this)" required>
+                                    placeholder="<?php echo $this->language->tLine('To Time'); ?>" onfocus="checkField(this)" required>
                             </div>
                             <div style="display: flex;" class="form-group">
-                                <label style="margin-right:20px;" for="totime">Multiple Timeslots</label>
+                                <label style="margin-right:20px;" for="totime"><?php echo $this->language->tLine('Multiple Timeslots'); ?></label>
                                 <ul>
                                     <li>
                                         <div class="custom-control custom-checkbox">
@@ -198,19 +198,25 @@ li {
                                 </ul>
                             </div>
                             <div v-if="timeSlotModalData.multiple_timeslots == 1" class="form-group">
-                                <label for="totime">Duration</label>
+                                <label for="totime"><?php echo $this->language->tLine('Duration'); ?></label>
                                 <input type="number" v-model="durationToMin" class="form-control"
-                                    placeholder="Duration(minutes)">
+                                    placeholder="<?php echo $this->language->tLine('Duration'); ?>(<?php echo $this->language->tLine('minutes'); ?>)">
                             </div>
                             <div v-if="timeSlotModalData.multiple_timeslots == 1" class="form-group">
-                                <label for="totime">Overflow</label>
+                                <label for="totime"><?php echo $this->language->tLine('Overflow'); ?></label>
                                 <input type="number" v-model="overflowToMin" class="form-control"
-                                    placeholder="Overflow(minutes)">
+                                    placeholder="<?php echo $this->language->tLine('Overflow'); ?>(<?php echo $this->language->tLine('minutes'); ?>)">
                             </div>
                             <div class="form-group">
-                                <label for="descript">Email Template</label>
+                                <label for="descript"><?php echo $this->language->tLine('Email Template'); ?></label>
                                 <search-select :options="emailsOptions" v-model="timeSlotModalData.email_id"
                                     placeholder="Select Email Template"></search-select>
+                            </div>
+                            <div class="form-group">
+                                <label for="voucher"><?php echo $this->language->tLine('Voucher'); ?></label>
+                                <search-select :options="vouchersOptions"
+                                           v-model="timeSlotModalData.voucherId"
+                                           placeholder="Select Voucher"></search-select>
                             </div>
                             <div class="form-group">
                                 <label for="Price">Price</label>
@@ -260,6 +266,7 @@ li {
             timeslots: JSON.parse('<?php echo json_encode($timeslots);?>'),
             spots: JSON.parse('<?php echo json_encode($spots);?>'),
             emails: JSON.parse('<?php echo json_encode($emails); ?>'),
+            vouchers: JSON.parse('<?php echo json_encode($vouchers); ?>'),
             baseURL: "<?php echo base_url(); ?>",
             timeOptions: {
                 format: 'HH:mm:ss',
@@ -279,7 +286,8 @@ li {
                 price: '',
                 reservationFee: '',
                 spot_id: null,
-                email_id: null
+                email_id: null,
+                voucherId: null
             },
             deleteTimeSlotTemp: null
 
@@ -301,7 +309,8 @@ li {
                     reservationFee: '',
                     spot_id: null,
                     email_id: null,
-                    id: null
+                    id: null,
+                    voucherId: null
                 };
                 this.method = 'create';
                 $('#add_time_slot_modal').modal('show');
@@ -342,6 +351,7 @@ li {
                 formData.append("reservationFee", this.timeSlotModalData.reservationFee);
                 formData.append("spot_id", this.timeSlotModalData.spot_id);
                 formData.append("email_id", this.timeSlotModalData.email_id);
+                formData.append("voucherId", this.timeSlotModalData.voucherId);
                 this.method = 'create';
 
                 axios.post(this.baseURL + 'ajaxdorian/saveTimeSLot', formData).then((response) => {
@@ -387,6 +397,8 @@ li {
                 formData.append("reservationFee", this.timeSlotModalData.reservationFee);
                 formData.append("spot_id", this.timeSlotModalData.spot_id);
                 formData.append("email_id", this.timeSlotModalData.email_id);
+                formData.append("voucherId", this.timeSlotModalData.voucherId);
+
                 if (this.timeSlotModalData.id) {
                     formData.append("id", this.timeSlotModalData.id);
                     this.method = 'edit';
@@ -542,6 +554,16 @@ li {
                     });
                 })
                 return emailsOptions;
+            },
+            vouchersOptions: function () {
+                let vouchersOptions = [];
+                this.vouchers.forEach((voucher) => {
+                    vouchersOptions.push({
+                        value: voucher.id,
+                        text: voucher.template_name + '(' + voucher.description +  ')'
+                    });
+                })
+                return vouchersOptions;
             }
         },
         mounted: function() {
