@@ -281,10 +281,13 @@ $activePayments = array_values($activePayments);
 <script>
     var payOrderGlobals = (function (){
         let globals = {
-            'tickecting' : '1'
+            'ticketing' : '1',
+            'orderRandomKey': '<?php echo $orderRandomKey; ?>'
         };
 
         Object.freeze(globals);
         return globals;
-    }())
+    }());
+
+
 </script>
