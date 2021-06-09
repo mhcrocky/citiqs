@@ -142,7 +142,7 @@
             // if we have an order, update shopprinterrequest_model
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
 
-            return $order;
+            return reset($order);
         }
 
         private function checkoOrderTime(array $order): void
@@ -329,12 +329,6 @@
             $fodUser = $this->shopvendorfod_model->isFodVendor($vendorId);
 
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
-                echo '2<br>';
-                echo '<pre>';
-                print_r($order);
-                echo '</pre>';
-            }
             $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
 
             return [$fodUser, $orderExtendedIds, $printOnlyReceipt];
