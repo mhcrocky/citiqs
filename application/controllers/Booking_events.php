@@ -668,8 +668,9 @@ class Booking_events extends BaseControllerWeb
             $orderData['transactionId'] = $transactionId;
             $this
                 ->shopsession_model
-                ->setProperty('randomKey', $orderRandomKey)
-                ->updateSessionData($orderData);
+                ->setIdFromRandomKey($orderRandomKey)
+                ->setProperty('orderData', Jwt_helper::encode($orderData))
+                ->update();
 
             $this->bookandpay_model->updateTransactionIdByReservationIds($reservationIds, $transactionId);
 			//Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', $result->transaction->paymentURL );
