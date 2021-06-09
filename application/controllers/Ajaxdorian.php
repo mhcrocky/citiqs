@@ -30,6 +30,7 @@ class Ajaxdorian extends CI_Controller
         $this->load->model('shopsession_model');
         $this->load->model('email_templates_model');
         $this->load->model('email_templates_model');
+        $this->load->model('bookandpay_model');
         $this->load->model('bookandpayagendabooking_model');
         $this->load->model('bookandpayspot_model');
         $this->load->model('bookandpaytimeslots_model');
@@ -640,9 +641,54 @@ class Ajaxdorian extends CI_Controller
         return;
     }
 
+    public function checkPaidStatus(): string
+    {
+        $data= [];
+
+        $orderRandomKey = $this->input->get('order') ? $this->input->get('order') : false;
+
+        if(!$orderRandomKey){
+            $data['status'] = 'error';
+            $data['message'] = 'Something is wrong!';
+            echo  json_encode($data);
+            return '';
+            
+        }
+
+        $orderData = $this->shopsession_model->setProperty('randomKey', $orderRandomKey)->getArrayOrderDetails();
+
+        if(count($orderData) < 1){
+            $data['status'] = 'error';
+            $data['message'] = 'Something is wrong!';
+            echo json_encode($data);
+            return '';
+        }
+
+        if(!isset($orderData['transactionId'])){
+            $data['status'] = 'false';
+            echo json_encode($data);
+            return '';
+        }
+
+
+        $isPaid = $this->bookandpay_model->checkPaidStatus($orderData['transactionId']);
+
+        if(!$isPaid){
+            $data['status'] = 'false';
+            echo json_encode($data);
+            return '';
+        }
+
+        $data['status'] = 'true';
+        $data['transactionId'] = $orderData['transactionId'];
+        echo json_encode($data);
+
+        return '';
+    }
+
     private function saveTemplateHtml($path, $html): bool
     {
         if (file_put_contents($path, $html)) return true;
-            return false;
-        }
+        return false;
+    }
 }
