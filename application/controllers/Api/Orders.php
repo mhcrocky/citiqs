@@ -132,10 +132,10 @@
         {
             $order = $this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder);
 
-            if (!$order) exit;
-
-            $message = 'No order for printer mac: ' . $this->macToFetchOrder;
-            if (!$order) exit($message);
+            if (!$order) {
+                $message = 'No order for printer mac: ' . $this->macToFetchOrder;
+                exit($message);
+            }
 
             $this->checkoOrderTime($order);
 
