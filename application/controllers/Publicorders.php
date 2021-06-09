@@ -135,9 +135,6 @@
 
             $preferedView = $this->getPreferedView($data, $spot, $vendor, $orderDataRandomKey);
 
-            // echo '<pre>';
-            // print_r($data['mainProducts']);
-            // die();
             if ($vendor['preferredView'] === $this->config->item('view2021')) {
                 $this->loadViews($preferedView, $this->global, $data, 'footer2021', 'header2021');
             } else {

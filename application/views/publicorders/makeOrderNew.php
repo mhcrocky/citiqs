@@ -47,6 +47,14 @@
                     <div class="shop__items selectedSpotBackground">
                         <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
                             <h2 class="categoryName"><?php echo $category; ?></h2>
+                            <!-- 43533 and 417 -->
+                            <?php if (isset($categoriesImages[$category]) && in_array($vendor['vendorId'], [417, 43533]) ) { ?>
+                                <img
+                                    class="img-responsive center-block"
+                                    src="<?php echo $categoriesImagesRelPath . $categoriesImages[$category][0]['image']; ?>"
+                                    alt="<?php echo $category; ?>"
+                                />
+                            <?php } ?>
                             <!--we have the line with the link to the menu -->
                             <span onclick="goToSlide(0)">BACK TO MENU</span>
                         </div>
