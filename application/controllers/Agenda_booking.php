@@ -339,7 +339,7 @@ class Agenda_booking extends BaseControllerWeb
 
             $reservations = $orderData['reservations'];
 
-            if (!is_null($reservations)) {
+            if (!is_null($reservations) && is_array($reservations)) {
                 array_push($reservations, $result->reservationId);
             } else {
                 $reservations = [];
