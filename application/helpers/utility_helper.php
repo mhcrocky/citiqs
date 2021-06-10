@@ -660,4 +660,15 @@
             unset($array[$key]);
             return $value;
         }
+
+        public static function testingVendors(int $vendorId): bool
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+
+            if ($vendorId && in_array($vendorId, $CI->config->item('testingIds'))) return true;
+
+            return false;
+        }
+
     }

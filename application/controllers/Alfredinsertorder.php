@@ -333,41 +333,10 @@ class Alfredinsertorder extends BaseControllerWeb
 
         (intval($post['pos'])) ? $this->handlePosOrder($post, $orderId) : $this->insertOrderExtended($post, $orderId);
 
+        $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC
+        $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
+        $this->sendEmailReceipt($post['order']['paid']);
 
-
-        if ($post['vendorId'] == 99999999) {
-            $timeStart = time();
-            echo 'time start</br>';            
-            var_dump($timeStart);
-
-            $orderForImage = $this->shoporder_model->setObjectId($orderId)->fetchOrdersForPrintcopy();
-            $orderForImage = reset($orderForImage);
-            Orderprint_helper::saveOrderImage($orderForImage);
-            $imageTime = time();
-            echo 'image created';            
-            var_dump($imageTime);
-
-            Receiptprint_helper::printAllReceipts($orderId);
-
-            $receiptTime = time();
-            echo 'receipt created';    
-            var_dump($receiptTime);
-
-            $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
-            $notificationTime = time();
-            echo 'notification send';    
-            var_dump($notificationTime);
-
-            $this->sendEmailReceipt($post['order']['paid']);
-            $emailTime = time();
-            echo 'email send created';    
-            var_dump($emailTime);
-            die('time end');
-        } else {
-            $this->saveOrderImage($orderId); // OPTIMIZE THREAD ... ASYNC
-            $this->sendNotifictaion($post, $orderId, $post['order']['paid']);
-            $this->sendEmailReceipt($post['order']['paid']);
-        }
         return $orderId;
     }
 

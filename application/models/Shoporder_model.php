@@ -1710,4 +1710,24 @@
 
             return;
         }
+
+        public function getLastVoucherOrder(): ?array
+        {
+            $order = $this->readImproved([
+                'what' => [
+                    $this->table . '.id',
+                    $this->table . '.paid',
+                    $this->table . '.voucherAmount'
+                ],
+                'where' => [
+                    $this->table . '.voucherId' => $this->voucherId
+                ],
+                'conditions' => [
+                    'ORDER_BY' => [$this->table . '.id', 'DESC'],
+                    'LIMIT' => ['1']
+                ]
+            ]);
+
+            return is_null($order) ? null : reset($order);
+        }
     }
