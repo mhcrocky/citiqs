@@ -1061,6 +1061,8 @@ class Ajax extends CI_Controller
 
         $this->shopvoucher_model->setProperty('code', $code)->setVoucher();
 
+        $this->shopvoucher_model->rollBackVoucher($this->shoporder_model);
+
         if (
             !$this->isBlocked($orderData)
             || !$this->checkIsVoucherExist($orderData, $this->shopvoucher_model, $this->shopsession_model)

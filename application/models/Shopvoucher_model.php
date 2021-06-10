@@ -181,4 +181,16 @@
             return is_null($voucher) ? null : reset($voucher);
         }
 
+        public function rollBackVoucher(object $orderObject): bool
+        {
+            $order = $orderObject->setProperty('voucherId', $this->id)->getLastVoucherOrder();
+
+            if ($order['paid'] === '1') return false;
+
+            $this->active = '1';
+            ($this->percent) ? $this->percentUsed = '0' : $this->amount += floatval($order['voucherAmount']);
+            ($this->productId) ? intval($this->productId) : $this->productId = null;
+
+            return $this->update();
+        }
     }
