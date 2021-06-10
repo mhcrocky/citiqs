@@ -70,7 +70,7 @@
                         <label for="status" class="col-md-4 col-form-label text-md-left">Voucher
                         </label>
                         <div class="col-md-6">
-                            <select id="voucherId" name="voucherId[]" class="form-control input-w border-50 field" multiple>
+                            <select id="voucherId" name="voucherId" class="form-control input-w border-50 field">
                                 <?php if(isset($vouchers) && is_array($vouchers)): ?>
                                 <?php foreach($vouchers as $voucher): ?>
                                 <option
@@ -81,7 +81,7 @@
                                     <?php echo $voucher['description']; ?>
                                 </option>
                                 <?php endforeach; ?>
-                                <?php endif; ?>
+                                <?php endif; ?> 
                             </select>
                         </div>
                     </div>

@@ -664,6 +664,7 @@ class  Customer_panel extends BaseControllerWeb
             'eventid' => $data['agenda_id'],
             'eventdate' => date("Y-m-d", strtotime(urldecode($data['event_date']))),
             'SpotId' => $data['spot_id'],
+            'Spotlabel' => $data['spot_label'],
             'timefrom' => urldecode($data['fromtime']),
             'timeto' =>  urldecode($data['totime']),
             'timeslotId' => $data['timeslot'],
