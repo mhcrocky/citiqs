@@ -666,7 +666,7 @@ class  Customer_panel extends BaseControllerWeb
             'SpotId' => $data['spot_id'],
             'timefrom' => urldecode($data['fromtime']),
             'timeto' =>  urldecode($data['totime']),
-            'timeslot' => $data['timeslot'],
+            'timeslotId' => $data['timeslot'],
             'name' => $data['name'],
             'email' => urldecode($data['email']),
             'mobilephone' => $data['mobile'],

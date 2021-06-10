@@ -34,6 +34,10 @@ $(document).ready(function () {
         data: "email",
       },
       {
+        title: "Date",
+        data: "eventdate",
+      },
+      {
         title: "Reservation Time",
         data: "reservationtime",
       },
@@ -65,7 +69,7 @@ function bookReservation(e){
       mobile: $('#mobile').val(),
       event_date: encodeURI($('#agendas option:selected').val()),
       agenda_id: $('#agendas option:selected').attr('data-agenda'),
-      timeslot: $('#spots option:selected').val(),
+      timeslot: $('#timeslots option:selected').val(),
       spot_id: $('#spots option:selected').val(),
       fromtime: encodeURI($('#timeslots option:selected').attr('data-fromtime')),
       totime: encodeURI($('#timeslots option:selected').attr('data-totime')),
@@ -101,7 +105,7 @@ function get_spots() {
       let spots = JSON.parse(data);
       var html = '<option value="">Select option</option>';
       $.each(spots, function (index, spot) {
-          html += '<option value="' + spot.spot_id + '" >' + spot.spot_descript + '</option>';
+          html += '<option value="' + spot.spot_id + '"data-spotLabel="'+spot.spot_descript+'" >' + spot.spot_descript + '</option>';
       });
       $('#spots').html(html);
 
