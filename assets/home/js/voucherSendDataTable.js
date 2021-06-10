@@ -67,7 +67,7 @@ $(document).ready(function () {
       }
       
     ],
-    order: [[1, 'asc']]
+    order: [[0, 'asc']]
   });
 
   $('#report_filter').addClass('text-right');
