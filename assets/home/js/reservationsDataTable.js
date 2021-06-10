@@ -65,7 +65,7 @@ function bookReservation(e){
       mobile: $('#mobile').val(),
       event_date: encodeURI($('#agendas option:selected').val()),
       agenda_id: $('#agendas option:selected').attr('data-agenda'),
-      timeslot: $('#spots option:selected').val(),
+      timeslot: $('#timeslots option:selected').val(),
       spot_id: $('#spots option:selected').val(),
       fromtime: encodeURI($('#timeslots option:selected').attr('data-fromtime')),
       totime: encodeURI($('#timeslots option:selected').attr('data-totime')),
