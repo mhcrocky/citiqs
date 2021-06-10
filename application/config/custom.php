@@ -588,3 +588,5 @@ $config['monthPeriod'] = 'month';
 $config['reportPeriods'] = [$config['dayPeriod'],$config['weekPeriod'], $config['monthPeriod']];
 
 $config['messageToBuyerTags'] = ['{orderId}', '{buyerName}'];
+
+$config['testingIds'] = [417, 43533];
