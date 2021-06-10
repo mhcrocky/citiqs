@@ -62,14 +62,14 @@
             // get utility data
             list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
 
+            // send message
+            $this->sendMessages($order);
+
             // do printing job
             $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
 
             // final updates
             $this->doFinalUpdates($order, $orderExtendedIds);
-
-            // send message
-            $this->sendMessages($order);
 
             return;
             // $this->callOrderCopy($order, $fodUser);
@@ -132,7 +132,10 @@
         {
             $order = $this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder);
 
-            if (!$order) exit;
+            if (!$order) {
+                $message = 'No order for printer mac: ' . $this->macToFetchOrder;
+                exit($message);
+            }
 
             $order = reset($order);
 
@@ -326,6 +329,7 @@
         {
             $vendorId = intval($order['vendorId']);
             $fodUser = $this->shopvendorfod_model->isFodVendor($vendorId);
+
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
             $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
 
@@ -367,6 +371,14 @@
             $replace = [$order['orderId'], $order['buyerUserName']];
             $message = str_replace ($search, $replace, $this->shopprinters_model->messageToBuyer);
 
+            // if ($this->macToFetchOrder === '00:11:62:0D:D3:E5') {
+            //     echo '<pre>';
+            //     print_r($this->shopprinters_model);
+            //     print_r($order);
+            //     echo '</pre>';
+            //     var_dump(Curl_helper::sendSmsNew($order['buyerMobile'], $message));
+            //     die('222');
+            // }
             // send buyer sms
             if ($this->shopprinters_model->sendSmsToBuyer === '1') {
                 Curl_helper::sendSmsNew($order['buyerMobile'], $message);
@@ -383,6 +395,11 @@
         {
             $this->shopprinters_model->setPrinterIdFromMacNumber($mac)->setObject();
             if ($this->shopprinters_model->active === '0') exit;
+
+            if ($this->shopprinters_model->active === '0') {
+                $message = 'Printer mac ' . $this->macToFetchOrder . ' is not active';
+                exit($message);
+            }
 
             $this->shopprinterrequest_model->insertPrinterRequest($mac);
             $this->macToFetchOrder = empty($this->shopprinters_model->masterMac) ? $mac : $this->shopprinters_model->masterMac;
