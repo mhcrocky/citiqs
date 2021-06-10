@@ -58,6 +58,9 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['emaildesigner/new'] = "emaildesigner/edit";
 
+$route['Paysuccesslinktgetfood'] = "Paysuccesslinktgetfood";
+
+
 $route['thuishaven'] = "thuishavensoldout";
 $route['places'] = "places/index";
 $route['places/(:any)'] = "places/index/$1";
