@@ -87,11 +87,8 @@ class   Bookandpayagendabooking_model extends CI_Model
 		// where ".$datefromquery.$datetoquery." AND timeslot!=0 AND paid !=0 AND NOT(timefrom ='00:00:00' AND timeto ='00:00:00') 
 		$sql="SELECT DATE(`ReservationDateTime`) as eventdate, COUNT(tbl_bookandpay.numberofpersons) as numberofpersons FROM tbl_bookandpayagenda LEFT JOIN tbl_bookandpay ON tbl_bookandpayagenda.id = tbl_bookandpay.eventid  ".
 			// "where ".$datefromquery.$datetoquery." AND timeslot!=0 AND paid !=0 AND NOT(timefrom ='00:00:00' AND timeto ='00:00:00') ".
-			"where tbl_bookandpayagenda.Customer=$customer ".
-			((isset($queryeventdate))?" and eventdate in ($queryeventdate)":"").
-			((isset($querySpotlabels))?" and Spotlabel in ($querySpotlabels)":"").
-			$this->generalquery().
-		" GROUP by eventdate ORDER BY eventdate asc";
+			"where paid='1' AND  tbl_bookandpayagenda.Customer='$customer' AND SpotId <> '0'
+			 GROUP BY tbl_bookandpayagenda.id ORDER BY eventdate asc";
 		// die();
 
 
@@ -241,7 +238,7 @@ class   Bookandpayagendabooking_model extends CI_Model
 
 	function get_scannedIn($customer,$eventdate = false,$spot_id = false,$timeslot = false){
 		$sql="SELECT id,timefrom,timeto FROM tbl_bookandpay 
-		WHERE paid=1 AND numberin=1 AND customer=$customer";
+		WHERE paid='1' AND numberin='1' AND customer=$customer AND SpotId <> '0'";
 		if($eventdate){
 			$sql .= " AND eventdate='$eventdate'";
 		}
@@ -313,17 +310,19 @@ class   Bookandpayagendabooking_model extends CI_Model
 			return '"' . $string . '"';
 			}, $_GET["Spotlabels"] ));
 		}
-		$sql="SELECT eventdate,SpotId,Spotlabel, count(tbl_bookandpay.numberofpersons) as totalpersons, timeslot FROM tbl_bookandpay".
-		// "where eventdate='$date'AND timeslot!=0 AND paid !=0 AND  NOT(timefrom ='00:00:00' AND timeto ='00:00:00') ".
-		" where paid = 1 AND eventdate='$date' AND customer=$customer".
-		((isset($queryeventdate))?" and eventdate in ($queryeventdate)":"").
-		((isset($querySpotlabels))?" and Spotlabel in ($querySpotlabels)":"").
-		$this->generalquery().
-		" GROUP by eventdate,SpotId ORDER BY eventdate asc";
+
+		$sql = "SELECT DATE(`ReservationDateTime`) as eventdate, SpotId, Spotlabel, COUNT(tbl_bookandpay.numberofpersons) as totalpersons 
+		FROM tbl_bookandpayagenda LEFT JOIN tbl_bookandpay ON tbl_bookandpayagenda.id = tbl_bookandpay.eventid  
+		WHERE paid='1' AND tbl_bookandpayagenda.Customer='$customer' AND SpotId <> '0'
+		GROUP by tbl_bookandpayagenda.id,SpotId ORDER BY eventdate asc";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		$newData = [];
 		foreach ($data as $key => $value) {
+			if($value['eventdate'] != $date){
+				continue;
+			}
+
 			$newData[$key] = [
 				"spot_id"=>$value['SpotId'],
 				"image" => $value['Spotlabel'],//str_replace(".png","",$value['image']),
@@ -340,11 +339,11 @@ class   Bookandpayagendabooking_model extends CI_Model
 	function get_timeslot_count($spot_id){
 		$sql="SELECT sum(available_items) as max_items 
 		FROM tbl_bookandpaytimeslots 
-		WHERE spot_id = $spot_id
+		WHERE spot_id = '$spot_id'
 		GROUP BY spot_id";
 		$query = $this->db->query($sql);
 		$result = $query->row();
-		return $result->max_items;
+		return Isset($result->max_items) ? $result->max_items : 0;
 	}
 
 	function get_slot_byspotidDate($spot_id,$date){
