@@ -71,6 +71,7 @@
                         </label>
                         <div class="col-md-6">
                             <select id="voucherId" name="voucherId[]" class="form-control input-w border-50 field" multiple>
+                                <?php if(isset($vouchers) && is_array($vouchers)): ?>
                                 <?php foreach($vouchers as $voucher): ?>
                                 <option
                                     id="option_<?php echo $voucher['id']; ?>"
@@ -80,6 +81,7 @@
                                     <?php echo $voucher['description']; ?>
                                 </option>
                                 <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                     </div>
