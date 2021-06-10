@@ -34,8 +34,31 @@ $(document).ready(function () {
         data: "email",
       },
       {
+        title: "Phone",
+        data: "mobilephone",
+      },
+      {
         title: "Date",
         data: "eventdate",
+      },
+      {
+        title: "Spot Label",
+        data: "Spotlabel",
+      },
+      {
+        title: "Price",
+        data: "price",
+      },
+      {
+        title: "Timeslot",
+        data: null,
+        "render": function (data, type, row) {
+          let timefrom = data.eventdate + ' ' + data.timefrom;
+          let timeto = data.eventdate + ' ' + data.timeto;
+          let timeslot = dayjs(timefrom).format('HH:mm') + ' - ' + dayjs(timeto).format('HH:mm');
+          
+          return timeslot;
+        }
       },
       {
         title: "Reservation Time",
@@ -44,7 +67,7 @@ $(document).ready(function () {
       
       
     ],
-    order: [[1, 'asc']]
+    order: [[9, 'desc']]
   });
 
   $('#report_filter').addClass('text-right');
@@ -71,6 +94,7 @@ function bookReservation(e){
       agenda_id: $('#agendas option:selected').attr('data-agenda'),
       timeslot: $('#timeslots option:selected').val(),
       spot_id: $('#spots option:selected').val(),
+      spot_label: $('#spots option:selected').text(),
       fromtime: encodeURI($('#timeslots option:selected').attr('data-fromtime')),
       totime: encodeURI($('#timeslots option:selected').attr('data-totime')),
       emailId: $('#email_template option:selected').val(),
@@ -105,7 +129,7 @@ function get_spots() {
       let spots = JSON.parse(data);
       var html = '<option value="">Select option</option>';
       $.each(spots, function (index, spot) {
-          html += '<option value="' + spot.spot_id + '"data-spotLabel="'+spot.spot_descript+'" >' + spot.spot_descript + '</option>';
+          html += '<option value="' + spot.spot_id + '" >' + spot.spot_descript + '</option>';
       });
       $('#spots').html(html);
 
