@@ -147,7 +147,7 @@ $config['serviceTypes'] = [
 ];
 
 $config['typeColors'] = [
-    'local' => '#e25f2a',
+    'local' => '#FBDE8A',
     'delivery' => '#72b19f',
     'pickup' => '#008ae6',
 ];

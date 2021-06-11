@@ -8,13 +8,19 @@
         text-align: center;
     }
 </style>
+
+<!--
 <script>
+/*
 	setInterval(function(){
 
 		location.reload();
 
 	}, 90000);
+*/
 </script>
+-->
+
 <script>
 
 	var x = document.getElementById("myAudio");

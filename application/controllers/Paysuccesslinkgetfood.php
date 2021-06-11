@@ -3,7 +3,7 @@
 
 require APPPATH . '/libraries/BaseControllerWeb.php';
 
-class  Paysuccesslinktgetfood extends BaseControllerWeb
+class  Paysuccesslinkgetfood extends BaseControllerWeb
 {
     /**
      * This is default constructor of the class
