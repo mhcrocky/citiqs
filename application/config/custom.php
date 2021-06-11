@@ -12,7 +12,7 @@ $config['dropOfPointFalse'] = 0;
 // TIQS id in tbl_user used when inserting finde item in tbl_label for userId value
 $config['tiqsId'] = TIQS_ID;
 // TIQS email
-$config['tiqsEmail'] = 'ceo@tiqs.com';
+$config['tiqsEmail'] = (ENVIRONMENT === 'development') ? 'antevidovic@gmail.com' : 'ceo@tiqs.com';
 $config['petersEmail'] = MIGRATION_EMAIL;
 
 // business types ids => Id is id value of business type in tbl_business_types
