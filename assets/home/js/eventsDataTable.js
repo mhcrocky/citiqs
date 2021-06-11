@@ -179,8 +179,8 @@ $(document).ready(function() {
             if(settings.nTable.id == 'events'){
                 let val = $('#selectTime option:selected').val();
                 let current_timestamp = dayjs();
-                let today = dayjs('YYYY-MM-DD');
-                let start_date = dayjs(data[2]);
+                let today = dayjs().format('YYYY-MM-DD');
+                let start_date = data[2];
                 //let end_str_timestamp = data[8] + ' ' + data[10];
                 //let end_timestamp = dayjs(end_str_timestamp);
                 let start_str_timestamp = data[2] + ' ' + data[3];
