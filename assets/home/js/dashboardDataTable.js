@@ -515,7 +515,7 @@ function format(d) {
 				'</tr>';
       var productsVat = [];
 			$.each(d.child, function(indexInArray, val) {
-        
+        console.log(val);
         if(productsVat[String(val.productVat)] !== undefined){
           productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
           productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
@@ -569,6 +569,10 @@ function format(d) {
 		$('#report tbody').on('click', 'td', function() {
 			var tr = $(this).closest('tr');
 			var row = table.row(tr);
+      if(typeof row.data() === 'undefined'){
+        return ;
+      }
+
 			if (row.child.isShown()) {
 				// This row is already open - close it
 				row.child.hide();
