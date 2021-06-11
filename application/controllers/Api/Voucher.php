@@ -159,7 +159,7 @@ class Voucher extends REST_Controller
         $what = ['*'];
 		$where = ["id" => $data['voucherId']];
         $voucher = $this->shopvoucher_model->read($what,$where);
-        $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher, $data['voucherId']);
+        $data['send'] = $this->emailSend($data['name'], $data['email'], $voucher[0], $data['voucherId']);
         if ($this->vouchersend_model->setObjectFromArray($data)->create()) {
             if($data['send'] == 1){
                 $voucherused = intval($voucher[0]['voucherused'])+1;
@@ -193,6 +193,7 @@ class Voucher extends REST_Controller
         $what = ['*'];
 		$where = ["id" => $data['voucherId']];
         $voucher = $this->shopvoucher_model->read($what,$where);
+        $voucher = isset($voucher[0]) ? $voucher[0] : [];
         $send = $this->emailSend($data['name'], $data['email'], $voucher, $data['voucherId']);
         if ($send == 1) {
             if($data['send'] == 0){
@@ -216,6 +217,67 @@ class Voucher extends REST_Controller
 
         $this->set_response($response, 201);
         return;
+
+
+    }
+
+    public function multiple_create_vouchersend_post()
+    {
+        $data = $this->input->post(null, true);
+        $email = urldecode($data['email']);
+        $name = $data['name'];
+        $voucherIds = json_decode($this->input->post('voucherIds'));
+        $vendorId = $this->session->userdata('userId');
+        $what = ['*'];
+		$where = ["vendorId" => $vendorId, "voucherused < numberOfTimes"];
+        $results = $this->shopvoucher_model->read($what,$where, [], "where_in", ['id', $voucherIds]);
+        $vouchers = ($results == null) ? [] : $results;
+        $mailsend = 0;
+        if(count($vouchers)){
+            foreach($vouchers as $voucher){
+                $send = $this->emailSend($name, $email, $voucher, $voucher['id']);
+
+                $vouchersendData = [
+                    'name' => $name,
+                    'email' => $email,
+                    'send' => $send,
+                    'voucherId' => $voucher['id']
+                ];
+
+                if ($this->vouchersend_model->setObjectFromArray($vouchersendData)->create()) {
+                    if($send == 1){
+                        $mailsend = 1;
+                        $voucherused = intval($voucher['voucherused'])+1;
+                        $whereVoucher = [
+                            "vendorId" => $vendorId,
+                            "id" => $voucher['id']
+                        ];
+                        $this->shopvoucher_model->setProperty('voucherused', $voucherused)->customUpdate($whereVoucher);
+                    }
+                    
+                }
+            }
+        }
+        
+        if($mailsend == 1) {
+            $response = [
+                'status' => "success",
+                'message' => "The vouchers are send successfully!",
+            ];
+    
+            $this->set_response($response, 201);
+            return;
+        }
+
+
+        $response = [
+            'status' => "error",
+            'message' => "Something went wrong!",
+        ];
+
+        $this->set_response($response, 201);
+        return;
+        
 
 
     }
@@ -526,11 +588,11 @@ class Voucher extends REST_Controller
     private function emailSend($name, $email, $data, $voucherId)
 	{
         $mailsend = 0;
-        $qrtext = $data[0]['code'];
-        $voucherCode = $data[0]['code'];
-        $voucherDescription = $data[0]['description'];
-        $voucherAmount = $data[0]['amount'];
-        $voucherPercent = $data[0]['percent'];
+        $qrtext = $data['code'];
+        $voucherCode = $data['code'];
+        $voucherDescription = $data['description'];
+        $voucherAmount = $data['amount'];
+        $voucherPercent = $data['percent'];
         $file = FCPATH . '/uploads/qrcodes/';
         switch (strtolower($_SERVER['HTTP_HOST'])) {
             case 'tiqs.com':
@@ -573,11 +635,11 @@ class Voucher extends REST_Controller
         }
 
                         
-		if($data[0]['emailId']) {
+		if($data['emailId']) {
             $this->load->model('email_templates_model');
-            $emailTemplate = $this->email_templates_model->get_emails_by_id($data[0]['emailId']);
+            $emailTemplate = $this->email_templates_model->get_emails_by_id($data['emailId']);
             $this->config->load('custom');
-            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$data[0]['vendorId'].'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
+            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$data['vendorId'].'/'.$emailTemplate->template_file .'.'.$this->config->item('template_extension'));
             $qrlink = $SERVERFILEPATH . $file_name1;
 			if($mailtemplate) {
                 $dt = new DateTime('now');
