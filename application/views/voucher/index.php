@@ -1,4 +1,3 @@
-
 <div class="row mt-5 p-4">
     <div class="col-md-4 mb-3">
         <div class="input-group">
@@ -43,6 +42,7 @@
 </div>
 
 <div class="row mt-5 p-4">
+    <!--
     <div class="col-md-4 mb-3">
         <div class="input-group">
             <input type="button" value="<?php echo $this->language->tline('Update Email Templates'); ?>"
@@ -54,6 +54,27 @@
                 <i style="color: #fff;font-size: 18px;" class="fa fa-envelope"></i>
         </div>
     </div>
+    -->
+
+    <div class="col-md-4 mb-3">
+        <div class="input-group">
+            <input type="button" value="<?php echo $this->language->tline('Send Vouchers'); ?>"
+                style="background: #007bff !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left" onclick="vouchersendModal()" 
+                data-toggle="modal" data-target="#sendVoucherModal">
+
+            <input type="button"
+                value="<?php echo $this->language->tline('Update Email Templates'); ?>"
+                style="background: #3498eb !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left" data-toggle="modal"
+                data-target="#editVoucherTemplateModal">
+            <span style="background: #275C5D;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3"
+                data-toggle="modal" data-target="#editVoucherTemplateModal">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-envelope"></i>
+            </span>
+        </div>
+    </div>
+
     <div class="col-md-4 mb-3">
         <div class="input-group">
             <input type="button" value="<?php echo $this->language->tline('Activated'); ?>"
@@ -92,22 +113,17 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form
-                    name="my-form"
-                    id="my-form"
-                    class="needs-validation"
-                    action="#"
-                    method="POST"
-                    onsubmit="return saveVoucher(event)"
-                    novalidate
-                >
-                    <button style="display: none;" id="submitForm" type="submit" class="btn btn-primary">Save Voucher</button>
+                <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
+                    onsubmit="return saveVoucher(event)" novalidate>
+                    <button style="display: none;" id="submitForm" type="submit" class="btn btn-primary">Save
+                        Voucher</button>
                     <input type="hidden" id="vendorId" name="vendorId" value="<?php echo $vendorId; ?>" />
                     <input type="hidden" id="active" name="active" value="1" />
                     <div class="form-group row">
-                        <label for="productGroup" class="col-md-4 col-form-label text-md-left">Select product group</label>
+                        <label for="productGroup" class="col-md-4 col-form-label text-md-left">Select product
+                            group</label>
                         <div class="col-md-6">
-                            <select id="productGroup" name="productGroup" class="form-control input-w border-50 field">
+                            <select id="productGroup" name="productGroup" class="form-control form-input input-w border-50 field">
                                 <option value="">Select option</option>
                                 <?php foreach ($productGroups as $group) { ?>
                                 <option value="<?php echo $group; ?>"><?php echo $group; ?></option>
@@ -116,14 +132,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label
-                            for="event-name"
-                            class="col-md-4 col-form-label text-md-left"
-                        >
+                        <label for="event-name" class="col-md-4 col-form-label text-md-left">
                             Number of Voucher to make
                         </label>
                         <div class="col-md-6">
-                            <input type="number" id="codes" class="input-w border-50 form-control" name="codes" required />
+                            <input type="number" id="codes" class="input-w border-50 form-control form-input" name="codes"
+                                required />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -131,20 +145,16 @@
                             Voucher Description
                         </label>
                         <div class="col-md-6">
-                            <input
-                                type="text"
-                                id="description"
-                                class="input-w border-50 form-control"
-                                name="description"
-                                required
-                            />
+                            <input type="text" id="description" class="input-w border-50 form-control form-input"
+                                name="description" required />
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="status" class="col-md-4 col-form-label text-md-left">Voucher Code</label>
                         <div class="col-md-6">
-                            <select id="status" onchange="voucherCode()" name="status" class="form-control input-w border-50 field">
+                            <select id="status" onchange="voucherCode()" name="status"
+                                class="form-control form-input input-w border-50 field">
                                 <option value="" disabled>Select option</option>
                                 <option value="unique" selected>Unique</option>
                                 <option value="same">Same</option>
@@ -160,20 +170,15 @@
                     <div class="form-group row">
                         <label for="percent" class="col-md-4 col-form-label text-md-left">Percent</label>
                         <div class="col-md-6">
-                            <input
-                                type="number"
-                                id="percent"
-                                class="input-w border-50 form-control"
-                                name="percent"
-                                onchange="disabledField(this, 'amount')" required
-                            />
+                            <input type="number" id="percent" class="input-w border-50 form-control form-input" name="percent"
+                                onchange="disabledField(this, 'amount')" required />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="expire" class="col-md-4 col-form-label text-md-left">Expire</label>
                         <div class="col-md-6">
 
-                            <input type="date" id="expire" class="input-w border-50 form-control" name="expire"
+                            <input type="date" id="expire" class="input-w border-50 form-control form-input" name="expire"
                                 required>
 
                         </div>
@@ -183,8 +188,8 @@
                         <label for="amount" class="col-md-4 col-form-label text-md-left">Amount</label>
                         <div class="col-md-6">
 
-                            <input type="number" step="0.01" id="amount" class="input-w border-50 form-control" name="amount"
-                                onchange="disabledField(this, 'percent')" required>
+                            <input type="number" step="0.01" id="amount" class="input-w border-50 form-control form-input"
+                                name="amount" onchange="disabledField(this, 'percent')" required>
 
                         </div>
                     </div>
@@ -192,7 +197,7 @@
                         <label for="status" class="col-md-4 col-form-label text-md-left">Email Template
                         </label>
                         <div class="col-md-6">
-                            <select id="emailId" name="emailId" class="form-control input-w border-50 field">
+                            <select id="emailId" name="emailId" class="form-control form-input input-w border-50 field">
                                 <option value="">Select option</option>
                                 <?php foreach($emails as $email): ?>
                                 <option value="<?php echo $email['id']; ?>"><?php echo $email['template_name']; ?>
@@ -207,7 +212,7 @@
                         <div class="col-md-6">
 
 
-                            <select id="productId" class="js-select2 form-control input-w border-50 w-100"
+                            <select id="productId" class="js-select2 form-control form-input input-w border-50 w-100"
                                 name="productId">
                                 <option value="" disabled selected>Select product</option>
                                 <?php foreach($products as $product): ?>
@@ -348,7 +353,8 @@
                                     </span>
                                 </div>
                                 <div class="w-100 mt-2 p-1 text-right">
-                                    <input type="submit" name="submit" id="upload-file" class="btn btn-success d-none" value="Upload">
+                                    <input type="submit" name="submit" id="upload-file" class="btn btn-success d-none"
+                                        value="Upload">
                                     <input type="reset" id="resetUpload" class="btn btn-success d-none" value="Upload">
                                 </div>
                             </div>
@@ -368,8 +374,9 @@
                             </div>
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="description">Description: </label>
-                                <select id="csvdescription" name="description" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                <select id="csvdescription" name="description"
+                                    class="col-md-9 filterSelection form-control">
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
                             <div class="d-flex col-md-12 align-items-center mb-3">
@@ -381,51 +388,55 @@
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="code">Percent: </label>
                                 <select id="csvpercent" name="percent" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="code">Percent Used: </label>
-                                <select id="csvpercentUsed" name="percentUsed" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                <select id="csvpercentUsed" name="percentUsed"
+                                    class="col-md-9 filterSelection form-control">
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="code">Expire: </label>
                                 <select id="csvexpire" name="expire" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="active">Expire: </label>
                                 <select id="csvactive" name="active" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="numberOfTimes">Number Of Times: </label>
-                                <select id="csvnumberOfTimes" name="numberOfTimes" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                <select id="csvnumberOfTimes" name="numberOfTimes"
+                                    class="col-md-9 filterSelection form-control">
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="activated">Activated: </label>
-                                <select id="csvactivated" name="activated" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                <select id="csvactivated" name="activated"
+                                    class="col-md-9 filterSelection form-control">
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
 
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="productId">Product Id: </label>
-                                <select id="csvproductId" name="productId" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                <select id="csvproductId" name="productId"
+                                    class="col-md-9 filterSelection form-control">
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
 
                             <div class="d-flex col-md-12 align-items-center mb-3">
                                 <label class="col-md-3 mr-3" for="emailId">Email Id: </label>
                                 <select id="csvemailId" name="emailId" class="col-md-9 filterSelection form-control">
-                                <option value="">Select Option</option>
+                                    <option value="">Select Option</option>
                                 </select>
                             </div>
                             <input type="hidden" name="csv_path" id="csv_path">
@@ -439,95 +450,157 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="emailTemplateClose"
                         data-dismiss="modal">Close</button>
-                    <button type="submit" onclick="uploadCsvFile()" id="uploadCsvFile" class="btn btn-primary">Upload File</button>
-                    <button type="submit" onclick="importCsvFile()" id="importCsvFile" class="btn btn-primary d-none">Import CSV File</button>
+                    <button type="submit" onclick="uploadCsvFile()" id="uploadCsvFile" class="btn btn-primary">Upload
+                        File</button>
+                    <button type="submit" onclick="importCsvFile()" id="importCsvFile"
+                        class="btn btn-primary d-none">Import CSV File</button>
                 </div>
 
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- Send Voucher Modal -->
+<div class="modal fade" id="sendVoucherModal" tabindex="-1" role="dialog" aria-labelledby="sendVoucherModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="sendVoucherModalLabel">Send Vouchers</h5>
+                <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
+                    onsubmit="return save_vouchersend(event)" novalidate>
+                    <button style="display: none;" id="submitForm" type="submit" class="btn btn-primary">Save
+                        Voucher</button>
+                    <div id="reachedMaxTimes" class="form-group row p-2 mb-3">
 
-    <script>
-    const emailsTemplates = `<?php echo json_encode($emails); ?>`;
-    const templateGlobals = (function() {
-        let globals = {
-            'templateHtmlId': 'templateHtml',
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-left">
+                            Name
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="text" id="name" class="input-w border-50 form-control form-vouchersend" name="name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email" class="col-md-4 col-form-label text-md-left">
+                            Email
+                        </label>
+                        <div class="col-md-6">
+
+                            <input type="email" id="email" class="input-w border-50 form-control form-vouchersend" name="email" required>
+                        </div>
+                    </div>
+
+
+                    <input type="reset" id="resetVoucherSendForm" class="d-none" value="Reset">
+                    <input type="submit" class="d-none" id="submitVoucherSend" value="Reset">
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeVoucherSendModal" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" onclick="vouchersendForm()" class="btn btn-primary">Send Vouchers</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+const emailsTemplates = `<?php echo json_encode($emails); ?>`;
+const templateGlobals = (function() {
+    let globals = {
+        'templateHtmlId': 'templateHtml',
+    }
+    <?php if (!empty($templateContent)) { ?>
+    globals['templateContent'] = `<?php echo $templateContent; ?>`
+    <?php } ?>
+    <?php if (!empty($templateId)) { ?>
+    globals['templateId'] = '<?php echo $templateId; ?>'
+    <?php } ?>
+
+
+    Object.freeze(globals);
+
+    return globals;
+}());
+
+$(document).ready(function() {
+    $("#fileForm").on("submit", function(e) {
+        e.preventDefault();
+        let filename = $("#filename").val();
+        let file = filename.split(".");
+        let ext = file[1];
+        if (ext != 'csv' && ext != 'CSV') {
+
+            alertify['error']('The filetype you are attempting to upload is not allowed!');
         }
-        <?php if (!empty($templateContent)) { ?>
-        globals['templateContent'] = `<?php echo $templateContent; ?>`
-        <?php } ?>
-        <?php if (!empty($templateId)) { ?>
-        globals['templateId'] = '<?php echo $templateId; ?>'
-        <?php } ?>
 
+        var formData = new FormData(this);
+        formData.append('userfile', $("#userfile")[0].files[0]);
 
-        Object.freeze(globals);
+        $.ajax({
+            url: globalVariables.baseUrl + "Api/Voucher/upload_csv",
+            data: formData,
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                console.log(data);
+                data = JSON.parse(data);
+                var header = '';
+                var html = '';
+                var arr = [];
+                var arrLen = data.length - 1;
+                var csv_path = data[arrLen];
 
-        return globals;
-    }());
-
-    $(document).ready(function() {
-        $("#fileForm").on("submit", function(e) {
-            e.preventDefault();
-            let filename = $("#filename").val();
-            let file = filename.split(".");
-            let ext = file[1];
-            if (ext != 'csv' && ext != 'CSV') {
-
-                alertify['error']('The filetype you are attempting to upload is not allowed!');
-            }
-
-            var formData = new FormData(this);
-            formData.append('userfile', $("#userfile")[0].files[0]);
-
-            $.ajax({
-                url: globalVariables.baseUrl + "Api/Voucher/upload_csv",
-                data: formData,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    console.log(data);
-                    data = JSON.parse(data);
-                    var header = '';
-                    var html = '';
-                    var arr = [];
-                    var arrLen = data.length - 1;
-                    var csv_path = data[arrLen];
-                    
-                    $('#csv_path').val(csv_path);
-                    for(var i=0; i<arrLen; i++){
-                        if(data[i].replaceAll('"', '').length > 0){
-                            html += '<option value="'+i+'">'+data[i].replaceAll('"', '')+'</option>';
-                            arr[i] = lcfirst(data[i].replaceAll('"', '').replaceAll(' ', ''));
-                        }
-                        
+                $('#csv_path').val(csv_path);
+                for (var i = 0; i < arrLen; i++) {
+                    if (data[i].replaceAll('"', '').length > 0) {
+                        html += '<option value="' + i + '">' + data[i].replaceAll('"',
+                            '') + '</option>';
+                        arr[i] = lcfirst(data[i].replaceAll('"', '').replaceAll(' ',
+                            ''));
                     }
-                    
-                    $('.filterSelection').html(html);
-                    $.each(arr, function(index, value){
-                        console.log(value);
-                        $('#csv'+value).val(index);
-                    });
-        
-                    $('#fileForm').addClass('d-none');
-                    $('#filterFormSection').removeClass('d-none');
-                    $('#uploadCsvFile').addClass('d-none');
-                    $('#importCsvFile').removeClass('d-none');
 
-                },
-                error: function(data) {
-                    let error = data.responseJSON;
-                    alertify['error']('Something went wrong!');
                 }
-            });
 
+                $('.filterSelection').html(html);
+                $.each(arr, function(index, value) {
+                    console.log(value);
+                    $('#csv' + value).val(index);
+                });
+
+                $('#fileForm').addClass('d-none');
+                $('#filterFormSection').removeClass('d-none');
+                $('#uploadCsvFile').addClass('d-none');
+                $('#importCsvFile').removeClass('d-none');
+
+            },
+            error: function(data) {
+                let error = data.responseJSON;
+                alertify['error']('Something went wrong!');
+            }
         });
-    });
 
-function lcfirst(str){
+    });
+});
+
+function lcfirst(str) {
     str += '';
     const f = str.charAt(0).toLowerCase();
     return f + str.substr(1);
@@ -535,15 +608,15 @@ function lcfirst(str){
 
 function uploadCsvFile() {
     $('#upload-file').click();
-    return ;
+    return;
 }
 
 function importCsvFile() {
     $('#filterBtn').click();
-    return ;
+    return;
 }
 
-function import_csv(e){
+function import_csv(e) {
     e.preventDefault();
     let data = {
         code: $('#csvcode option:selected').val(),
@@ -562,7 +635,7 @@ function import_csv(e){
 
     //console.log(data);
 
-    $.post(globalVariables.baseUrl + "Api/Voucher/import_csv", data, function(data){
+    $.post(globalVariables.baseUrl + "Api/Voucher/import_csv", data, function(data) {
         $('#voucher').DataTable().ajax.reload();
         $('#resetUpload').click();
         $('#fileForm').removeClass('d-none');
@@ -573,4 +646,4 @@ function import_csv(e){
     });
 
 }
-    </script>
+</script>

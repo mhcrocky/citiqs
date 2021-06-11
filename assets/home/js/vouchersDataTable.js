@@ -57,6 +57,9 @@ $(document).ready(function () {
       {
         title: "Description",
         data: "description",
+        createdCell: function (td, cellData, rowData, row, col) {
+          $(td).addClass('col-'+ rowData.id);
+       }
       },
       {
         title: "Percent",
@@ -83,6 +86,14 @@ $(document).ready(function () {
       {
         title: "Number Of Times",
         data: "numberOfTimes",
+      },
+      {
+        title: "Voucher Used",
+        data: "voucherused",
+        createdCell: function (td, cellData, rowData, row, col) {
+          let times = parseInt(rowData.numberOfTimes) - parseInt(rowData.voucherused);
+          $(td).closest('tr').attr('data-times', times);
+       }
       },
       {
         title: "Activated",
@@ -126,6 +137,10 @@ $(document).ready(function () {
     drawCallback: function(settings){
       getEmailTemplates();
     },
+    createdRow: function(row, data, dataIndex){
+      $(row).attr('id', 'row-' + data.id);
+      $(row).addClass('row-' + data.id);
+    },
       columnDefs: [
          {
             targets: 0,
@@ -137,7 +152,7 @@ $(document).ready(function () {
       select: {
          style: 'multi'
       },
-      order: [[1, 'asc']]
+      order: [[0, 'desc']]
   });
 
   $('#report_filter').addClass('text-right');
@@ -222,8 +237,8 @@ function voucherCode() {
 
 function saveVoucher(e) {
   e.preventDefault();
-  $('.form-control').removeClass('input-clear');
-  if ($('.form-control:invalid').length > 0) {
+  $('.form-input').removeClass('input-clear');
+  if ($('.form-input:invalid').length > 0) {
       return;
   }
   let data = {
@@ -259,7 +274,7 @@ function saveVoucher(e) {
   $.post(globalVariables.baseUrl + 'Api/Voucher/create', data, function(data) {
       $('#voucher').DataTable().ajax.reload();
       alertify[data.status](data.message);
-      $('.form-control').addClass('input-clear');
+      $('.form-input').addClass('input-clear');
       $('#my-form').trigger("reset");
       $('#closeAddVoucherModal').click();
       $('#voucher_code').hide();
@@ -402,4 +417,95 @@ function translateText(text){
   $.post(globalVariables.baseUrl + 'voucher/translate_lang', {text: text}, function(data) {
     return data;
   });
+}
+
+
+function vouchersendModal(){
+  var rows_selected = $("#voucher").DataTable().column(0).checkboxes.selected();
+  //var numberOfTimes = $("#voucher").DataTable().rows().data();
+  var voucherused = $("#voucher").DataTable().column(8).checkboxes.selected();
+  
+  var rowIds = [];
+  var reachMaxIds = [];
+  var voucherDescription = [];
+  $.each(rows_selected, function(index, rowId){
+    let rowData = $("#voucher").DataTable().row('#row-' + rowId).data();
+    var description = rowData.description;
+    let numberOfTimes = parseInt(rowData.numberOfTimes);
+    let voucherused = parseInt(rowData.voucherused);
+    let times = numberOfTimes - voucherused;
+    if(times < 1){
+      reachMaxIds.push(rowId);
+      voucherDescription.push(description);
+    } else {
+      rowIds.push(rowId);
+    }
+  });
+
+  if(reachMaxIds.length > 0){
+    $.each(reachMaxIds, function(index, rowId){
+      let description = voucherDescription[index];
+      $('#reachedMaxTimes').append(`<p class="text-dark">Voucher "`+description+`" has reached maximum number of times to use.<p>`);
+    });
+    
+  }
+}
+
+
+function vouchersendForm(params) {
+  $('#submitVoucherSend').click();
+}
+
+
+function save_vouchersend(e){
+  e.preventDefault();
+
+  var rows_selected = $("#voucher").DataTable().column(0).checkboxes.selected();
+  var rowIds = [];
+  var reachMaxIds = [];
+  $.each(rows_selected, function(index, rowId){
+    let rowData = $("#voucher").DataTable().row('#row-' + rowId).data();
+    let numberOfTimes = parseInt(rowData.numberOfTimes);
+    let voucherused = parseInt(rowData.voucherused);
+    let times = numberOfTimes - voucherused;
+    if(times < 1){
+      reachMaxIds.push(rowId);
+    } else {
+      rowIds.push(rowId);
+    }
+  });
+
+  if(rowIds.length < 1 && reachMaxIds < 1){
+    alertify['error']('You must have to select a voucher!');
+    return ;
+  }
+
+  if(rowIds.length < 1){
+    alertify['error']('All vouchers have reached maximum number of times to use!');
+    return ;
+  }
+
+  $('.form-vouchersend').removeClass('input-clear');
+  if ($('.form-vouchersend:invalid').length > 0) {
+    return;
+  }
+  var voucherId = $('#voucherId option:selected').val();
+  let data = {
+      name: $('#name').val(),
+      email: encodeURI($('#email').val()),
+      voucherIds: JSON.stringify(rowIds)
+  }
+
+  $('#submitVoucherSend').prop('disabled', true);
+
+  $.post(globalVariables.baseUrl + "Api/Voucher/multiple_create_vouchersend", data, function(data){
+      $('#voucher').DataTable().ajax.reload();
+      $('#submitVoucherSend').prop('disabled', false);
+      $('#resetVoucherSendForm').click();
+      $('#closeVoucherSendModal').click();
+      $('.form-vouchersend').addClass('input-clear');
+      alertify[data.status](data.message);
+      $('#reachedMaxTimes').empty();
+  });
+
 }
