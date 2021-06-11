@@ -187,7 +187,7 @@
                         class="button"
                         onclick="submitForm()"
                         >
-                        Continue
+                            <?php echo $this->language->tLine('Continue'); ?>                        
                         <i class="fa fa-arrow-right arrowStyle"></i>
                     </a>
                 </div>

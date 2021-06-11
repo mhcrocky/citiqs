@@ -19,6 +19,7 @@
             $this->load->helper('date');
             $this->load->helper('jwt_helper');
             $this->load->helper('fod_helper');
+            $this->load->helper('language_helper');
 
             $this->load->model('user_subscription_model');
             $this->load->model('shopcategory_model');
@@ -42,8 +43,6 @@
             $this->load->config('custom');
 
             $this->load->library('language', array('controller' => $this->router->class));
-
-
             $this->load->library('session');
         }
 
@@ -68,6 +67,7 @@
             $get = Utility_helper::sanitizeGet();
             $spotId = empty($get['spotid']) ? 0 : intval($get['spotid']);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $get['vendorid'])->getVendorData();
+            
 
             if (is_null($vendor)) {
                 redirect(base_url(). 'places');
@@ -138,13 +138,13 @@
             if ($vendor['preferredView'] === $this->config->item('view2021')) {
                 $this->loadViews($preferedView, $this->global, $data, 'footer2021', 'header2021');
             } else {
-                $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic');
+                $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendor['vendorId']));
             }
             return;
         }
 
         private function loadVendorView(array $vendor, int $typeId = 0): void
-        {
+        {;
             if ($typeId) {
                 $this->checkVendorCredentials($vendor, $typeId);
                 $this->loadSelectSpotView($vendor, $typeId);
@@ -163,7 +163,7 @@
                 ];
 
                 $this->global['pageTitle'] = 'TIQS : SELECT TYPE';
-                $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic');
+                $this->loadViews('publicorders/selectType', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendor['vendorId']));
             }
 
             return;
@@ -209,7 +209,7 @@
             ];
 
             $this->global['pageTitle'] = 'TIQS : SELECT SPOT';
-            $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/selectSpot', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendor['vendorId']));
             return;
         }
 
@@ -293,7 +293,7 @@
 
             $spotId = intval($spotId);
             $spot =  $this->shopspot_model->setObjectId($spotId)->setObject();
-            $vendorId = $this->shopprinters_model->setObjectid($spot->printerId)->getProperty('userId');
+            $vendorId = intval($this->shopprinters_model->setObjectid($spot->printerId)->getProperty('userId'));
 
             if ($this->shopspottime_model->setProperty('spotId', $spotId)->isOpen()) {
                 $redirect = 'make_order?vendorid=' . $vendorId . '&spotid=' . $spotId;
@@ -312,11 +312,12 @@
             $this->global['pageTitle'] = 'TIQS : CLOSED';
             $this->setGlobalDesign($data['vendor']['design']);
             $this->setGlobalVendor($data['vendor']);
-            $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/spotClosed', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendorId));
         }
 
         public function temporarilyClosed($vendorId, $spotId): void
         {
+            $vendorId = intval($vendorId);
             if (Fod_helper::isFodActive(intval($vendorId), intval($spotId))) {
                 $redirect = base_url() . 'make_order?vendorid=' . $vendorId . '&spotid=' . $spotId;
                 redirect($redirect);
@@ -330,13 +331,14 @@
             $this->global['pageTitle'] = 'TIQS : CLOSED';
             $this->setGlobalDesign($data['vendor']['design']);
             $this->setGlobalVendor($data['vendor']);
-            $this->loadViews('publicorders/temporarilyClosed', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/temporarilyClosed', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendorId));
         }
 
         public function closed(string $vendorId): void
         {
             if (!ctype_digit($vendorId)) redirect(base_url());
 
+            $vendorId = intval($vendorId);
             $vendor = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getVendorData();
             $isClosedPeriod = ($vendor['nonWorkFrom'] && $vendor['nonWorkTo'] && date('Y-m-d') >= $vendor['nonWorkFrom'] && date('Y-m-d') <= $vendor['nonWorkTo']);
             $isOpenTime = $this->shopvendortime_model->setProperty('vendorId', $vendorId)->isOpen();
@@ -358,7 +360,7 @@
             $this->global['pageTitle'] = 'TIQS : CLOSED';
             $this->setGlobalDesign($data['vendor']['design']);
             $this->setGlobalVendor($data['vendor']);
-            $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/closed', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendorId));
         }
         // CHECKOUT ORDER
 
@@ -396,10 +398,12 @@
             $this->setDelayTime($data);
             $this->setBuyerSideFee($data);
 
+            $vendorId = intval($orderData['vendorId']);
+
             $this->global['pageTitle'] = 'TIQS : CHECKOUT';
             $this->setGlobalDesign($data['vendor']['design']);
             $this->setGlobalVendor($data['vendor']);
-            $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/checkoutOrder', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendorId));
         }
 
         private function setOrderData(array &$data, array $orderData): void
@@ -493,10 +497,12 @@
             $data['orderRandomKey'] = $orderRandomKey;
             $data['orderDataGetKey'] = $this->config->item('orderDataGetKey');
 
+            $vendorId = intval($orderData['vendorId']);
+
             $this->global['pageTitle'] = 'TIQS : BUYER DETAILS';
             $this->setGlobalDesign($data['vendor']['design']);
             $this->setGlobalVendor($data['vendor']);
-            $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/buyerDetails', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendorId));
         }
 
         // PAY ORDER
@@ -566,11 +572,12 @@
             // echo '<pre>';
             // print_r($data);
             // die();
+            $vendorId = intval($orderData['vendorId']);
 
             $this->global['pageTitle'] = 'TIQS : PAY';
             $this->setGlobalDesign($data['vendor']['design']);
             $this->setGlobalVendor($data['vendor']);
-            $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic');
+            $this->loadViews('publicorders/payOrder', $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendorId));
         }
 
         private function getRedirect(array $vendor, int $spotTypeId, string $orderRandomKey, int $spotId): string
