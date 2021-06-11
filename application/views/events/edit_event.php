@@ -225,6 +225,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="showInSameDate" class="col-md-4 col-form-label text-md-left">
+                                Show In The Same Date
+                                </label>
+                                <div class="col-md-6">
+                                    <select id="showInSameDate" name="showInSameDate"
+                                        class="form-control input-w border-50 field" required>
+                                        <option value="">Select option</option>
+                                        <option value="1" <?php if($event->showInSameDate == '1'){ ?> selected <?php } ?>>Yes</option>
+                                        <option value="0" <?php if($event->showInSameDate == '0'){ ?> selected <?php } ?>>No</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
 
                             <div class="form-group row">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>

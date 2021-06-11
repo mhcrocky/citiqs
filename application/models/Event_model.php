@@ -84,14 +84,15 @@ class Event_model extends CI_Model {
 	public function get_events($vendor_id)
 	{
 		date_default_timezone_set('Europe/Amsterdam');
-        $date = date('Y-m-d H:i:s');
+        $current_timestamp = date('Y-m-d H:i:s');
+		$today = date('Y-m-d');
 		//$time = date('H:i:s');
 		$this->db->trans_start();
 		$this->db->select('*');
 		$this->db->from('tbl_events');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('archived', '0');
-		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
+		$this->db->where('( (showInSameDate="1" AND StartDate = "' . $today . '" ) OR concat_ws(" ", StartDate, StartTime) >= "'.$current_timestamp.'")', NULL, false);
 		$this->db->order_by('StartDate');
 		$query = $this->db->get();
 		$this->db->trans_complete();
@@ -101,14 +102,15 @@ class Event_model extends CI_Model {
 	public function get_event_by_id($vendor_id, $eventId)
 	{
 		date_default_timezone_set('Europe/Amsterdam');
-        $date = date('Y-m-d H:i:s');
-		//$time = date('H:i:s');
+        $current_timestamp = date('Y-m-d H:i:s');
+		$today = date('Y-m-d');
 		$this->db->trans_start();
 		$this->db->select('*');
 		$this->db->from('tbl_events');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('id', $eventId);
-		$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
+		//$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
+		$this->db->where('( (showInSameDate="1" AND StartDate = "' . $today . '" ) OR concat_ws(" ", StartDate, StartTime) >= "'.$current_timestamp.'")', NULL, false);
 		$query = $this->db->get();
 		$this->db->trans_complete();
 		return $query->result_array();
