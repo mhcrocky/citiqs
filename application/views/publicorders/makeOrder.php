@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php if($vendor['vendorId'] == 1162 ){?>
 <body style="background-color: white">
 <?php } else {?>

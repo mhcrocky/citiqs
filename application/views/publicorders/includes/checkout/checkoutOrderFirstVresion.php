@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="row d-flex justify-content-center">
     <div class='col-sm-12 col-lg-9'>
         <div class="checkout-table">
