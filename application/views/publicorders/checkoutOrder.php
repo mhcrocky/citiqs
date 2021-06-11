@@ -1,4 +1,4 @@
-
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <main
     id="orderCheckoutView"
     class="container checkoutOrderBody"
@@ -46,52 +46,57 @@
             <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                 <?php if (isset($workingTime)) { ?>
                     <div class="checkout-title">
-                        <span id="deliveryPeriodAndTime"><?php echo $spot['spotType']; ?>&nbsp;<?php echo $this->language->line("PAYMENT-C0010",'period and time');?> </span>
+                        <span id="deliveryPeriodAndTime"><?php echo $spot['spotType']; ?>&nbsp;<?php echo $this->language->tLine('period and time');?> </span>
                     </div>
                     <div class="row">                        
                         <?php if (intval($spot['spotTypeId']) === $this->config->item('deliveryType')) { ?>
                             <div class="form-group col-sm-6">
-                                <label class="labelColorCheckout" for="city"><?php echo $this->language->line("PAYMENT-C0020CITY",'City');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="city"><?php echo $this->language->tLine('City');?><sup>*</sup></label>
                                 <input
                                     type="teyt"
                                     id="city"
                                     class="form-control inputFieldCheckout"
                                     name="user[city]"
                                     value="<?php echo $city; ?>"
-                                    placeholder="<?php echo $this->language->line("PAYMENT-C0020",'City');?>"
+                                    placeholder="<?php echo $this->language->tLine('City');?>"
                                     required
                                     data-name='City'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label class="labelColorCheckout" for="zipcode"><?php echo $this->language->line("PAYMENT-C0020ZIP",'Zipcode');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="zipcode"><?php echo $this->language->tLine('Zipcode');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="zipcode"
                                     class="form-control inputFieldCheckout"
                                     name="user[zipcode]"
                                     value="<?php echo $zipcode; ?>"
-                                    placeholder="<?php echo $this->language->line("PAYMENT-C0020",'Zipcode');?>"
+                                    placeholder="<?php echo $this->language->tLine('Zipcode');?>"
                                     required
                                     data-name='Zipcode'
                                 />
                             </div>
                             <div class="form-group col-sm-6">
-                                <label class="labelColorCheckout" for="address"><?php echo $this->language->line("PAYMENT-C0020",'Address');?><sup>*</sup></label>
+                                <label class="labelColorCheckout" for="address"><?php echo $this->language->tLine('Address');?><sup>*</sup></label>
                                 <input
                                     type="text"
                                     id="address"
                                     class="form-control inputFieldCheckout"
                                     name="user[address]"
                                     value="<?php echo $address; ?>"
-                                    placeholder="<?php echo $this->language->line("PAYMENT-C0020ADDRESS",'Address');?>"
+                                    placeholder="<?php echo $this->language->tLine('Address');?>"
                                     required
                                     data-name='Address'
                                 />
                             </div>                            
                         <?php } ?>
                         <div class="form-group col-sm-6">
-                            <label class="labelColorCheckout" for="periodTime" ><?php echo $this->language->line("PAYMENT-PC00120",'Choose');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0020",'period');?><sup>*</sup></label>
+                            <label
+                                class="labelColorCheckout"
+                                for="periodTime" >
+                                <?php echo $this->language->tLine('Choose');?>&nbsp;
+                                <?php echo lcfirst($spot['spotType']); ?>&nbsp;
+                                <?php echo $this->language->tLine('period');?><sup>*</sup></label>
                             <div>
                                 <select
                                     id="periodTime"
@@ -139,7 +144,12 @@
                                                     <option
                                                         value="<?php echo $date . ' ' . $hours['timeFrom']. ' ' . $hours['timeTo']; ?>"
                                                     >
-                                                        <?php echo $this->language->line($date . ' (' . $hours['day'] . ')',$date . ' (' . $hours['day'] . ')'). ' '.$this->language->line("PAYMENT-ABC0035"," from ").' '. $hours['timeFrom'] . " ".$this->language->line("PAYMENT-ABC0045"," to ")." " . $hours['timeTo'] ?>
+                                                        <?php
+                                                            echo
+                                                                $this->language->tLine($date . ' (' . $hours['day'] . ')',$date . ' (' . $hours['day'] . ')'). ' '
+                                                                . $this->language->tLine(' from ') . ' ' . $hours['timeFrom'] . ' '
+                                                                . $this->language->tLine(' to ' ) . ' ' . $hours['timeTo'];
+                                                        ?>
                                                     </option>
                                                 <?php
                                             }
@@ -149,7 +159,14 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-6" id="orderTimeDiv">
-                            <label class="labelColorCheckout" for="orderTime"><?php echo $this->language->line("PAYMENT-PC0110",'Select ');?>&nbsp;<?php echo lcfirst($spot['spotType']); ?>&nbsp;<?php echo $this->language->line("PAYMENT-PC0120",'time');?> (<sup>*</sup>)</label>
+                            <label
+                                class="labelColorCheckout"
+                                for="orderTime"
+                            >
+                                <?php echo $this->language->tLine('Select ');?>&nbsp;
+                                <?php echo $this->language->tLine(lcfirst($spot['spotType'])); ?>&nbsp;
+                                <?php echo $this->language->tLine('time'); ?> (<sup>*</sup>)
+                            </label>
                             <input type="text" id="orderTimeInput" class="form-control timepicker inputFieldCheckout" name="order[time]" readonly />
                         </div>
                     </div>
@@ -161,7 +178,7 @@
                         style="background-color: #948b6f" class="button"
                         >
                         <i class="fa fa-arrow-left arrowStyle"></i>
-                        <?php echo $this->language->line("PAYMENT-9100",'Back to list'); ?>
+                        <?php echo $this->language->tLine('Back to list'); ?>
                     </a>
                     <a
                         id="checkoutContinue"
@@ -187,18 +204,18 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Delivery notice</h4>
+                <h4 class="modal-title">
+                    <?php echo $this->language->tLine('Delivery notice'); ?>
+                </h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-				&nbsp;<?php echo $this->language->line("DELIVERY-A0001",'Sorry, but we do not deliver to given address, due to the distance. Please change delivery location.');?>
-
+				&nbsp;<?php echo $this->language->tLine('Sorry, but we do not deliver to given address, due to the distance. Please change delivery location.');?>
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->language->tLine('Cancel'); ?></button>
             </div>
         </div>
     </div>
@@ -208,19 +225,18 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Delivery notice</h4>
+                <h4 class="modal-title"><?php echo $this->language->tLine('Delivery notice'); ?></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                Sorry, but we do not deliver to given address.
+                <?php echo $this->language->tLine('Sorry, but we do not deliver to given address.'); ?>                
                 <br style="display:initial"/>
-                You can click cancel and change delivery location or you can select pickup option.
-                In that case you order details will be reset.
+                <?php echo $this->language->tLine('You can click cancel and change delivery location or you can select pickup option. In that case you order details will be reset.'); ?>                
                 <i
                     class="fa fa-info-circle" aria-hidden="true"
                     data-toggle="pickupPopover"
-					data-content="<?php echo $this->language->line("DELIVERY-A0010",'We will reset your order because the selected products may be not available in pick-up option or can be differently priced.');?>"
+					data-content="<?php echo $this->language->tLine('We will reset your order because the selected products may be not available in pick-up option or can be differently priced.');?>"
                 >
                 </i>
             </div>
@@ -231,9 +247,11 @@
                     href="<?php echo base_url() . 'make_order?vendorid=' . $vendor['vendorId'] . '&typeId=' . $pickupTypeId; ?>"
                     class="btn btn-primary btn-lg active"
                     role="button"
-                    aria-pressed="true">Select pickup
+                    aria-pressed="true"
+                >
+                    <?php echo $this->language->tLine('Select pickup'); ?>
                 </a>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo $this->language->tLine('Cancel'); ?></button>
             </div>
         </div>
     </div>

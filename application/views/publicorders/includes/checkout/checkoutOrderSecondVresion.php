@@ -1,9 +1,10 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="row d-flex justify-content-center">
     <div class='col-sm-12 col-lg-10 col-lg-offset-1'>
         <div class="checkout-table">
             <div id="headlineYourOrder" class="checkout-table__header">
                 <h3 class='mb-0' style="text-align:center">
-                    <?php  echo $this->language->line("PAYMENT-AHD0010",'YOUR ORDER'); ?>
+                    <?php  echo $this->language->tLine('YOUR ORDER'); ?>
                 </h3>
             </div>
             <!--            <div class="checkout-table__single-element checkout-table__single-element--header">-->
@@ -92,7 +93,7 @@
                                 <?php if (isset($product['remark'])) { ?>
                                     <div>
                                         <?php if ($product['remark']) { ?>
-                                            <label><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
+                                            <label><?php echo $this->language->tLine('Remarks');?> </label>
                                             <p><?php echo $product['remark']; ?></p>
                                         <?php } ?>
                                         <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $productExtendedId; ?>_remark">Remark</label>
@@ -268,7 +269,7 @@
                                                 <?php if (isset($addon['remark'])) { ?>
                                                     <div>
                                                         <?php if ($addon['remark']) { ?>
-                                                            <label><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
+                                                            <label><?php echo $this->language->tLine('Remarks');?> </label>
                                                             <p><?php echo $addon['remark']; ?></p>
                                                         <?php } ?>
                                                         <!-- <label for="orderExtended_<?php #echo $countInputs; ?>_<?php #echo $addonExtendedId; ?>_remark">Remark</label>

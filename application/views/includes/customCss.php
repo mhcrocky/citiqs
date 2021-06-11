@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php if ($this->view === 'found') { ?>
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/timeline-page.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;; ?>assets/home/styles/hotel-page.css">
@@ -304,6 +305,13 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif (strpos($this->view, 'paysuccesslink/') !== false) { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+
+    <?php if ($this->view === 'paysuccesslink/success') { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/animation.css" />
+    <?php } elseif ($this->view === 'paysuccesslink/pending') { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/animation.css" />
+    <?php } ?>
+
 <?php }  elseif ($this->view  === 'blackbox/login') { ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/blackbox.css">
 <?php } elseif ($this->view === 'publicorders/temporarilyClosed') { ?>

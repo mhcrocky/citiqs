@@ -1,12 +1,16 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <main class="container shop-container selectedSpotBackground designBackgroundImage" style="width:100%"
     id="makeOrderView">
     <div class="row selectedSpotBackground">
         <?php if (!empty($mainProducts)) { ?>
         <?php if ($vendor['logo']) { ?>
         <div id="vendorLogo" style="text-align:center">
-            <img src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?>
-            alt="" width="100%"
-                height="auto" />
+            <img
+                src=<?php echo base_url() . 'assets/images/vendorLogos/' . $vendor['logo']; ?>
+                alt=""
+                width="100%"
+                height="auto"
+            />
         </div>
         <?php }?>
         <?php
@@ -48,7 +52,7 @@
                         <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
                             <h2 class="categoryName"><?php echo $category; ?></h2>
                             <!-- 43533 and 417 -->
-                            <?php if (isset($categoriesImages[$category]) && in_array($vendor['vendorId'], [417, 43533]) ) { ?>
+                            <?php if (isset($categoriesImages[$category])) { ?>
                                 <img
                                     class="img-responsive center-block"
                                     src="<?php echo $categoriesImagesRelPath . $categoriesImages[$category][0]['image']; ?>"
@@ -56,7 +60,7 @@
                                 />
                             <?php } ?>
                             <!--we have the line with the link to the menu -->
-                            <span onclick="goToSlide(0)">BACK TO MENU</span>
+                            <span onclick="goToSlide(0)"><?php echo $this->language->tLine('BACK TO MENU');?></span>
                         </div>
                         <div class="shop__item-list selectedSpotBackground">
                             <?php foreach ($products as $product) { ?>
@@ -66,7 +70,7 @@
                                     // for next update when every category need to have private key
                             ?>
                             <div style="width:100%; margin-bottom: 5px">
-                                <h2 style="text-align:center">PRIVATE CATEGORY</h2>
+                                <h2 style="text-align:center"><?php echo $this->language->tLine('PRIVATE CATEGORY');?></h2>
                                 <div class="col-lg-4 col-lg-offset-4 col-sm-12">
                                     <input
                                         type="text"
@@ -99,26 +103,26 @@
                                         </p>
                                     <?php } ?>
                                     <?php
-                                            $baseUrl = base_url();
-                                            if ($vendor['showAllergies'] === '1')  {
-                                                $product['allergies'] = unserialize($product['allergies']);
-                                                if (!empty($product['allergies']['productAllergies'])) {
-                                                    $productAllergies = $product['allergies']['productAllergies'];
-                                                    echo '<div class="shop__single-item__alergies">';
-                                                        foreach ($productAllergies as $allergy) {
-                                                                        ?>
-                                    <img
-                                        src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
-                                        class="ingredients imgAlergies"
-                                        alt="<?php echo $allergy; ?>"
-                                        style="display:inline; margin:5px 2px"
-                                    />
-                                    <?php
-                                                                    }
-                                                                    echo '</div>';
-                                                                }
-                                                            }
+                                        $baseUrl = base_url();
+                                        if ($vendor['showAllergies'] === '1')  {
+                                            $product['allergies'] = unserialize($product['allergies']);
+                                            if (!empty($product['allergies']['productAllergies'])) {
+                                                $productAllergies = $product['allergies']['productAllergies'];
+                                                echo '<div class="shop__single-item__alergies">';
+                                                    foreach ($productAllergies as $allergy) {
                                                         ?>
+                                                        <img
+                                                            src="<?php echo $baseUrl . 'assets/images/allergies/' . str_replace(' ', '_', $allergy); ?>.png"
+                                                            class="ingredients imgAlergies"
+                                                            alt="<?php echo $allergy; ?>"
+                                                            style="display:inline; margin:5px 2px"
+                                                        />
+                                                        <?php
+                                                    }
+                                                echo '</div>';
+                                            }
+                                        }
+                                    ?>
                                 </div>
                                 <?php if ($vendor['showProductsImages'] === '1') { ?>
                                 <div class="shop__single-item__image">
@@ -178,7 +182,7 @@
                     <?php if (isset($termsAndConditions) && $termsAndConditions) { ?>
                     <div class="shop__items selectedSpotBackground">
                         <div class="shop__item-list-heading">
-                            <h2>TERMS AND CONDITIONS</h2>
+                            <h2><?php echo $this->language->tLine('TERMS AND CONDITIONS');?></h2>
                         </div>
                         <div class="shop__item-list selectedSpotBackground">
                             <p style="padding-left:10px">
@@ -208,7 +212,7 @@
         </div>
         <!-- end right side -->
         <?php } else { ?>
-        No available products
+            <?php echo $this->language->tLine('No available products');?>        
         <?php } ?>
     </div>
 </main>

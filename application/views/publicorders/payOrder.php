@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <main id="wrapper" class="payOrderBackgroundColor designBackgroundImage">
     <div id="content" class="payOrderBackgroundColor">
         <div class="container payOrderBackgroundColor" id="shopping-cart">

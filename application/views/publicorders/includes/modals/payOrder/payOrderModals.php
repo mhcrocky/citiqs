@@ -77,7 +77,7 @@
             <!-- Modal content-->
             <div class="modal-content modalPayOrder">
                 <div class="modal-body modalPayOrder" style="text-align:center">
-                    <label for="codeId" class="payOrderInputFieldsLabel">Insert code from voucher</label>
+                    <label for="codeId" class="payOrderInputFieldsLabel"><?php echo $this->language->tLine('Insert code from voucher');?></label>
                     <input
                         type="text"
                         id="codeId"

@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/utility.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/ajax.js"></script>
 <?php if ($this->view === 'labels') { ?>

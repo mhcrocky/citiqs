@@ -1,4 +1,5 @@
 <?php
+    defined('BASEPATH') OR exit('No direct script access allowed');
     $counter = 0;
     $categorySlide = 0;
     foreach ($mainProducts as $category => $products) {
@@ -38,7 +39,7 @@
 
                                 <div class="modal__adittional">
                                     <?php if ($product['onlyOne'] === '0') { ?>
-                                        <h6 class="labelsMain">Quantity</h6>
+                                        <h6 class="labelsMain"><?php echo $this->language->tLine('Quantity');?></h6>
                                         <div class="form-check modal__additional__checkbox  col-lg-7 col-sm-12" style="margin-bottom:3px">
                                             <label class="form-check-label">
                                                 <?php echo $productDetails['name']; ?>
@@ -120,7 +121,7 @@
                                         }
                                     ?>
                                     <?php if ($product['addRemark'] === '1') { ?>
-                                        <h6 class="remark remarkStyle"><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </h6>
+                                        <h6 class="remark remarkStyle"><?php echo $this->language->tLine('Remarks');?> </h6>
                                         <div class="form-check modal__additional__checkbox  col-lg-12 col-sm-12" style="margin-bottom:3px">
                                             <input
                                                 type="text"
@@ -308,7 +309,9 @@
                                 data-product-price="<?php echo $productDetails['price']; ?>"
                                 onclick="cloneProductAndAddons(this)"
                                 id="modal_buuton_<?php echo 'single-item-details-modal' . $product['productId']; ?>_<?php echo $productDetails['productExtendedId']?>"
-                                >Add to list</button>
+                            >
+                                <?php echo $this->language->tLine('Add to list');?>
+                            </button>
                         </div>
                     </div>
                 </div>

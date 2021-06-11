@@ -1,4 +1,4 @@
-
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <main class="main-wrapper-nh" style="text-align:center;">
 	<div id="selectSpotContainer" class="col-half background-apricot-blue height designBackgroundImage">
 		<div class="width-650" style="padding-top:0px"></div>
@@ -12,21 +12,35 @@
 		<?php } ?>
 		<h1 id="selectSpotH1" style="text-align:center; text-transform: uppercase; margin: 0px 7px; border-bottom: 4px solid;"><?php echo $vendor['vendorName'] ?></h1>
 		<div class="d-flex align-items-center" style="padding: 10px 15px">
-			<p style="font-family: Arial; text-align:left; margin-top: 10px; margin-bottom: 5px ">Insert your table or area number</p>
+			<p style="font-family: Arial; text-align:left; margin-top: 10px; margin-bottom: 5px ">
+				<?php echo $this->language->tLine('Insert your table or area number');?>
+			</p>
 			<div class="input-group" style="margin-bottom: -5px; margin-left: -3px  ">
 
-				<input style="height: 45px" oninput="searchTable()" type="text" id="search" class="form-control" aria-label="Search" placeholder="Search">
+				<input
+					style="height: 45px"
+					oninput="searchTable()"
+					type="text"
+					id="search"
+					class="form-control"
+					aria-label="Search"
+					placeholder="<?php echo $this->language->tLine('Search');?>"
+				/>
 				<span onclick="searchTable()" style="background: #fff !important;height: 45px;cursor: pointer" class="input-group-addon"><i class="fa fa-search"></i></span>
 			</div>
 			<div style="margin-top: 10px; margin-top: 30px; margin-bottom: -10px">
-				<h4 style="font-family: Arial; font-size: 16px;text-align:left; text-transform: uppercase; ">OR</h4>
+				<h4 style="font-family: Arial; font-size: 16px;text-align:left; text-transform: uppercase; ">
+					<?php echo $this->language->tLine('OR');?>
+				</h4>
 			</div>
 		</div>
-		<p style="font-family: Arial; text-align:left; padding: 0px 15px; margin-top: 10px; margin-bottom: -15px ">Select your table or area number</p>
+		<p style="font-family: Arial; text-align:left; padding: 0px 15px; margin-top: 10px; margin-bottom: -15px ">
+			<?php echo $this->language->tLine('Select your table or area number');?>
+		</p>
 		<div class="selectWrapper mb-35" style="padding-top:10px; font-family: Arial;">
 			<?php if (!empty($spots)) { ?>
-				<div id="selectSpots" style="margin-top:10px" align="left">
-<!--					<label id="labelColor" for="spot" style="font-family: Arial;text-align:left; ">Select your table or area number</label>-->
+				<div id="selectSpots" style="margin-top:10px; text-align:left">
+					<!--					<label id="labelColor" for="spot" style="font-family: Arial;text-align:left; ">Select your table or area number</label>-->
 					<!-- <select class="selectBox selectSpot" id="spot" onchange="redirectTo(this.value)" class="form-control" style="color :black">
 						<option value="">Select spot</option>
 						<?php
@@ -56,7 +70,7 @@
 						?>
 					</select> -->
 
-					<div class="custom__select" align="center">
+					<div class="custom__select; text-align:center">
 						<form action="">
 							<ul class='select__list bordersColor' id="productList">
 								<?php
@@ -105,7 +119,7 @@
 								onclick="redirectToSpot('checked')"
 								style="text-align:center;margin-top:30px;padding-left:0;padding-right:0"
 							>
-								CONFIRM
+								<?php echo $this->language->tLine('CONFIRM');?>
 							</button>
 						<?php } ?>
 					</div>
@@ -119,7 +133,7 @@
 					<?php } ?>
 				</div>
 			<?php } else { ?>
-				<p>No available spots</p>
+				<p><?php echo $this->language->tLine('No available spots');?></p>
 			<?php } ?>
 		</div>
 	</div>
@@ -131,7 +145,7 @@
 				</div>
 				<h1 style="text-align:center"><?php echo $vendor['vendorName'] ?></h1>
 				<div style="text-align:center; margin-top: 30px">
-					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?php echo $this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?></p>
+					<p style="font-size: larger; margin-top: 50px; margin-left: 0px"><?php echo $this->language->tLine('BUILD BY TIQS');?></p>
 				</div>
 			</div>
 		</div>
