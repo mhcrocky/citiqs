@@ -52,7 +52,7 @@
                         <div class="shop__item-list-heading" id='<?php echo $category; ?>'>
                             <h2 class="categoryName"><?php echo $category; ?></h2>
                             <!-- 43533 and 417 -->
-                            <?php if (isset($categoriesImages[$category]) && in_array($vendor['vendorId'], [417, 43533]) ) { ?>
+                            <?php if (isset($categoriesImages[$category])) { ?>
                                 <img
                                     class="img-responsive center-block"
                                     src="<?php echo $categoriesImagesRelPath . $categoriesImages[$category][0]['image']; ?>"
