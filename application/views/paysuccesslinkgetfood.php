@@ -110,21 +110,39 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer ></script>
 
 <div class="main-wrapper">
-	<div class="col-half background-orange-light height-100">
+	<div class="col-half background-blue-light height-100">
 		<div class="flex-column align-start">
 			<div align="left">
 				<h2 class="heading mb-35">
 					Vreilander, bedankt voor jouw bestelling.
 					<h5 class="heading mb-35">
 
+						<div>
 						Belangrijk:
-						- je drank wordt gebracht naar de tafel.
-						- wanneer jouw eten klaar is, krijg je een smsje. Je kan dan het eten afhalen bij Emmy’s tortiga (tussen de bar en dj booth).
-						- 1 persoon per bubbel doet de bestellingen, gelieve te centraliseren zoveel als mogelijk.
+						</div>
+						<ul>
+							<li>
+								je drank wordt gebracht naar de tafel.
+							</li>
+							<li>
+								wanneer jouw eten klaar is, krijg je een smsje. Je kan dan het eten afhalen bij Emmy’s tortiga (tussen de bar en dj booth).
+							</li>
+							<li>
+								1 persoon per bubbel doet de bestellingen, gelieve te centraliseren zoveel als mogelijk.
+							</li>
+						</ul>
 
 						Volg ons op de voet via:
-						- facebook.com/vreiland
-						- instagram.com/vreiland.zomerbar
+
+						<ul>
+							<li>
+								facebook.com/vreiland
+							</li>
+							<li>
+								instagram.com/vreiland.zomerbar</li>
+
+						</ul>
+
 
 						Geniet ervan!					</h5>
 					<p><br></p>
@@ -135,9 +153,6 @@
 
 			</div>
 
-			<div class="mt-50" align="center" >
-				<img border="0" src="<?php echo base_url(); ?>assets/home/images/tiqslogowhite.png" alt="tiqs" width="350" height="auto" />
-			</div>
 			<div class="mt-50" align="center" >
 				<img border="0" src="<?php echo base_url(); ?>assets/home/images/alfredmenu.png" alt="tiqs" width="350" height="auto" />
 			</div>
