@@ -1,7 +1,7 @@
-
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
             <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
                 <div class="checkout-table__total">
-                    <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL9999",'FEE');?></b>
+                    <b class="feeTotalTip"><?php echo $this->language->tLine('FEE');?></b>
                     <span id="serviceFee">
                         <?php
                             $serviceFee = $orderTotal * $serviceFeePercent / 100 + $minimumOrderFee;
@@ -12,7 +12,7 @@
             </div>
             <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
                 <div class="checkout-table__total checkoutOrderBody">
-                    <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL0010",'AMOUNT');?></b>
+                    <b class="feeTotalTip"><?php echo $this->language->tLine('AMOUNT');?></b>
                     <span id="totalAmount">
                         <?php
                             $total = $orderTotal + $serviceFee;
@@ -24,7 +24,7 @@
             <?php if ($vendor['tipWaiter'] === '1') { ?>
                 <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor">
                     <div class="checkout-table__total checkoutOrderBody" style="text-align:right">
-                        <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL00101",'TIP');?></b>
+                        <b class="feeTotalTip"><?php echo $this->language->tLine('TIP');?></b>
                         <span>
                             <input
                                 type="number"
@@ -42,7 +42,7 @@
                 </div>
                 <div class="checkout-table__single-element checkout-table__single-element--total checkoutOrderBody borderColor" style="text-align:right">
                     <div class="checkout-table__total ">
-                        <b class="feeTotalTip"><?php echo $this->language->line("PAYMENT-AL0010",'TOTAL');?> </b>
+                        <b class="feeTotalTip"><?php echo $this->language->tLine('TOTAL');?> </b>
                         <span>
                             <input
                                 type="number"
@@ -53,7 +53,7 @@
                                 value="<?php echo round($totalWithTip, 2); ?>"
                                 step="0.01"
                                 id="totalWithTip"
-                                placeholder="Waiter tip"
+                                placeholder="<?php echo $this->language->tLine('Waiter tip');?>"
                                 class="form-control inputFieldCheckout"
                                 oninput="addTotalWithTip(this)"
                                 onchange="checkValue(this)"
@@ -65,7 +65,7 @@
             <?php } ?>
             <?php if ($vendor['requireRemarks'] === '1') { ?>
                 <div class="form-group col-sm-12 checkoutOrderBody borderColor">
-                    <label class="labelColorCheckout" for="notesInput"><?php echo $this->language->line("PAYMENT-LL0010",'Remarks');?> </label>
+                    <label class="labelColorCheckout" for="notesInput"><?php echo $this->language->tLine('Remarks');?> </label>
                     <input
                         type="text"
                         id="notesInput"
@@ -73,7 +73,7 @@
                         name="order[remarks]"
                         rows="3"
                         maxlength="<?php echo $maxRemarkLength; ?>"
-                        placeholder="Allowed <?php echo $maxRemarkLength; ?> characters"
+                        placeholder="<?php echo $this->language->tLine('Allowed') . ' ' . $maxRemarkLength . ' ' . $this->language->tLine('characters'); ?>"
                     />
                 </div>
             <?php } ?>
@@ -85,14 +85,16 @@
                         <label>
                             <input
                                 type="checkbox"
-                                value="1" name="order[termsAndConditions]"
+                                value="1"
+                                name="order[termsAndConditions]"
                                 <?php echo $termsAndConditions; ?>
                                 id="termsAndConditions"
                                 class="inputFieldCheckout"
                             />
-                            I read and accept the
+                            <?php echo $this->language->tLine('I read and accept the');?>
                             <a href="<?php echo $return; ?>">
-                            Terms and conditions</a>
+                                <?php echo $this->language->tLine('Terms and conditions');?>
+                            </a>
                         </label>
                     </div>
                     <div class="form-group col-sm-12 checkbox">
@@ -105,7 +107,10 @@
                                 id="privacyPolicy"
                                 class="inputFieldCheckout"
                             />
-                            I took notice of <a href="<?php echo $return; ?>">Privacy policy</a>
+                            <?php echo $this->language->tLine('I took notice of');?>&nbsp;
+                            <a href="<?php echo $return; ?>">
+                                <?php echo $this->language->tLine('Privacy policy');?>
+                            </a>
                         </label>
                     </div>
                     <?php

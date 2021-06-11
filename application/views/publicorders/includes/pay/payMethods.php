@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="col-md-12 payOrderBackgroundColor">
     <div id="area-container" class="payOrderBackgroundColor">
         <div class="page-containe payOrderBackgroundColorr">
@@ -9,20 +10,20 @@
                 <table>
                     <thead>
                     <tr>
-                        <th data-trans="" data-trn-key="Productnaam"><?php echo $this->language->line("PAYMENT-010",'Productname');?>
+                        <th data-trans="" data-trn-key="Productnaam"><?php echo $this->language->tLine('Productname');?>
                         </th>
-                        <th data-trans="" data-trn-key="Totaal"><?php echo $this->language->line("PAYMENT-020",'Total');?></th>
+                        <th data-trans="" data-trn-key="Totaal"><?php echo $this->language->tLine('Total');?></th>
                     </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td style="text-align:left">
-                                <p>Bestellingen</p>
-                                <p>Service</p>
-                                <p>TOTAAL</p>
+                                <p><?php echo $this->language->tLine('Orders');?></p>
+                                <p><?php echo $this->language->tLine('Service');?></p>
+                                <p><?php echo $this->language->tLine('TOTAAL');?></p>
                                 <?php if ($waiterTip) { ?>
-                                <p>Waiter tip</p>
-                                <p>TOTAL WITH TIP</p>
+                                <p><?php echo $this->language->tLine('Waiter tip');?></p>
+                                <p><?php echo $this->language->tLine('TOTAL WITH TIP');?></p>
                                 <?php } ?>                                                    
                                 <!-- <p class="voucher" style="display:none">Voucher amount</p>
                                 <p class="voucher" style="display:none">Pay with other method</p> -->
@@ -44,11 +45,11 @@
             <div  id="choosePaymentMethod" class="bar" style="width:100 vw; height:100">
                 <div class="bar-title">
                     <span data-trans="" data-trn-key="Kies een betaalmethode">
-                            <?php echo $this->language->tline('Kies een betaalmethode');?>
+                            <?php echo $this->language->tline('Choose payment method');?>
                     </span>
                 </div>
                 <span class="bar-title-original hidden">
-                    <span data-trans="" data-trn-key="Kies een betaalmethode"><?php echo $this->language->line("PAYMENT-050",'Kies een betaalmethode');?></span>
+                    <span data-trans="" data-trn-key="Kies een betaalmethode"><?php echo $this->language->tline('Choose payment method');?></span>
                 </span>
             </div>
             <div class="content-container clearfix" id="paymentMethodsContainer">
@@ -117,7 +118,7 @@
                             <a href="javascript:void(0);" class="paymentMethod method-card" data-toggle="modal" data-target="#postPaid">
                                 <img src="<?php echo base_url() . 'assets/images/waiter.png'; ?>" alt="Pay at waiter" />
                                 <?php if ($vendor['vendorId'] == THGROUP) { ?>
-                                    <span class="paymentMethodText">Collect at the bar</span>
+                                    <span class="paymentMethodText"><?php echo $this->language->tLine('Collect at the bar');?></span>
                                 <?php } else { ?>
                                     <span class="paymentMethodText"><?php echo $this->language->tline('Pay at waiter');?></span>
                                 <?php } ?>
@@ -130,12 +131,15 @@
                             class="paymentMethod method-card addTargetBlank"
                         >
                         <img src="<?php echo base_url() . 'assets/home/images/pinmachine.png'; ?>" alt="pin machine">
-                            <span class="paymentMethodText">Pin machine</span>
+                            <span class="paymentMethodText"><?php echo $this->language->tLine('Pin machine');?></span>
                         </a>
                     <?php } ?>
                     <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
                         <a href="javascript:void(0);" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
-                            <img src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
+                            <img
+                                src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>"
+                                alt="<?php echo $this->language->tLine('voucher');?>"
+                            />
                             <span class="paymentMethodText"><?php echo $this->language->tline('Use Voucher');?></span>
                         </a>
                     <?php } ?>
@@ -145,7 +149,7 @@
 
             <?php if (in_array($idealPayment, $paymentMethodsKey)) { ?>
                 <div class="method method-ideal hidden"  id="idealBanks" style="z-index:1000">
-                    <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
+                    <div class="title hidden"><span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->tLine('Choose your bank');?></span>
                     </div>                                        
                     <div class="payment-container">
                         <a
@@ -237,7 +241,7 @@
                                             data-href="javascript:void(0);"
                                             class="text-center text-primary mb-1">
                                             
-                            <span class="text-primary"><?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?></span>
+                            <span class="text-primary"><?php echo $this->language->tLine('Back to payment methods');?></span>
                         </span>
                         
                     </div>
@@ -247,7 +251,7 @@
             <?php if (in_array($giroPayment, $paymentMethodsKey)) { ?>
                 <div class="method method-ideal hidden"  id="giroBanks">
                     <div class="title hidden">
-                        <span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->line("PAYMENT-030",'Choose your bank');?></span>
+                        <span data-trans="" data-trn-key="Kies een bank"><?php echo $this->language->tLine('Choose your bank');?></span>
                     </div>
                     <div class="payment-container">
                         <a
@@ -311,19 +315,23 @@
                                             data-href="javascript:void(0)"
                                             class="text-center text-primary mb-1">
                                             
-                            <span class="text-primary"><?php echo $this->language->line("PAYMENT-910",'Back to payment methods');?></span>
+                            <span class="text-primary"><?php echo $this->language->tLine('Back to payment methods');?></span>
                         </span>
 
                     </div>
                 </div>
             <?php } ?>
 
-            <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Pay with voucher: <span id="voucherAmount"></span> &euro;</p>
-            <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">Left amount: <span id="leftAmount"></span> &euro;</p>
+            <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">
+                <?php echo $this->language->tLine('Pay with voucher');?>: <span id="voucherAmount"></span> &euro;
+            </p>
+            <p class="voucher" style="display:none; margin:0px; background-color:#fff; text-align:left; color:#000; font-weight:900; padding:5px">
+                <?php echo $this->language->tLine('Left amount');?>: <span id="leftAmount"></span> &euro;
+            </p>
             <div id="payFooter" class="footer" style="text-align:left">
                 <a id="backLink" href="<?php echo base_url() . $redirect; ?>" class="btn btn-cancel">
                     <i class="fa fa-arrow-left"></i>
-                    <span data-trans="" data-trn-key="Annuleren">BACK</span>
+                    <span data-trans="" data-trn-key="Annuleren"><?php echo $this->language->tLine('BACK');?></span>
                 </a>
             </div>
             <?php

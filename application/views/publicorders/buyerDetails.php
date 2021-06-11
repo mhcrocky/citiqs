@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <main
     class="container designBackgroundImage"
     style="text-align:left; margin-bottom:20px; width:100vw; height:100vh" id="buyerDetailsContainer"
@@ -10,7 +11,7 @@
             <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                 <div id="yourDetails" class="checkout-title">
                     <span>
-                        Your&nbsp;details
+                        <?php echo $this->language->tLine('Your details');?>                        
                     </span>
                 </div>
                 <div class="row">
@@ -22,7 +23,7 @@
                                 class="form-control inputFieldsBuyer"
                                 name="user[username]"
                                 value="<?php echo $username; ?>"
-                                type="text" placeholder="<?php echo $this->language->tLine('Name');?> "
+                                type="text" placeholder="<?php echo $this->language->tLine('Name');?>"
                                 required
                                 data-name="Name"
                             />

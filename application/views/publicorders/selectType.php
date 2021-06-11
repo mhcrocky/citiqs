@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <main class="main-wrapper-nh" style="text-align:center">
 	<div class="background-apricot-blue height-100 designBackgroundImage" id="selectTypeBody" style="width:100vw; height:auto">
 		<?php if (empty($_SESSION['iframe'])) { ?>
@@ -28,7 +29,12 @@
 				<?php foreach ($activeTypes as $type) { ?>
 
 					<label>
-						<input type="radio" name="radio" value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $type['typeId'] ?>" onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?> />
+						<input
+							type="radio"
+							name="radio"
+							value="<?php echo 'make_order?vendorid=' . $vendor['vendorId'] . '&typeid=' . $type['typeId'] ?>"
+							onchange="redirectTo(this.value)" class="form-control" <?php if($type['typeId']==='0') echo "checked" ?>
+						/>
 						<div class="front-end box selectTypeLabels">
 							<!--							--><?php //{
 							//								if (is_null($vendor['logo'])) {
@@ -38,16 +44,15 @@
 							//								}
 							//							} ?>
 
-<!--							<div style="margin-top: 20px" align="center">-->
-<!--								<img src="--><?php //echo $logoFile; ?><!--" alt="tiqs" width="100" height="auto" align="center"/>-->
-<!--							</div>-->
+							<!--							<div style="margin-top: 20px" align="center">-->
+							<!--								<img src="--><?php //echo $logoFile; ?><!--" alt="tiqs" width="100" height="auto" align="center"/>-->
+							<!--							</div>-->
 
 							<div style="margin-top: 10px">
 								<div style="margin-top: -60px">
-									<span class="selectTypeLabelsColor typeLabel"><?php echo $type['type']; ?></span>
+									<span class="selectTypeLabelsColor typeLabel"><?php echo $this->language->tLine($type['type']);?></span>
 								</div>
 							</div>
-
 							<div style="margin-top:100px">
 								<i class="<?php if($type['typeId']==='1') echo "fa fa-coffee selectTypeLabelsColor" ?>" style="font-size:48px;color:ghostwhite"></i>
 								<i class="<?php if($type['typeId']==='2') echo "fa fa-bicycle selectTypeLabelsColor" ?>" style="font-size:48px;color:ghostwhite"></i>
@@ -58,10 +63,9 @@
 
 							<div style="margin-top: -80px">
 								<div style="margin-top: 10px">
-									<span style="font-size: xx-small" class="selectTypeLabelsColor">click here</span>
+									<span style="font-size: xx-small" class="selectTypeLabelsColor"><?php echo $this->language->tLine('click here');?></span>
 								</div>
 							</div>
-
 						</div>
 					</label>
 
@@ -70,10 +74,10 @@
 
 			<?php if ($vendor['requireReservation'] === '1' && !empty($_SESSION['visitorReservationId'])) { ?>
 				<div><br/></div>
-				<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>">Checkout</a>
+				<a href="<?php echo base_url(); ?>check424/<?php echo $vendor['vendorId']; ?>"><?php echo $this->language->tLine('Checkout');?></a>
 			<?php } ?>
 			<?php } else { ?>
-				<p>No available service</p>
+				<p><?php echo $this->language->tLine('No available service');?></p>
 			<?php } ?>
 		</div>
 	</div>
@@ -86,7 +90,7 @@
 	<!--				</div>-->
 	<!--				<h1 style="text-align:center">QR-MENU</h1>-->
 	<!--				<div style="text-align:center; margin-top: 30px">-->
-	<!--					<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->line("HOMESTART-SPOT-X001111ABC",'BUILD BY TIQS');?><!--</p>-->
+	<!--					<p style="font-size: larger; margin-top: 50px; margin-left: 0px">--><?php //$this->language->tLine('BUILD BY TIQS');?><!--</p>-->
 	<!--				</div>-->
 	<!--			</div>-->
 	<!--		</div>-->
