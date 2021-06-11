@@ -594,6 +594,7 @@
                                         'what' => ['id', 'printer'],
                                         'where' => [
                                             'userId' => $userId,
+                                            'active' => '1'
                                         ]
                                     ]),
                 'vendorData' => $this->shopvendor_model->setProperty('vendorId', $userId)->getProperties(['id', 'requireRemarks', 'busyTime', 'minBusyTime', 'maxBusyTime']),
