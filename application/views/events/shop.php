@@ -62,7 +62,7 @@
                             src="<?php echo base_url(); ?>assets/images/events/<?php echo $event['eventImage']; ?>"
                             <?php endif; ?> alt="<?php echo $event['eventname']; ?>">
                         <p class='single-item__promotion'>Order Now</p>
-                        <p class='single-item__bottom'><?php echo date('d/m/y', strtotime($event['StartDate'])); ?></p>
+                        <p class='single-item__bottom'><?php echo (date('Y-m-d') == $event['StartDate']) ? $this->language->tLine('TODAY') : date('d/m/Y', strtotime($event['StartDate'])); ?></p>
                     </div>
                 </a>
                 <a href="#tickets" onclick="getTicketsView('<?php echo $event['id']; ?>')"
