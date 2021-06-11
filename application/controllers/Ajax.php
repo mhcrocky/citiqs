@@ -1061,9 +1061,7 @@ class Ajax extends CI_Controller
 
         $this->shopvoucher_model->setProperty('code', $code)->setVoucher();
 
-        if (Utility_helper::testingVendors($orderData['vendorId'])) {
-            $this->shopvoucher_model->rollBackVoucher($this->shoporder_model);
-        }
+        $this->shopvoucher_model->rollBackVoucher($this->shoporder_model);
 
         if (
             !$this->isBlocked($orderData)

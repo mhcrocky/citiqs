@@ -1570,18 +1570,36 @@
             if ($response->request->result === '1') {
                 $refundAmount = $argumentsArray['amount'] / 100;
                 $this->setProperty('refundAmount', $refundAmount)->update();
-                $response = [
+                $return = [
                     'status' => '1',
                     'messages' => [$response->description]
                 ];
             } else {
-                $response = [
+                $return = [
                     'status' => '0',
-                    'messages' => [$response->request->errorMessage]
+                    'messages' => ['Refund was sent to TIQS for further processing']
                 ];
+                $paynlErrorMessage = (empty($response->request->errorMessage)) ? '' : $response->request->errorMessage;
+                $this->refundFailedMessage($argumentsArray, $paynlErrorMessage);
             }
 
-            return $response;
+            return $return;
+        }
+
+        private function refundFailedMessage(array $argumentsArray, string $paynlErrorMessage): bool
+        {
+            $this->load->helper('email_helper');
+            $this->load->config('custom');
+
+            $message  = '<p>Refund declined or still processing</p>';
+            $message .= '<p>TIQS order id: '. $this->id . '</p>';
+            $message .= '<p>PAYNL transaction id: '. $argumentsArray['transactionId'] . '</p>';
+            $message .= '<p>Refund amount: '. ($argumentsArray['amount'] / 100) . '&nbsp;&euro;</p>';
+            if ($paynlErrorMessage)  {
+                $message .= '<p>PAYNL error message: '. $paynlErrorMessage . '</p>';
+            }
+
+            return Email_helper::sendEmail($this->config->item('tiqsEmail'), 'Refund', $message);
         }
 
         public function getOrderVendorId(): int

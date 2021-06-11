@@ -276,7 +276,6 @@ function fetchOrders() {
         post['orderStatus'] = selectedStatus.value;
     }
     if (selectedPrinter && selectedPrinter.value) {
-        selectedPrinter = selectedPrinter.value;
         post['selectedPrinter'] = selectedPrinter.value;
     }
 

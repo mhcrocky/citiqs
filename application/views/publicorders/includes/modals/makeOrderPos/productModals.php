@@ -26,8 +26,8 @@
                                     <h4 class="modal-header__title productName"><?php echo $productDetails['name']; ?></h4>
                                     <h4 class='modal-price productName productName'>&euro; <?php echo $productDetails['price']; ?></h4>
                                 </div>
-                                <h6 class="modal-header__description productDescription"><?php echo $productDetails['shortDescription']; ?></h6>
-                                <p class='modal__category productCategory'>Category: <a href='#' class='productCategory'><?php echo $product['category']; ?></a></p>
+                                <!-- <h6 class="modal-header__description productDescription"><?php #echo $productDetails['shortDescription']; ?></h6> -->
+                                <!-- <p class='modal__category productCategory'>Category: <a href='#' class='productCategory'><?php #echo $product['category']; ?></a></p> -->
                             </div>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span style="color:#000;">&times;</span>
