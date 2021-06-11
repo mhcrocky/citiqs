@@ -9,6 +9,7 @@ require APPPATH . '/libraries/BaseControllerWeb.php';
 
 class  Paysuccesslink extends BaseControllerWeb
 {
+    private $vendorLanguage = '';
     /**
      * This is default constructor of the class
      */
@@ -25,6 +26,7 @@ class  Paysuccesslink extends BaseControllerWeb
         $this->load->helper('url');
         $this->load->helper('utility_helper');
         $this->load->helper('landingpage_helper');
+        $this->load->helper('language_helper');
 
         $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
@@ -49,14 +51,20 @@ class  Paysuccesslink extends BaseControllerWeb
         }
 
         $data['landingPage'] = Landingpage_helper::getTemplateString($data['order'], $landingPage['value']);
+        
         return;
+    }
+
+    private function setVendorLanguage(int $vendorId): void
+    {
+        $this->vendorLanguage = Language_helper::getLanguage($vendorId);
     }
 
     public function loadViewOrTemplate(array $data, string $defaultTemplate): void
     {
         $view = empty($data['landingPage']) ?  $defaultTemplate : $this->config->item('landingPageView');
 
-        $this->loadViews($view, $this->global, $data, 'nofooter', 'noheader');
+        $this->loadViews($view, $this->global, $data, 'nofooter', 'noheader', $this->vendorLanguage);
     }
 
     public function index()
@@ -188,6 +196,8 @@ class  Paysuccesslink extends BaseControllerWeb
                                         'facebookPixelId'
                                     ]);
         $data['analytics'] = $this->global['vendor'];
+
+        $this->setVendorLanguage($vendorId);
     }
 
     private function setBackAndFailedUrl(array &$data): void

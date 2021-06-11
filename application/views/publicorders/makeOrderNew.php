@@ -236,15 +236,18 @@
                         <i style="font-size: 40px;color: white" class="fa fa-home"></i>
                     </a>
                     <?php } ?>
-                    <p class='button-main button-secondary bottom-bar__checkout totalButton'>TOTAL: <span
-                            class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span> </p>
+                    <p class='button-main button-secondary bottom-bar__checkout totalButton'>
+                        <?php echo $this->language->tLine('TOTAL');?>:
+                        &nbsp;
+                        <span class='bottom-bar__total-price'>&euro;&nbsp;<span class="totalPrice">0</span></span>
+                    </p>
                     <!-- <button class='button-main button-secondary' onclick="focusCheckOutModal('modal__checkout__list')">Order List</button> -->
                 </div>
             </div>
             <!--				<div class="col-12 col-md-6 text-center text-right-md">-->
             <div class="col-12 text-center text-right-md">
                 <button id="payButton" class='button-main button-secondary bottom-bar__checkout payButton'
-                    onclick="checkout(0)" style="width:100%">PAY</button>
+                    onclick="checkout(0)" style="width:100%"><?php echo $this->language->tLine('PAY');?></button>
             </div>
         </div>
     </div>

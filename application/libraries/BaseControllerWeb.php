@@ -127,9 +127,14 @@ class BaseControllerWeb extends CI_Controller
      * @param {mixed} $footerInfo : This is array of footer information
      * @return {null} $result : null
      */
-    public function loadViews(string $viewName = "", $headerInfo = NULL, $pageinfo= NULL, $footerInfo = NULL, $Headermenu = NULL ): void
+    public function loadViews(string $viewName = "", $headerInfo = NULL, $pageinfo= NULL, $footerInfo = NULL, $Headermenu = NULL, $language = ''): void
     {        
-        $this->setSessionDefaultLang();
+        if ($language) {
+            $this->session->set_userdata('site_lang', $language);
+        } else {
+            $this->setSessionDefaultLang();
+        }
+        
         $this->setBaseUrl();
         $this->setHeader($Headermenu);
         $this->setView($viewName);
