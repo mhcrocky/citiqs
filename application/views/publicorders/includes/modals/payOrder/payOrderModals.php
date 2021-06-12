@@ -72,7 +72,7 @@
 <?php } ?>
 <?php if (in_array($voucherPayment, $paymentMethodsKey) &&  $vendor['voucherPaymentCode'] === '0') { ?>
 
-        <div class="modal fade" id="voucher" tabindex="-1" role="dialog" aria-labelledby="voucherLabel" aria-hidden="true">
+        <div class="modal" id="voucher" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content modalPayOrder">
                 
