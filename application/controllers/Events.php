@@ -897,7 +897,7 @@ class Events extends BaseControllerWeb
         $GLOBALS['vendorId'] = $vendorId;
         $GLOBALS['eventId'] = $eventId;
         $GLOBALS['sql'] = $sql;
-        $this->load->model('event_model');
+
 		$graphs = DrillDown::create(array(
             "name" => "saleDrillDown",
             "title" => " ",
@@ -949,6 +949,56 @@ class Events extends BaseControllerWeb
 		return $graphs;
 
 	}
+
+    public function scannedin(){
+
+        $this->global['pageTitle'] = 'Scanned In';
+
+        $data['scan_graphs'] = DrillDown::create(array(
+            "name" => "scanDrillDown",
+            "title" => "Scan Report",
+            "levels" => array(
+                array(
+                    "title" => "E-Ticketing",
+                    "content" => function ($params, $scope) {
+                        ColumnChart::create(array(
+                            "dataSource" => ($this->event_model->get_scannedin_by_events($this->session->userdata('userId'))), 
+                            "columns" => array(
+                                "date" => array(
+                                    "type" => "string",
+                                    "label" => "Date",
+                                ),
+                                "tickets" => array(
+                                    "label" => "Bookings",
+                                ),
+                                "scanned" => array(
+                                    "label" => "Scanned in",
+                                ),
+                            ),
+                            "clientEvents" => array(
+                                "itemSelect" => "function(params){
+                                    scanDrillDown.next({date:params.selectedRow[0]});
+                                }",
+                            ),
+                            "colorScheme"=>array(
+                                "#3366cc",
+                                "#ffff00",
+                                "#c2b9b0",
+                                "#7e685a",
+                                "#afd275"
+                            )
+                        ));
+                    }
+                ),
+
+
+            ),
+            
+        ), true);
+
+        $this->loadViews('events/scannedin_graph', $this->global, $data, 'footerbusiness', 'headerbusiness' );    
+
+    }
 
     public function resend_ticket()
 	{
