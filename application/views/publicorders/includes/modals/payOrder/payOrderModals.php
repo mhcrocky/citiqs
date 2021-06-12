@@ -70,17 +70,17 @@
         </div>
     <?php } ?>
 <?php } ?>
-<?php #if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
-    <!-- <div id="voucher" class="modal" role="dialog">
+<?php if (in_array($voucherPayment, $paymentMethodsKey) &&  $vendor['voucherPaymentCode'] === '0') { ?>
+    <div id="voucher" class="modal" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content modalPayOrder">
                 <div class="modal-body modalPayOrder" style="text-align:center">
-                    <label for="codeId2" class="payOrderInputFieldsLabel"><?php #echo $this->language->tLine('Insert code from voucher');?></label>
+                    <label for="codeId2" class="payOrderInputFieldsLabel"><?php echo $this->language->tLine('Insert code from voucher');?></label>
                     <input
                         type="text"
                         id="codeId2"
                         class="form-control payOrderInputFields voucherClass"
-                        data-<?php #echo $orderDataGetKey; ?>="<?php #echo $orderRandomKey; ?>"
+                        data-<?php echo $orderDataGetKey; ?>="<?php echo $orderRandomKey; ?>"
                         autocomplete="off"
                     />
                     <br/>
@@ -101,5 +101,5 @@
                 </div>
             </div>
         </div>
-    </div> -->
-<?php #} ?>
+    </div>
+<?php } ?>

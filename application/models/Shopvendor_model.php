@@ -88,6 +88,7 @@
         public $myBank;
         public $pinMachine;
         public $emailFinanceReporets;
+        public $voucherPaymentCode;
 
         private $table = 'tbl_shop_vendors';
 
@@ -214,6 +215,7 @@
             if (isset($data['facebookPixelId']) && !Validate_data_helper::validateString($data['facebookPixelId'])) return false;
 
             if (isset($data['emailFinanceReporets']) && !($data['emailFinanceReporets'] === '1' || $data['emailFinanceReporets'] === '0')) return false;
+            if (isset($data['voucherPaymentCode']) && !($data['voucherPaymentCode'] === '1' || $data['voucherPaymentCode'] === '0')) return false;
 
             return true;
         }
@@ -293,6 +295,7 @@
                     $this->table . '.googleTagManagerCode',
                     $this->table . '.facebookPixelId',
                     $this->table . '.emailFinanceReporets',
+                    $this->table . '.voucherPaymentCode',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',

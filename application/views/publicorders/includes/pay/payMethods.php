@@ -54,7 +54,7 @@
             </div>
             <div class="content-container clearfix" id="paymentMethodsContainer">
                 <div id="paymentContainer" class="payment-container methods" style="padding: 0px 10px 0px 10px">
-                    <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
+                    <?php if (in_array($voucherPayment, $paymentMethodsKey) && $vendor['voucherPaymentCode'] === '1') { ?>
                         <div style="width:100%">
                             <label for="codeId"><?php echo $this->language->tLine('Insert and confirm code from voucher');?>
                                 <input
@@ -156,15 +156,15 @@
                             <span class="paymentMethodText"><?php echo $this->language->tLine('Pin machine');?></span>
                         </a>
                     <?php } ?>
-                    <?php #if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
-                        <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
+                    <?php if (in_array($voucherPayment, $paymentMethodsKey) &&  $vendor['voucherPaymentCode'] === '0') { ?>
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                             <img
-                                src="<?php #echo base_url() . 'assets/home/images/voucher.png'; ?>"
-                                alt="<?php #echo $this->language->tLine('voucher');?>"
+                                src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>"
+                                alt="<?php echo $this->language->tLine('voucher');?>"
                             />
                             <span class="paymentMethodText"><?php #echo $this->language->tline('Use Voucher');?></span>
-                        </a> -->
-                    <?php #} ?>
+                        </a>
+                    <?php } ?>
                     <div class="clearfix"></div>
                 </div>
             </div>

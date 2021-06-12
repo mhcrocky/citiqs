@@ -242,6 +242,13 @@
 							&nbsp; minutes.
 						</label>
 					</div>
+					<h4>SHOW VOUCHER CODE ON TOP OF PAYMENT METHODS</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="voucherPaymentCodeYes">Yes</label>
+						<input type="radio" id="voucherPaymentCodeYes" name="vendor[voucherPaymentCode]" value="1" <?php if ($vendor['voucherPaymentCode'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="voucherPaymentCodeNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="voucherPaymentCodeNo" name="vendor[voucherPaymentCode]" value="0" <?php if ($vendor['voucherPaymentCode'] === '0') echo 'checked'; ?> />
+					</div>
 					<br/>
 					<br/>
 					<input class="btn btn-primary" type="submit" value="Submit" />
