@@ -71,35 +71,41 @@
     <?php } ?>
 <?php } ?>
 <?php if (in_array($voucherPayment, $paymentMethodsKey) &&  $vendor['voucherPaymentCode'] === '0') { ?>
-    <div id="voucher" class="modal" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content modalPayOrder">
-                <div class="modal-body modalPayOrder" style="text-align:center">
-                    <label for="codeId2" class="payOrderInputFieldsLabel"><?php echo $this->language->tLine('Insert code from voucher');?></label>
-                    <input
-                        type="text"
-                        id="codeId2"
-                        class="form-control payOrderInputFields voucherClass"
-                        data-<?php echo $orderDataGetKey; ?>="<?php echo $orderRandomKey; ?>"
-                        autocomplete="off"
-                    />
-                    <br/>
-                    <button
-                        class="btn btn-success btn-lg modalPayOrderButton"
-                        style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-                        onclick="voucherPay('codeId2')"
-                    >
-                        <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
-                    </button>
-                    <button
-                        class="btn btn-danger btn-lg closeModal modalPayOrderButton"
-                        style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-                        data-dismiss="modal"
-                    >
-                        <i class="fa fa-times modalPayOrderButton" aria-hidden="true"></i>
-                    </button>
+
+        <div class="modal fade" id="voucher" tabindex="-1" role="dialog" aria-labelledby="voucherLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content modalPayOrder">
+                
+                    <div class="modal-body modalPayOrder" style="text-align:center">
+                        <label for="codeId2" class="payOrderInputFieldsLabel"><?php echo $this->language->tLine('Insert code from voucher');?></label>
+                        <input
+                            type="text"
+                            id="codeId2"
+                            class="form-control payOrderInputFields voucherClass"
+                            data-<?php echo $orderDataGetKey; ?>="<?php echo $orderRandomKey; ?>"
+                            autocomplete="off"
+                        />
+                        <br/>
+                        <button
+                            type="button"
+                            class="btn btn-success btn-lg modalPayOrderButton"
+                            style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+                            onclick="voucherPay('codeId2')"
+                        >
+                            <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-danger btn-lg closeModal modalPayOrderButton"
+                            style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
+                            data-dismiss="modal"
+                        >
+                            <i class="fa fa-times modalPayOrderButton" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
 <?php } ?>
