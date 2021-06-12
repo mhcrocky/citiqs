@@ -169,6 +169,14 @@
             $draw->setFontSize(30);
             $draw->setStrokeWidth(3);
 
+            if (in_array($order['paymentType'], $CI->config->item('cashPaymentTypes'))) {
+                $paymetnMethod = 'PAY METHOD: PAY AT THE WAITER';
+            } else {
+                $paymetnMethod = $order['paymentType'];
+            }
+            $draw->annotation(0, 35 * $h, $paymetnMethod);
+            $h++;
+
             if (!$isMobile) {
                 if ($serviceTypeId === $CI->config->item('local')) {
                     $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");
