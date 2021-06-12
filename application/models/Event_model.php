@@ -1137,14 +1137,37 @@ class Event_model extends CI_Model {
         return false;
 	}
 
-	private function generateNewVoucher()
+	public function get_scannedin_by_events($vendorId) : array
+	{
+		$query = $this->db->query("SELECT tbl_events.StartDate as eventDate, COUNT(tbl_bookandpay.id) as tickets, SUM(numberin) as scannedin
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND tbl_events.vendorId = ".$vendorId."
+		GROUP BY tbl_events.id");
+		$results = $query->result_array();
+		$newData = [];
+
+		foreach($results as $result){
+
+			$newData[] = [
+				"date" => $result['eventDate'],//$date,
+				"tickets" => (int) $result['tickets'],
+				"scanned" => (int) $result['scannedin']
+			];
+
+		}
+
+		return $newData;
+	}
+
+	private function generateNewVoucher() : string
 	{
 		$set = '3456789ABCDEFGHJKLMNPQRSTVWXY';
 		$voucher = 'V-' . substr(str_shuffle($set), 0, 6);
         return $voucher;
 	}
 
-	public function get_age_avg($vendorId, $gender)
+	private function get_age_avg($vendorId, $gender) : array
 	{
 		$query = $this->db->query("SELECT tbl_event_tickets.eventId, AVG(TIMESTAMPDIFF(YEAR, age, CURDATE())) AS age_avg, gender
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
