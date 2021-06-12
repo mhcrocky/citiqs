@@ -56,13 +56,14 @@
                 <div id="paymentContainer" class="payment-container methods" style="padding: 0px 10px 0px 10px">
                     <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
                         <div style="width:100%">
-                            <label for="codeId"><?php echo $this->language->tLine('Insert code from voucher');?>
+                            <label for="codeId"><?php echo $this->language->tLine('Insert and confirm code from voucher');?>
                                 <input
                                     type="text"
                                     id="codeId"
-                                    class="form-control"
+                                    class="form-control voucherClass"
                                     style="display:inline; width:70%"
                                     data-<?php echo $orderDataGetKey; ?>="<?php echo $orderRandomKey; ?>"
+                                    autocomplete="off"
                                 />
                                 <button
                                     class="btn btn-success btn"
@@ -155,15 +156,15 @@
                             <span class="paymentMethodText"><?php echo $this->language->tLine('Pin machine');?></span>
                         </a>
                     <?php } ?>
-                    <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
-                        <a href="javascript:void(0);" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
+                    <?php #if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
+                        <!-- <a href="javascript:void(0);" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                             <img
-                                src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>"
-                                alt="<?php echo $this->language->tLine('voucher');?>"
+                                src="<?php #echo base_url() . 'assets/home/images/voucher.png'; ?>"
+                                alt="<?php #echo $this->language->tLine('voucher');?>"
                             />
-                            <span class="paymentMethodText"><?php echo $this->language->tline('Use Voucher');?></span>
-                        </a>
-                    <?php } ?>
+                            <span class="paymentMethodText"><?php #echo $this->language->tline('Use Voucher');?></span>
+                        </a> -->
+                    <?php #} ?>
                     <div class="clearfix"></div>
                 </div>
             </div>

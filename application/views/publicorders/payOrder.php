@@ -18,6 +18,10 @@
             'orderDataGetKey' : '<?php echo $orderDataGetKey; ?>',
             'orderRandomKey' : '<?php echo $orderRandomKey; ?>'
         }
+
+        <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
+            globals.vocuherClass = 'voucherClass'
+        <?php } ?>
         Object.freeze(globals);
         return globals;
     }());

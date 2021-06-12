@@ -79,6 +79,14 @@ function preventDoubleClick(element) {
     }
 }
 
+
+function emptyVoucherFields() {
+    if (!payOrderGlobals.hasOwnProperty('vocuherClass')) return;
+    $('.' + payOrderGlobals['vocuherClass']).val('');
+}
+
 if (inIframe()) {
     addTargetBlank();
 }
+
+emptyVoucherFields();
