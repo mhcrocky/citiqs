@@ -53,7 +53,28 @@
                 </span>
             </div>
             <div class="content-container clearfix" id="paymentMethodsContainer">
-                <div id="paymentContainer" class="payment-container methods">
+                <div id="paymentContainer" class="payment-container methods" style="padding: 0px 10px 0px 10px">
+                    <?php if (in_array($voucherPayment, $paymentMethodsKey)) { ?>
+                        <div style="width:100%">
+                            <label for="codeId"><?php echo $this->language->tLine('Insert code from voucher');?>
+                                <input
+                                    type="text"
+                                    id="codeId"
+                                    class="form-control"
+                                    style="display:inline; width:70%"
+                                    data-<?php echo $orderDataGetKey; ?>="<?php echo $orderRandomKey; ?>"
+                                />
+                                <button
+                                    class="btn btn-success btn"
+                                    style="border-radius:50%; font-size:24px"
+                                    onclick="voucherPay('codeId')"
+                                >
+                                    <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
+                                </button>
+                            </label>
+                        </div>
+                        <br/>
+                    <?php } ?>
 					<?php if (in_array($payconiqPayment, $paymentMethodsKey)) { ?>
 						<a
                             href="<?php echo base_url(); ?>onlinepayment/<?php echo $payconiqPaymentType; ?>/0<?php echo '?' . $orderDataGetKey . '=' . $orderRandomKey; ?>"
