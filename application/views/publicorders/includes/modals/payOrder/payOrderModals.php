@@ -2,7 +2,7 @@
 <?php if ($localType === intval($spot['spotTypeId'])) { ?>
     <?php if (in_array($prePaid, $paymentMethodsKey)) { ?>
         <!-- Modal -->
-        <div id="prePaid" class="modal" role="dialog">
+        <div id="prePaid" class="modal"  tabindex="-1" role="dialog">
             <div class="modal-dialog modal-sm modalPayOrder" style="text-align:center">
                 <!-- Modal content-->
                 <div class="modal-content modalPayOrder">
@@ -35,7 +35,7 @@
     <?php } ?>
     <?php if (in_array($postPaid, $paymentMethodsKey)) { ?>
         <!-- Modal -->
-        <div id="postPaid" class="modal" role="dialog">
+        <div id="postPaid" class="modal" role="dialog"  tabindex="-1">
             <div class="modal-dialog modal-sm">
                 <!-- Modal content-->
                 <div class="modal-content modalPayOrder">
