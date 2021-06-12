@@ -77,10 +77,10 @@
             <!-- Modal content-->
             <div class="modal-content modalPayOrder">
                 <div class="modal-body modalPayOrder" style="text-align:center">
-                    <label for="codeId" class="payOrderInputFieldsLabel"><?php echo $this->language->tLine('Insert code from voucher');?></label>
+                    <label for="codeId2" class="payOrderInputFieldsLabel"><?php echo $this->language->tLine('Insert code from voucher');?></label>
                     <input
                         type="text"
-                        id="codeId"
+                        id="codeId2"
                         class="form-control payOrderInputFields"
                         data-<?php echo $orderDataGetKey; ?>="<?php echo $orderRandomKey; ?>"
                     />
@@ -88,7 +88,7 @@
                     <button
                         class="btn btn-success btn-lg modalPayOrderButton"
                         style="border-radius:50%; margin:30px 5% 0px 0px; font-size:24px"
-                        onclick="voucherPay('codeId')"
+                        onclick="voucherPay('codeId2')"
                     >
                         <i class="fa fa-check modalPayOrderButton" aria-hidden="true"></i>
                     </button>
