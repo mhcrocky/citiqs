@@ -86,6 +86,8 @@ class Alfredinsertorder extends BaseControllerWeb
         $redirect .= DIRECTORY_SEPARATOR . $orderId;
         $redirect .= '?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
 
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/order_payment.txt', "$redirect");
+
         redirect($redirect);
         exit();
     }
