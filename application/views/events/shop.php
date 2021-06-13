@@ -13,10 +13,10 @@
     <div <?php if(isset($events[0])) { ?> style="clip-path: none !important;width: 100%;max-width: 65%; height: auto !important" <?php } ?>
         class="d-none d-md-flex px-0 hero__background">
         <?php if(isset($events[0]) && $events[0]['backgroundImage'] != ''): ?>
-        <img id="background-image"
+        <img id="background-image" style="max-height: 750px;"
             src="<?php echo base_url(); ?>assets/images/events/<?php echo $events[0]['backgroundImage']; ?>" alt="">
         <?php else: ?>
-        <img id="background-image" src="<?php echo base_url(); ?>assets/images/events/default_background.webp" alt="">
+        <img style="max-height: 750px;" id="background-image" src="<?php echo base_url(); ?>assets/images/events/default_background.webp" alt="">
         <?php endif; ?>
     </div>
 
