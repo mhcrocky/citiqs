@@ -81,7 +81,8 @@ class Alfredinsertorder extends BaseControllerWeb
             $this->failedRedirect($orderData['vendorId'], $orderData['spotId'], $orderRandomKey);
         }
 
-        $redirect  = 'paymentengine' . DIRECTORY_SEPARATOR . $payNlPaymentTypeId  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
+        //$redirect  = 'paymentengine' . DIRECTORY_SEPARATOR . $payNlPaymentTypeId  . DIRECTORY_SEPARATOR . $paymentOptionSubId;
+        $redirect  = base_url() . 'paymentengine' . DIRECTORY_SEPARATOR . $payNlPaymentTypeId  . DIRECTORY_SEPARATOR . $paymentOptionSubId; // added base_url()
         $redirect .= DIRECTORY_SEPARATOR . $orderId;
         $redirect .= '?' . $this->config->item('orderDataGetKey') . '=' . $orderRandomKey;
 
