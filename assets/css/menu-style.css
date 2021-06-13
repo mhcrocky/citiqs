@@ -121,7 +121,7 @@ h2{
 
 .hero__background img{
 	width: 100%;
-	object-fit: cover;
+	object-fit: revert;
 	height: 100%;
 }
 /* item grid */
