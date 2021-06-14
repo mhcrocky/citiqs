@@ -338,6 +338,54 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         }
     }
     </style>
+<?php  } elseif ($this->view === 'events/clearing_tickets') { ?>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <style>
+    .b-top {
+        border-top: 1px solid #dfdfdf;
+        padding-top: 10px;
+    }
+
+    .b-bottom {
+        border-bottom: 1px solid #dfdfdf;
+        padding-bottom: 5px;
+    }
+
+    .pt-10px {
+        padding-top: 10px; 
+    }
+
+    .pb-5px {
+        padding-bottom: 5px; 
+    }
+
+
+    .hr-200 {
+        visibility: hidden;
+        margin-top: 200px; 
+    }
+
+    @media only screen and (min-width: 1100px) {
+        .p-right {
+            padding-right: 40px;
+        }
+
+        .p-left {
+            padding-left: 40px;
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        .hr-200 {
+            visibility: hidden;
+            margin-top: 40px; 
+        }
+
+    }
+
+
+
+    </style>
 <?php } elseif ($this->view === 'events/reports') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
