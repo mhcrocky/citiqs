@@ -303,7 +303,7 @@ $(document).ready(function () {
           return (
             "<div class='bg-success btn-edit' style='width: 30px;height: 30px;'><a class='text-light' onclick='getTicketOptions(" +
             data.ticketId +
-            ")' id='edit' href='javascript:' data-toggle='modal' data-target='#editModal'><i class='fa fa-pencil p-2'><i></a></div>"
+            ", `"+data.ticketDescription+"`)' id='edit' href='javascript:' data-toggle='modal' data-target='#editModal'><i class='fa fa-pencil p-2'><i></a></div>"
           );
         },
       },
@@ -541,10 +541,11 @@ function timestampTicketOnFocus(){
   return ;
 }
 
-function getTicketOptions(ticketId) {
+function getTicketOptions(ticketId, ticketDescription) {
   $('#resetTicketOptions').click();
   $('.ql-snow').remove();
   $("#ticketId").val(ticketId);
+  $("#ticketOptionTitle").text(ticketDescription);
   $.get(
     globalVariables.baseUrl + "events/get_ticket_options/" + ticketId,
     function (data) {
@@ -690,6 +691,7 @@ function saveTicketOptions(e){
       alertify['success']('Ticket options are saved successfully!');
       $("#tickets").DataTable().ajax.reload();
       $('#ticketOptionsClose').click();
+      $('#ticketOptionTitle').empty();
   });
 }
 
