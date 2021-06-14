@@ -1000,6 +1000,19 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function clearingtickets()
+	{
+        $this->global['pageTitle'] = 'TIQS: Clearing Tickets';
+        $events = $this->event_model->get_all_events($this->vendor_id);
+        $data['event_stats'] = isset($events[0]) ? $this->get_clearing_stats($events[0]['id']) : [];
+        $data['payment_stats'] = isset($events[0]) ? $this->event_model->get_payment_methods_stats($this->vendor_id, $events[0]['id']) : [];
+        $data['events'] = $events;
+
+        
+        $this->loadViews('events/clearing_tickets', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
+
+    }
+
     public function resend_ticket()
 	{
         $reservationId = $this->input->post('reservationId');
@@ -1012,6 +1025,24 @@ class Events extends BaseControllerWeb
             echo 'false';
         }
         
+        return ;
+
+    }
+
+    public function get_clearing_stats($eventId = false)
+	{
+        $id = ($eventId !== false) ? $eventId : $this->input->post('eventId');
+        $event_stats = $this->event_model->get_clearing_event_stats($this->vendor_id, $id);
+        $payment_stats = $this->event_model->get_payment_methods_stats($this->vendor_id, $id);
+        $stats = array_merge($event_stats, $payment_stats);
+        
+        
+        if($eventId !== false){
+            return $stats;
+        }
+
+        echo json_encode($stats);
+
         return ;
 
     }
