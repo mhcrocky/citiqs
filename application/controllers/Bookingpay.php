@@ -29,6 +29,8 @@ class Bookingpay extends BaseControllerWeb
         $this->load->model('email_templates_model');
         $this->load->model('shopvendor_model');
         $this->load->model('shopsession_model');
+        $this->load->model('shopvoucher_model');
+
         $this->load->config('custom');
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->library('form_validation');
@@ -450,13 +452,13 @@ class Bookingpay extends BaseControllerWeb
         $strResult = @file_get_contents($strUrl);
         $result = json_decode($strResult);
         if ($result->request->result == '1') {
-//			$this->db->where('order_id',  $_SESSION['order_id']);
-//			if (!$this->db->update('orders', array(
-//				'transactionid' => $result->transaction->transactionId,
-//				'processed' => 0
-//			))) {
-//				log_message('error', print_r($this->db->error(), true));
-//			}
+        //			$this->db->where('order_id',  $_SESSION['order_id']);
+        //			if (!$this->db->update('orders', array(
+        //				'transactionid' => $result->transaction->transactionId,
+        //				'processed' => 0
+        //			))) {
+        //				log_message('error', print_r($this->db->error(), true));
+        //			}
 
             
             $transactionId = $result->transaction->transactionId;
@@ -484,14 +486,14 @@ class Bookingpay extends BaseControllerWeb
         //$arrArguments = $this->session->userdata(''arrArguments');
 
         $arrArguments['paymentOptionId'] = '706' ;
-//		$arrArguments['paymentOptionSubId'] = $num;
+        //		$arrArguments['paymentOptionSubId'] = $num;
 
         # Prepare complete API URL
         $strUrl = $strUrl . http_build_query($arrArguments);
         //var_dump($arrArguments);
         $this->processPaymenttype($strUrl);
 
-//		$cardholder = $_POST['cardholder'];
+        //		$cardholder = $_POST['cardholder'];
         // cardholder
         //cardnumber
         //cc-exp
@@ -513,14 +515,11 @@ class Bookingpay extends BaseControllerWeb
             // 
             //$query = 'UPDATE tbl_bookandpay SET paid = "1" WHERE TransactionID = "' . $this->db->escape($transactionid) . '"';
             //$this->db->query($query);
-
-            $this->bookandpay_model->updateBookandpayByTransactionId($transactionid);
+            $this->exchangeSideJobs($transactionid);
             echo('TRUE| '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
-            $this->emailReservation($transactionid);
         } else {
 			echo('TRUE| NOT FIND '. $transactionid.'-status-'.$action.'-date-'.date('Y-m-d H:i:s'));
         }
-
     }
 
     public function successPaymentPay($reservation_id)
@@ -717,6 +716,10 @@ class Bookingpay extends BaseControllerWeb
         public function successBooking()
         {
             $get = Utility_helper::sanitizeGet();
+
+            if (ENVIRONMENT === 'development') {
+                $this->exchangeSideJobs($get['orderId']);
+            }
             
             if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
                 // need to do something with the facebook pixel.
@@ -789,5 +792,35 @@ class Bookingpay extends BaseControllerWeb
     }
     
 
+    private function createReservationVoucher(string $orderTransactionId): void
+    {
+        $data = $this->bookandpay_model->getReservationsByTransactionIdImproved($orderTransactionId, ['eventid', 'SpotId', 'timeslotId', 'voucher']);
+
+        if (is_null($data)) return;
+
+        foreach($data as $info) {
+            if (empty($info->voucher)) continue;
+
+            $voucherId = $this->shopvoucher_model->getReservationVoucherId($info);
+            if (is_null($voucherId)) continue;
+
+            $voucherBlueprint = $this->shopvoucher_model->setObjectId($voucherId)->getVoucher();
+            if (is_null($voucherBlueprint)) continue;
+
+            $this->shopvoucher_model->createVoucherFromTemplate($voucherBlueprint, $info->voucher);
+        }
+
+        return;
+    }
+
+    private function exchangeSideJobs($transactionId): void
+    {
+        $this->bookandpay_model->updateBookandpayByTransactionId($transactionId);
+
+        $this->createReservationVoucher($transactionId);
+
+        $this->emailReservation($transactionId);
+        return;
+    }
 
 }

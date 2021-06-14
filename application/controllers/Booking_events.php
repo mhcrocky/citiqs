@@ -950,7 +950,7 @@ class Booking_events extends BaseControllerWeb
         $voucherBlueprint = $this->shopvoucher_model->setObjectId($voucherId)->getVoucher();
 
         foreach($data as $voucherInfo) {
-            if (!$this->shopvoucher_model->createTicektFromVoucherTemplate($voucherBlueprint, $voucherInfo->voucher)) return false;
+            if (!$this->shopvoucher_model->createVoucherFromTemplate($voucherBlueprint, $voucherInfo->voucher)) return false;
         }
 
         return true;

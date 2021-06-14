@@ -161,7 +161,17 @@
             return is_null($id) ? null : intval($id[0]['id']);
         }
 
-        public function createTicektFromVoucherTemplate(array $voucherTemplate, string $voucherBlueprint): bool
+        /**
+         * createVoucherFromTemplate
+         *
+         * Method creates voucher for ticket and reservation
+         *
+         * @param array $voucherTemplate
+         * @param string $voucherBlueprint
+         * @access public
+         * @return boolean
+         */
+        public function createVoucherFromTemplate(array $voucherTemplate, string $voucherBlueprint): bool
         {
             $voucherTemplate['code'] = $voucherBlueprint;
             $voucherTemplate['numberOfTimes'] = 1;
@@ -192,5 +202,68 @@
             ($this->productId) ? intval($this->productId) : $this->productId = null;
 
             return $this->update();
+        }
+
+        public function getReservationVoucherId(object $data): ?int
+        {
+
+            // first check is voucherId connectd to agenda time slot id
+            $id = $this->getAgendaTimeslotVoucherId(intval($data->timeslotId));
+            if (!is_null($id)) return $id;
+
+            // seconde check is voucherId connectd to agenda spot id
+            $id = $this->getAgendaSpotVoucherId(intval($data->SpotId));
+            if (!is_null($id)) return $id;
+
+            // seconde check is voucherId connectd to agenda spot id
+            $id = $this->getAgendaVoucherId(intval($data->eventid));
+            if (!is_null($id)) return $id;
+
+            return null;
+        }
+
+        public function getAgendaTimeslotVoucherId(int $timeSlotId): ?int
+        {
+            $id = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    'tbl_bookandpaytimeslots.id' => intval($timeSlotId)
+                ],
+                'joins' => [
+                    ['tbl_bookandpaytimeslots', 'tbl_bookandpaytimeslots.voucherId = ' . $this->table . '.id', 'INNER']
+                ],
+            ]);
+
+            return is_null($id) ? null : intval($id[0]['id']);
+        }
+
+        public function getAgendaSpotVoucherId(int $spotId): ?int
+        {
+            $id = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    'tbl_bookandpayspot.id' => intval($spotId)
+                ],
+                'joins' => [
+                    ['tbl_bookandpayspot', 'tbl_bookandpayspot.voucherId = ' . $this->table . '.id', 'INNER']
+                ],
+            ]);
+
+            return is_null($id) ? null : intval($id[0]['id']);
+        }
+
+        public function getAgendaVoucherId(int $agendaId): ?int
+        {
+            $id = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    'tbl_bookandpayagenda.id' => intval($agendaId)
+                ],
+                'joins' => [
+                    ['tbl_bookandpayagenda', 'tbl_bookandpayagenda.voucherId = ' . $this->table . '.id', 'INNER']
+                ],
+            ]);
+
+            return is_null($id) ? null : intval($id[0]['id']);
         }
     }
