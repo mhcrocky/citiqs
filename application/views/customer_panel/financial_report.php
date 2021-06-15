@@ -1,7 +1,7 @@
 
     <div style="padding:25px;" class="w-100 mt-3 row-sort ui-sortable">
         <div class="float-right text-center pl-3">
-            <input style="width: 330px;" class="date form-control-sm mb-2" type="text" name="datetimes"
+            <input style="width: 220px;" class="date form-control-sm mb-2" type="text" name="datetimes"
                 id="reportDateTime" />
             <!--
             <select style="width: 264px;font-size: 14px;"
