@@ -209,14 +209,17 @@
 
             // first check is voucherId connectd to agenda time slot id
             $id = $this->getAgendaTimeslotVoucherId(intval($data->timeslotId));
+            echo 'Time slot id: ' . $id . '<br/>';
             if (!is_null($id)) return $id;
 
             // seconde check is voucherId connectd to agenda spot id
             $id = $this->getAgendaSpotVoucherId(intval($data->SpotId));
+            echo 'Spot id: ' . $id . '<br/>';
             if (!is_null($id)) return $id;
 
             // seconde check is voucherId connectd to agenda spot id
             $id = $this->getAgendaVoucherId(intval($data->eventid));
+            echo 'Agenda id: ' . $id . '<br/>';
             if (!is_null($id)) return $id;
 
             return null;
@@ -274,9 +277,6 @@
             if (is_null($data)) return false;
 
             foreach($data as $info) {
-                echo '<pre>';
-                print_r($info);
-                echo '</pre>';
                 if (empty($info->voucher)) continue;
 
                 $voucherId = $this->getReservationVoucherId($info);
