@@ -27,6 +27,7 @@
         public $productId;
         public $emailId;
         public $productGroup;
+        public $created;
 
         private $table = 'tbl_shop_voucher';
 
