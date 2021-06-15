@@ -236,6 +236,14 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="descriptionInShop" class="col-md-4 col-form-label text-md-left">Text showed in shop</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control input-w border-50" id="descriptionInShop" name="descriptionInShop"
+                                        placeholder="Text showed in shop" required>
+                                </div>
+                            </div>
+
                             <div class="form-group row wideField">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div id="locationField" class="col-md-6">
