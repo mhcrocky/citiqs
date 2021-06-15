@@ -136,7 +136,7 @@
 
             foreach ($reservations as $key => $reservation) {
                 
-                $totalAmount +=  floatval($reservation->numberofpersons) * (floatval($reservation->price) + floatval($reservation->ticketFee));
+                $totalAmount +=  floatval($reservation->price) + floatval($reservation->ticketFee);
                 $transactionDescription[] = $reservation->eventid . " - " . $reservation->ticketDescription;
 
                 if ($key == 0) {

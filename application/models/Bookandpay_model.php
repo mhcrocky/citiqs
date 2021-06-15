@@ -827,7 +827,7 @@ class Bookandpay_model extends CI_Model
 
 	public function get_financial_report($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT id, eventdate, reservationId, reservationtime, price, numberofpersons, name, email, mobilephone, Spotlabel, timefrom, timeto, TransactionID
+		$query = $this->db->query("SELECT id, eventdate, voucher, reservationId, reservationtime, price, numberofpersons, name, email, mobilephone, Spotlabel, timefrom, timeto, TransactionID
 		FROM tbl_bookandpay
 		WHERE paid = '1' AND SpotId <> '0' AND customer = ".$vendorId." $sql
 		ORDER BY reservationtime DESC");
