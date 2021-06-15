@@ -155,17 +155,19 @@ class Booking_events extends BaseControllerWeb
         $vendor_id = $orderData['vendorId'];
         $event = $this->event_model->get_event($vendor_id,$eventId);
         $event_start =  date_create($event->StartDate . " " . $event->StartTime);
+        $event_end =  date_create($event->EndDate . " " . $event->EndTime);
 
 
         $eventVenue = ucwords($event->eventVenue);
-        $eventDate = date_format($event_start, "d M - H:i");
+        $eventStartDate = date_format($event_start, "d M  H:i");
+        $eventEndDate = date_format($event_end, "d M  H:i");
         $data = [
             'tickets' => $this->event_model->get_event_tickets($vendor_id,$eventId),
             'checkout_tickets' => $orderData['tickets'],
             'eventId' => $eventId,
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage,
-            'eventDescription' => $eventVenue . ' ' . $eventDate,
+            'eventDescription' => $eventVenue . ' ' . $eventStartDate . ' - ' . $eventEndDate,
             'vendor_cost_paid' =>  $this->event_model->check_vendor_cost_paid($vendor_id)
             
         ];
