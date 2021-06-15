@@ -274,6 +274,9 @@
             if (is_null($data)) return false;
 
             foreach($data as $info) {
+                echo '<pre>';
+                print_r($info);
+                echo '</pre>';
                 if (empty($info->voucher)) continue;
 
                 $voucherId = $this->getReservationVoucherId($info);
