@@ -712,12 +712,10 @@ class  Customer_panel extends BaseControllerWeb
         $reservationId = $this->input->post('reservationId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
-        var_dump($_POST);
 
         if (Reservationsemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport)) {
-            if (Utility_helper::testingVendors(intval($_SESSION['userId']))) {
-                var_dump($this->shopvoucher_model->createReservationVoucher($this->bookandpay_model, $transactionId));
-            }
+            // TO DO -> UPDATE USE Reservation id FOR GUEST TICKET
+            $this->shopvoucher_model->createReservationVoucher($this->bookandpay_model, $transactionId);
         }
 
         return;
