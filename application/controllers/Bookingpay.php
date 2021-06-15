@@ -790,34 +790,12 @@ class Bookingpay extends BaseControllerWeb
             'newline' => "\r\n"
         ];
     }
-    
-
-    private function createReservationVoucher(string $orderTransactionId): void
-    {
-        $data = $this->bookandpay_model->getReservationsByTransactionIdImproved($orderTransactionId, ['eventid', 'SpotId', 'timeslotId', 'voucher']);
-
-        if (is_null($data)) return;
-
-        foreach($data as $info) {
-            if (empty($info->voucher)) continue;
-
-            $voucherId = $this->shopvoucher_model->getReservationVoucherId($info);
-            if (is_null($voucherId)) continue;
-
-            $voucherBlueprint = $this->shopvoucher_model->setObjectId($voucherId)->getVoucher();
-            if (is_null($voucherBlueprint)) continue;
-
-            $this->shopvoucher_model->createVoucherFromTemplate($voucherBlueprint, $info->voucher);
-        }
-
-        return;
-    }
 
     private function exchangeSideJobs($transactionId): void
     {
         $this->bookandpay_model->updateBookandpayByTransactionId($transactionId);
 
-        $this->createReservationVoucher($transactionId);
+        $this->shopvoucher_model->createReservationVoucher($this->bookandpay_model, $transactionId);
 
         $this->emailReservation($transactionId);
         return;

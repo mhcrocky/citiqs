@@ -111,7 +111,7 @@
 							if($mailtemplate) {
                                 $dt = new DateTime('now');
                                 $date = $dt->format('Y.m.d');
-//								$mailtemplate = str_replace('[voucherCode]', $voucher, $mailtemplate);
+                                //								$mailtemplate = str_replace('[voucherCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[currentDate]', $name, $mailtemplate);
                                 $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
                                 $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
@@ -165,7 +165,7 @@
 								    if(self::sendEmail($email, $subject, $mailtemplate, $icsContent)) {
                                         //$file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
-//                                        Utility_helper::logMessage($file, $mailtemplate);
+                                        // Utility_helper::logMessage($file, $mailtemplate);
                                         $send_successfully = true;
                                         $CI->sendreservation_model->editbookandpaymailsend($datachange, $reservationId);
                                     

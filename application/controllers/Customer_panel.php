@@ -31,6 +31,8 @@ class  Customer_panel extends BaseControllerWeb
         $this->load->model('bookandpaytimeslots_model');
         $this->load->model('email_templates_model');
         $this->load->model('shopvoucher_model');
+
+        $this->load->helper('utility_helper');
         $this->isLoggedIn();
     }
 
@@ -706,12 +708,19 @@ class  Customer_panel extends BaseControllerWeb
 
     public function resend_reservation()
 	{
+        $transactionId = $this->input->post('transactionId');
         $reservationId = $this->input->post('reservationId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
-        Reservationsemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport);
-        return ;
+        var_dump($_POST);
 
+        if (Reservationsemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport)) {
+            if (Utility_helper::testingVendors(intval($_SESSION['userId']))) {
+                var_dump($this->shopvoucher_model->createReservationVoucher($this->bookandpay_model, $transactionId));
+            }
+        }
+
+        return;
     }
 
 }
