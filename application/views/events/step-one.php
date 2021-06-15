@@ -221,6 +221,21 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="positionSoldoutAtBottom" class="col-md-4 col-form-label text-md-left">
+                                Postion Of Sold Out Tickets
+                                </label>
+                                <div class="col-md-6">
+                                    <select id="positionSoldoutAtBottom" name="positionSoldoutAtBottom"
+                                        class="form-control input-w border-50 field" required>
+                                        <option value="">Select option</option>
+                                        <option value="0">Top</option>
+                                        <option value="1" selected>Bottom</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
                             <div class="form-group row wideField">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div id="locationField" class="col-md-6">
