@@ -71,9 +71,9 @@ $(document).ready( function () {
     $('input[name="datetimes"]').daterangepicker({
       timePicker: true,
       timePicker24Hour: true,
-      startDate: todayDate+' 00:00:00',
+      startDate: todayDate,
       locale: {
-        format: 'YYYY-MM-DD HH:mm:ss'
+        format: 'YYYY-MM-DD'
       },
       ranges: {
        'Today': [moment().startOf("day"), moment()],
@@ -167,8 +167,8 @@ $(document).ready( function () {
       data: 'Spotlabel'
     },
     {
-      title: 'Date',
-      data: 'eventdate'
+      title: 'Voucher',
+      data: 'voucher'
     },
     {
       title: 'Timeslot',
@@ -203,8 +203,8 @@ $(document).ready( function () {
       data: 'numberofpersons'
     },
     {
-      title: 'Reservation Time',
-      data: 'reservationtime'
+      title: 'Date',
+      data: 'eventdate'
     }
     ],
   });
