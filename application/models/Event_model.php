@@ -188,6 +188,8 @@ class Event_model extends CI_Model {
 			return $results;
 		}
 		$tickets = [];
+		$soldoutTickets = [];
+		$positionSoldoutAtBottom = 1;
 		$nextFaseTickets = $this->verify_soldout_fase($eventId, $results);
 
 		foreach($results as $result){
@@ -240,9 +242,16 @@ class Event_model extends CI_Model {
 
 			$result['soldOut'] = $sold_out;
 			$result['ticketAvailable'] = $ticket_available;
-			$tickets[] = $result;
+			$positionSoldoutAtBottom = $result['positionSoldoutAtBottom'];
+			if($sold_out){
+				$soldoutTickets[] = $result;
+			} else {
+				$tickets[] = $result;
+			}
+			
 		}
 
+		$tickets = ($positionSoldoutAtBottom == '1') ? array_merge($tickets, $soldoutTickets) : array_merge($soldoutTickets, $tickets);
 		return $tickets;
 
 	}
