@@ -130,8 +130,8 @@ $(document).ready(function () {
         data: "productId",
       },
       {
-        title: "Product group",
-        data: "productGroup",
+        title: "Created At",
+        data: "created",
       }
     ],
     drawCallback: function(settings){
