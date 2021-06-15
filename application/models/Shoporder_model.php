@@ -353,12 +353,11 @@
             );
         }
 
-        public function fetchOrdersForPrint(string $macNumber): ?array
+        public function fetchOrdersForPrint(string $macNumber, string $timeConstraint = ''): ?array
         {
             $this->load->config('custom');
             $concatSeparator = $this->config->item('concatSeparator');
-            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
-            $dateConstraint = date('Y-m-d H:i:s', strtotime('-24 hours', time()));
+            $orderCreatedConstraint = $timeConstraint ? 'AND tbl_shop_orders.created > "' . $timeConstraint . '"' : '';
             $query =
             '
                 (
@@ -464,6 +463,7 @@
                         AND tbl_shop_orders.expired = "0"
                         AND tbl_shop_order_extended.printed = "0"
                         AND tbl_shop_printers.macNumber = "' . $macNumber . '" 
+                        ' . $orderCreatedConstraint  . '
                     GROUP BY
                         orderId
                 )
@@ -602,6 +602,7 @@
                                 WHERE 
                                     tbl_shop_printers.macNumber != "' . $macNumber . '"
                             )
+                        ' . $orderCreatedConstraint  . '
                     GROUP BY
                         orderId
                 )
@@ -1748,4 +1749,38 @@
 
             return is_null($order) ? null : reset($order);
         }
+
+        public function getOrderReceipt(int $venodrId, string  $timeConstraint): ?array
+        {
+            $this->load->config('custom');
+
+            $query =
+                '
+                    SELECT
+                        ' . $this->table . '.id orderId,
+                        ' . $this->table . '.waiterReceipt waiterReceipt,
+                        ' . $this->table . '.customerReceipt customerReceipt
+                    FROM
+                        ' . $this->table . '
+                    INNER JOIN
+                        tbl_shop_spots ON tbl_shop_spots.id = ' . $this->table . '.spotId
+                    INNER JOIN
+                        tbl_shop_printers ON tbl_shop_printers.id = tbl_shop_spots.printerId
+                    WHERE
+                        ' . $this->table . '.paid = "1"
+                        AND ' . $this->table . '.printStatus = "1"
+                        AND ' . $this->table . '.created > "' . $timeConstraint .'"
+                        AND (' . $this->table . '.waiterReceipt = "0" || ' . $this->table . '.customerReceipt = "0")
+                        AND (
+                                ' . $this->table . '.paymentType = "' . $this->config->item('prePaid') . '"
+                                || ' . $this->table . '.paymentType = "' . $this->config->item('postPaid') . '"
+                                || ' . $this->table . '.paymentType = "' . $this->config->item('pinMachinePayment') . '"
+                            )
+                        AND tbl_shop_printers.userId = "' . $venodrId . '"
+                    ORDER BY ' . $this->table . '.id ASC LIMIT 1;
+                ';
+            $data = $this->db->query($query)->result_array();
+            return $data ? reset($data) : null;
+        }
+
     }
