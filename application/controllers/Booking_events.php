@@ -167,7 +167,7 @@ class Booking_events extends BaseControllerWeb
             'eventId' => $eventId,
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage,
-            'eventDescription' => $eventVenue . ' ' . $eventStartDate . ' - ' . $eventEndDate,
+            'eventDescription' => (empty($event->descriptionInShop) || $event->descriptionInShop == '') ? $eventVenue . ' ' . $eventStartDate . ' - ' . $eventEndDate : $event->descriptionInShop,
             'vendor_cost_paid' =>  $this->event_model->check_vendor_cost_paid($vendor_id)
             
         ];
