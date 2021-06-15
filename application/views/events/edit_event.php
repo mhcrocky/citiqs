@@ -242,6 +242,22 @@
 
 
                             <div class="form-group row">
+                                <label for="positionSoldoutAtBottom" class="col-md-4 col-form-label text-md-left">
+                                Postion Of Sold Out Tickets
+                                </label>
+                                <div class="col-md-6">
+                                    <select id="positionSoldoutAtBottom" name="positionSoldoutAtBottom"
+                                        class="form-control input-w border-50 field" required>
+                                        <option value="">Select option</option>
+                                        <option value="0" <?php if($event->positionSoldoutAtBottom == '0'){ ?> selected <?php } ?>>Top</option>
+                                        <option value="1" <?php if($event->positionSoldoutAtBottom == '1'){ ?> selected <?php } ?>>Bottom</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
                                 <label for="venue" class="col-md-4 col-form-label text-md-left">Venue</label>
                                 <div class="col-md-6">
                                     <input type="text" id="venue" class="form-control border-50 input-w"
