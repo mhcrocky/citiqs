@@ -266,4 +266,25 @@
 
             return is_null($id) ? null : intval($id[0]['id']);
         }
+
+        public function createReservationVoucher(object $bookandpay, string $orderTransactionId): bool
+        {
+            $data = $bookandpay->getReservationsByTransactionIdImproved($orderTransactionId, ['eventid', 'SpotId', 'timeslotId', 'voucher']);
+
+            if (is_null($data)) return false;
+
+            foreach($data as $info) {
+                if (empty($info->voucher)) continue;
+
+                $voucherId = $this->getReservationVoucherId($info);
+                if (is_null($voucherId)) continue;
+
+                $voucherBlueprint = $this->setObjectId($voucherId)->getVoucher();
+                if (is_null($voucherBlueprint)) continue;
+
+                if (!$this->createVoucherFromTemplate($voucherBlueprint, $info->voucher)) return false;
+            }
+
+            return true;
+        }
     }

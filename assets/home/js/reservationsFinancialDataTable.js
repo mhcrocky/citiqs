@@ -148,6 +148,8 @@ $(document).ready( function () {
             data.reservationId +
             "', '" +
             data.email +
+            "', '" +
+            data.TransactionID +
             '\')" class="btn btn-primary">Resend Ticket</a>'
         );
       },
@@ -363,7 +365,7 @@ $(el).val(total_amount.toFixed(2))
 
 }
 
-function confirmResendTicket(reservationId, email){
+function confirmResendTicket(reservationId, email, transactionId){
   bootbox.confirm({
     message: "Do you  to send the mail to support@tiqs.com as well?",
     buttons: {
@@ -378,19 +380,20 @@ function confirmResendTicket(reservationId, email){
     },
     callback: function (result) {
       if(result == true){
-        resendTicket(reservationId, email, 1);
+        resendTicket(transactionId, reservationId, email, 1);
       } else {
-        resendTicket(reservationId, email);
+        resendTicket(transactionId, reservationId, email);
       }
     }
 });
 }
 
-function resendTicket(reservationId, email, sendTo = 0) {
+function resendTicket(transactionId, reservationId, email, sendTo = 0) {
   let data = {
     reservationId: reservationId,
     email: encodeURI(email),
-    sendTo: sendTo
+    sendTo: sendTo,
+    transactionId: transactionId
   };
   $.post(
     globalVariables.baseUrl + "customer_panel/resend_reservation",
