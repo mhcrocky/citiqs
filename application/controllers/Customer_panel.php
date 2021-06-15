@@ -712,6 +712,7 @@ class  Customer_panel extends BaseControllerWeb
         $reservationId = $this->input->post('reservationId');
         $sendToSupport = ($this->input->post('sendTo') == 1) ? true : false;
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
+        var_dump($_POST);
 
         if (Reservationsemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport)) {
             if (Utility_helper::testingVendors(intval($_SESSION['userId']))) {
