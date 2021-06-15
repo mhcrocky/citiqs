@@ -240,7 +240,7 @@
                                 <label for="descriptionInShop" class="col-md-4 col-form-label text-md-left">Text showed in shop</label>
                                 <div class="col-md-6">
                                     <input type="text" class="form-control input-w border-50" id="descriptionInShop" name="descriptionInShop"
-                                        placeholder="Text showed in shop" required>
+                                        placeholder="Text showed in shop">
                                 </div>
                             </div>
 

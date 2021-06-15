@@ -262,8 +262,7 @@
                                 <div class="col-md-6">
                                     <input type="text" class="form-control input-w border-50" id="descriptionInShop" name="descriptionInShop"
                                         placeholder="Text showed in shop" 
-                                        value="<?php echo $event->descriptionInShop; ?>" 
-                                        required>
+                                        value="<?php echo $event->descriptionInShop; ?>" >
                                 </div>
                             </div>
 
