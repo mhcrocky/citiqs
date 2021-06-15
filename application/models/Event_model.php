@@ -526,7 +526,7 @@ class Event_model extends CI_Model {
 					'timeto' => $ticket['endTime'],
 					'price' => $ticket['price'],
 					'ticketFee' => ($ticket['ticketFee'] != null) ? $ticket['ticketFee'] : 0,
-					'numberofpersons' => $ticket['numberofpersons'],
+					'numberofpersons' => ($ticket['numberofpersons'] != null && is_numeric($ticket['numberofpersons'])) ? $ticket['numberofpersons'] : 1,
 					'name' => $userInfo['name'],
 					'email' => $userInfo['email'],
 					'age' => $userInfo['age'],
