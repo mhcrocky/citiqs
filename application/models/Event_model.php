@@ -11,7 +11,7 @@ class Event_model extends CI_Model {
 	{
 		$data['StartDate'] = date('Y-m-d', strtotime($data['StartDate']));
 		$data['EndDate'] = date('Y-m-d', strtotime($data['EndDate']));
-		$this->db->insert('tbl_events',$data);
+		$this->db->insert('tbl_events', $data);
 		return $this->db->insert_id();
 	}
 
@@ -34,7 +34,8 @@ class Event_model extends CI_Model {
 
 	public function save_ticket($data)
 	{
-		return $this->db->insert('tbl_event_tickets',$data);
+		$this->db->insert('tbl_event_tickets',$data);
+		return $this->db->insert_id();
 	}
 
 	public function save_guest($data)
@@ -1224,6 +1225,56 @@ class Event_model extends CI_Model {
 		}
 
 		return $newData;
+	}
+
+	public function copy_event($vendorId, $eventId) : bool
+	{
+		$eventData = $this->get_event_by_id($vendorId, $eventId);
+		if(is_array($eventData) && count($eventData) > 0){
+			$eventData = $eventData[0];
+			unset($eventData['id']);
+			$createdEventId = $this->save_event($eventData);
+			return $this->copy_tickets($eventId, $createdEventId);
+		}
+		
+	}
+
+	public function copy_tickets($eventId, $createdEventId) : bool
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_event_tickets');
+		$this->db->where('eventId', $eventId);
+		$query = $this->db->get();
+		$tickets = $query->result_array();
+		if($query->num_rows() > 0){
+			foreach($tickets as $ticket){
+				$ticketId = $ticket['id'];
+				$ticket['eventId'] = $createdEventId;
+				unset($ticket['id']);
+				$createdTicketId = $this->save_ticket($ticket);
+				$ticket_options = $this->copy_ticket_options($ticketId, $createdTicketId);
+			}
+		}
+
+		return true;
+		
+	}
+
+	public function copy_ticket_options($ticketId, $createdTicketId) : bool
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_ticket_options');
+		$this->db->where('ticketId', $ticketId);
+		$query = $this->db->get();
+		$ticket_options = (array) $query->first_row();
+		if($query->num_rows() > 0){
+			unset($ticket_options['id']);
+			$ticket_options['ticketId'] = $createdTicketId;
+			$this->save_ticket_options($ticket_options);
+		}
+
+		return true;
+		
 	}
 
 	private function generateNewVoucher() : string
