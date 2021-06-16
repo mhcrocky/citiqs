@@ -1235,7 +1235,7 @@ class   Bookandpayagendabooking_model extends CI_Model
     }
 
 	public function getTimeSlotsByCustomer($customer_id, $spotId) {
-        $this->db->select('tbl_bookandpaytimeslots.id as timeslot_id, tbl_bookandpaytimeslots.price as timeslot_price, fromtime, totime');
+        $this->db->select('tbl_bookandpaytimeslots.id as timeslot_id, tbl_bookandpaytimeslots.price as timeslot_price, fromtime, totime, multiple_timeslots, duration, overflow, tbl_bookandpaytimeslots.available_items');
         $this->db->from('tbl_bookandpaytimeslots');
 		$this->db->join('tbl_bookandpayspot', 'tbl_bookandpayspot.id = tbl_bookandpaytimeslots.spot_id', 'left');
 		$this->db->join('tbl_bookandpayagenda', 'tbl_bookandpayagenda.id = tbl_bookandpayspot.agenda_id', 'left');
