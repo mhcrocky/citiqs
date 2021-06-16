@@ -99,7 +99,8 @@ function bookReservation(e){
       totime: encodeURI($('#timeslots option:selected').attr('data-totime')),
       emailId: $('#email_template option:selected').val(),
       price: $('#amount').val(),
-      timeslot_price: $('#timeslots option:selected').attr('data-price')
+      timeslot_price: $('#timeslots option:selected').attr('data-price'),
+      available_items: $('#timeslots option:selected').attr('data-available')
   }
 
 
@@ -116,7 +117,16 @@ function bookReservation(e){
       var html = '<option value="">Select Option</option>';
       $('#spots').html(html);
       $('#timeslots').html(html);
-      //alertify[data.status](data.message);
+
+      data = JSON.parse(data);
+      
+      if(data.status == 'warning'){
+        alertify['success'](data.messages[0]);
+        alertify['warning'](data.messages[1]);
+      } else {
+        alertify[data.status](data.message);
+      }
+      
 
   });
 
@@ -142,7 +152,7 @@ function get_timeslots() {
       let timeslots = JSON.parse(data);
       var html = '<option value="">Select option</option>';
       $.each(timeslots, function (index, timeslot) {
-          html += '<option value="' + timeslot.timeslot_id + '" data-fromtime="'+ timeslot.fromtime + '" data-totime="'+ timeslot.totime + '" data-price="'+ timeslot.timeslot_price + '">' + timeslot.fromtime + ' - ' +timeslot.totime+'</option>';
+          html += '<option value="' + timeslot.timeslot_id + '" data-fromtime="'+ timeslot.fromtime + '" data-totime="'+ timeslot.totime + '" data-price="'+ timeslot.timeslot_price + '" data-available="'+ timeslot.available_items + '">' + timeslot.fromtime + ' - ' +timeslot.totime+'</option>';
       });
       $('#timeslots').html(html);
 
