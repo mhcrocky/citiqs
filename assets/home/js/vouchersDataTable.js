@@ -51,6 +51,10 @@ $(document).ready(function () {
         data: "id",
       },
       {
+        title: "ID",
+        data: "id",
+      },
+      {
         title: "Code",
         data: "code",
       },
@@ -147,6 +151,10 @@ $(document).ready(function () {
             checkboxes: {
                selectRow: true
             }
+         },
+         {
+            targets: [ 1 ],
+            visible: false
          }
       ],
       select: {
@@ -156,7 +164,24 @@ $(document).ready(function () {
   });
 
   $('#report_filter').addClass('text-right');
-  $('#report_filter label').addClass('text-left');
+  $('#report_filter label').addClass('text-left'); 
+
+  var voucherId = getParameterByName('voucherId');
+  if($.isNumeric(voucherId)){
+    $.fn.dataTable.ext.search.push(
+      function (settings, data, dataIndex) {
+        
+        if(data[1] == voucherId){
+          return true;
+        }
+
+        return false;
+
+    });
+
+  }
+  
+ 
 
 });
 
@@ -508,4 +533,13 @@ function save_vouchersend(e){
       $('#reachedMaxTimes').empty();
   });
 
+}
+
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
