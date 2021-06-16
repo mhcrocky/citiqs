@@ -618,6 +618,7 @@ $route['events/update_event_inputs'] = 'Events/update_event_inputs';
 $route['events/delete_event_inputs'] = 'Events/delete_event_inputs';
 $route['events/update_event_archived'] = 'Events/update_event_archived';
 $route['events/scannedin'] = 'Events/scannedin';
+$route['events/copy_event'] = 'Events/copy_event';
 $route['clearingtickets'] = 'Events/clearingtickets';
 $route['events/get_clearing_stats/(:any)'] = 'Events/get_clearing_stats/$1';
 $route['events/inputs/(:any)'] = 'Events/inputs/$1';
