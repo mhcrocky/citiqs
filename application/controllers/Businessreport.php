@@ -149,9 +149,12 @@ class Businessreport extends BaseControllerWeb
 			$total_EXVATSERVICE = $this->row_total('EXVATSERVICE',$val);
 
 			$exservicefee = ($val[0]['serviceFee'])-($val[0]['VATSERVICE']);
+			$totalOrderAmount = floatval($total_AMOUNT) + floatval($val[0]['serviceFee']) + floatval($val[0]['waiterTip']);
 			$rows[] = [
 				'order_id'=>$val[0]['order_id'],
 				'total_AMOUNT'=>($total_AMOUNT+$val[0]['serviceFee']+$val[0]['waiterTip']),
+				'voucherAmount' => round($val[0]['voucherAmount'], 2),
+				'amountWithoutVoucher' => round(($totalOrderAmount - floatval($val[0]['voucherAmount'])), 2),
 				'quantity'=>$total_quantity,
 				'service_type'=>$val[0]['service_type'],
 				'serviceFee'=>$val[0]['serviceFee'],
