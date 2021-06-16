@@ -1055,6 +1055,27 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function copy_event()
+	{
+        $eventId = $this->input->post('eventId');
+        $copy_event = $this->event_model->copy_event($this->vendor_id, $eventId);
+        
+        $response = [
+            'status' => 'success',
+            'message' => 'The event is copied successfully!'
+        ];
+
+        if(!$copy_event){
+            $response = [
+                'status' => 'error',
+                'message' => 'Something went wrong!'
+            ];
+        }
+
+        echo json_encode($response);
+
+    }
+
     private function generateTransactionId(){
         $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
         $transactionId = '14';
