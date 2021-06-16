@@ -655,7 +655,55 @@ class  Customer_panel extends BaseControllerWeb
         $vendorId = $this->session->userdata('userId');
         $spot_id = $this->input->post('spot_id');
         $timeslots = $this->bookandpayagendabooking_model->getTimeSlotsByCustomer($vendorId, $spot_id);
+        $multiple_timeslots = [];
+        
+        if(is_array($timeslots) && count($timeslots)){
+
+            foreach($timeslots as $key => $timeslot){
+                if($timeslot['multiple_timeslots'] == 1){
+                    unset($timeslots[$key]);
+                    $fromtime = explode(':',$timeslot['fromtime']);
+                    $totime = explode(':', $timeslot['totime']);
+                    $duration = explode(':', $timeslot['duration']);
+                    $overflow = explode(':', $timeslot['overflow']);
+            
+                    $time_diff = ($totime[0]*60 - $fromtime[0]*60) + ($totime[1] - $fromtime[1]);
+                    $time_duration = ($duration[0]*60 + $overflow[0]*60) + ($duration[1] + $overflow[1]);
+                    $time_div = intval($time_diff/$time_duration);
+                    $start_time = '';
+                    $end_time = '';
+                    for($i=0; $i < $time_div; $i++):
+                        
+                        if($i == 0){
+                            $start_time = self::explode_time($timeslot['fromtime']);
+                            $end_time = $start_time + self::explode_time($timeslot['duration']);
+                        } else {
+                            $start_time = $end_time + self::explode_time($timeslot['overflow']);
+                            $end_time = $start_time + self::explode_time($timeslot['duration']);
+                        }
+                        
+
+                        $multiple_timeslots[] = [
+                            'timeslot_id' => $timeslot['timeslot_id'],
+                            'timeslot_price' => $timeslot['timeslot_price'],
+                            'available_items' => $timeslot['available_items'],
+                            'fromtime' => self::second_to_hhmm($start_time),
+                            'totime' => self::second_to_hhmm($end_time)
+                        ];
+
+                    endfor;
+                }
+            }
+
+
+        }
+
+        if(count($multiple_timeslots) > 0){
+            $timeslots = array_merge($timeslots, $multiple_timeslots);
+        }
+
         echo json_encode($timeslots);
+
     }
 
     public function book_reservation(){
@@ -678,17 +726,44 @@ class  Customer_panel extends BaseControllerWeb
             'reservationset' => '1'
         ];
 
+        //check if is sold out
+        $isSoldout = $this->check_if_soldout($newBooking['timeslotId'], $newBooking['timefrom'], $newBooking['timeto'], $data['available_items']);
+
         // create new id for user of this session
         $result = $this->bookandpay_model->newbooking($newBooking);
-        $this->emailReservation($result->reservationId, $data['emailId']);
+
+        $response = [
+            'status' => 'error',
+            'message' =>'Something went wrong!',
+        ];
+
+        if($this->emailReservation($result->reservationId, $data['emailId'])){
+
+            if($isSoldout){
+                $response = [
+                    'status' => 'warning',
+                    'messages' => [
+                        'The reservation is send successfully',
+                        'The selected timeslot is soldout!',
+                    ],
+                ];
+            } else {
+                $response = [
+                    'status' => 'success',
+                    'message' =>'The reservation is send successfully',
+                ];
+            }
+        }
+        
+        echo json_encode($response);
     }
 
 
-    public function emailReservation($id, $emailId)
+    public function emailReservation($id, $emailId) : bool
 	{
         
         $reservations = $this->bookandpay_model->getReservationsById($id);
-        Reservationsemail_helper::sendEmailReservation($reservations, true);
+        return Reservationsemail_helper::sendEmailReservation($reservations, true);
        
     }
 
@@ -719,6 +794,33 @@ class  Customer_panel extends BaseControllerWeb
         }
 
         return;
+    }
+
+    public function check_if_soldout($timeslotId, $fromtime, $totime, $availableItems) : bool
+    {
+        $spotReserved = $this->bookandpay_model->getBookingCountByTimeSlot($timeslotId, $fromtime, $totime);
+        if($spotReserved >= $availableItems){
+            return true;
+        }
+        return false;
+    }
+
+    private static function explode_time($time)
+    {
+        $time = explode(':', $time);
+        $time = $time[0]*3600+$time[1]*60;
+        return $time;
+    }
+
+    private static function second_to_hhmm($time)
+    {
+        $hour = floor($time/3600);
+        $min = strval(floor(($time%3600)/60));
+        if($min <= 9){
+            $min = '0'.$min;
+        }
+        $time = $hour . ':' . $min . ':' . '00'; 
+        return $time;
     }
 
 }
