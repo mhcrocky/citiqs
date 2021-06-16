@@ -639,14 +639,17 @@ function format(d) {
           var productsVat = [];
           var html = '';
           var totalAmountVat = 0;
+          let totaAmountExVoucher = 0;
+          let totaVoucherAmount = 0;
           var totalAmountExVat = 0;
           var totalServiceFeeVat = 0;
           var totalServiceFeeExVat = 0;
           var waiterTipVat = 0;
           var percentageVat = 0;
-
           $.each(tbl_datas, function( index, tbl_data ) {
             totalAmountVat = totalAmountVat + parseFloat(tbl_data.total_AMOUNT);
+            totaVoucherAmount = totaVoucherAmount + parseFloat(tbl_data.voucherAmount);
+            totaAmountExVoucher = totaAmountExVoucher + parseFloat(tbl_data.amountWithoutVoucher);
             totalAmountExVat = totalAmountExVat + parseFloat(tbl_data.AMOUNT);
             percentageVat = percentageVat + parseFloat(tbl_data.VAT);
             totalServiceFeeVat = totalServiceFeeVat + parseFloat(tbl_data.serviceFee);
@@ -683,7 +686,17 @@ function format(d) {
           '<td class="text-center">' + totalAmountVat.toFixed(2) + '</td>' +
           '<td class="text-center"></td>' + //totalAmountExVat.toFixed(2)
           '<td class="text-center"></td>' + //(totalAmountVat - totalAmountExVat).toFixed(2)
-          '</tr>' ;
+          '</tr>' +
+          '<td class="text-right" colspan="4"><b>Total Voucher Amount</b></td>' +
+          '<td class="text-center">' + totaVoucherAmount.toFixed(2) + '</td>' +
+          '<td class="text-center"></td>' + //totalAmountExVat.toFixed(2)
+          '<td class="text-center"></td>' + //(totalAmountVat - totalAmountExVat).toFixed(2)
+          '</tr>'  +
+          '<td class="text-right" colspan="4"><b>Total Without Voucher Amount</b></td>' +
+          '<td class="text-center">' + totaAmountExVoucher.toFixed(2) + '</td>' +
+          '<td class="text-center"></td>' + //totalAmountExVat.toFixed(2)
+          '<td class="text-center"></td>' + //(totalAmountVat - totalAmountExVat).toFixed(2)
+          '</tr>'  ;
           for (var key in productsVat) {
             html += '<tr id="tr-totals">' +
             '<td class="text-right" colspan="4"><b>Total Revenue VAT ' + parseInt(key) + '%</b></td>' +
