@@ -50,8 +50,8 @@
                                     Total orders
                                     </div>
 
-                                    <div class="font-weight-bold">
-                                    0
+                                    <div id="totalOrders" class="font-weight-bold">
+                                    <?php echo isset($event_stats['totalOrders']) ? $event_stats['totalOrders'] : 0; ?>
                                     </div>
 
                                 </div>
@@ -123,7 +123,7 @@
                                     </div>
 
                                     <div class="font-weight-bold">
-                                    € 0.00
+                                    € <span id="totalReceived"><?php echo isset($event_stats['totalAmount']) ? number_format($event_stats['totalAmount'], 2) : '0.00'; ?></span>
                                     </div>
 
                                 </div>
@@ -213,7 +213,20 @@
                                     </div>
 
                                     <div class="font-weight-bold">
-                                    € 0.00
+                                    € <span id="totalPayout">
+                                        <?php 
+
+                                            $totalAmount = isset($event_stats['totalAmount']) ? floatval($event_stats['totalAmount']) : 0;
+                                            $totalTicketFee = isset($event_stats['totalTicketFee']) ? floatval($event_stats['totalTicketFee']) : 0;
+                                            $paymentEngineFee = isset($event_stats['paymentEngineFee']) ? floatval($event_stats['paymentEngineFee']) : 0;
+                                            $totalPayout = $totalAmount - $totalTicketFee - $paymentEngineFee;
+                                            $totalPayout = number_format($totalPayout, 2);
+
+                                            echo $totalPayout;
+
+                                        ?>
+
+                                    </span>
                                     </div>
 
                                 </div>
@@ -275,12 +288,18 @@ function getEventStats(){
         let totalTicketFee = (typeof data.totalTicketFee !== 'undefined') ? number_format(data.totalTicketFee, 2) : '0.00';
         let paymentEngineFee = (typeof data.paymentEngineFee !== 'undefined') ? number_format(data.paymentEngineFee, 2) : '0.00';
         let promoterPaid = (typeof data.promoterPaid !== 'undefined') ? number_format(data.promoterPaid, 2) : '0.00';
+        let totalOrders = (typeof data.totalOrders !== 'undefined') ? data.totalOrders : '0';
+        let totalPayout = parseFloat(totalAmount.replaceAll(',', '')) - (parseFloat(totalTicketFee.replaceAll(',', '')) + parseFloat(paymentEngineFee.replaceAll(',', '')));
+        totalPayout = number_format(totalPayout, 2);
 
         $('#tickets-sold').text(ticketsSold);
         $('#totalAmount').text(totalAmount);
         $('#totalTicketFee').text(totalTicketFee);
         $('#paymentEngineFee').text(paymentEngineFee);
         $('#promoterPaid').text(promoterPaid);
+        $('#totalOrders').text(totalOrders);
+        $('#totalReceived').text(totalAmount);
+        $('#totalPayout').text(totalPayout);
 
     });
 }
