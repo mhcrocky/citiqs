@@ -88,6 +88,7 @@ li {
                                     <th>Duration</th>
                                     <th>Overflow</th>
                                     <th>Email Template</th>
+                                    <th>Voucher</th>
                                     <th>Price</th>
                                     <th>Reservation Fee</th>
                                     <th>Action</th>
@@ -106,6 +107,11 @@ li {
                                     <td>
                                         <a href="javascript:;" @click="editEmailTemplate(timeslot.email_id, timeslot.template_name)" data-toggle="modal" data-target="#emailTemplateModal">
                                             {{ timeslot.template_name }}
+                                        </a>
+                                    </td>
+                                    <td v-for="voucher in vouchers">
+                                        <a v-if="voucher.id == timeslot.voucherId" :href="baseURL+ 'voucher?voucherId=' + voucher.id">
+                                            {{ voucher.template_name + '(' + voucher.description +  ')' }}
                                         </a>
                                     </td>
                                     <td>{{ timeslot.price }}</td> 
