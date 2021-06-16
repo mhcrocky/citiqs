@@ -165,6 +165,15 @@ $(document).ready(function() {
                     return '<a href="'+globalVariables.baseUrl+'events/viewdesign/'+data.id+'" style="background: #10a9b9;" class="btn btn-primary">Go To Design</a>'
                 }
 
+            },
+            {
+
+                title: 'Copy',
+                data: null,
+                "render": function(data, type, row) {
+                    return '<a href="javascript:;" onclick="copy_event(' + data.id + ')" class="btn btn-primary">Copy Event</a>'
+                }
+
             }
         ],
        
@@ -287,5 +296,15 @@ function saveShopSettings() {
 function update_archived(eventId, value){
     $.post(globalVariables.baseUrl + 'events/update_event_archived', {id: eventId, value: value});
     $('#events').DataTable().ajax.reload();
+    return ;
+}
+
+function copy_event(eventId){
+    $.post(globalVariables.baseUrl + 'events/copy_event', {eventId: eventId}, function(data){
+        data = JSON.parse(data);
+        alertify[data.status](data.message);
+        $('#events').DataTable().ajax.reload();
+    });
+    
     return ;
 }
