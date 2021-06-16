@@ -103,8 +103,7 @@ function bookReservation(e){
       available_items: $('#timeslots option:selected').attr('data-available')
   }
 
-
-  //console.log(data);
+  data['addVoucher'] = document.getElementById('addVoucher').checked ? '1' : '0';
 
   $('#submitBookReservation').prop('disabled', true);
 

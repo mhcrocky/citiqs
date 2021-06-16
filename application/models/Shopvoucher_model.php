@@ -268,9 +268,9 @@
             return is_null($id) ? null : intval($id[0]['id']);
         }
 
-        public function createReservationVoucher(object $bookandpay, string $orderTransactionId): bool
+        public function createReservationVoucher(object $bookandpay, string $value, string $serachKey = 'TransactionID'): bool
         {
-            $data = $bookandpay->getReservationsByTransactionIdImproved($orderTransactionId, ['eventid', 'SpotId', 'timeslotId', 'voucher']);
+            $data = $bookandpay->getReservationDataByKey($serachKey, $value, ['eventid', 'SpotId', 'timeslotId', 'voucher']);
 
             if (is_null($data)) return false;
 
