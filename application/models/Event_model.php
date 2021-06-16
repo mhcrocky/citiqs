@@ -750,14 +750,27 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function get_clearing_event_stats($vendorId, $eventId)
+	public function get_clearing_event_stats($vendorId, $eventId) : array
 	{
 		$query = $this->db->query("SELECT tbl_events.id, COUNT(tbl_bookandpay.id) AS tickets_sold, SUM(tbl_bookandpay.price) as amount, SUM(tbl_bookandpay.ticketFee) as totalTicketFee, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as totalAmount
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
 		GROUP BY tbl_events.id");
-		return (array) $query->first_row();
+		$stats = (array) $query->first_row();
+		$stats['totalOrders'] = $this->get_total_event_orders($vendorId, $eventId);
+		return $stats;
+
+	} 
+
+	public function get_total_event_orders($vendorId, $eventId) : int
+	{
+		$query = $this->db->query("SELECT tbl_bookandpay.id
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
+		GROUP BY TransactionID");
+		return $query->num_rows();
 	} 
 
 	public function get_payment_methods_stats($vendorId, $eventId)
