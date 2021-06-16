@@ -847,4 +847,15 @@ class Bookandpay_model extends CI_Model
 
 		return empty($result) ? null : $result;
 	}
+
+	public function getReservationDataByKey(string $key, string $value, array $what): ?array
+	{
+		$this->db->select(implode(',', $what));
+		$this->db->from('tbl_bookandpay');
+		$this->db->where($key, $value);
+		$query = $this->db->get();
+		$result = $query->result();
+
+		return empty($result) ? null : $result;
+	}
 }

@@ -680,6 +680,12 @@ class  Customer_panel extends BaseControllerWeb
 
         // create new id for user of this session
         $result = $this->bookandpay_model->newbooking($newBooking);
+
+        if ($data['addVoucher'] === '1') {
+            $this->bookandpay_model->newvoucher($result->reservationId);
+            $this->shopvoucher_model->createReservationVoucher($this->bookandpay_model, $result->reservationId, 'reservationId');
+        }
+
         $this->emailReservation($result->reservationId, $data['emailId']);
     }
 
@@ -714,7 +720,6 @@ class  Customer_panel extends BaseControllerWeb
         $reservations = $this->bookandpay_model->getReservationsByIds([$reservationId]);
 
         if (Reservationsemail_helper::sendEmailReservation($reservations, true, true, $sendToSupport)) {
-            // TO DO -> UPDATE USE Reservation id FOR GUEST TICKET
             $this->shopvoucher_model->createReservationVoucher($this->bookandpay_model, $transactionId);
         }
 
