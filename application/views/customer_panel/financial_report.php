@@ -95,3 +95,8 @@
             </div>
         </div>
     </div>
+
+
+<script>
+const vouchers = JSON.parse('<?php echo json_encode($vouchers); ?>');
+</script>
