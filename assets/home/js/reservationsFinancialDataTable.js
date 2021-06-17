@@ -173,7 +173,7 @@ $(document).ready( function () {
         if(vouchers.length > 0 && inArray(data.voucher, vouchers)){
           return '<span class="text-success">' + data.voucher + '</span>';
         }
-        return data.voucher;
+        return '<span class="text-danger">' + data.voucher + '</span>';
       }
     },
     {
