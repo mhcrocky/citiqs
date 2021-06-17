@@ -775,7 +775,9 @@ class  Customer_panel extends BaseControllerWeb
     public function financial_report() : void
     {
         $this->global['pageTitle'] = 'TIQS : FINANCIAL REPORT';
-        $this->loadViews('customer_panel/financial_report', $this->global, '', 'footerbusiness', 'headerbusiness');
+        $vendorId = $this->session->userdata('userId');
+        $data['vouchers'] = $this->bookandpay_model->get_vouchers($vendorId);
+        $this->loadViews('customer_panel/financial_report', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
     public function get_financial_report()
