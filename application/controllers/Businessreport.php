@@ -154,6 +154,7 @@ class Businessreport extends BaseControllerWeb
 				'order_id'=>$val[0]['order_id'],
 				'total_AMOUNT'=>($total_AMOUNT+$val[0]['serviceFee']+$val[0]['waiterTip']),
 				'voucherAmount' => round($val[0]['voucherAmount'], 2),
+				'voucherCode' => $val[0]['voucherCode'],
 				'amountWithoutVoucher' => round(($totalOrderAmount - floatval($val[0]['voucherAmount'])), 2),
 				'quantity'=>$total_quantity,
 				'service_type'=>$val[0]['service_type'],
