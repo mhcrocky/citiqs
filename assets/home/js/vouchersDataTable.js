@@ -92,6 +92,10 @@ $(document).ready(function () {
         data: "numberOfTimes",
       },
       {
+        title: "Expire Date",
+        data: "expire",
+      },
+      {
         title: "Voucher Used",
         data: "voucherused",
         createdCell: function (td, cellData, rowData, row, col) {
