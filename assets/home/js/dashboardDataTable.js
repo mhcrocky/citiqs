@@ -102,6 +102,16 @@ $(document).ready( function () {
             size: 30,
             unique: true
           },
+          {
+            id: 'tbl_shop_voucher.code',
+            label: 'Voucher code',
+            type: 'string',
+            class: 'quantity',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
 			{
 				id: 'tbl_shop_orders.paymentType',
 				label: 'Payment type',
