@@ -168,7 +168,13 @@ $(document).ready( function () {
     },
     {
       title: 'Voucher',
-      data: 'voucher'
+      data: null,
+      "render": function (data, type, row) {
+        if(vouchers.length > 0 && inArray(data.voucher, vouchers)){
+          return '<span class="text-success">' + data.voucher + '</span>';
+        }
+        return data.voucher;
+      }
     },
     {
       title: 'Timeslot',
@@ -402,4 +408,13 @@ function resendTicket(transactionId, reservationId, email, sendTo = 0) {
       alertify.success("Reservation is resend successfully!");
     }
   );
+}
+
+
+function inArray(needle, haystack){
+  var length = haystack.length;
+  for(var i = 0; i < length; i++){
+    if(haystack[i] == needle) return true;
+  }
+  return false;
 }
