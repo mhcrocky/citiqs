@@ -25,26 +25,28 @@ $(document).ready(function () {
       url: globalVariables.baseUrl + "Api/Voucher/vouchers",
       dataSrc: "",
     },
-    dom: 'Bfrtip',
-    buttons: [{
-      extend: 'csv',
-      text: 'Export CSV',
-      className: "btn btn-primary mb-3 ml-1",
-      style: "background: #10b981 !important;border-radius:0;height:45px;"
-    },
-    {
-      extend: 'excel',
-      text: 'Export Excel',
-      className: "btn btn-success mb-3 ml-1",
-      style: "background: #10b981 !important;border-radius:0;height:45px;"
-    },
-    {
-      text: 'Import CSV',
-      className: "btn btn-secondary mb-3 ml-1",
-      action: function ( e, dt, node, config ) {
-        $('#uploadCsvModal').modal('toggle');
+    dom: 'Blfrtip',
+    buttons: [
+      {
+        extend: 'csv',
+        text: 'Export CSV',
+        className: "btn btn-primary mb-3 ml-1",
+        style: "background: #10b981 !important;border-radius:0;height:45px;"
+      },
+      {
+        extend: 'excel',
+        text: 'Export Excel',
+        className: "btn btn-success mb-3 ml-1",
+        style: "background: #10b981 !important;border-radius:0;height:45px;"
+      },
+      {
+        text: 'Import CSV',
+        className: "btn btn-secondary mb-3 ml-1",
+        action: function ( e, dt, node, config ) {
+          $('#uploadCsvModal').modal('toggle');
+        }
       }
-    }],
+    ],
     columns: [
       {
         title: "ID",
@@ -63,7 +65,7 @@ $(document).ready(function () {
         data: "description",
         createdCell: function (td, cellData, rowData, row, col) {
           $(td).addClass('col-'+ rowData.id);
-       }
+      }
       },
       {
         title: "Percent",
@@ -145,22 +147,22 @@ $(document).ready(function () {
       $(row).attr('id', 'row-' + data.id);
       $(row).addClass('row-' + data.id);
     },
-      columnDefs: [
-         {
-            targets: 0,
-            checkboxes: {
-               selectRow: true
-            }
-         },
-         {
-            targets: [ 1 ],
-            visible: false
-         }
-      ],
-      select: {
-         style: 'multi'
+    columnDefs: [
+      {
+        targets: 0,
+        checkboxes: {
+          selectRow: true
+        }
       },
-      order: [[0, 'desc']]
+      {
+        targets: [ 1 ],
+        visible: false
+      }
+    ],
+    select: {
+      style: 'multi'
+    },
+    order: [[0, 'desc']]
   });
 
   $('#report_filter').addClass('text-right');
