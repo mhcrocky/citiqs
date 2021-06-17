@@ -89,7 +89,7 @@
         public $pinMachine;
         public $emailFinanceReporets;
         public $voucherPaymentCode;
-
+        public $sendAnonymousReceipt;
         private $table = 'tbl_shop_vendors';
 
         protected function setValueType(string $property,  &$value): void
@@ -216,6 +216,7 @@
 
             if (isset($data['emailFinanceReporets']) && !($data['emailFinanceReporets'] === '1' || $data['emailFinanceReporets'] === '0')) return false;
             if (isset($data['voucherPaymentCode']) && !($data['voucherPaymentCode'] === '1' || $data['voucherPaymentCode'] === '0')) return false;
+            if (isset($data['sendAnonymousReceipt']) && !($data['sendAnonymousReceipt'] === '1' || $data['sendAnonymousReceipt'] === '0')) return false;            
 
             return true;
         }
@@ -296,6 +297,7 @@
                     $this->table . '.facebookPixelId',
                     $this->table . '.emailFinanceReporets',
                     $this->table . '.voucherPaymentCode',
+                    $this->table . '.sendAnonymousReceipt',
                     'tbl_user.id AS vendorId',
                     'tbl_user.username AS vendorName',
 					'tbl_user.logo AS logo',
