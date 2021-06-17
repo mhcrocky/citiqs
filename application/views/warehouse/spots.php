@@ -43,10 +43,6 @@
                                                 required />
                                         </div>
                                         <div>
-                                            <label for="QRCode">QRCode: </label>
-                                            <input type="text"  class="form-control pl-3 pr-3" name="qrcodes">
-                                        </div>
-                                        <div>
                                             <label for="addSpotTypeId">Spot type: </label>
                                             <select class="form-control" id="addSpotTypeId" name="spotTypeId">
                                                 <option value="">Select</option>
