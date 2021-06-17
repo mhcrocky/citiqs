@@ -937,7 +937,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_event_tickets.id, COUNT(tbl_bookandpay.id) AS ticket_used
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.id = ".$eventId." AND paid = 1
+		WHERE tbl_events.id = ".$eventId." AND paid = 1 AND SpotId = '0' AND tbl_bookandpay.ticketDescription <> ''
 		GROUP BY tbl_event_tickets.id");
 		$this->db->trans_complete();
 		$results = $query->result_array();
@@ -1189,7 +1189,6 @@ class Event_model extends CI_Model {
 		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'left');
 		
         $query = $this->db->get();
-		var_dump($this->db->error());
 		$result = $query->first_row();
 
         if($query->num_rows() > 0) {
