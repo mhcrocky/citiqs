@@ -9,18 +9,18 @@
                     <span><?php echo $this->language->tLine('Orders'); ?></span>
                 </a>
             </li>
-            <li>
-                <a href="<?php echo $this->baseUrl; ?>buyer_tickets">
+            <!-- <li>
+                <a href="<?php #echo $this->baseUrl; ?>buyer_tickets">
                     <i class="ti-receipt"></i>&nbsp;
-                    <span><?php echo $this->language->tLine('Tickets'); ?></span>
+                    <span><?php #echo $this->language->tLine('Tickets'); ?></span>
                 </a>
             </li>
             <li>
-                <a href="<?php echo $this->baseUrl; ?>buyer_reservations">
+                <a href="<?php #echo $this->baseUrl; ?>buyer_reservations">
                     <i class="ti-pin-alt"></i>&nbsp;
-                    <span><?php echo $this->language->tLine('Reservations'); ?></span>
+                    <span><?php #echo $this->language->tLine('Reservations'); ?></span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </li>
     <li>
