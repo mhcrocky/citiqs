@@ -1624,8 +1624,6 @@
 
         public function emailReceipt(): void
         {
-            if (!$this->checkIsAllowedToEmailReceipt()) return;
-
             $email = $this->getOrderReceiptEmail();
             $orderImageFullPath = $this->getOrderImagePath(' AND tbl_shop_orders.paid = "1" ');
             $subject = "tiqs-Order : " . $this->id;
@@ -1644,6 +1642,9 @@
         private function getOrderReceiptEmail(): ?string
         {
             $this->load->config('custom');
+
+            $vendorData = $this->getOrderVendorData(['sendAnonymousReceipt', 'sendEmailReceipt']);
+            if ($vendorData['sendAnonymousReceipt'] === '0' && $vendorData['sendEmailReceipt'] === '0') return null;
 
             $data = $this->readImproved([
                 'what' => ['buyer.email AS buyerEmail, vendor.receiptEmail as receiptEmail'],
@@ -1673,28 +1674,20 @@
             $data = reset($data);
 
             if (strpos($data['buyerEmail'], 'anonymus_') !== false && strpos($data['buyerEmail'], '@tiqs.com') !== false) {
-                $email = $data['receiptEmail'];
+                $email = $vendorData['sendAnonymousReceipt'] === '1' ? $data['receiptEmail'] : null;
             } else {
-                $email = $data['buyerEmail'];
+                $email = $vendorData['sendEmailReceipt'] === '1' ? $data['buyerEmail'] : null;
             }
 
             return $email;
         }
 
-        private function checkIsAllowedToEmailReceipt(): bool
+        private function getOrderVendorData(array $properties): array
         {
             $vendorId = $this->getOrderVendorId();
-
-            // check does vendor requried send receipt with email
             $this->load->model('shopvendor_model');
-            if (!$this->shopvendor_model->setProperty('vendorId', $vendorId)->sendEmailWithReceipt()) return false;
-			return true;
-
-            // chekc is vendor bbUser, if it is email will not be send
-			// this is a very bad check
-			// it checks if the vendor is in the table tbl_
-            // $this->load->model('shopvendorfod_model');
-            // return $this->shopvendorfod_model->isOnlyBBVendor($vendorId);
+            $emailData = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperties($properties);
+			return $emailData;
         }
 
         private function getOrderImagePath(string $filterString): ?string

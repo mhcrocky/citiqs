@@ -95,6 +95,13 @@
 						<label class="radio-inline" for="sendEmailReceiptNo">&nbsp;&nbsp;&nbsp;No</label>
 						<input type="radio" id="sendEmailReceiptNo" name="vendor[sendEmailReceipt]" value="0" <?php if ($vendor['sendEmailReceipt'] === '0') echo 'checked'; ?> />
 					</div>
+					<h4>SEND EMAIL WITH RECEIPT FROM ANONYMOUS BUYER</h4>
+					<div class="form-group mb-35">
+						<label class="radio-inline" for="sendAnonymousReceiptYes">Yes</label>
+						<input type="radio" id="sendAnonymousReceiptYes" name="vendor[sendAnonymousReceipt]" value="1" <?php if ($vendor['sendAnonymousReceipt'] === '1') echo 'checked'; ?> />
+						<label class="radio-inline" for="sendAnonymousReceiptNo">&nbsp;&nbsp;&nbsp;No</label>
+						<input type="radio" id="sendAnonymousReceiptNo" name="vendor[sendAnonymousReceipt]" value="0" <?php if ($vendor['sendAnonymousReceipt'] === '0') echo 'checked'; ?> />
+					</div>
 					<h4>SHOW PRODUCTS IMAGES IN MAKE ORDER FORM</h4>
 					<div class="form-group mb-35">
 						<label class="radio-inline" for="showProductsImagesYes">Yes</label>
