@@ -835,6 +835,21 @@ class Bookandpay_model extends CI_Model
 		return empty($result) ? [] : $result;
 	}
 
+	public function get_vouchers($vendorId) : array
+	{
+		$query = $this->db->query("SELECT code
+		FROM tbl_shop_voucher
+		WHERE productGroup = 'Reservations' AND vendorId = ".$vendorId);
+		$results = $query->result_array();
+		$vouchers = [];
+		if($query->num_rows() > 0){
+			foreach($results as $result){
+				$vouchers[] = $result['code'];
+			}
+		}
+		return $vouchers;
+	}
+
 	public function getReservationsByTransactionIdImproved(string $TransactionId, $what = []): ?array
 	{
 		if ($what) {
