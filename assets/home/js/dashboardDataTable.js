@@ -102,6 +102,16 @@ $(document).ready( function () {
             size: 30,
             unique: true
           },
+          {
+            id: 'tbl_shop_voucher.code',
+            label: 'Voucher code',
+            type: 'string',
+            class: 'quantity',
+            // optgroup: 'core',
+            default_value: '',
+            size: 30,
+            unique: true
+          },
 			{
 				id: 'tbl_shop_orders.paymentType',
 				label: 'Payment type',
@@ -281,47 +291,47 @@ $(document).ready( function () {
             }) : 0;
 
 
-          let pageAmountExVoucherData = api.column( 6, { page: 'current'}  ).cache('search');
+          let pageAmountExVoucherData = api.column( 7, { page: 'current'}  ).cache('search');
           let pageAmountExVoucherTotal = pageAmountExVoucherData.length ? 
           pageAmountExVoucherData.reduce( function (a, b) {
               return parseFloat(a) + parseFloat(b);
             }) : 0;
 
-         let pageServiceFeeData = api.column( 9,  { page: 'current'} ).cache('search');
+         let pageServiceFeeData = api.column( 10,  { page: 'current'} ).cache('search');
          let pageServiceFeeTotal = pageServiceFeeData.length ? 
          pageServiceFeeData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-         let pageVatServiceData = api.column( 11,  { page: 'current'} ).cache('search');
+         let pageVatServiceData = api.column( 12,  { page: 'current'} ).cache('search');
          let pageVatServiceTotal = pageVatServiceData.length ? 
          pageVatServiceData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-         let pageExvatServiceData = api.column( 12,  { page: 'current'} ).cache('search');
+         let pageExvatServiceData = api.column( 13,  { page: 'current'} ).cache('search');
          let pageExvatServiceTotal = pageExvatServiceData.length ? 
          pageExvatServiceData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-         let pageWaiterTipData = api.column( 13, { page: 'current'}  ).cache('search');
+         let pageWaiterTipData = api.column( 14, { page: 'current'}  ).cache('search');
          let pageWaiterTipTotal = pageWaiterTipData.length ? 
          pageWaiterTipData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-         let pageAmountData = api.column( 14, { page: 'current'}  ).cache('search');
+         let pageAmountData = api.column( 15, { page: 'current'}  ).cache('search');
          let pageAmount = pageAmountData.length ? 
          pageAmountData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
-         let pageExvatData = api.column( 15, { page: 'current'} ).cache('search');
+         let pageExvatData = api.column( 16, { page: 'current'} ).cache('search');
          let pageExvatTotal = pageExvatData.length ? 
            pageExvatData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
-         let pageVatData = api.column( 16, { page: 'current'} ).cache('search');
+         let pageVatData = api.column( 17, { page: 'current'} ).cache('search');
          let pageVatTotal = pageVatData.length ? 
            pageVatData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
@@ -380,15 +390,16 @@ $(document).ready( function () {
       
       $(tfoot).find('th').eq(3).html(round_up(pageAmountTotal));
       $(tfoot).find('th').eq(4).html(round_up(pageVoucherAmountTotal));
-      $(tfoot).find('th').eq(5).html(round_up(pageAmountExVoucherTotal));
-			$(tfoot).find('th').eq(6).html('-');
+      $(tfoot).find('th').eq(5).html('-');
+      $(tfoot).find('th').eq(6).html(round_up(pageAmountExVoucherTotal));
 			$(tfoot).find('th').eq(7).html('-');
-			$(tfoot).find('th').eq(8).html(round_up(pageServiceFeeTotal));
-			$(tfoot).find('th').eq(9).html('-');
-			$(tfoot).find('th').eq(10).html(round_up(pageVatServiceTotal));
-			$(tfoot).find('th').eq(11).html(round_up(pageExvatServiceTotal));
-			$(tfoot).find('th').eq(12).html(round_up(pageWaiterTipTotal));
-			$(tfoot).find('th').eq(13).html(round_up(pageAmount));
+			$(tfoot).find('th').eq(8).html('-');
+			$(tfoot).find('th').eq(9).html(round_up(pageServiceFeeTotal));
+			$(tfoot).find('th').eq(10).html('-');
+			$(tfoot).find('th').eq(11).html(round_up(pageVatServiceTotal));
+			$(tfoot).find('th').eq(12).html(round_up(pageExvatServiceTotal));
+			$(tfoot).find('th').eq(13).html(round_up(pageWaiterTipTotal));
+			$(tfoot).find('th').eq(14).html(round_up(pageAmount));
 			// $(tfoot).find('th').eq(12).html(round_up(pageExvatTotal));
       // $(tfoot).find('th').eq(13).html(round_up(pageVatTotal));
       
@@ -440,6 +451,10 @@ $(document).ready( function () {
             let voucherAmount = parseFloat(data.voucherAmount);
             return voucherAmount.toFixed(2);
           }
+        },
+        {
+          title: 'Voucher code',
+          data: 'voucherCode',
         },
         {
           title: 'Total without voucher amount',
@@ -732,7 +747,7 @@ function format(d) {
             var date = full_timestamp.split(" - ");
             var min = moment(date[0]);
             var max = moment(date[1]);
-            var startDate = moment(data[17]);
+            var startDate = moment(data[18]);
             if (min == '' && max == '') { min = todayDate; }
             if (min == '' && startDate <= max) { return true;}
             if(max == '' && startDate >= min) {return true;}
