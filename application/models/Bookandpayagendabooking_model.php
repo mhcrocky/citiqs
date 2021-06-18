@@ -167,15 +167,9 @@ class   Bookandpayagendabooking_model extends CI_Model
 		$insertData = [];
 		$spot_ids = [];
 		foreach ($results as $result) {
-			$insertData[] = [
-					"email_id" => $result['email_id'],
-					"spot_id" => $spot_id,
-					"timeslotdescript" => $result['timeslotdescript'],
-					"available_items" => $result['available_items'],
-					"fromtime" => $result['fromtime'],
-					"totime" => $result['totime'],
-					"price" => $result['price']
-				];
+			$result['spot_id'] = $spot_id;
+			unset($result['id']);
+			array_push($insertData, $result);
 		}
 		return $this->db->insert_batch('tbl_bookandpaytimeslots', $insertData);
 	}
