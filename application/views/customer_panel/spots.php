@@ -86,7 +86,7 @@ li {
                                     <th>Number of persons</th>
                                     <th>Price</th>
                                     <th>Email Template</th>
-                                    <td>Voucher</td>
+                                    <!--<td>Voucher</td>-->
                                     <th>Max Bookings</th>
                                     <td>Send To Email</td>
                                     <td>Email</td>
@@ -110,11 +110,13 @@ li {
                                             {{ spot.template_name }}
                                         </a>
                                     </td>
+                                    <!--
                                     <td v-for="voucher in vouchers">
                                         <a v-if="voucher.id == spot.voucherId" :href="baseURL+ 'voucher?voucherId=' + voucher.id">
                                             {{ voucher.template_name + '(' + voucher.description +  ')' }}
                                         </a>
                                     </td>
+                                    -->
                                     <td>{{ spot.maxBooking }}</td>
                                     <td>{{ spot.send_to_email }}</td>
                                     <td>{{ spot.spot_email }}</td>
