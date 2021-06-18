@@ -397,6 +397,9 @@ class Booking_events extends BaseControllerWeb
         if(count($orderData) < 1){
             redirect(base_url());
         }
+
+        $buyerLog = json_encode($buyerInfo);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "Buyer info: $buyerLog");
         
         
         $tickets = $orderData['tickets'];
@@ -556,6 +559,9 @@ class Booking_events extends BaseControllerWeb
         }
 
         //$this->loadViews('events/selectpayment', $this->global, $data, null, 'headerWarehousePublic');
+        $orderLog = json_encode($orderData);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "Order Data: $orderLog");
+
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
 
@@ -614,6 +620,8 @@ class Booking_events extends BaseControllerWeb
             $arrArguments['saleData']['orderData'][$key]['vatPercentage'] = '0.00';
 
         }
+
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "paymentType: $paymentType; paymentOptionSubId: $paymentOptionSubId");
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
