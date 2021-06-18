@@ -10,7 +10,6 @@ use \koolreport\widgets\google\ColumnChart;
 use \koolreport\clients\Bootstrap4;
 use \koolreport\bootstrap3\Theme;
 
-
 class Events extends BaseControllerWeb
 {
     private $vendor_id;
@@ -1073,6 +1072,93 @@ class Events extends BaseControllerWeb
         }
 
         echo json_encode($response);
+
+    }
+
+    public function tags_graphs()
+	{
+        $this->global['pageTitle'] = 'TIQS: Tags Graphs';
+        $reservations = $this->event_model->get_reservations_stats_by_tags($this->vendor_id);
+
+
+
+        if(count($reservations) == 0){
+            $data['sold_tickets_graph'] = [];
+            $data['sold_amount_graph'] = [];
+            $data['tags'] = [];
+            $data['events'] = [];
+            $this->loadViews('events/tags_graphs', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
+        }
+
+
+
+        $tags = array_values(array_unique($reservations['tags']));
+        $events = array_values(array_unique($reservations['events']));
+        $sold_tickets = $reservations['sold_tickets'];
+        $sold_amount = $reservations['amount'];
+        $sold_tickets_graph = [];
+        $label = (object) [];
+        $emphasis = (object) [];
+        $newData = [];
+        $soldTicketsArr = [];
+        $soldAmountArr = [];
+
+
+
+        //Tickets Sold Number graph data
+        foreach($tags as $key => $tag){
+            
+            $label->show = true;
+            $emphasis->focus = 'series';
+            $newData['name'] = $events[$key];
+            $newData['type'] = 'bar';
+            $newData['stack'] = 'total';
+            $newData['label'] = $label;
+            $newData['emphasis'] = $emphasis;
+
+            $tempData = [];
+            foreach($events as $event){
+                $tempData[] = isset($sold_tickets[$tag][$event]) ? $sold_tickets[$tag][$event] : 0;
+            }
+
+            $newData['data'] = $tempData;
+            $soldTicketsArr[$key] = (object) $newData;
+ 
+        }
+
+        //Tickets Sold Amount graph data
+
+        foreach($tags as $key => $tag){
+ 
+            $label->show = true;
+            $emphasis->focus = 'series';
+            $newData = [];
+            $newData['name'] = $events[$key];
+            $newData['type'] = 'bar';
+            $newData['stack'] = 'total';
+            $newData['label'] = $label;
+            $newData['emphasis'] = $emphasis;
+
+            $tempData = [];
+            foreach($events as $event){
+                $tempData[] = isset($sold_amount[$tag][$event]) ? number_format($sold_amount[$tag][$event], 2) : '0.00';
+            }
+
+            $newData['data'] = $tempData;
+            $soldAmountArr[$key] = (object) $newData;
+ 
+        }
+
+
+      
+
+        $data['sold_tickets_graph'] = $soldTicketsArr;
+        $data['sold_amount_graph'] = $soldAmountArr;
+        
+        $data['tags'] = $tags;
+        $data['events'] = $events;
+ 
+        $this->loadViews('events/tags_graphs', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
 
     }
 
