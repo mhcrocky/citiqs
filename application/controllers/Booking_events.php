@@ -617,7 +617,7 @@ class Booking_events extends BaseControllerWeb
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
-                
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/event_payment.txt', $strUrl);
         // if ($orderData['vendorId'] === 49456) {
         //     $file = FCPATH . 'application/tiqs_logs/payment_logs.txt';
         //     Utility_helper::logMessage($file, serialize($arrArguments));
