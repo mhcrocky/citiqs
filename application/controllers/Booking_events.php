@@ -621,7 +621,8 @@ class Booking_events extends BaseControllerWeb
 
         }
 
-        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "paymentType: $paymentType; paymentOptionSubId: $paymentOptionSubId");
+        $arrArgLog = json_encode($arrArguments);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "paymentType: $paymentType; paymentOptionSubId: $paymentOptionSubId;arrArguments: $arrArgLog");
 
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
@@ -669,7 +670,9 @@ class Booking_events extends BaseControllerWeb
 	{
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
         $result = json_decode($strResult);
+        //Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
 
         if ($result->request->result == '1') {
 			//Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'updating transactionid');
