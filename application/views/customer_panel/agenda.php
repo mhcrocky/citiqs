@@ -74,7 +74,7 @@
                             <th><?php echo $this->language->tLine('Date'); ?></th>
                             <th class="d-none"><?php echo $this->language->tLine('Background Color'); ?>
                             <th><?php echo $this->language->tLine('Email Template'); ?></th>
-                            <th><?php echo $this->language->tLine('Voucher'); ?></th>
+                            <!-- <th><?php echo $this->language->tLine('Voucher'); ?></th> -->
                             <th><?php echo $this->language->tLine('Max Spots'); ?></th>
                             <th><?php echo $this->language->tLine('Online'); ?></th>
                             <th><?php echo $this->language->tLine('Action'); ?></th>
@@ -93,11 +93,13 @@
                                         {{ agenda.template_name }}
                                     </a>
                                 </td>
+                                <!--
                                 <td v-for="voucher in vouchers">
                                     <a v-if="voucher.id == agenda.voucherId" :href="baseURL+ 'voucher?voucherId=' + voucher.id">
                                         {{ voucher.template_name + '(' + voucher.description +  ')' }}
                                     </a>
                                 </td>
+                                -->
                                 <td>{{ agenda.max_spots }} </td>
                                 <td v-if="agenda.online == 1">
 									<?php echo $this->language->tLine('Yes'); ?>
