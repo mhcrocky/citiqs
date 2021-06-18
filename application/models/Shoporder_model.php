@@ -1776,4 +1776,48 @@
             return $data ? reset($data) : null;
         }
 
+        public function getBuyerOrders(): ? array
+        {
+            $this->load->config('custom');
+            $prePaid = $this->config->item('prePaid');
+            $postPaid = $this->config->item('postPaid');
+            $payAtWaiter = 'Pay at waiter';
+
+            $orders = $this->readImproved([
+                'escape' => false,
+                'what' => [
+                    $this->table . '.amount AS orderAmount',
+                    $this->table . '.refundAmount AS refundAmount',
+                    $this->table . '.voucherAmount AS voucherAmount',
+                    $this->table . '.serviceFee AS serviceFee',
+                    $this->table . '.waiterTip AS waiterTip',
+                    $this->table . '.voucherId AS voucherId',
+                    $this->table . '.paymentType AS paymentType',
+                    $this->table . '.createdOrder AS createdOrder',
+                    $this->table . '.created AS created',
+                    'vendor.username AS vendorUserName',
+                    'tbl_shop_voucher.code AS voucherCode',
+                    'tbl_shop_spots.spotName AS spotName',
+                    'tbl_shop_spot_types.type AS spotType',
+                    'IF(' . $this->table . '.paymentType = "' . $prePaid . '", "' . $payAtWaiter . '", IF(' . $this->table . '.paymentType = "' . $postPaid . '", "' . $payAtWaiter . '", ' .  $this->table . '.paymentType)) AS paymentMethod'
+                ],
+                'where' => [
+                    $this->table . '.buyerId' => $this->buyerId,
+                ],
+                'joins' => [
+                    ['tbl_shop_spots', 'tbl_shop_spots.id = ' . $this->table . '.spotId'],
+                    ['tbl_shop_spot_types', 'tbl_shop_spot_types.id = tbl_shop_spots.spotTypeId'],
+                    ['tbl_shop_printers', 'tbl_shop_printers.id = tbl_shop_spots.printerId'],
+                    [
+                        '(SELECT * FROM tbl_user WHERE roleid = '. $this->config->item('owner') .') vendor',
+                        'vendor.id  = tbl_shop_printers.userId',
+                        'INNER'
+                    ],
+                    ['tbl_shop_voucher', 'tbl_shop_voucher.id = ' . $this->table . '.voucherId', 'LEFT']
+                ]
+            ]);
+
+            return is_null($orders) ? null : $orders;
+        }
+
     }

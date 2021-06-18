@@ -235,7 +235,7 @@ class Login extends BaseControllerWeb
 				redirect('login');
 			} else {
                 $sessionArray = array(
-                    'buyerId' => $result->userId,
+                    'buyerId' => intval($result->userId),
                     'isLoggedIn' => true,
                     'name' => $result->name,
                 );

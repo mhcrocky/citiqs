@@ -42,6 +42,11 @@
         {
             $this->global['pageTitle'] = 'TIQS : BUYER ORDERS';
 
+            var_dump($_SESSION);
+            $orders = $this->shoporder_model->setProperty('buyerId',  $_SESSION['buyerId'])->getBuyerOrders();
+            var_dump($orders);
+            die();
+
             $data = [];
 
             $this->loadViews('buyer/buyerOrders', $this->global, $data, 'footerbusiness', 'headerbusiness');

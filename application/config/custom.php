@@ -589,4 +589,4 @@ $config['reportPeriods'] = [$config['dayPeriod'],$config['weekPeriod'], $config[
 
 $config['messageToBuyerTags'] = ['{orderId}', '{buyerName}'];
 
-$config['testingIds'] = [417, 43533];
+$config['testingIds'] = [43533];
