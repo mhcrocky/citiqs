@@ -713,10 +713,12 @@ $route['edit_floorplan/(:num)'] = 'Floorplans/editFloorplan/$1';
 
 // connections api routes
 
-//buyer
+// buyer api
 $route['api/connection/buyer']['get'] = 'Api/connection/Buyerapi/buyer';
 $route['api/connection/buyer']['post'] = 'Api/connection/Buyerapi/buyer';
 $route['api/connection/buyer/(:any)']['put'] = 'Api/connection/Buyerapi/buyer/$1';
+
+
 
 // orders
 $route['api/connection/order']['post']  = 'Api/connection/Ordersapi/order';
@@ -731,12 +733,16 @@ $route['send_reportes'] = 'Api/Cronjobs/sendReportes';
 
 $route['update_payment_method'] = 'Api/Cronjobs/updatePaymentMethod';
 
-// byuer
+// buyer
 
 $route['buyer'] = 'Buyer/index';
 $route['buyer_orders'] = 'Buyer/buyerOrders';
 $route['buyer_tickets'] = 'Buyer/buyerTickets';
 $route['buyer_reservations'] = 'Buyer/buyerReservations';
+
+//buyer ajax
+$route['get_buyer_orders'] = 'Ajaxbuyer/getBuyerOrders';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
