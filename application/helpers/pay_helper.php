@@ -187,7 +187,7 @@
             
 
             $arrArguments['enduser']['emailAddress'] = $buyerEmail;
-            $arrArguments['transaction']['description'] = implode(' | ', $transactionDescription);
+            $arrArguments['transaction']['description'] = substr(implode(' | ', $transactionDescription), 0, 31);
             
    
 

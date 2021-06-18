@@ -612,7 +612,7 @@ class Booking_events extends BaseControllerWeb
         foreach ($reservations as $key => $reservation) {
             $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
             $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
-            $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->ticketDescription;
+            $arrArguments['saleData']['orderData'][$key]['description'] = substr($reservation->ticketDescription, 0, 31);
             $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
             $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
             $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
