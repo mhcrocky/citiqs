@@ -598,7 +598,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_bookandpay.id, reservationId, reservationtime, price,numberofpersons,price as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, ticketQuantity, TransactionID, tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." AND tbl_events.id = ".$eventId." $sql
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendorId." AND tbl_events.id = ".$eventId." $sql
 		ORDER BY reservationtime DESC");
 		return $query->result_array();
 	}
@@ -608,7 +608,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_bookandpay.id, reservationId, reservationtime, price,numberofpersons, price as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, eventname, TransactionID, tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_events.vendorId = ".$vendorId." $sql
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendorId." $sql
 		ORDER BY reservationtime DESC");
 		return $query->result_array();
 	}
@@ -736,7 +736,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date,  eventdate, reservationtime, sum(tbl_bookandpay.id) AS tickets 
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND paid='1' AND tbl_events.id = ".$eventId." $sql  GROUP BY day_date 
+		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND paid='1' AND tbl_events.id = ".$eventId." $sql  GROUP BY day_date 
 		ORDER BY day_date ASC");
 		return $query->result_array();
 	}
@@ -746,7 +746,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT DATE(reservationtime) AS day_date, tbl_event_tickets.ticketDescription, COUNT(tbl_event_tickets.id) AS tickets
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND paid='1' AND tbl_events.id = ".$eventId." $sql  GROUP BY tbl_event_tickets.id 
+		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND paid='1' AND tbl_events.id = ".$eventId." $sql  GROUP BY tbl_event_tickets.id 
 		ORDER BY tbl_bookandpay.reservationtime ASC");
 		return $query->result_array();
 	}
@@ -756,7 +756,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_events.id, COUNT(tbl_bookandpay.id) AS tickets_sold, SUM(tbl_bookandpay.price) as amount, SUM(tbl_bookandpay.ticketFee) as totalTicketFee, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as totalAmount
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
+		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
 		GROUP BY tbl_events.id");
 		$stats = (array) $query->first_row();
 		$stats['totalOrders'] = $this->get_total_event_orders($vendorId, $eventId);
@@ -769,7 +769,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_bookandpay.id
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.vendorId = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
+		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
 		GROUP BY TransactionID");
 		return $query->num_rows();
 	} 
@@ -779,7 +779,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_bookandpay.id, paymentMethod, tbl_bookandpay.price
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_events.vendorId ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_events.id='".$eventId."' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.id");
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_events.id='".$eventId."' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.id");
 		$results = $query->result_array();
 
 		$paymentEngineFee = 0;
@@ -806,6 +806,44 @@ class Event_model extends CI_Model {
 
 		return $newData;
 	}  
+
+	public function get_reservations_stats_by_tags($vendorId)
+	{
+		$query = $this->db->query("SELECT tbl_events.eventname, tbl_bookandpay.price, tbl_event_shop_tags.tag
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		GROUP BY tbl_bookandpay.id");
+		$results = $query->result_array();
+		$reservations = [];
+		if($query->num_rows() < 1){
+			return $reservations;
+		}
+		
+		foreach($results as $key => $result){
+			$tag = $result['tag'];
+			$event = $result['eventname'];
+
+			$reservations['tags'][] = $tag;
+			$reservations['events'][] = $event;
+			
+			if(!isset($reservations['sold_tickets'][$tag][$event])) {
+				$reservations['sold_tickets'][$tag][$event] = 1;
+				$reservations['amount'][$tag][$event] = floatval($result['price']);
+				
+			} else {
+				$reservations['sold_tickets'][$tag][$event] += 1;
+				$reservations['amount'][$tag][$event] += floatval($result['price']);
+			}
+			
+			
+			
+		}
+
+		return $reservations;
+
+	}
 
 	function get_tickets_report($vendor_id, $eventId, $days = true, $sql=''){
 		if(!$days){
@@ -1208,7 +1246,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_events.StartDate as eventDate, COUNT(tbl_bookandpay.id) as tickets, SUM(numberin) as scannedin
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND tbl_events.vendorId = ".$vendorId."
+		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND tbl_bookandpay.customer = ".$vendorId."
 		GROUP BY tbl_events.id");
 		$results = $query->result_array();
 		$newData = [];
