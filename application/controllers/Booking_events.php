@@ -236,6 +236,7 @@ class Booking_events extends BaseControllerWeb
         }
         $ticketType = $ticketInfo->ticketType;
 
+        /*
         $ticket_quantity = intval($ticket['quantity']);
         $ticket_available = intval($ticketInfo->ticketAvailable);
         if($ticket_quantity > $ticket_available){
@@ -248,6 +249,9 @@ class Booking_events extends BaseControllerWeb
             echo json_encode($response);
             return ;
         }
+
+        */
+        
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,
