@@ -295,11 +295,16 @@
         {
             $this->shopprinters_model->setPrinterIdFromMacNumber($mac)->setObject();
 
+            if (is_null($this->shopprinters_model->userId)) {
+                $file = FCPATH . 'application/tiqs_logs/unregistered_printers.txt';
+			    Utility_helper::logMessage($file, 'Not registered printer with mac: "' . $mac . '"');
+                exit();
+            }
+
             if ($this->shopprinters_model->active === '0') exit();
 
             $this->shopprinterrequest_model->insertPrinterRequest($mac);
             $this->macToFetchOrder = empty($this->shopprinters_model->masterMac) ? $mac : $this->shopprinters_model->masterMac;
-
             return;
         }
 
