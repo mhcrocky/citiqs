@@ -140,35 +140,20 @@
                 // vullen onderdelen
                 // printed op 1 zetten.
 
-                if (Utility_helper::testingVendors($this->shopprinters_model->userId)) {
-                    if (
-                        $this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder, $this->printTimeConstraint)
-                        || $this->shoporder_model->getOrderReceipt($this->shopprinters_model->userId, $this->printTimeConstraint)
-                    ) {
-                        $arr = [
-                            "jobReady" => true,
-                            // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));
-                            "mediaTypes" => array('image/png')
-                            // "deleteMethod" => "GET");
-                        ];
-                        //    Utility_helper::logMessage($file, 'JOB READY => ');
-                    } else {
-                        $arr = array("jobReady" => false);
-                        // Utility_helper::logMessage($file, 'JOB NOT READY => 2');
-                    }
+                if (
+                    $this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder, $this->printTimeConstraint)
+                    || $this->shoporder_model->getOrderReceipt($this->shopprinters_model->userId, $this->printTimeConstraint)
+                ) {
+                    $arr = [
+                        "jobReady" => true,
+                        // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));
+                        "mediaTypes" => array('image/png')
+                        // "deleteMethod" => "GET");
+                    ];
+                    //    Utility_helper::logMessage($file, 'JOB READY => ');
                 } else {
-                    if ($this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder)) {
-                        $arr = [
-                            "jobReady" => true,
-                            // "mediaTypes" => array('text/plain','image/png', 'image/jpeg'));
-                            "mediaTypes" => array('image/png')
-                            // "deleteMethod" => "GET");
-                        ];
-                        //    Utility_helper::logMessage($file, 'JOB READY => ');
-                    } else {
-                        $arr = array("jobReady" => false);
-                        // Utility_helper::logMessage($file, 'JOB NOT READY => 2');
-                    }
+                    $arr = array("jobReady" => false);
+                    // Utility_helper::logMessage($file, 'JOB NOT READY => 2');
                 }
             }
 
