@@ -52,38 +52,19 @@
         public function data_get()
         {
             $mac = $this->input->get('mac', true);
+
             if (!$mac) exit;
 
             $this->setPrinterAndMacToFetchOrder($mac);
 
             // print finance report
             $this->printFinanceReport($mac);
-
-            if (Utility_helper::testingVendors($this->shopprinters_model->userId)) {
-                $this->setVendorInfo();
-                $this->printReceipt();
-                $this->printOrder();
-            } else {
-                //get order to print
-                $order = $this->getOrder();
-
-                // get utility data
-                list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
-
-                // send message
-                $this->sendMessages($order);
-
-                // do printing job
-                $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
-
-                $this->doFinalUpdates($order, $orderExtendedIds);
-            }
+            $this->setVendorInfo();
+            $this->printReceipt();
+            $this->printOrder();
 
             return;
-            // $this->callOrderCopy($order, $fodUser);
         }
-
-
 
         /**
          * 
@@ -335,7 +316,7 @@
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
-            // $this->sendMessages($order);
+            $this->sendMessages($order);
 
             Receiptprint_helper::printPrinterReceipt($order);
 
@@ -366,104 +347,4 @@
             }
         }
 
-
-
-
-        // OLD 
-
-        private function isCashpayment(array $order): bool
-        {
-            if (
-                $order['paymentType'] === $this->config->item('prePaid')
-                || $order['paymentType'] === $this->config->item('postPaid')
-                || $order['paymentType'] === $this->config->item('pinMachinePayment')
-                // if voucher payment and pos orders
-                || ( $order['paymentType'] === $this->config->item('voucherPayment') && $order['orderIsPos'] === '1' )
-            ) {
-                return true;
-            }
-            return false;
-        }
-
-        private function handlePrePostPaid(array $order, bool $fodUser): void
-        {
-            if ($fodUser) {   
-                return;
-            }
-            if ($this->isCashpayment($order)) {
-
-                if ($order['waiterReceipt'] === '0') {
-                    header('Content-type: image/png');
-                    echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
-                    $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('waiterReceipt', '1')->update();
-                    exit;
-                }
-
-                if ($order['customerReceipt'] === '0') {
-                    header('Content-type: image/png');
-                    echo file_get_contents(base_url() . 'Api/Orderscopy/data/' . $order['orderId']);
-                    $this->shoporder_model->setObjectId(intval($order['orderId']))->setProperty('customerReceipt', '1')->update();
-                    exit;
-                }
-
-                if ($order['paidStatus'] === $this->config->item('orderNotPaid') && $order['orderIsPos'] === '0') exit;
-            }
-        }
-
-
-        private function getOrder(): array
-        {
-            $order = $this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder);
-
-            if (!$order) exit();
-
-            $order = reset($order);
-
-            $this->checkoOrderTime($order);
-
-            // if we have an order, update shopprinterrequest_model
-            $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
-
-            return $order;
-        }
-
-        private function checkoOrderTime(array $order): void
-        {
-            $printTimeConstraint = $this->shopvendor_model->setProperty('vendorId', $order['vendorId'])->getPrintTimeConstraint();
-            // order expiration settings
-            if (strtotime($printTimeConstraint) > strtotime($order['orderCreated'])) {
-                $this->shoporder_model->setObjectId(intval($order['orderId']))->updateExpired('1');
-                exit;
-            }
-        }
-
-        private function printOrderAndReceipts(array $order, bool $fodUser, array $orderExtendedIds, bool $printOnlyReceipt): void
-        {
-            if (
-                $printOnlyReceipt
-                && $order['paidStatus'] ===  $this->config->item('orderPaid')
-                && $this->shopprinters_model->printReceipts === '1'
-                && $this->isCashpayment($order)
-            ) {
-                header('Content-type: image/png');
-                echo file_get_contents(base_url() . 'Api/Orderscopy/receipt/' . $order['orderId']);
-            } else {
-                if ($this->shopprinters_model->printReceipts === '1') {
-                    $this->handlePrePostPaid($order, $fodUser);
-                    $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
-                }
-                Receiptprint_helper::printPrinterReceipt($order);
-            }
-        }
-
-        private function getRequiredInfo(array $order): array
-        {
-            $vendorId = intval($order['vendorId']);
-            $fodUser = $this->shopvendorfod_model->isFodVendor($vendorId);
-
-            $orderExtendedIds = explode(',', $order['orderExtendedIds']);
-            $printOnlyReceipt = $this->shopvendor_model->setProperty('vendorId', $vendorId)->getProperty('printOnlyReceipt') === '1' ? true : false;
-
-            return [$fodUser, $orderExtendedIds, $printOnlyReceipt];
-        }
     }
