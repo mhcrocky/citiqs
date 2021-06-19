@@ -61,6 +61,7 @@ class Booking_events extends BaseControllerWeb
         }
         
         $tag = $this->input->get('tag') ? $this->input->get('tag') : '0';
+        $ip_address = $this->input->ip_address();
         $sessionData['vendorId'] = $customer->id;
         $sessionData['shortUrl'] = $shortUrl;
         $sessionData['spotId'] = 0;
@@ -71,9 +72,10 @@ class Booking_events extends BaseControllerWeb
         $sessionData['ticketFee'] = 0;
         $sessionData['logoUrl'] = $logoUrl;
         $sessionData['eventId'] = $eventId;
+        $sessionData['ip_address'] = $ip_address;
         
 
-        if(count($orderData) < 1){
+        if(count($orderData) < 1 || $orderData['ip_address'] != $ip_address){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
             $userShortUrl = ($tag != '0') ? base_url() . 'events/shop/' . $shortUrl . '?tag=' . $tag . '&order=' . $orderData->randomKey : base_url() . 'events/shop/' . $shortUrl . '?order=' . $orderData->randomKey;
             $eventUrl = ($tag != '0') ? base_url() . 'events/shop/' . $eventId . '?tag=' . $tag . '&order=' . $orderData->randomKey : base_url() . 'events/shop/' . $eventId . '?order=' . $orderData->randomKey;
@@ -251,7 +253,7 @@ class Booking_events extends BaseControllerWeb
         }
 
         */
-        
+
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,
