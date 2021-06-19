@@ -84,16 +84,6 @@
                     'LIMIT' => ['1']
                 ]
             ]);
-
-            if ($printerMac === '00:11:62:0D:D3:E2') {
-                echo $this->db->last_query();
-                echo '<pre>';
-                print_r($data);
-                echo '</pre>';
-                echo '<pre>';
-                print_r(reset($data));
-                echo '</pre>';
-            }
             
             return is_null($data) ? null : reset($data);
         }
