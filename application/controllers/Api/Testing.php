@@ -5,7 +5,7 @@
 
     require APPPATH . 'libraries/REST_Controller.php';
 
-    class Orders extends REST_Controller
+    class Testing extends REST_Controller
     {
         //if slave printer send request this will be value of masterMacNumber
         private $macToFetchOrder;
@@ -210,10 +210,10 @@
 
             if ($this->shopprinters_model->printReports === '0') return;
             $data = $this->shopreportrequest_model->checkRequests($mac);
-            if ($mac === '00:11:62:0D:D3:E2') {
+            #if ($mac === '00:11:62:0D:D3:E2') {
                 var_dump($data);
                 die('check data');
-            }
+            #}
 
             if (is_null($data)) return;
 

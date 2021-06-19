@@ -84,7 +84,7 @@
                     'LIMIT' => ['1']
                 ]
             ]);
-
+            
             return is_null($data) ? null : reset($data);
         }
 
