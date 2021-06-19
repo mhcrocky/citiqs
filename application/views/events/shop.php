@@ -78,7 +78,7 @@
                     </div>
                 </a>
                 <div style="align-items: end;background: transparent !important;" class="w-100 mt-4 bg-white pr-4 text-center">
-                    <a href="javascript:;" type="button" class="btn btn-info mb-1 show-info" data-toggle="modal"
+                    <a href="javascript:;" style="background: #60a5fa !important;" type="button" class="btn btn-info mb-1 show-info" data-toggle="modal"
                         data-target="#eventModal<?php echo $event['id']; ?>">
                         <?php echo $this->language->tLine('Show Info'); ?>
                     </a>
@@ -100,6 +100,9 @@
                         </div>
                         <div style="min-height: 100px" class="modal-body">
                             <?php echo $event['eventdescript']; ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button style="border-radius: 0px !important; background: #3b82f6;" type="button" class="btn btn-primary" onclick="getTicketsView('<?php echo $event['id']; ?>')" data-dismiss="modal"><?php echo $this->language->tLine('BOOK NOW'); ?></button>
                         </div>
                     </div>
                 </div>
