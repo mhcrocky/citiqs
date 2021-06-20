@@ -117,16 +117,29 @@
 					Vreilander, bedankt voor jouw bestelling.
 					<h5 class="heading mb-35">
 
+						<h5 class="heading mb-35">
+							<a href="https://tiqs.com/alfred/events/shop/87">
+								<div>
+									Boek nu je activiteit
+								</div>
+								<img src="<?php echo $this->baseUrl; ?>assets/home/images/Creatool_logo.png" style="width:350px; margin-left: 30px; min-width: 25px !important;" alt="" />
+							</a>
+						</h5>
+
 						<div>
 						Belangrijk:
 						</div>
-						<ul>
+						<ul style="font-family: Arial;">
 							<li>
-								je drank wordt gebracht naar de tafel.
+
+										je drank wordt gebracht naar de tafel.
+
 							</li>
+							<p></p>
 							<li>
-								wanneer jouw eten klaar is, krijg je een smsje. Je kan dan het eten afhalen bij Emmy’s tortiga (tussen de bar en dj booth).
+								wanneer jouw eten klaar is en of koffie klaar is, krijg je een smsje. Je kan dan het eten afhalen bij Emmy’s tortiga (tussen de bar en dj booth) en je koffie kar onder de tent naast de caravan.
 							</li>
+							<p></p>
 							<li>
 								1 persoon per bubbel doet de bestellingen, gelieve te centraliseren zoveel als mogelijk.
 							</li>
@@ -134,7 +147,7 @@
 
 						Volg ons op de voet via:
 
-						<ul>
+						<ul style="font-family: Arial;">
 							<li>
 								facebook.com/vreiland
 							</li>
