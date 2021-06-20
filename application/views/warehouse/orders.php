@@ -127,6 +127,7 @@
                     <th>Remarks</th>
                     <th>Payment type</th>
                     <th>Confirm</th>
+                    <th>Print status</th>
                 </tr>
             </thead>
             <tbody>
@@ -150,6 +151,7 @@
                     <th>Remarks</th>
                     <th>Payment type</th>
                     <th>Confirm</th>
+                    <th>Print status</th>
                 </tr>
             </tfoot>
         </table>
