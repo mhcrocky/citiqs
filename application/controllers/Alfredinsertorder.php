@@ -371,6 +371,7 @@ class Alfredinsertorder extends BaseControllerWeb
         $post['order']['serviceTypeId'] = $spot['spotTypeId'];
         $post['order']['orderRandomKey'] = $orderRandomKey;
         $post['order']['createdOrder'] = date('Y-m-d H:i:s');
+        $post['order']['vendorId'] = $post['vendorId'];
 
         $this->setAmountAndServiceFee($post);
 
