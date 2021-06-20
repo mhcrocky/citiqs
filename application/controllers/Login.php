@@ -1093,4 +1093,29 @@ class Login extends BaseControllerWeb
 		redirect($redirect);
 		return;
 	}
+
+	public function resendActivationLink(): void
+	{
+		$this->global['pageTitle'] = 'TIQS : RESEND ACTIVATION LINK';
+		$this->loadViews("login/resendActivationLink", $this->global, NULL, NULL);
+	}
+
+	public function requestNewActivationLink(): void
+	{
+		$email = strtolower($this->security->xss_clean($this->input->post('login_email')));
+
+		if (empty($email)) {
+			setFlashData('fail','Email is requried');
+		} elseif (!Validate_data_helper::validateEmail($email)) {
+			setFlashData('fail','Email is not valid');
+		} elseif (!$this->login_model->checkEmailExist($email)) {
+			setFlashData('fail','This email is not registered with us.');
+		} elseif (!$this->user_model->resendActivationLink($email)) {
+			setFlashData('fail','Email did not send. Please try again');
+		} else {
+			setFlashData('success','Activate account email sent');
+		}
+
+		redirect('resend_activation_link');;
+	}
 }

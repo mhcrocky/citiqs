@@ -251,6 +251,7 @@ $route['resetPasswordConfirmUser'] = "login/resetPasswordConfirmUser";
 $route['resetPasswordConfirmUser/(:any)'] = "login/resetPasswordConfirmUser/$1";
 $route['resetPasswordConfirmUser/(:any)/(:any)'] = "login/resetPasswordConfirmUser/$1/$2";
 $route['createPasswordUser'] = "login/createPasswordUser";
+$route['resend_activation_link'] = "login/resendActivationLink";
 
 $route['switchlang/(:any)'] = "languageswitcher/switchLang/$1";
 

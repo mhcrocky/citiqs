@@ -833,9 +833,9 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css" />
     <style>
-    .modal-body {
-        overflow: hidden !important;
-    }
+        .modal-body {
+            overflow: hidden !important;
+        }
     </style>
 <?php } elseif ($this->view === 'scanner/scanner') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/scanner.css" />
@@ -844,4 +844,6 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif ($this->view === 'floorplans/addFloorplan') { ?>
     <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/floorplan/assets/css/main.css" />
+<?php } elseif ($this->view === 'login/resendActivationLink') { ?>
+    <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/home/styles/resend_activation_link.css" />
 <?php } ?>

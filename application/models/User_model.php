@@ -1220,4 +1220,12 @@ class User_model extends CI_Model
 
         return $this->editUser($data, $this->id);
     }
+
+    public function resendActivationLink(string $email): bool
+    {
+        $this->setUniqueValue($email)->setWhereCondtition()->setUser();
+        if (!$this->id) return false;
+        $this->load->helper('email_helper');
+        return Email_helper::sendBuyerCreatePasswordEmail($this->email, $this->code);
+    }
 }

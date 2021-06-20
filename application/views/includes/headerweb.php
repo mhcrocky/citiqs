@@ -1,7 +1,6 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
-<html lang="<?php echo $_SESSION['site_lang']; ?>">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:fb="http://ogp.me/ns/fb#">
+<html lang="<?php echo ($_SESSION['site_lang'] === 'english') ?  'en' : $_SESSION['site_lang']; ?>">
 <head>
     <title><?php echo $pageTitle ? $pageTitle : 'TIQS | SPOT'; ?></title>
 
