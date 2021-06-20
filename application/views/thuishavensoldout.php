@@ -138,7 +138,7 @@
 				<p class="text-content-light" style="color:white; font-size: larger">WE GAAN SNEL AAN DE VOLGENDE TERRAS EDITIE WERKEN!</p>
 				<div class="flex-column align-space">
 					<div align="center">
-						<a href="https://tiqs.com/spot/thuishaven" target="_self" class="button button-orange">AGAIN</a>
+						<a href="https://tiqs.com/alfred/agenda_booking/vreiland" target="_self" class="button button-orange">AGAIN</a>
 					</div>
 				</div>
 			</div>

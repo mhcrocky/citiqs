@@ -85,8 +85,6 @@ class Events extends REST_Controller
 //		echo var_dump($eventid);
 //		echo var_dump($changetimein);
 //		echo var_dump($changetimeout);
-//
-//
 
 //		die();
 

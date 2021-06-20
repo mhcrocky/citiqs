@@ -177,6 +177,8 @@
             $draw->annotation(0, 35 * $h, $paymetnMethod);
             $h++;
 
+
+
             if (!$isMobile) {
                 if ($serviceTypeId === $CI->config->item('local')) {
                     $draw->annotation(0, 35 * $h, "DIT IS GEEN GELDIG BTW TICKET");

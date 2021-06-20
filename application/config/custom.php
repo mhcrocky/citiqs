@@ -233,12 +233,12 @@ $config['paymentPrice'] = [
                 'amount' => 0.25,
             ],
         $config['prePaid'] => [
-                'percent' => 1,
-                'amount' => 0.25,
+                'percent' => 0,
+                'amount' => 0.00,
             ],
         $config['postPaid'] => [
-                'percent' => 1,
-                'amount' => 0.25,
+                'percent' => 0,
+                'amount' => 0.00,
             ]
     ],
     $config['reservations'] => [
@@ -589,4 +589,4 @@ $config['reportPeriods'] = [$config['dayPeriod'],$config['weekPeriod'], $config[
 
 $config['messageToBuyerTags'] = ['{orderId}', '{buyerName}'];
 
-$config['testingIds'] = [417, 43533];
+$config['testingIds'] = [417, 43533, 46244, 59413 ];

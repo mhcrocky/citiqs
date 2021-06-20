@@ -162,7 +162,8 @@
                                 src="<?php echo base_url() . 'assets/home/images/voucher.png'; ?>"
                                 alt="<?php echo $this->language->tLine('voucher');?>"
                             />
-                            <span class="paymentMethodText"><?php #echo $this->language->tline('Use Voucher');?></span>
+<!--                            <span class="paymentMethodText">--><?php //#echo $this->language->tline('Use Voucher');?><!--</span>-->
+							<span class="paymentMethodText">Voucher</span>
                         </a>
                     <?php } ?>
                     <div class="clearfix"></div>
