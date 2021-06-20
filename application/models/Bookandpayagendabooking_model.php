@@ -136,19 +136,10 @@ class   Bookandpayagendabooking_model extends CI_Model
 			if($diff == 0){
 				break;
 			}
-			$insertData = [
-					"agenda_id" => $agenda_id,
-					"email_id" => $result['email_id'],
-					"numberofpersons" => $result['numberofpersons'],
-					"sort_order" => $result['sort_order'],
-					"price" => $result['price'],
-					"descript" => $result['descript'],
-					"soldoutdescript" => $result['soldoutdescript'],
-					"pricingdescript" => $result['pricingdescript'],
-					"feedescript" => $result['feedescript'],
-					"available_items" => $result['available_items'],
-					"image" => $result['image'],
-				];
+
+			$result['agenda_id'] = $agenda_id;
+			unset($result['id']);
+			$insertData = $result;
 			$this->db->insert('tbl_bookandpayspot', $insertData);
 			$this->copy_timeslots($result['id'],$this->db->insert_id());
 			$spots_count++;
@@ -167,15 +158,9 @@ class   Bookandpayagendabooking_model extends CI_Model
 		$insertData = [];
 		$spot_ids = [];
 		foreach ($results as $result) {
-			$insertData[] = [
-					"email_id" => $result['email_id'],
-					"spot_id" => $spot_id,
-					"timeslotdescript" => $result['timeslotdescript'],
-					"available_items" => $result['available_items'],
-					"fromtime" => $result['fromtime'],
-					"totime" => $result['totime'],
-					"price" => $result['price']
-				];
+			$result['spot_id'] = $spot_id;
+			unset($result['id']);
+			array_push($insertData, $result);
 		}
 		return $this->db->insert_batch('tbl_bookandpaytimeslots', $insertData);
 	}

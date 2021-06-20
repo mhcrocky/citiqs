@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:fb="http://ogp.me/ns/fb#">
+<html>
 <head>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/scriptonboard.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/style/styleonboard.css" />

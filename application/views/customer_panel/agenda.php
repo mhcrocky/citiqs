@@ -664,7 +664,10 @@ const templateGlobals = (function() {
                 }
             },
             emailsOptions: function () {
-                let emailsOptions = [];
+                let emailsOptions = [{
+                    value: '',
+                    text: 'None'
+                }];
                 this.emails.forEach((email) => {
                     emailsOptions.push({
                         value: email.id,
@@ -674,7 +677,10 @@ const templateGlobals = (function() {
                 return emailsOptions;
             },
             vouchersOptions: function () {
-                let vouchersOptions = [];
+                let vouchersOptions = [{
+                    value: '',
+                    text: 'None'
+                }];
                 this.vouchers.forEach((voucher) => {
                     vouchersOptions.push({
                         value: voucher.id,

@@ -84,8 +84,10 @@ $activePayments = array_values($activePayments);
                     <?php if (in_array($voucherPaymentText, $activePayments)) { ?>
                         <a href="javascript:void(0)" data-toggle="modal" data-target="#voucher" class="paymentMethod method-card" >
                             <img src="<?php echo $this->baseUrl . 'assets/home/images/voucher.png'; ?>" alt="voucher" >
-                            <span class="paymentMethodText"><?php echo $this->language->tline('Use Voucher');?></span>
-                        </a>
+<!--							<span class="paymentMethodText">--><?php //echo $this->language->tline('Use Voucher');?><!--</span>-->
+							<span class="paymentMethodText">Voucher</span>
+
+						</a>
                     <?php } ?>
 
 

@@ -61,6 +61,7 @@ class Booking_events extends BaseControllerWeb
         }
         
         $tag = $this->input->get('tag') ? $this->input->get('tag') : '0';
+        $ip_address = $this->input->ip_address();
         $sessionData['vendorId'] = $customer->id;
         $sessionData['shortUrl'] = $shortUrl;
         $sessionData['spotId'] = 0;
@@ -71,9 +72,10 @@ class Booking_events extends BaseControllerWeb
         $sessionData['ticketFee'] = 0;
         $sessionData['logoUrl'] = $logoUrl;
         $sessionData['eventId'] = $eventId;
+        $sessionData['ip_address'] = $ip_address;
         
 
-        if(count($orderData) < 1){
+        if(count($orderData) < 1 || $orderData['ip_address'] != $ip_address){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
             $userShortUrl = ($tag != '0') ? base_url() . 'events/shop/' . $shortUrl . '?tag=' . $tag . '&order=' . $orderData->randomKey : base_url() . 'events/shop/' . $shortUrl . '?order=' . $orderData->randomKey;
             $eventUrl = ($tag != '0') ? base_url() . 'events/shop/' . $eventId . '?tag=' . $tag . '&order=' . $orderData->randomKey : base_url() . 'events/shop/' . $eventId . '?order=' . $orderData->randomKey;
@@ -236,6 +238,7 @@ class Booking_events extends BaseControllerWeb
         }
         $ticketType = $ticketInfo->ticketType;
 
+        /*
         $ticket_quantity = intval($ticket['quantity']);
         $ticket_available = intval($ticketInfo->ticketAvailable);
         if($ticket_quantity > $ticket_available){
@@ -248,6 +251,9 @@ class Booking_events extends BaseControllerWeb
             echo json_encode($response);
             return ;
         }
+
+        */
+
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,
@@ -397,6 +403,9 @@ class Booking_events extends BaseControllerWeb
         if(count($orderData) < 1){
             redirect(base_url());
         }
+
+        $buyerLog = json_encode($buyerInfo);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "Buyer info: $buyerLog");
         
         
         $tickets = $orderData['tickets'];
@@ -556,6 +565,9 @@ class Booking_events extends BaseControllerWeb
         }
 
         //$this->loadViews('events/selectpayment', $this->global, $data, null, 'headerWarehousePublic');
+        $orderLog = json_encode($orderData);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "Order Data: $orderLog");
+
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
 
@@ -606,7 +618,7 @@ class Booking_events extends BaseControllerWeb
         foreach ($reservations as $key => $reservation) {
             $arrArguments['statsData']['extra' . ($key + 1)] = $reservation->reservationId;
             $arrArguments['saleData']['orderData'][$key]['productId'] = $reservation->reservationId;
-            $arrArguments['saleData']['orderData'][$key]['description'] = $reservation->ticketDescription;
+            $arrArguments['saleData']['orderData'][$key]['description'] = substr($reservation->ticketDescription, 0, 31);
             $arrArguments['saleData']['orderData'][$key]['productType'] = 'HANDLIUNG';
             $arrArguments['saleData']['orderData'][$key]['price'] = $reservation->price * 100;
             $arrArguments['saleData']['orderData'][$key]['quantity'] = 1;
@@ -615,9 +627,12 @@ class Booking_events extends BaseControllerWeb
 
         }
 
+        $arrArgLog = json_encode($arrArguments);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "paymentType: $paymentType; paymentOptionSubId: $paymentOptionSubId;arrArguments: $arrArgLog");
+
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
-                
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/event_payment.txt', $strUrl);
         // if ($orderData['vendorId'] === 49456) {
         //     $file = FCPATH . 'application/tiqs_logs/payment_logs.txt';
         //     Utility_helper::logMessage($file, serialize($arrArguments));
@@ -661,7 +676,9 @@ class Booking_events extends BaseControllerWeb
 	{
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
         $result = json_decode($strResult);
+        //Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
 
         if ($result->request->result == '1') {
 			//Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'updating transactionid');
