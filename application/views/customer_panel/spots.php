@@ -17,6 +17,8 @@ li {
 
 }
 
+.ui-draggable-handle { -ms-touch-action: none; touch-action: none; } 
+
 </style>
 
 <div class="modal fade" id="emailTemplateModal" tabindex="-1" role="dialog" aria-labelledby="emailTemplateModalLabel"
@@ -336,7 +338,7 @@ li {
 
 
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-touch-punch-touch_fix@0.2.5/jquery.ui.touch-punch.min.js"></script>
 
     <script>
     (function() {
@@ -833,10 +835,18 @@ function updateEmailTemplate(id){
 
 <?php if(isset($agendaId)): ?>
 <script>
+
+$(document).ready(function(){
+    var x = window.matchMedia("(max-width: 770px)");
+    checkIfDisableSortable(x);
+});
+
+
 $( "table" ).sortable({
     items: "tr:not(.tab_head)",
     cursor: 'move',
     opacity: 0.6,
+    scroll: true,
     update: function() {
         var spots = [];
         $('tr:not(.tab_head)').each(function(index,element) {
@@ -859,6 +869,14 @@ $( "table" ).sortable({
         });
     }
   });
+
+function checkIfDisableSortable(x) {
+  if (x.matches) { // If media query matches
+    $( "table" ).sortable("disable");
+  }
+
+  return ;
+}
 
 </script>
 <?php endif; ?>

@@ -28,6 +28,9 @@
 <script>
 $('.col-md-4').css('visibility', 'hidden');
     $(document).ready(function(){
+        var x = window.matchMedia("(max-width: 770px)");
+        checkIfDisableSortable(x);
+
         //$('#saleDrillDown').addClass('ui-sortable');
         /*
         var sort = '';
@@ -136,6 +139,15 @@ $('.col-md-4').css('visibility', 'hidden');
         });
 
     });
+
+function checkIfDisableSortable(x) {
+  if (x.matches) { // If media query matches
+    $('.main-content-inner').sortable("disable");
+    $('.row').sortable("disable");
+  }
+
+  return ;
+}
 
     
 </script>
