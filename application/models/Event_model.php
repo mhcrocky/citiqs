@@ -1314,46 +1314,57 @@ class Event_model extends CI_Model {
 		
 	}
 
-	public function get_tags_ticket_sold_stats($vendorId, $eventId) : array
+	public function get_tags_ticket_sold_stats($vendorId, $eventId)
 	{
-		$query = $this->db->query("SELECT count(tbl_bookandpay.id) as sold_tickets, DATE(reservationtime) as reservationdate, tbl_event_tickets.ticketDescription 
+		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, COUNT(tbl_bookandpay.id) as sold_tickets, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
-		GROUP BY reservationdate, tbl_event_tickets.id");
+		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		GROUP BY tbl_bookandpay.tag");
 
 		if($query->num_rows() < 1) return [];
 
 		$results = $query->result_array();
+		
 		$newData = [];
-		$tickets = [];
+		$tags = [];
 
 		foreach($results as $result){
-			$tickets[] = $result['ticketDescription'];
+			$tags[] = $result['tag'];
 		}
 
-		$tickets = array_unique($tickets);
+		$tags = array_unique($tags);
 
+		
 		foreach($results as $key => $result){
 			$date = $result['reservationdate'];
-			$ticketDescription = $result['ticketDescription'];
+			$tag = $result['tag'];
 			
 			$exists = isset($newData[$date]);
 
-			if(!$exists){
-				$newData[$date] = [
-					"date" => $result['reservationdate']
-				];
-				
-				foreach($tickets as $ticket){
-					if(!isset($newData[$date][$ticket])) { 
-					    $newData[$date][$ticket] = 0; 
+			$newData[$date] = [
+				"date" => $result['reservationdate']
+			];
+
+			
+			
+			$newData[$date][$tag] = (int) $result['sold_tickets'];
+
+			$tags_stats = [];
+
+			foreach($newData as $key => $data){
+				foreach($tags as $key => $tag){
+					
+					if(!isset($data[$tag])) { 
+					    $data[$tag] = 0;
 					    continue;
 				    }
 			    }
-		    }
-			
-			$newData[$date][$ticketDescription] = (int) $result['sold_tickets'];
+
+				$tags_stats[] = $data;
+			}
+
 
 			
 		}
@@ -1361,50 +1372,62 @@ class Event_model extends CI_Model {
 
 		//$newData['tickets'] = $tickets;
 
-		return $newData;
+		return $tags_stats;
 
 	} 
 
 	public function get_tags_amount_stats($vendorId, $eventId) : array
 	{
-		$query = $this->db->query("SELECT SUM(tbl_bookandpay.price) as amount, DATE(reservationtime) as reservationdate, tbl_event_tickets.ticketDescription 
+		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, SUM(tbl_bookandpay.price) as amount, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
-		GROUP BY reservationdate, tbl_event_tickets.id");
+		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		GROUP BY tbl_bookandpay.tag");
 
 		if($query->num_rows() < 1) return [];
 
 		$results = $query->result_array();
+		
 		$newData = [];
-		$tickets = [];
+		$tags = [];
 
 		foreach($results as $result){
-			$tickets[] = $result['ticketDescription'];
+			$tags[] = $result['tag'];
 		}
 
-		$tickets = array_unique($tickets);
+		$tags = array_unique($tags);
 
+		
 		foreach($results as $key => $result){
 			$date = $result['reservationdate'];
-			$ticketDescription = $result['ticketDescription'];
+			$tag = $result['tag'];
 			
 			$exists = isset($newData[$date]);
 
-			if(!$exists){
-				$newData[$date] = [
-					"date" => $result['reservationdate']
-				];
-				
-				foreach($tickets as $ticket){
-					if(!isset($newData[$date][$ticket])) { 
-					    $newData[$date][$ticket] = 0.00; 
+			$newData[$date] = [
+				"date" => $result['reservationdate']
+			];
+
+			
+			
+			$newData[$date][$tag] = floatval($result['amount']);
+
+			$tags_stats = [];
+
+			foreach($newData as $key => $data){
+				foreach($tags as $key => $tag){
+					
+					if(!isset($data[$tag])) { 
+					    $data[$tag] = 0;
 					    continue;
 				    }
 			    }
-		    }
-			
-			$newData[$date][$ticketDescription] =  number_format(floatval($result['amount']), 2);
+
+				$tags_stats[] = $data;
+			}
+
+
 
 			
 		}
@@ -1412,7 +1435,7 @@ class Event_model extends CI_Model {
 
 		//$newData['tickets'] = $tickets;
 
-		return $newData;
+		return $tags_stats;
 
 	} 
 
