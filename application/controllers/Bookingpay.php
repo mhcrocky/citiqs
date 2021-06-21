@@ -724,7 +724,7 @@ class Bookingpay extends BaseControllerWeb
             if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
                 // need to do something with the facebook pixel.
                 $redirect = base_url() . 'reservation_success?orderid=' . $get['orderId'];
-            } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
+            } elseif (in_array($get['orderStatusId'], $this->config->item('payNlPending'))) {
                 $redirect = base_url() . 'reservation_pending?orderid=' . $get['orderId'];
             } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
                 $redirect = base_url() . 'reservation_authorised?orderid=' . $get['orderId'];
