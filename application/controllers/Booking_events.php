@@ -131,6 +131,11 @@ class Booking_events extends BaseControllerWeb
                 ->update();
         }
 
+
+        if(is_array($events) && count($events) < 1){
+            $data['closedShopMessage'] = $data['shopsettings']->closedShopMessage;
+        }
+
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
