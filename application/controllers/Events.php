@@ -1176,7 +1176,8 @@ class Events extends BaseControllerWeb
 
     }
 
-    public function get_tags_stats($eventId = false){
+    public function get_tags_stats($eventId = false)
+    {
 
         $issetEventId = ($eventId) ? true : false;
         $eventId = ($eventId) ? $eventId : $this->input->post('eventId');
@@ -1192,35 +1193,35 @@ class Events extends BaseControllerWeb
                     "content" => function ($params, $scope) {
                         global $eventId;
 
-                        $tickets = $this->event_model->get_tags_ticket_sold_stats($this->vendor_id, $eventId);
+                        $tags = $this->event_model->get_tags_ticket_sold_stats($this->vendor_id, $eventId);
 
                         $columnArr['date'] = [
                             "type" => "string",
                             "label" => "Date",
                         ];
 
-                        foreach($tickets as $ticket){
-                            $keys = array_keys($ticket);
+                        foreach($tags as $tag){
+                            $keys = array_keys($tag);
                             foreach($keys as $key){
                                 if($key == 'date') { continue; }
-                                $ticketDescription = $key;
-                                $columnArr[$ticketDescription] = [
-                                    "label" => $ticketDescription
+                                $tag = $key;
+                                $columnArr[$tag] = [
+                                    "label" => $tag
                                 ];
                             }
                             
                         }
 
-                        $tickets = array_values($tickets);
+                        $tags = array_values($tags);
 
 
                         
                         ColumnChart::create(array(
-                            "dataSource" => $tickets, 
+                            "dataSource" => $tags, 
                             "columns" => $columnArr,
                             "clientEvents" => array(
                                 "itemSelect" => "function(params){
-                                    saleDrillDown.next({date:params.selectedRow[0]});
+                                    saleDrillDown.next({eventId:" . $eventId . "});
                                 }",
                             ),
                             "options"=>array(
@@ -1235,22 +1236,21 @@ class Events extends BaseControllerWeb
                         return "Amount";
                     },
                     "content" => function ($params, $scope) {
-                        global $eventId;
 
-                        $tickets = $this->event_model->get_tags_amount_stats($this->vendor_id, $eventId);
+                        $tags = $this->event_model->get_tags_amount_stats($this->vendor_id, $params['eventId']);
 
                         $columnArr['date'] = [
                             "type" => "string",
                             "label" => "Date",
                         ];
 
-                        foreach($tickets as $ticket){
-                            $keys = array_keys($ticket);
+                        foreach($tags as $tag){
+                            $keys = array_keys($tag);
                             foreach($keys as $key){
                                 if($key == 'date') { continue; }
-                                $ticketDescription = $key;
-                                $columnArr[$ticketDescription] = [
-                                    "label" => $ticketDescription,
+                                $tag = $key;
+                                $columnArr[$tag] = [
+                                    "label" => $tag,
                                     "type"=>"number",
                                     "prefix"=>"€"
                                 ];
@@ -1258,11 +1258,9 @@ class Events extends BaseControllerWeb
                             
                         }
 
-                        $tickets = array_values($tickets);
-
 
                         ColumnChart::create(array(
-                            "dataSource" => $tickets, 
+                            "dataSource" => $tags, 
                             "columns" => $columnArr,
                             "clientEvents" => array(
                                 "itemSelect" => "function(params){
