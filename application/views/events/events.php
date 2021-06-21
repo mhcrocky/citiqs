@@ -272,6 +272,15 @@
                             <input type="text" id="facebookPixelId" name="facebookPixelId" class="form-control">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label style="margin-bottom: auto;margin-top: auto;" for="facebookPixelId"
+                            class="col-md-4 col-form-label text-md-left">
+                            Closed Shop Message
+                        </label>
+                        <div class="col-md-6">
+                            <input type="text" id="closedShopMessage" name="closedShopMessage" class="form-control">
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label style="margin-bottom: auto;margin-top: auto;" for="facebookPixelId"
@@ -433,6 +442,7 @@
         $('#googleAdwordsConversionLabel').val(shopsettings.googleAdwordsConversionLabel);
         $('#googleTagManagerCode').val(shopsettings.googleTagManagerCode);
         $('#facebookPixelId').val(shopsettings.facebookPixelId);
+        $('#closedShopMessage').val(shopsettings.closedShopMessage);
     }
 }())
 </script>

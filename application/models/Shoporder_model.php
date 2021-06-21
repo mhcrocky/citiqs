@@ -10,6 +10,7 @@
     Class Shoporder_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
+        public $vendorId;
         public $buyerId;
         public $amount;
         public $serviceFee;
@@ -57,6 +58,7 @@
                 || $property === 'buyerId'
                 || $property === 'countSentMessages'
                 || $property === 'invoiceId'
+                || $property === 'vendorId'
             ) {
                 $value = intval($value);
             }
@@ -88,6 +90,7 @@
         public function updateValidate(array $data): bool
         {
             if (!count($data)) return false;
+            if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
             if (isset($data['buyerId']) && !Validate_data_helper::validateInteger($data['buyerId'])) return false;
             if (isset($data['amount']) && !Validate_data_helper::validateFloat($data['amount'])) return false;
             if (isset($data['serviceFee']) && !Validate_data_helper::validateFloat($data['serviceFee'])) return false;
@@ -195,6 +198,7 @@
                     $this->table . '.paymentType AS paymentType',
                     $this->table . '.serviceTypeId AS serviceTypeId',
                     $this->table . '.confirm AS confirmStatus',
+                    $this->table . '.printStatus AS printStatus',
                     'buyer.id AS buyerId',
                     'buyer.email AS buyerEmail',
                     'buyer.username AS buyerUserName',
@@ -946,6 +950,7 @@
                 array( 'db' => 'buyerZipcode',          'dt' => 17),
                 array( 'db' => 'buyerAddress',          'dt' => 18),
                 array( 'db' => 'confirmStatus',         'dt' => 19),
+                array( 'db' => 'printStatus',           'dt' => 20),
             );
 
             return Jquerydatatable_helper::data_output($columns, $return);

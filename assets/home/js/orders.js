@@ -228,6 +228,13 @@ function populateTable(data) {
                     },
                     "width": "10%"
                 },
+                {
+                    "targets": 16,
+                    "data": function (row, type, val, meta) {
+                        return (row[20] === '1') ? 'Printed' : 'Not printed';
+                    },
+                    "width": "10%"
+                },
             ],
             initComplete: function () {
                 this.api().columns().every( function () {

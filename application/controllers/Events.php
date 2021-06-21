@@ -870,7 +870,7 @@ class Events extends BaseControllerWeb
 									"label" => "Tickets",
 									"id" => "Tickets",
                                 ),
-							),
+							), 
 							"class"=>array(
 								"button"=>"bg-warning"
 							),
@@ -1159,6 +1159,131 @@ class Events extends BaseControllerWeb
         $data['events'] = $events;
  
         $this->loadViews('events/tags_graphs', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
+
+    }
+
+    public function tags_stats()
+	{
+        $this->global['pageTitle'] = 'TIQS: Tags Graphs';
+        $reservations = $this->event_model->get_reservations_stats_by_tags($this->vendor_id);
+        $events = $this->event_model->get_all_events($this->vendor_id);
+        $data['events'] = $events;
+
+        $data['graph'] = isset($events[0]) ? $this->get_tags_stats($events[0]['id']) : [];
+
+ 
+        $this->loadViews('events/tags_stats', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
+
+    }
+
+    public function get_tags_stats($eventId = false)
+    {
+
+        $issetEventId = ($eventId) ? true : false;
+        $eventId = ($eventId) ? $eventId : $this->input->post('eventId');
+
+        $GLOBALS['eventId'] = $eventId;
+
+        $graph = DrillDown::create(array(
+            "name" => "saleDrillDown",
+            "title" => "Tags Stats",
+            "levels" => array(
+                array(
+                    "title" => "Tickets Sold",
+                    "content" => function ($params, $scope) {
+                        global $eventId;
+
+                        $tags = $this->event_model->get_tags_ticket_sold_stats($this->vendor_id, $eventId);
+
+                        $columnArr['date'] = [
+                            "type" => "string",
+                            "label" => "Date",
+                        ];
+
+                        foreach($tags as $tag){
+                            $keys = array_keys($tag);
+                            foreach($keys as $key){
+                                if($key == 'date') { continue; }
+                                $tag = $key;
+                                $columnArr[$tag] = [
+                                    "label" => $tag
+                                ];
+                            }
+                            
+                        }
+
+                        $tags = array_values($tags);
+
+
+                        
+                        ColumnChart::create(array(
+                            "dataSource" => $tags, 
+                            "columns" => $columnArr,
+                            "clientEvents" => array(
+                                "itemSelect" => "function(params){
+                                    saleDrillDown.next({eventId:" . $eventId . "});
+                                }",
+                            ),
+                            "options"=>array(
+                                "isStacked"=>true
+                            )
+                        ));
+                    }
+                ),
+
+                array(
+                    "title" => function ($params, $scope) {
+                        return "Amount";
+                    },
+                    "content" => function ($params, $scope) {
+
+                        $tags = $this->event_model->get_tags_amount_stats($this->vendor_id, $params['eventId']);
+
+                        $tags = array_values($tags);
+
+                        $columnArr['date'] = [
+                            "type" => "string",
+                            "label" => "Date",
+                        ];
+
+                        foreach($tags as $tag){
+                            $keys = array_keys($tag);
+                            foreach($keys as $key){
+                                if($key == 'date') { continue; }
+                                $tag = $key;
+                                $columnArr[$tag] = [
+                                    "label" => $tag,
+                                    "type"=>"number",
+                                    "prefix"=>"€"
+                                ];
+                            }
+                            
+                        }
+
+
+                        ColumnChart::create(array(
+                            "dataSource" => $tags, 
+                            "columns" => $columnArr,
+                            "clientEvents" => array(
+                                "itemSelect" => "function(params){
+                                    saleDrillDown.next({date:params.selectedRow[0]});
+                                }",
+                            ),
+                            "options"=>array(
+                                "isStacked"=>true
+                            )
+                           
+                        ));
+                    }
+                ),
+
+            ),
+            "themeBase" => "bs4",
+        ), true);
+        if($issetEventId){
+            return $graph;
+        }
+        echo json_encode($graph);
 
     }
 

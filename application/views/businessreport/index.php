@@ -720,7 +720,13 @@ window.onload = function() {
 
     });
 
+
 };
+
+$(document).ready(function(){
+    var x = window.matchMedia("(max-width: 770px)");
+    checkIfDisableSortable(x);
+});
 
 
 
@@ -856,4 +862,15 @@ function drawChart() {
 
 
 }
+
+function checkIfDisableSortable(x) {
+  if (x.matches) { // If media query matches
+    $('.main-content-inner').sortable("disable");
+    $('.row').sortable("disable");
+  }
+
+  return ;
+}
+
+
 </script>

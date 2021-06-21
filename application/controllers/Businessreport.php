@@ -389,3 +389,4 @@ class Businessreport extends BaseControllerWeb
 		$this->loadViews("businessreport/paymentMethods", $this->global, $data, 'footerbusiness', 'headerbusiness');
 	}
 }
+

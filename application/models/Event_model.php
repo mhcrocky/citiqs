@@ -1080,7 +1080,7 @@ class Event_model extends CI_Model {
 
 	public function get_shopsettings($vendorId)
 	{
-		$this->db->select('labels, showAddress, showCountry, showZipcode, showMobileNumber, showAge, googleAnalyticsCode, googleAdwordsConversionId, googleAdwordsConversionLabel, googleTagManagerCode, facebookPixelId, termsofuseFile');
+		$this->db->select('labels, showAddress, showCountry, showZipcode, showMobileNumber, showAge, googleAnalyticsCode, googleAdwordsConversionId, googleAdwordsConversionLabel, googleTagManagerCode, facebookPixelId, termsofuseFile, closedShopMessage');
 		$this->db->where('vendorId', $vendorId);
 		$query = $this->db->get('tbl_event_shop');
 		return ($this->db->affected_rows()) ? $query->first_row() : null;
@@ -1313,6 +1313,132 @@ class Event_model extends CI_Model {
 		return true;
 		
 	}
+
+	public function get_tags_ticket_sold_stats($vendorId, $eventId)
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, COUNT(tbl_bookandpay.id) as sold_tickets, tbl_event_shop_tags.tag
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		GROUP BY reservationdate, tbl_event_shop_tags.id");
+
+		if($query->num_rows() < 1) return [];
+
+		$results = $query->result_array();
+		
+		$newData = [];
+		$tags = [];
+
+		foreach($results as $result){
+			$tags[] = $result['tag'];
+		}
+
+		$tags = array_unique($tags);
+
+		
+		foreach($results as $key => $result){
+			$date = $result['reservationdate'];
+			$tag = $result['tag'];
+			
+			$exists = isset($newData[$date]);
+
+			if(!$exists) {
+
+			
+				$newData[$date] = [
+					"date" => $result['reservationdate']
+				];
+			} 
+				$newData[$date][$tag] = floatval($result['sold_tickets']);
+	
+				foreach($tags as $key => $tag){
+						
+					if(!isset($newData[$date][$tag])) { 
+						$newData[$date] = array_merge($newData[$date], array("$tag" => 0));
+						//$data[$tag] = 0;
+						//continue;
+					}
+				}
+	
+				
+				
+				
+	
+	
+	
+				
+			}
+	
+	
+			//$newData['tickets'] = $tickets;
+	
+			return $newData;
+
+	} 
+
+	public function get_tags_amount_stats($vendorId, $eventId) : array
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, SUM(tbl_bookandpay.price) as amount, tbl_event_shop_tags.tag
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		GROUP BY reservationdate, tbl_event_shop_tags.id");
+
+		if($query->num_rows() < 1) return [];
+
+		$results = $query->result_array();
+		
+		$newData = [];
+		$tags = [];
+
+		foreach($results as $result){
+			$tags[] = $result['tag'];
+		}
+
+		$tags = array_unique($tags);
+
+		
+		foreach($results as $key => $result){
+			$date = $result['reservationdate'];
+			$tag = $result['tag'];
+			
+			$exists = isset($newData[$date]);
+
+			if(!$exists) {
+
+			
+			$newData[$date] = [
+				"date" => $result['reservationdate']
+			];
+		} 
+			$newData[$date][$tag] = floatval($result['amount']);
+
+			foreach($tags as $key => $tag){
+					
+				if(!isset($newData[$date][$tag])) { 
+					$newData[$date] = array_merge($newData[$date], array("$tag" => 0));
+					//$data[$tag] = 0;
+					//continue;
+				}
+			}
+
+			
+			
+			
+
+
+
+			
+		}
+
+
+		//$newData['tickets'] = $tickets;
+
+		return $newData;
+
+	} 
 
 	private function generateNewVoucher() : string
 	{

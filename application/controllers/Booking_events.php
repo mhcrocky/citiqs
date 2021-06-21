@@ -131,6 +131,11 @@ class Booking_events extends BaseControllerWeb
                 ->update();
         }
 
+
+        if(is_array($events) && count($events) < 1){
+            $data['closedShopMessage'] = $data['shopsettings']->closedShopMessage;
+        }
+
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
     }
@@ -913,7 +918,7 @@ class Booking_events extends BaseControllerWeb
         if ($get['orderStatusId'] === $this->config->item('payNlSuccess')) {
             // need to do something with the facebook pixel.
             $redirect = base_url() . 'ticketing_success?orderid=' . $get['orderId'];
-        } elseif ($get['orderStatusId'] === $this->config->item('payNlPending')) {
+        } elseif (in_array($get['orderStatusId'], $this->config->item('payNlPending'))) {
             $redirect = base_url() . 'ticketing_pending?orderid=' . $get['orderId'];
         } elseif ($get['orderStatusId'] === $this->config->item('payNlAuthorised')) {
             $redirect = base_url() . 'ticketing_authorised?orderid=' . $get['orderId'];
@@ -925,7 +930,7 @@ class Booking_events extends BaseControllerWeb
             $redirect = base_url() . 'ticketing_denied?orderid=' . $get['orderId'];
         } elseif ($get['orderStatusId'] === $this->config->item('payNlPinCanceled')) {
             $redirect = base_url() . 'ticketing_pin_canceled?orderid=' . $get['orderId'];
-        }
+        } 
 
         redirect($redirect);
 
