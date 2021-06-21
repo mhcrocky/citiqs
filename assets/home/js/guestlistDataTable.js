@@ -10,6 +10,17 @@ $(document).ready(function () {
       [5, 10, 20, 50, 100, 200, 500, "All"],
     ],
     pageLength: 5,
+    dom: "Blfrtip",
+    buttons: [
+      {
+        extend: "excelHtml5",
+        autoFilter: true,
+        footer: true,
+        text: '<input type="button" value="Export to Excel" class="btn btn-success btn-export"><span class="input-group-addon input-group-export pl-2 pr-2 mb-3"><i style="color: #fff;font-size: 18px;" class="fa fa-file-text-o"></i></span>',
+        className: "input-group mb-4",
+        sheetName: "Exported data",
+      },
+    ],
     ajax: {
       type: "get",
       url: globalVariables.baseUrl + "events/get_guestlist/"+eventId,
