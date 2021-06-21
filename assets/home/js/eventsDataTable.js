@@ -275,6 +275,7 @@ function saveShopSettings() {
         formData.append('googleAdwordsConversionLabel', $('#googleAdwordsConversionLabel').val());
         formData.append('googleTagManagerCode', $('#googleTagManagerCode').val());
         formData.append('facebookPixelId', $('#facebookPixelId').val());
+        formData.append('closedShopMessage', $('#closedShopMessage').val());
 
         $.ajax({
             url: globalVariables.baseUrl + "events/save_shopsettings",
