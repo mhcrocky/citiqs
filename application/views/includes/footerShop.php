@@ -205,7 +205,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer checkout-modal-footer">
                 <div class="checkout-modal-sum">
                     <h4 class='mb-0 total'>TOTAL:
                         <span class='ml-2 color-secondary font-weight-bold totalBasket'>
