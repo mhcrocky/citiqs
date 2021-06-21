@@ -1239,6 +1239,8 @@ class Events extends BaseControllerWeb
 
                         $tags = $this->event_model->get_tags_amount_stats($this->vendor_id, $params['eventId']);
 
+                        $tags = array_values($tags);
+
                         $columnArr['date'] = [
                             "type" => "string",
                             "label" => "Date",
