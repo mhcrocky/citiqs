@@ -1321,7 +1321,7 @@ class Event_model extends CI_Model {
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
 		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
-		GROUP BY tbl_bookandpay.tag");
+		GROUP BY reservationdate, tbl_event_shop_tags.id");
 
 		if($query->num_rows() < 1) return [];
 
@@ -1343,36 +1343,37 @@ class Event_model extends CI_Model {
 			
 			$exists = isset($newData[$date]);
 
-			$newData[$date] = [
-				"date" => $result['reservationdate']
-			];
+			if(!$exists) {
 
 			
-			
-			$newData[$date][$tag] = (int) $result['sold_tickets'];
-
-			$tags_stats = [];
-
-			foreach($newData as $key => $data){
+				$newData[$date] = [
+					"date" => $result['reservationdate']
+				];
+			} 
+				$newData[$date][$tag] = floatval($result['sold_tickets']);
+	
 				foreach($tags as $key => $tag){
-					
-					if(!isset($data[$tag])) { 
-					    $data[$tag] = 0;
-					    continue;
-				    }
-			    }
-
-				$tags_stats[] = $data;
+						
+					if(!isset($newData[$date][$tag])) { 
+						$newData[$date] = array_merge($newData[$date], array("$tag" => 0));
+						//$data[$tag] = 0;
+						//continue;
+					}
+				}
+	
+				
+				
+				
+	
+	
+	
+				
 			}
-
-
-			
-		}
-
-
-		//$newData['tickets'] = $tickets;
-
-		return $tags_stats;
+	
+	
+			//$newData['tickets'] = $tickets;
+	
+			return $newData;
 
 	} 
 
@@ -1383,7 +1384,7 @@ class Event_model extends CI_Model {
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
 		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
-		GROUP BY tbl_bookandpay.tag");
+		GROUP BY reservationdate, tbl_event_shop_tags.id");
 
 		if($query->num_rows() < 1) return [];
 
@@ -1405,27 +1406,27 @@ class Event_model extends CI_Model {
 			
 			$exists = isset($newData[$date]);
 
+			if(!$exists) {
+
+			
 			$newData[$date] = [
 				"date" => $result['reservationdate']
 			];
-
-			
-			
+		} 
 			$newData[$date][$tag] = floatval($result['amount']);
 
-			$tags_stats = [];
-
-			foreach($newData as $key => $data){
-				foreach($tags as $key => $tag){
+			foreach($tags as $key => $tag){
 					
-					if(!isset($data[$tag])) { 
-					    $data[$tag] = 0;
-					    continue;
-				    }
-			    }
-
-				$tags_stats[] = $data;
+				if(!isset($newData[$date][$tag])) { 
+					$newData[$date] = array_merge($newData[$date], array("$tag" => 0));
+					//$data[$tag] = 0;
+					//continue;
+				}
 			}
+
+			
+			
+			
 
 
 
@@ -1435,7 +1436,7 @@ class Event_model extends CI_Model {
 
 		//$newData['tickets'] = $tickets;
 
-		return $tags_stats;
+		return $newData;
 
 	} 
 
