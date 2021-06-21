@@ -1314,6 +1314,108 @@ class Event_model extends CI_Model {
 		
 	}
 
+	public function get_tags_ticket_sold_stats($vendorId, $eventId) : array
+	{
+		$query = $this->db->query("SELECT count(tbl_bookandpay.id) as sold_tickets, DATE(reservationtime) as reservationdate, tbl_event_tickets.ticketDescription 
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
+		GROUP BY reservationdate, tbl_event_tickets.id");
+
+		if($query->num_rows() < 1) return [];
+
+		$results = $query->result_array();
+		$newData = [];
+		$tickets = [];
+
+		foreach($results as $result){
+			$tickets[] = $result['ticketDescription'];
+		}
+
+		$tickets = array_unique($tickets);
+
+		foreach($results as $key => $result){
+			$date = $result['reservationdate'];
+			$ticketDescription = $result['ticketDescription'];
+			
+			$exists = isset($newData[$date]);
+
+			if(!$exists){
+				$newData[$date] = [
+					"date" => $result['reservationdate']
+				];
+				
+				foreach($tickets as $ticket){
+					if(!isset($newData[$date][$ticket])) { 
+					    $newData[$date][$ticket] = 0; 
+					    continue;
+				    }
+			    }
+		    }
+			
+			$newData[$date][$ticketDescription] = (int) $result['sold_tickets'];
+
+			
+		}
+
+
+		//$newData['tickets'] = $tickets;
+
+		return $newData;
+
+	} 
+
+	public function get_tags_amount_stats($vendorId, $eventId) : array
+	{
+		$query = $this->db->query("SELECT SUM(tbl_bookandpay.price) as amount, DATE(reservationtime) as reservationdate, tbl_event_tickets.ticketDescription 
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
+		GROUP BY reservationdate, tbl_event_tickets.id");
+
+		if($query->num_rows() < 1) return [];
+
+		$results = $query->result_array();
+		$newData = [];
+		$tickets = [];
+
+		foreach($results as $result){
+			$tickets[] = $result['ticketDescription'];
+		}
+
+		$tickets = array_unique($tickets);
+
+		foreach($results as $key => $result){
+			$date = $result['reservationdate'];
+			$ticketDescription = $result['ticketDescription'];
+			
+			$exists = isset($newData[$date]);
+
+			if(!$exists){
+				$newData[$date] = [
+					"date" => $result['reservationdate']
+				];
+				
+				foreach($tickets as $ticket){
+					if(!isset($newData[$date][$ticket])) { 
+					    $newData[$date][$ticket] = 0.00; 
+					    continue;
+				    }
+			    }
+		    }
+			
+			$newData[$date][$ticketDescription] =  number_format(floatval($result['amount']), 2);
+
+			
+		}
+
+
+		//$newData['tickets'] = $tickets;
+
+		return $newData;
+
+	} 
+
 	private function generateNewVoucher() : string
 	{
 		$set = '3456789ABCDEFGHJKLMNPQRSTVWXY';
