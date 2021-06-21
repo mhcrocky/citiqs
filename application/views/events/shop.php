@@ -9,7 +9,19 @@
 <?php endif; ?>
 
 <input type="hidden" id="shop" value="shop">
-<section id="main-content" class='hero-section position-relative'>
+
+<?php if(isset($closedShopMessage)):?> 
+
+<div style="height: calc(100% - 330px)" class="container d-flex align-items-center justify-content-center">
+<?php echo $closedShopMessage; ?>
+</div>
+
+
+<?php endif; ?>
+
+
+
+<section id="main-content" class='hero-section position-relative' <?php if(isset($closedShopMessage)){?> style="display:none" <?php } ?> >
     <div <?php if(isset($events[0])) { ?> style="clip-path: none !important;width: 100%;max-width: 65%; height: auto !important" <?php } ?>
         class="d-none d-md-flex px-0 hero__background">
         <?php if(isset($events[0]) && $events[0]['backgroundImage'] != ''): ?>
@@ -21,7 +33,7 @@
     </div>
 
     <!-- end col -->
-    <div class="container">
+    <div class="container"  >
         <!--        <div class="row">-->
         <!--            <div class="col-12 col-md-6">-->
         <!--                <h1 id="event-title" class="event-title">Our Events</h1>-->
