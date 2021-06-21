@@ -324,14 +324,17 @@
 
         private function printOrder(): void
         {
-            if ($this->printOnlyReceipt) return;
-
             $order = $this->shoporder_model->fetchOrdersForPrint($this->macToFetchOrder, $this->printTimeConstraint);
-
             if (!$order) exit();
 
             $order = reset($order);
             $orderExtendedIds = explode(',', $order['orderExtendedIds']);
+
+            if ($this->printOnlyReceipt && $this->isCashpayment($order)) {
+                //update order printStatus so that printer can print receipt
+                $this->doFinalUpdates($order, $orderExtendedIds);
+                return;
+            }
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
             $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
@@ -367,10 +370,6 @@
         }
 
 
-
-
-        // OLD 
-
         private function isCashpayment(array $order): bool
         {
             if (
@@ -384,6 +383,8 @@
             }
             return false;
         }
+
+        // OLD
 
         private function handlePrePostPaid(array $order, bool $fodUser): void
         {
