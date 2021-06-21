@@ -1080,7 +1080,7 @@ class Event_model extends CI_Model {
 
 	public function get_shopsettings($vendorId)
 	{
-		$this->db->select('labels, showAddress, showCountry, showZipcode, showMobileNumber, showAge, googleAnalyticsCode, googleAdwordsConversionId, googleAdwordsConversionLabel, googleTagManagerCode, facebookPixelId, termsofuseFile');
+		$this->db->select('labels, showAddress, showCountry, showZipcode, showMobileNumber, showAge, googleAnalyticsCode, googleAdwordsConversionId, googleAdwordsConversionLabel, googleTagManagerCode, facebookPixelId, termsofuseFile, closedShopMessage');
 		$this->db->where('vendorId', $vendorId);
 		$query = $this->db->get('tbl_event_shop');
 		return ($this->db->affected_rows()) ? $query->first_row() : null;
