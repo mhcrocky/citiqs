@@ -1169,7 +1169,7 @@ class Events extends BaseControllerWeb
         $events = $this->event_model->get_all_events($this->vendor_id);
         $data['events'] = $events;
 
-        $data['graph'] = $this->get_tags_stats('10');
+        $data['graph'] = isset($events[0]) ? $this->get_tags_stats($events[0]['id']) : [];
 
  
         $this->loadViews('events/tags_stats', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
