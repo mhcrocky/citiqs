@@ -966,3 +966,4 @@ AND tbl_shop_orders.created >= $min_date AND tbl_shop_orders.created <= $max_dat
 	}
 
 }
+
