@@ -1319,7 +1319,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, COUNT(tbl_bookandpay.id) as sold_tickets, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
 		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
 		GROUP BY reservationdate, tbl_event_shop_tags.id");
 
@@ -1331,7 +1331,7 @@ class Event_model extends CI_Model {
 		$tags = [];
 
 		foreach($results as $result){
-			$tags[] = $result['tag'];
+			$tags[] = ($result['tag'] == null) ? 'basic' : $result['tag'];
 		}
 
 		$tags = array_unique($tags);
@@ -1339,7 +1339,7 @@ class Event_model extends CI_Model {
 		
 		foreach($results as $key => $result){
 			$date = $result['reservationdate'];
-			$tag = $result['tag'];
+			$tag = ($result['tag'] == null) ? 'basic' : $result['tag'];
 			
 			$exists = isset($newData[$date]);
 
@@ -1382,7 +1382,7 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, SUM(tbl_bookandpay.price) as amount, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
 		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
 		GROUP BY reservationdate, tbl_event_shop_tags.id");
 
@@ -1394,7 +1394,7 @@ class Event_model extends CI_Model {
 		$tags = [];
 
 		foreach($results as $result){
-			$tags[] = $result['tag'];
+			$tags[] = ($result['tag'] == null) ? 'basic' : $result['tag'];
 		}
 
 		$tags = array_unique($tags);
@@ -1402,7 +1402,7 @@ class Event_model extends CI_Model {
 		
 		foreach($results as $key => $result){
 			$date = $result['reservationdate'];
-			$tag = $result['tag'];
+			$tag = ($result['tag'] == null) ? 'basic' : $result['tag'];
 			
 			$exists = isset($newData[$date]);
 
