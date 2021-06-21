@@ -784,7 +784,7 @@ function format(d) {
       $('#serviceType').change(function() {
         var category = this.value;
         table
-        .columns( 4 )
+        .columns( 9 )
         .search( category )
         .draw();
       });
