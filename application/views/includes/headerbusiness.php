@@ -276,7 +276,7 @@
                     <div class="header-area">
                         <div id="navItems" class="row align-items-center">
                             <!-- nav and search button -->
-                            <div style="flew-wrap: unset !important" id="collapse-item" class="row w-100">
+                            <div style="flex-wrap: nowrap !important" id="collapse-item" class="row w-100">
                                 <div class="nav-btn col-md-1 col-sm-1" style="width:50px;">
                                     <span></span>
                                     <span></span>
