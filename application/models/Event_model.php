@@ -100,7 +100,7 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	} 
 
-	public function get_event_by_id($vendor_id, $eventId)
+	public function get_event_by_id($vendor_id, $eventId, $checkDate = true)
 	{
 		date_default_timezone_set('Europe/Amsterdam');
         $current_timestamp = date('Y-m-d H:i:s');
@@ -111,7 +111,10 @@ class Event_model extends CI_Model {
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('id', $eventId);
 		//$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
-		$this->db->where('( (showInSameDate="1" AND StartDate = "' . $today . '" ) OR concat_ws(" ", StartDate, StartTime) >= "'.$current_timestamp.'")', NULL, false);
+		if ($checkDate) {
+			$this->db->where('( (showInSameDate="1" AND StartDate = "' . $today . '" ) OR concat_ws(" ", StartDate, StartTime) >= "'.$current_timestamp.'")', NULL, false);
+		}
+		
 		$query = $this->db->get();
 		$this->db->trans_complete();
 		return $query->result_array();
@@ -1266,14 +1269,14 @@ class Event_model extends CI_Model {
 
 	public function copy_event($vendorId, $eventId) : bool
 	{
-		$eventData = $this->get_event_by_id($vendorId, $eventId);
+		$eventData = $this->get_event_by_id($vendorId, $eventId, false);
 		if(is_array($eventData) && count($eventData) > 0){
 			$eventData = $eventData[0];
 			unset($eventData['id']);
 			$createdEventId = $this->save_event($eventData);
 			return $this->copy_tickets($eventId, $createdEventId);
 		}
-		
+		return false;
 	}
 
 	public function copy_tickets($eventId, $createdEventId) : bool
