@@ -689,6 +689,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php  } elseif ($this->view === 'events/pay') { ?>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
 <?php  } elseif ($this->view === 'events/tags_stats') { ?>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
 <?php  } elseif ($this->view === 'email_designer') { ?>
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/colpick.css" rel="stylesheet"  type="text/css"/>
