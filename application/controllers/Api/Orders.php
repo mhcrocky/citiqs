@@ -312,9 +312,13 @@
 
         private function setPrinterAndMacToFetchOrder(string $mac): void
         {
-            $this->shopprinters_model->setPrinterIdFromMacNumber($mac)->setObject();
+            $this->shopprinters_model->setPrinterIdFromMacNumber($mac);
 
-            if ($this->shopprinters_model->active === '0') exit();
+            if (is_null($this->shopprinters_model->id)) exit();
+
+            $this->shopprinters_model->setObject();
+
+            if (is_null($this->shopprinters_model->id) || $this->shopprinters_model->active === '0') exit();
 
             $this->shopprinterrequest_model->insertPrinterRequest($mac);
             $this->macToFetchOrder = empty($this->shopprinters_model->masterMac) ? $mac : $this->shopprinters_model->masterMac;
