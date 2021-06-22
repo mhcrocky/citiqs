@@ -202,7 +202,6 @@
 			floorplan.scaleAndPositionCanvas(0.75);
 		})
 
-		console.dir(showFloorPlanGloabals);
 
 	</script>
 <?php } else { ?>

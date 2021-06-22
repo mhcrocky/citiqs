@@ -16,12 +16,9 @@ $(document).ready(function () {
     });
 
     floorplan.areaClickCallback = function (area_data) {
-        console.log(area_data);
-        // document.getElementById('available').value = area_data.available;
-        // document.getElementById('area_count').value = area_data.area_count;
-        // // document.getElementById('price').value = area_data.price;
-        // document.getElementById('spotForm').action = globalVariables.ajax + 'updateSpot/' + area_data.id
-        // $('#booking_modal').modal();
+        // area_count is area data, something buid before alfred, in lost and foud
+        let posSpot = 'pos?spotid=' + area_data['area_count'];
+        redirectToNewLocation(posSpot);
     }
 });
 
