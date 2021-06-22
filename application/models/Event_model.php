@@ -1342,7 +1342,7 @@ class Event_model extends CI_Model {
 		
 		foreach($results as $key => $result){
 			$date = $result['reservationdate'];
-			$tag = ($result['tag'] == null) ? 'basic' : $result['tag'];
+			$tag = ($result['tag'] == null) ? 'No Tags' : $result['tag'];
 			
 			$exists = isset($newData[$date]);
 
@@ -1397,7 +1397,7 @@ class Event_model extends CI_Model {
 		$tags = [];
 
 		foreach($results as $result){
-			$tags[] = ($result['tag'] == null) ? 'basic' : $result['tag'];
+			$tags[] = ($result['tag'] == null) ? 'No Tags' : $result['tag'];
 		}
 
 		$tags = array_unique($tags);
