@@ -46,16 +46,16 @@
         {
             $header = getallheaders();
 
-            // if 'x-api-key' is not set in the request header
-            if (empty($header['x-api-key'])) {
+            // if 'X-Api-Key' is not set in the request header
+            if (empty($header['X-Api-Key'])) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$AUTHENTICATION_KEY_NOT_SET);
                 $this->response($response, 401);
                 return null;
             }
 
-            $userData = $this->api_model->setProperty('apikey', $header['x-api-key'])->getUser();
+            $userData = $this->api_model->setProperty('apikey', $header['X-Api-Key'])->getUser();
 
-            // if 'x-api-key' doesnt't exists
+            // if 'X-Api-Key' doesnt't exists
             if (empty($userData)) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$INVALID_AUTHENTICATION_KEY);
                 $this->response($response, 403);

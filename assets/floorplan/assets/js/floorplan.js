@@ -176,6 +176,7 @@ class Floorplan {
 				if (object.get('type') != 'text' ) {
 					var label = null;
 					_this.areas.forEach(function (area) {
+						console.dir(area);
 						if (object.area_id == area.area_id) {
 							if (area.area_status) {
 								_this.changeAreaColor(object, area.area_status)
