@@ -743,6 +743,9 @@ $route['buyer_reservations'] = 'Buyer/buyerReservations';
 
 //buyer ajax
 $route['get_buyer_orders'] = 'Ajaxbuyer/getBuyerOrders';
+$route['fetch_order/(:num)'] = 'Ajaxbuyer/fetchOrder/$1';
+
+
 
 
 /* End of file routes.php */

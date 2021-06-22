@@ -1791,17 +1791,18 @@
             $orders = $this->readImproved([
                 'escape' => false,
                 'what' => [
+                    $this->table . '.id AS orderId',
                     $this->table . '.amount AS orderAmount',
                     $this->table . '.refundAmount AS refundAmount',
                     $this->table . '.voucherAmount AS voucherAmount',
                     $this->table . '.serviceFee AS serviceFee',
                     $this->table . '.waiterTip AS waiterTip',
-                    $this->table . '.voucherId AS voucherId',
+                    'IF (' . $this->table . '.voucherId IS NOT NULL, ' . $this->table . '.voucherId, "")AS voucherId',
                     $this->table . '.paymentType AS paymentType',
                     $this->table . '.createdOrder AS createdOrder',
                     $this->table . '.created AS created',
                     'vendor.username AS vendorUserName',
-                    'tbl_shop_voucher.code AS voucherCode',
+                    'IF (tbl_shop_voucher.code IS NOT NULL, tbl_shop_voucher.code, "") AS voucherCode',
                     'tbl_shop_spots.spotName AS spotName',
                     'tbl_shop_spot_types.type AS spotType',
                     'IF(' . $this->table . '.paymentType = "' . $prePaid . '", "' . $payAtWaiter . '", IF(' . $this->table . '.paymentType = "' . $postPaid . '", "' . $payAtWaiter . '", ' .  $this->table . '.paymentType)) AS paymentMethod'
@@ -1825,4 +1826,33 @@
             return is_null($orders) ? null : $orders;
         }
 
+        public function getOrderProducts(): array
+        {
+            $this->load->config('custom');
+
+            return $this->readImproved([
+                'escape' =>  false,
+                'what' => [
+                    'tbl_shop_products_extended.id AS productExId',
+                    'tbl_shop_products_extended.name AS productName',
+                    'tbl_shop_order_extended.quantity AS productQuantity',
+                    '
+                        (
+                            CASE
+                                WHEN ' . $this->table . '.serviceTypeId = "' . $this->config->item('local') . '" THEN tbl_shop_products_extended.price
+                                WHEN ' . $this->table . '.serviceTypeId = "' . $this->config->item('deliveryType') . '" THEN tbl_shop_products_extended.deliveryPrice
+                                WHEN ' . $this->table . '.serviceTypeId = "' . $this->config->item('pickupType') . '" THEN tbl_shop_products_extended.pickupPrice
+                            END
+                        ) AS productPrice
+                    '
+                ],
+                'where' => [
+                    $this->table . '.id' => $this->id
+                ],
+                'joins' => [
+                    ['tbl_shop_order_extended', 'tbl_shop_order_extended.orderId = ' . $this->table . '.id', 'INNER'],
+                    ['tbl_shop_products_extended', 'tbl_shop_products_extended.id = tbl_shop_order_extended.productsExtendedId', 'INNER']
+                ]
+            ]);
+        }
     }

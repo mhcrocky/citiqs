@@ -544,4 +544,7 @@
 			floorplan.scaleAndPositionCanvas();
 		});
 	</script>
+<?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
+	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+	<script src='<?php echo base_url(); ?>assets/home/js/buyer.js'></script>
 <?php } ?>

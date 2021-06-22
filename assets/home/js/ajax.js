@@ -105,6 +105,23 @@ function sendUrlRequest(url, callBack, callFunction = null, functionArg = []) {
     });
 }
 
+function sendGetRequest(url, callFunction = null, functionArg = []) {
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (response) {
+            let data = JSON.parse(response);
+            if (callFunction) {
+                functionArg.push(data);
+                callFunction(...functionArg);
+            }
+        },
+        error: function (err) {
+            console.dir(err);
+        }
+    });
+}
+
 var callThis = (function() {
     let methods = {        
         uploadIdentification: function() {

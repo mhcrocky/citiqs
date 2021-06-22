@@ -848,4 +848,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/floorplan/assets/css/main.css" />
 <?php } elseif ($this->view === 'login/resendActivationLink') { ?>
     <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/home/styles/resend_activation_link.css" />
-<?php } ?>
+<?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/home/styles/buyerOrders.css" />
+<?php }  ?>

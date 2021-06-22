@@ -58,4 +58,13 @@
             return;
         }
 
+        public function fetchOrder($orderId): void
+        {
+            if (!$this->input->is_ajax_request()) return;
+
+            $order = $this->shoporder_model->setObjectId(intval($orderId))->getOrderProducts();
+            echo json_encode($order);
+
+            return;
+        }
     }
