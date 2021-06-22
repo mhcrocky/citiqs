@@ -17,7 +17,7 @@
             <div style="overflow: auto !important;" class="modal-body">
                 <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
                     <div class="col-md-9 text-center"><?php echo base_url(); ?>agenda_booking/<?php echo $this->session->userdata('userShortUrl'); ?></div>
-                    <div id="shopUrlText" class="col-md-3 text-left">
+                    <div class="col-md-3 text-left">
                         <button class="btn btn-clear text-primary" onclick="copyToClipboard('<?php echo base_url(); ?>agenda_booking/<?php echo $this->session->userdata('userShortUrl'); ?>')">Copy URL</button>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             <div style="overflow: auto !important;" class="modal-body">
                 <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
                     <div class="col-md-9 text-center"><?php echo base_url(); ?>booking_agenda/<?php echo $this->session->userdata('userShortUrl'); ?></div>
-                    <div id="shopUrlText" class="col-md-3 text-left">
+                    <div class="col-md-3 text-left">
                         <button class="btn btn-clear text-primary" onclick="copyToClipboard('<?php echo base_url(); ?>booking_agenda/<?php echo $this->session->userdata('userShortUrl'); ?>')">Copy URL</button>
                     </div>
                 </div>
