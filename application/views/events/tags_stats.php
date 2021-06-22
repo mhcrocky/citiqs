@@ -16,7 +16,7 @@
                             <!-- Events Select Box -->
                             <div class="col-md-9">
                                 <select id="events" name="events" onchange="getEventGraph()"
-                                        style="background-color: #f4f3f3 !important; border-radius: 0px !important; height:41px !important;font-weight: 510;"
+                                        style="background-color: #f4f3f3 !important; border-radius: 0px !important;font-weight: 510;"
                                         class="form-control w-100 mb-5" required>
                                     <?php if(is_array($events) && count($events) > 0): ?>
                                         <?php foreach($events as $event): ?>
@@ -27,11 +27,19 @@
                             </div>
                             <!-- End Events Select Box -->
 
+                            <!-- Datetime Picker Box -->
+                            <div class="col-md-3">
+                                <input style="border-radius: 0px !important;" onchange="getEventGraph()" class="form-control mb-2 w-100" type="text" name="datetimes" />
+                            </div>
+                            <!-- Datetime Picker Box -->
 
 
-                            <div id="graph" style="background: #fff;" class="w-100">
+
+                            <!-- Graph -->
+                            <div id="graph" style="background: #fff; visibility: hidden" class="w-100">
                                 <?php echo isset($graph) ? $graph : ''; ?>
                             </div>
+                            <!-- End Graph -->
 
                             
                         
@@ -47,18 +55,3 @@
         </div>
     </div>
 </main>
-
-<script>
-
-function getEventGraph(){
-    let eventId = $('#events option:selected').val();
-
-    $.post('<?php echo base_url(); ?>events/get_tags_stats', {eventId: eventId}, function(data){
-        $('#graph').fadeOut("slow", function(){ $('#graph').empty(); });
-        $('#graph').fadeIn("slow", function(){ 
-            $('#graph').html(JSON.parse(data));
-         });
-        
-    });
-}
-</script>
