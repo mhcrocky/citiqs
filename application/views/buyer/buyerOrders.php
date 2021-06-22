@@ -6,24 +6,26 @@
         style="width:100%"
     >
         <thead>
-            <th>Order ID</th>
-            <th>Order amount (1)</th>
-            <th>Service fee (2)</th>
-            <th>Waiter tip (3)</th>
-            <th>Refund amount (4)</th>
-            <th>Voucher amount (5)</th>
-            <th>
-                Total amount
-                <br/>
-                (1 + 2 + 3 - 4 - 5)
-            </th>
-            <th>Voucher code</th>
-            <th>Created</th>
-            <th>Vendor</th>
-            <th>Spot name</th>
-            <th>Service type</th>
-            <th>Payment method</th>
-            <th>Details</th>
+            <tr>
+                <th>Order ID</th>
+                <th>Order amount (1)</th>
+                <th>Service fee (2)</th>
+                <th>Waiter tip (3)</th>
+                <th>Refund amount (4)</th>
+                <th>Voucher amount (5)</th>
+                <th>
+                    Total amount
+                    <br/>
+                    (1 + 2 + 3 - 4 - 5)
+                </th>
+                <th>Voucher code</th>
+                <th>Created</th>
+                <th>Vendor</th>
+                <th>Spot name</th>
+                <th>Service type</th>
+                <th>Payment method</th>
+                <th>Details</th>
+            </tr>
         </thead>
         <tbody>
         </tbody>
