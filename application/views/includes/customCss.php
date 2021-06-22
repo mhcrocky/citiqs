@@ -792,6 +792,21 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <style>
+    .btn-export {
+        border-radius: 0px !important;
+        background: #059669 !important;
+        padding: 0px !important;
+        width: 120px !important;
+    }
+
+    .input-group-export {
+        background: #275C5D;
+        padding-top: 13px;
+        padding-bottom: 15px;
+    }
+
+    </style>
 <?php  } elseif ($this->view === 'qrcodeview/index') { ?>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
