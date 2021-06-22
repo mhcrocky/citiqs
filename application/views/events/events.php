@@ -308,7 +308,7 @@
     </div>
 </div>
 
-<!-- Refund Modal -->
+<!-- Refund Modal
 <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -355,6 +355,8 @@
 </div>
 
 
+-->
+
 <!-- Copy Main Shop Url Modal -->
 <div class="modal fade" id="copyMainShopUrlModal" tabindex="-1" role="dialog" aria-labelledby="copyMainShopUrlModalLabel"
     aria-hidden="true">
@@ -369,7 +371,7 @@
             <div style="overflow: auto !important;" class="modal-body">
                 <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
                     <div class="col-md-9 text-center"><?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?></div>
-                    <div id="shopUrlText" class="col-md-3 text-left">
+                    <div class="col-md-3 text-left">
                         <button class="btn btn-clear text-primary" onclick="textToClipboard('<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>')">Copy URL</button>
                     </div>
                 </div>
@@ -395,7 +397,7 @@
                 <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
                     <div class="col-md-9 text-center shopUrlText"><?php echo base_url(); ?></div>
                     <input type="text" class="d-none" id="shopUrl">
-                    <div id="shopUrlText" class="col-md-3 text-left">
+                    <div class="col-md-3 text-left">
                         <button class="btn btn-clear text-primary" onclick="copyShopUrl()">Copy URL</button>
                     </div>
                 </div>
@@ -411,8 +413,7 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <input type="text" class="d-none" id="shopUrl">
-                    <div id="shopUrlText" class="col-md-3 text-left">
+                    <div class="col-md-3 text-left">
                         <button class="btn btn-clear text-primary" onclick="copyShopUrlWithTag()">Copy URL</button>
 
                     </div>
