@@ -1317,13 +1317,13 @@ class Event_model extends CI_Model {
 		
 	}
 
-	public function get_tags_ticket_sold_stats($vendorId, $eventId)
+	public function get_tags_ticket_sold_stats($vendorId, $eventId, $startDate, $endDate) : array
 	{
 		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, COUNT(tbl_bookandpay.id) as sold_tickets, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
-		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' AND (reservationtime >= '" . $startDate . "' AND reservationtime <= '" . $endDate . "')
 		GROUP BY reservationdate, tbl_event_shop_tags.id");
 
 		if($query->num_rows() < 1) return [];
@@ -1380,13 +1380,13 @@ class Event_model extends CI_Model {
 
 	} 
 
-	public function get_tags_amount_stats($vendorId, $eventId) : array
+	public function get_tags_amount_stats($vendorId, $eventId, $startDate, $endDate) : array
 	{
 		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, SUM(tbl_bookandpay.price) as amount, tbl_event_shop_tags.tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
-		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' AND (reservationtime >= '" . $startDate . "' AND reservationtime <= '" . $endDate . "')
 		GROUP BY reservationdate, tbl_event_shop_tags.id");
 
 		if($query->num_rows() < 1) return [];
