@@ -1169,20 +1169,25 @@ class Events extends BaseControllerWeb
         $events = $this->event_model->get_all_events($this->vendor_id);
         $data['events'] = $events;
 
-        $data['graph'] = isset($events[0]) ? $this->get_tags_stats($events[0]['id']) : [];
+        $data['graph'] = isset($events[0]) ? $this->get_tags_stats($events[0]['id'], true) : [];
+
 
  
         $this->loadViews('events/tags_stats', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
 
     }
 
-    public function get_tags_stats($eventId = false)
+    public function get_tags_stats($eventId = false, $dateRange = false)
     {
 
         $issetEventId = ($eventId) ? true : false;
         $eventId = ($eventId) ? $eventId : $this->input->post('eventId');
+        $dateRange = (!$dateRange) ? urldecode($this->input->post('dateRange')) : '0000-00-00 - 0000-00-00';
+        $dateRange = explode(' - ', $dateRange);
 
         $GLOBALS['eventId'] = $eventId;
+        $GLOBALS['startDate'] = $dateRange[0] . ' 00:00:00';
+        $GLOBALS['endDate'] = $dateRange[1] . ' 00:00:00';
 
         $graph = DrillDown::create(array(
             "name" => "saleDrillDown",
@@ -1192,8 +1197,16 @@ class Events extends BaseControllerWeb
                     "title" => "Tickets Sold",
                     "content" => function ($params, $scope) {
                         global $eventId;
+                        global $startDate;
+                        global $endDate;
 
-                        $tags = $this->event_model->get_tags_ticket_sold_stats($this->vendor_id, $eventId);
+                        $conditions = [
+                            'eventId' => $eventId,
+                            'startDate' => $startDate,
+                            'endDate' => $endDate
+                        ];
+
+                        $tags = $this->event_model->get_tags_ticket_sold_stats($this->vendor_id, $eventId, $startDate, $endDate);
 
                         $columnArr['date'] = [
                             "type" => "string",
@@ -1221,7 +1234,7 @@ class Events extends BaseControllerWeb
                             "columns" => $columnArr,
                             "clientEvents" => array(
                                 "itemSelect" => "function(params){
-                                    saleDrillDown.next({eventId:" . $eventId . "});
+                                    saleDrillDown.next({conditions:" . json_encode($conditions) . "});
                                 }",
                             ),
                             "options"=>array(
@@ -1237,7 +1250,12 @@ class Events extends BaseControllerWeb
                     },
                     "content" => function ($params, $scope) {
 
-                        $tags = $this->event_model->get_tags_amount_stats($this->vendor_id, $params['eventId']);
+                        $conditions = $params['conditions'];
+                        $eventId = $conditions['eventId'];
+                        $startDate = $conditions['startDate'];
+                        $endDate = $conditions['endDate'];
+
+                        $tags = $this->event_model->get_tags_amount_stats($this->vendor_id, $eventId, $startDate, $endDate);
 
                         $tags = array_values($tags);
 
