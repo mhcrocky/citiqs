@@ -116,7 +116,7 @@
         }
 
 
-        public function manageMainTypeId(): int
+        public function manageMainTypeId(): ?int
         {
             $id = $this->readImproved([
                 'what' => ['id'],

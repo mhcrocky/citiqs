@@ -223,7 +223,7 @@
 
         public function getVendorData(): ?array
         {
-            if (!ctype_digit($this->vendorId)) return null;
+            if (!ctype_digit(strval($this->vendorId))) return null;
 
             $filter = [
                 'what' => [
