@@ -7,7 +7,7 @@
 
     class Ticketingemail_helper
     {
-        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false, $supportEmail = "support@tiqs.com") : bool
+        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false, $supportEmail = "support@tiqs.com", $emailId = false) : bool
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -88,7 +88,7 @@
 								break;
                         }
 
-                        $emailId = $record->emailId;
+                        $emailId =  ($emailId !== false) ?  $emailId : $record->emailId ;
                         
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
