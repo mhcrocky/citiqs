@@ -139,12 +139,19 @@
 								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
 
+
+                                $fromEmail = 'support@tiqs.com';
+
                                 if($templateId === false){
                                     $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
                                     $download_pdf_link = base_url() . "booking_events/pdf/" . $emailId . "/" . $reservationId;
                                     $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
                                     $mailtemplate .= '</div>';
+                                } else {
+                                    $fromEmail = 'noreply@tiqs.com';
                                 }
+
+
                                 
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
@@ -167,10 +174,10 @@
 
                                 if($mailsend == 0 || $resend == true){
                                     if($sendToSupport){
-                                        self::sendEmail($supportEmail, $subject, $mailtemplate, $icsContent );
+                                        self::sendEmail($supportEmail, $subject, $mailtemplate, $icsContent);
                                     }
 
-								    if(self::sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent)) {
+								    if(self::sendEmail($buyerEmail, $subject, $mailtemplate, $icsContent, $fromEmail)) {
                                         $file = FCPATH . 'application/tiqs_logs/messages.txt';
                                         
 //                                        Utility_helper::logMessage($file, $mailtemplate);
@@ -190,7 +197,7 @@
             
         }
 
-        private static function sendEmail($email, $subject, $message, $icsContent=false)
+        private static function sendEmail($email, $subject, $message, $icsContent=false, $fromEmail = 'support@tiqs.com')
         {
             $configemail = array(
 			    'protocol' => PROTOCOL,
