@@ -7,7 +7,7 @@
 
     class Ticketingemail_helper
     {
-        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false, $supportEmail = "support@tiqs.com", $emailId = false) : bool
+        public static function sendEmailReservation(array $reservations, $icsFile = false, $resend = false, $sendToSupport = false, $supportEmail = "support@tiqs.com", $templateId = false) : bool
         {
             $CI =& get_instance();
             $CI->load->config('custom');
@@ -88,7 +88,7 @@
 								break;
                         }
 
-                        $emailId =  ($emailId !== false) ?  $emailId : $record->emailId ;
+                        $emailId =  ($templateId !== false) ?  $templateId : $record->emailId ;
                         
                         
 						switch (strtolower($_SERVER['HTTP_HOST'])) {
@@ -138,10 +138,14 @@
 								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
 								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
 								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
-                                $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
-                                $download_pdf_link = base_url() . "booking_events/pdf/" . $emailId . "/" . $reservationId;
-                                $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
-                                $mailtemplate .= '</div>';
+
+                                if($templateId === false){
+                                    $mailtemplate .= '<div style="width:100%;text-align:center;margin-top: 30px;">';
+                                    $download_pdf_link = base_url() . "booking_events/pdf/" . $emailId . "/" . $reservationId;
+                                    $mailtemplate .= '<a href="'.$download_pdf_link.'" id="pdfDownload" style="background-color:#008CBA;border: none;color: white;padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;">Download as PDF</a>';
+                                    $mailtemplate .= '</div>';
+                                }
+                                
 								$subject = ($emailTemplate->template_subject) ? strip_tags($emailTemplate->template_subject) : 'Your tiqs reservation(s)';
 								$datachange['mailsend'] = 1;
 
