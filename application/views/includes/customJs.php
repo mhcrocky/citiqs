@@ -554,4 +554,10 @@
 <?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
 	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 	<script src='<?php echo base_url(); ?>assets/home/js/buyer.js'></script>
+<?php } elseif ($this->view === 'floorplans/floorplans') { ?>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorplan.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/floorplanShow.js"></script>
+	<script src="<?php echo base_url(); ?>assets/floorplan/assets/js/listFloorplans.js"></script>
 <?php } ?>

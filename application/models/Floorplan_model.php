@@ -65,8 +65,16 @@
                 ]
             ]);
 
-            return is_null($floorplans) ? null: $floorplans;
-        
+            if (is_null($floorplans)) return null;
+
+            $this->load->model('floorplanareas_model');
+
+            return array_map(function($floorplan){
+                return [
+                    'floorplan' => $floorplan,
+                    'areas' => $this->floorplanareas_model->get_floorplan_areas($floorplan['id'])
+                ];
+            }, $floorplans);
         }
 
         // public function fetch(): ?array
