@@ -217,7 +217,7 @@ class Events extends BaseControllerWeb
             'isTicket' => 1
         ];
 
-        $this->event_model->save_guest_reservations($booking);
+        $this->event_model->save_guest_reservations($booking, $data->guest);
         
            
            $guestlist[] = [
