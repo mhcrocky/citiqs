@@ -28,6 +28,15 @@ class Email_templates_model extends CI_Model
         return $result;
     }
 
+    public function get_mailing_email_by_user ($user_id) {
+        $this->db->from('tbl_email_templates');
+        $this->db->where('user_id', $user_id);
+        $this->db->like('template_type', 'mailing');
+        $query = $this->db->get();
+        $result = $query->result();
+        return $result;
+    }
+
     public function get_voucher_email_by_user ($user_id) {
         $this->db->from('tbl_email_templates');
         $this->db->where('user_id', $user_id);
