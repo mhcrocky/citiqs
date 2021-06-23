@@ -1309,7 +1309,7 @@ class Events extends BaseControllerWeb
 	{
         $this->global['pageTitle'] = 'TIQS: Marketing';
 
-        $data['templates'] = $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id);
+        $data['templates'] = $this->email_templates_model->get_mailing_email_by_user($this->vendor_id);
         $this->loadViews('events/marketing', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
 
     }
