@@ -317,6 +317,11 @@
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/voucherTemplates.js'></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/vouchersDataTable.js"></script>
+<?php } elseif ($this->view === 'events/marketing') { ?>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketingMarketingDataTable.js"></script>
 <?php } elseif ($this->view === 'voucher/send') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/multiselect/helper.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/multiselect/multiselect.core.js"></script>
