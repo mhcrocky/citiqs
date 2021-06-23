@@ -21,8 +21,8 @@
         <ul class="collapse">
             <li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-gift"></i> <span><?php echo $this->language->tLine('Vouchers add/edit'); ?></span></a>
             <li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Send Vouchers'); ?></span></a>
-            <li data-menuid="2.1"><a href="<?php echo $this->baseUrl; ?>marketing/targeting"><i class="ti-pin-alt"></i><span><?php echo $this->language->tLine('Targeting'); ?></span></a></li>
-            <li data-menuid="2.2"><a href="<?php echo $this->baseUrl; ?>marketing/selection"><i class="ti-comment"></i> <span><?php echo $this->language->tLine('Notification Messaging'); ?></span></a></li>
+<!--            <li data-menuid="2.1"><a href="--><?php //echo $this->baseUrl; ?><!--marketing/targeting"><i class="ti-pin-alt"></i><span>--><?php //echo $this->language->tLine('Targeting'); ?><!--</span></a></li>-->
+<!--            <li data-menuid="2.2"><a href="--><?php //echo $this->baseUrl; ?><!--marketing/selection"><i class="ti-comment"></i> <span>--><?php //echo $this->language->tLine('Notification Messaging'); ?><!--</span></a></li>-->
             <!--											<li data-menuid="2.3"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-user"></i> <span>RSVP Pre-register</span></a></li>-->
             <!--											<li data-menuid="2.4"><a href="--><?php //echo $this->baseUrl; ?><!--dashboard"><i class="ti-pencil-alt"></i> <span>E-mail Campaigns</span></a></li>-->
             <!--											<li data-menuid="2.5"><a href="--><?php //echo $this->baseUrl; ?><!--visitors"><i class="ti-user"></i> <span>Visitors</span></a></li>-->
@@ -50,13 +50,15 @@
         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Finance'); ?></span></a>
 
 			<ul class="collapse">
-				<li data-menuid="3.1.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-wallet"></i> <span><?php echo $this->language->tLine('PAY-OUT QR Menu'); ?></span></a></li>
-				<li data-menuid="3.1.2"><a href="<?php echo $this->baseUrl; ?>clearingreservations"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('PAY-OUT Reservations'); ?></span></a></li>
-				<li data-menuid="3.1.3"><a href="<?php echo $this->baseUrl; ?>clearingtickets"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('PAY-OUT E-Tickets'); ?></span></a></li>
+
 				<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions QR Menu'); ?></span></a></li>
 				<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>customer_panel/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions Reservations'); ?></span></a></li>
 				<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>events/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions E-Tickets'); ?></span></a></li>
 				<li data-menuid="3.4"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-layout"></i> <span><?php echo $this->language->tLine('Invoices'); ?></span></a></li>
+
+				<li data-menuid="3.1.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-wallet"></i> <span><?php echo $this->language->tLine('PAY-OUT QR Menu'); ?></span></a></li>
+				<li data-menuid="3.1.2"><a href="<?php echo $this->baseUrl; ?>clearingreservations"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('PAY-OUT Reservations'); ?></span></a></li>
+				<li data-menuid="3.1.3"><a href="<?php echo $this->baseUrl; ?>clearingtickets"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('PAY-OUT E-Tickets'); ?></span></a></li>
 				<li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-credit-card"></i><span><?php echo $this->language->tLine('Payment methods'); ?></span></a></li>
 			</ul>
 
@@ -188,6 +190,7 @@
         <ul class="collapse">
             <li data-menuid="5.1"><a href="<?php echo $this->baseUrl;?>customer_panel/agenda"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Reservations ADD/EDIT'); ?></span></a></li>
             <li data-menuid="5.2"><a href="<?php echo $this->baseUrl;?>customer_panel/manual_reservations"><i class="ti-ticket"></i> <span><?php echo $this->language->tLine('Manual booking'); ?></span></a></li>
+			<li data-menuid="5.5"><a href="<?php echo $this->baseUrl; ?>customer_panel/financial_report2"><i class="ti-bar-chart"></i> <span><?php echo $this->language->tLine('Sales'); ?></span></a></li>
             <li data-menuid="5.3"><a href="<?php echo $this->baseUrl;?>customer_panel/booking_tickets"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
 			<li data-menuid="5.6.1"><a href="<?php echo $this->baseUrl;?>customer_panel/settings"><i class="ti-shopping-cart-full"></i><span><?php echo $this->language->tLine('Terms and conditions'); ?></span></a></li>
 			<li data-menuid="5.6.2"><a href="<?php echo $this->baseUrl;?>agenda_booking/design"><i class="ti-clipboard"></i> <span><?php echo $this->language->tLine('Design Agenda view'); ?></span></a></li>
@@ -202,6 +205,7 @@
         <ul class="collapse">
             <li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your event'); ?></span></a></li>
             <li data-menuid="6.2"><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span><?php echo $this->language->tLine('Your Events'); ?></span></a></li>
+			<li data-menuid="5.3"><a href="<?php echo $this->baseUrl;?>events/tags_stats"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
             <li data-menuid="6.3"><a href="<?php echo $this->baseUrl;?>events/emaildesigner"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email Designer'); ?></span></a></li>
             <li data-menuid="6.4"><a href="<?php echo $this->baseUrl;?>events/tags"><i class="ti-email"></i> <span>tags and pixels</span></a></li>
 			<li data-menuid="6.5"><a href="<?php echo $this->baseUrl;?>events/scannedin"><i class="ti-email"></i> <span>scanner results</span></a></li>

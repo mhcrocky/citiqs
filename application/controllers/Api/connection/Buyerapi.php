@@ -135,6 +135,8 @@
                 ]
             ];
 
+            $this->user_model->resendActivationLink($buyer['email']);
+
             $this->response($response, 200);
             return;
         }
