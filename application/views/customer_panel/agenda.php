@@ -301,10 +301,10 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="ReservationDescription"><?php echo $this->language->tLine('Description'); ?></label>
+                            <label for="copyReservationDescription"><?php echo $this->language->tLine('Description'); ?></label>
                             <input type="text" name="reservationDescription"
                                    v-model="agendaModalData.ReservationDescription" class="form-control"
-                                   id="ReservationDescription" placeholder="<?php echo $this->language->tLine('Description'); ?>">
+                                   id="copyReservationDescription" placeholder="<?php echo $this->language->tLine('Description'); ?>">
                         </div>
                         <div class="form-group">
                             <label for="ReservationDate"><?php echo $this->language->tLine('Date'); ?></label>
@@ -533,7 +533,7 @@ const templateGlobals = (function() {
                 this.agendaModalData.ReservationDescription = '';
                 this.agendaModalData.ReservationDateTime = '';
                 $('#background_color').val(this.agendaModalData.Background).trigger('change');
-                $('#ReservationDescription').val(' ');
+                $('#copyReservationDescription').val(' ');
                 $('#copy_agenda_modal').modal('show');
             },
             goToSpots(agenda) {
@@ -614,6 +614,9 @@ const templateGlobals = (function() {
                 axios.post(this.baseURL + 'ajaxdorian/saveAgenda', formData
                 ).then((response) => {
                     if (this.method == 'create') {
+                        //console.log(response);
+                        //console.log(response.data);
+                        //console.log(response.data.data);
                         this.agendas.push(response.data.data);
                     }
             
