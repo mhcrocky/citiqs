@@ -65,6 +65,12 @@
                 >
                     Vouchers
                 </option>
+                <option
+                    value="mailing"
+                    <?php echo (isset($templateType) && $templateType === "mailing") ? "selected" : '' ?>
+                >
+                   Mailing
+                </option>
             <?php } ?>
             <?php if ($landingPagesEdit === true) { ?>
                 <option
