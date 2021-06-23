@@ -138,14 +138,13 @@ class   Bookandpayagendabooking_model extends CI_Model
 			}
 
 			$result['agenda_id'] = $agenda_id;
+			$id = $result['id'];
 			unset($result['id']);
 			$insertData = $result;
 			$this->db->insert('tbl_bookandpayspot', $insertData);
-			$this->copy_timeslots($result['id'],$this->db->insert_id());
+			$this->copy_timeslots($id, $this->db->insert_id());
 			$spots_count++;
 		}
-		
-		
 	}
 
 	function copy_timeslots($oldSpot,$spot_id){
@@ -156,7 +155,6 @@ class   Bookandpayagendabooking_model extends CI_Model
 		$query = $this->db->get();
 		$results = $query->result_array();
 		$insertData = [];
-		$spot_ids = [];
 		foreach ($results as $result) {
 			$result['spot_id'] = $spot_id;
 			unset($result['id']);
