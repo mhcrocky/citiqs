@@ -19,14 +19,6 @@ $(document).ready(function () {
         data: 'bookandpay_id'
       },
       {
-        title: 'Reservation ID',
-        data: 'reservationId'
-      },
-      {
-        title: 'Event Name',
-        data: 'eventname'
-      },
-      {
         title: 'Buyer Name',
         data: 'name'
       },
@@ -35,37 +27,18 @@ $(document).ready(function () {
         data: 'email'
       },
       {
-        title: 'Price',
-        data: 'price'
+        title: 'Gender',
+        data: 'gender'
       },
       {
-        title: 'Ticket Fee',
-        data: 'ticketFee'
-      },
-      {
-        title: 'Quantity',
-        data: 'numberofpersons'
-      },
-      {
-        title: 'Total Amount',
+        title: 'Tag',
         data: null,
-        "render": function (data, type, row) {
-          let amount = parseFloat(data.price) + parseFloat(data.ticketFee);
-          let total_amount = parseFloat(amount) * parseFloat(data.numberofpersons);
-          return total_amount.toFixed(2);
+        render: function (data, type, row) {
+          if(data.tagName == 'null'){
+            return 'No Tag';
+          }
+          return data.tagName;
         }
-      },
-      {
-        title: 'Ticket Description',
-        data: 'ticketDescription'
-      },
-      {
-        title: 'Tag ID',
-        data: 'tag'
-      },
-      {
-        title: 'Reservation Time',
-        data: 'reservationtime'
       }
     ],
     createdRow: function(row, data, dataIndex){
@@ -78,10 +51,6 @@ $(document).ready(function () {
         checkboxes: {
           selectRow: true
         }
-      },
-      {
-        targets: [ 1 ],
-        visible: false
       }
     ],
     select: {
