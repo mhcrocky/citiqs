@@ -163,7 +163,7 @@ function showProducts(products) {
 }
 
 function setReceiptHref(orderId) {
-    let href = globalVariables.baseUrl + '/receipts/' + orderId + '-email.png';
+    let href = globalVariables.baseUrl + 'receipts/' + orderId + '-email.png';
     document.getElementById('receiptLink').setAttribute('href', href);
 }
 

@@ -336,7 +336,6 @@
 
             if ($this->printOnlyReceipt && $this->isCashpayment($order)) {
                 //update order printStatus so that printer can print receipt
-                die('we are here');
                 $this->doFinalUpdates($order, $orderExtendedIds);
                 return;
             }
