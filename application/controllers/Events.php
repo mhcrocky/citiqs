@@ -1305,6 +1305,40 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function marketing()
+	{
+        $this->global['pageTitle'] = 'TIQS: Marketing';
+
+        $data['templates'] = $this->email_templates_model->get_ticketing_email_by_user($this->vendor_id);
+        $this->loadViews('events/marketing', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
+
+    }
+
+    public function send_multiple_emails()
+	{
+        $ids = json_decode($this->input->post('ids'));
+        $emailId = $this->input->post('templateId');
+        $reservations = $this->bookandpay_model->getBookingsByIds($ids);
+
+        $response = [
+            'status' => 'error',
+            'message' => 'Emails are not sent successfully!'
+        ];
+
+        if(Ticketingemail_helper::sendEmailReservation($reservations, true, true, false, '', $emailId)){
+            $response = [
+                'status' => 'success',
+                'message' => 'Emails are sent successfully!'
+            ];
+
+        }
+
+        echo json_encode($response);
+
+        return ;
+
+    }
+
     private function generateTransactionId(){
         $set = '3456789abcdefghjkmnpqrstvwxyABCDEFGHJKLMNPQRSTVWXY';
         $transactionId = '14';
