@@ -48,7 +48,7 @@ class  Floorplans extends BaseControllerWeb
             'spots' => $this->shopspot_model->fetchUserSpotsImporved($filterSpots),
         ];
 
-        $this->loadViews('floorplans/addFloorplan', $this->global, $data, 'footerbusiness', 'headerbusiness');
+        $this->loadViews('floorplans/manageFloorplan', $this->global, $data, 'footerbusiness', 'headerbusiness');
 
         return;
     }

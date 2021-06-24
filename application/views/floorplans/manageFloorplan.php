@@ -38,6 +38,7 @@
 
             </div>
             <div class="row images-category">
+                <!-- TO DO ADD IMAGES -->
                 <!-- <div class="col-md-3">
                     <div class="form-group mb-0">
                         <label for="area_type">Images category</label>
@@ -48,7 +49,7 @@
                         </select>
                     </div>
                 </div> -->
-                <?php #oreach ($floorplan_images as $key => $category) {?>
+                <?php #foreach ($floorplan_images as $key => $category) {?>
                     <!-- <div class="col-md-3" id="cat_<?php #echo $key;?>" style="display: none;">
                         <div class="form-group">
                             <label for="area_type">Images</label>

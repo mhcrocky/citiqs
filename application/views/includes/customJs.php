@@ -458,6 +458,7 @@
     <script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/floorplan.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/floorEditor.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/helper.js"></script>
 	<script src ="<?php $this->baseUrl; ?>assets/floorplan/assets/js/addEditFloorplan.js"></script>
 <?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
 	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
@@ -467,5 +468,6 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/floorplan.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/floorplanShow.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/helper.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/listFloorplans.js"></script>
 <?php } ?>

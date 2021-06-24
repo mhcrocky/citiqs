@@ -94,11 +94,8 @@
 
         public function deleteFloorplan(Floorplanareas_model $floorplanAreas): bool
         {
-            if (
-                !$this->isVendorFloorplan()
-                || !$floorplanAreas->setProperty('floorplanID', $this->id)->deleteFloorplanAreas()
-            ) return false;
-
+            if (!$this->isVendorFloorplan()) return false;
+            $floorplanAreas->setProperty('floorplanID', $this->id)->deleteFloorplanAreas();
             return $this->delete();
         }
 
