@@ -14,12 +14,27 @@
                 $areas = $data['areas'];
                 $imageId = 'floor_image_' . $floorplan['id'];
                 $canvasId = 'canvas_' . $floorplan['id'];
+                $floorplanParentELement = 'floorplan_parent_' . $floorplan['id'];
                 ?>
-                    <div style="width:100%">
+                    <div style="width:100%" id="<?php echo $floorplanParentELement; ?>">
                         <div class="row mb-5 canvas_row">
+                            <h2 style="margin: 12px">
+                                <?php echo $floorplan['floorplanName']; ?>
+                            </h2>
                             <div class="col-md-12 mh-100" id="<?php echo $imageId; ?>">
                                 <canvas id="<?php echo $canvasId; ?>" width="700" height="700"></canvas>
                             </div>
+                            <p style="margin: 12px">
+                                <button
+                                    class="btn btn-danger"
+                                    data-parent-id="<?php echo $floorplanParentELement; ?>"
+                                    data-floorplan-id="<?php echo $floorplan['id']; ?>"
+                                    onclick="deleteFloorplan(this)"
+                                >
+                                    Delete floorplan
+                                </button>
+                                <button class="btn btn-info">Edit floorplan</button>
+                            </p>
                         </div>
                     </div>
                     <script>

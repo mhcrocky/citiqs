@@ -77,6 +77,31 @@
             }, $floorplans);
         }
 
+        private function isVendorFloorplan(): bool
+        {
+            if (empty($this->id) || empty($this->vendorId)) return false;
+
+            $id = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.id' => $this->id,
+                    $this->table . '.vendorId' => $this->vendorId,
+                ]
+            ]);
+
+            return !is_null($id);
+        }
+
+        public function deleteFloorplan(Floorplanareas_model $floorplanAreas): bool
+        {
+            if (
+                !$this->isVendorFloorplan()
+                || !$floorplanAreas->setProperty('floorplanID', $this->id)->deleteFloorplanAreas()
+            ) return false;
+
+            return $this->delete();
+        }
+
         // public function fetch(): ?array
         // {
         //     return $this->read(
