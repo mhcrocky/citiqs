@@ -76,8 +76,48 @@
             $query .= implode(',', $allValues) ;
             $query .= ' ON DUPLICATE KEY UPDATE email = VALUES(email);';
 
-
             return $this->db->query($query);
+        }
+
+        public function fetchVendorEmails(): ?array
+        {
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId
+            ];
+
+            if ($this->id) {
+                $where[$this->table . '.id'] = $this->id;
+            }
+
+            return $this->readImproved([
+                'what' => [$this->table . '.*'],
+                'where' => $where
+            ]);
+        }
+
+        public function sendEmails(int $checkBreak, string $helperName, string $methodToCall, array $rawArguments): void
+        {
+            $emails = $this->fetchVendorEmails();
+
+            if (is_null($emails)) return;
+
+            $this->load->helper(strtolower($helperName));
+
+            $sent = 0;
+
+            while ($emails) {
+                $data = array_pop($emails);
+
+                if ($data['active'] === '0') continue;
+
+                $arguments = $rawArguments;         
+                array_unshift($prepareArguments, $data['email']);
+
+                if (empty(call_user_func_array([ucfirst($helperName), $methodToCall], $arguments))) {
+                    $sent++;
+                    if ($sent % $checkBreak === 0) sleep(1);
+                }
+            }
         }
 
     }
