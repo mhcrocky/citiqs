@@ -99,8 +99,9 @@ function importExcelFile(){
     let emails = [];
 
     $.each(jsonData, function(index, data) {
+        
         if(!validEmail(data[emailCol])){ return; }
-        emails.push(data[emailCol]);
+        emails.push(encodeURI(data[emailCol]));
     });
 
     if(emails.length < 1){
@@ -108,7 +109,15 @@ function importExcelFile(){
         return ;
     }
 
-    console.log(emails);
+    emails = JSON.stringify(emails);
+    $.post(globalVariables.baseUrl + 'customeremail/import_emails', {emails: emails}, function (data) {
+        $('#customeremail').DataTable().ajax.reload();
+        $('#importEmailsModal').modal('show');
+        data = JSON.parse(data);
+        alertify[data.status](data.message);
+    })
+
+    
 
 }
 
