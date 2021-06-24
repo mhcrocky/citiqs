@@ -2808,4 +2808,29 @@ class Ajax extends CI_Controller
         }
     }
 
+    public function deleteFloorplan($floorplanId): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $floorplanId = intval($floorplanId);
+        $delete = $this
+                    ->floorplan_model
+                        ->setObjectId($floorplanId)
+                        ->setProperty('vendorId', $_SESSION['userId'])
+                        ->deleteFloorplan($this->floorplanareas_model);
+        if ($delete) {
+            $response = [
+                'status' => '1',
+                'messages' => ['Floorplan deleted']
+            ];
+        } else {
+            $response = [
+                'status' => '0',
+                'messages' => ['Floorplan did not delete']
+            ];
+        }
+
+        echo json_encode($response);
+    }
+
 }

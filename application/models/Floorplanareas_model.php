@@ -70,7 +70,7 @@
             $this->db->where('floorplanID', $floor_plan_id);
             $this->db->where_in('id', $ids);
             $this->db->delete($this->table);
-            var_dump($this->db->last_query());
+
             return $this->db->affected_rows();
         }
 
