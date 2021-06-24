@@ -95,12 +95,13 @@
             ]);
         }
 
-        public function sendEmails(int $checkBreak, string $helperName, string $methodToCall, array $rawArguments): void
+        public function sendEmails(int $checkBreak, string $helperName, string $methodToCall, array $rawArguments, string $campaignName = ''): void
         {
             $emails = $this->fetchVendorEmails();
 
             if (is_null($emails)) return;
 
+            $this->load->model('customeremailsent_model');
             $this->load->helper(strtolower($helperName));
 
             $sent = 0;
@@ -110,13 +111,23 @@
 
                 if ($data['active'] === '0') continue;
 
-                $arguments = $rawArguments;         
+                $insertSent = [
+                    'emailId' => $data['id'],
+                    'campaign' => $campaignName,
+                ];
+
+                $arguments = $rawArguments;
                 array_unshift($arguments, $data['email']);
 
-                if (empty(call_user_func_array([ucfirst($helperName), $methodToCall], $arguments))) {
+                if (!empty(call_user_func_array([ucfirst($helperName), $methodToCall], $arguments))) {
                     $sent++;
-                    if ($sent % $checkBreak === 0) sleep(1);
+                    $insertSent['emailSent'] = '1';
+                    if ($sent % $checkBreak === 0) sleep(10);
+                } else {
+                    $insertSent['emailSent'] = '0';
                 }
+
+                $this->customeremailsent_model->setObjectFromArray($insertSent)->create();
             }
         }
 
