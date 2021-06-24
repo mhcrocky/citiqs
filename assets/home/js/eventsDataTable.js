@@ -74,28 +74,24 @@ $(document).ready(function() {
                 data: 'StartDate'
 
             },
-            /*
-            {
-
-                title: 'End Date',
-                data: 'EndDate'
-
-            },
-            */
             {
 
                 title: 'Start Time',
                 data: 'StartTime'
 
             },
-            /*
+            {
+
+                title: 'End Date',
+                data: 'EndDate'
+
+            },
             {
 
                 title: 'End Time',
                 data: 'EndTime'
 
             },
-            */
             {
 
                 title: 'Archived',
@@ -176,7 +172,10 @@ $(document).ready(function() {
 
             }
         ],
-       
+        columnDefs: [
+            { visible: false, "targets": [4, 5] }
+          ],
+
         displayLength: 25,
         createdRow: function(row, data, dataIndex){
             $(row).attr('id', 'row-' + dataIndex);
@@ -192,13 +191,13 @@ $(document).ready(function() {
                 let start_date = data[2];
                 //let end_str_timestamp = data[8] + ' ' + data[10];
                 //let end_timestamp = dayjs(end_str_timestamp);
-                let start_str_timestamp = data[2] + ' ' + data[3];
+                let start_str_timestamp = data[4] + ' ' + data[5];
                 let start_timestamp = dayjs(start_str_timestamp);
                 
                 if (val == 'past' && current_timestamp >= start_timestamp) { return true;}
-                if(val == 'archived' && data[5] == 'Yes') { return true; }
+                if(val == 'archived' && data[7] == 'Yes') { return true; }
                 if(val == 'today' && today == start_date && data[5] != 'Yes') {return true;}
-                if(val == 'future' && current_timestamp <= start_timestamp && data[5] != 'Yes') {return true;}
+                if(val == 'future' && current_timestamp <= start_timestamp && data[7] != 'Yes') {return true;}
                 
                 if(val == 'all') { return true; }
                 return false;

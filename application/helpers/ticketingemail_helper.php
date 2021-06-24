@@ -217,7 +217,7 @@
 		    $CI->load->library('email', $config);
 		    $CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
 		    $CI->email->set_newline("\r\n");
-		    $CI->email->from('support@tiqs.com');
+		    $CI->email->from($fromEmail);
 		    $CI->email->to($email);
 		    $CI->email->subject($subject);
 		    $CI->email->message($message);

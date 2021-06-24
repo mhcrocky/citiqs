@@ -93,7 +93,7 @@ class Event_model extends CI_Model {
 		$this->db->from('tbl_events');
 		$this->db->where('vendorId', $vendor_id);
 		$this->db->where('archived', '0');
-		$this->db->where('( (showInSameDate="1" AND StartDate = "' . $today . '" ) OR concat_ws(" ", StartDate, StartTime) >= "'.$current_timestamp.'")', NULL, false);
+		$this->db->where('( (showInSameDate="1" AND EndDate = "' . $today . '" ) OR concat_ws(" ", EndDate, EndTime) >= "'.$current_timestamp.'")', NULL, false);
 		$this->db->order_by('StartDate');
 		$query = $this->db->get();
 		$this->db->trans_complete();
@@ -112,7 +112,7 @@ class Event_model extends CI_Model {
 		$this->db->where('id', $eventId);
 		//$this->db->where('concat_ws(" ", StartDate, StartTime)  >=', $date);
 		if ($checkDate) {
-			$this->db->where('( (showInSameDate="1" AND StartDate = "' . $today . '" ) OR concat_ws(" ", StartDate, StartTime) >= "'.$current_timestamp.'")', NULL, false);
+			$this->db->where('( (showInSameDate="1" AND EndDate = "' . $today . '" ) OR concat_ws(" ", EndDate, EndTime) >= "'.$current_timestamp.'")', NULL, false);
 		}
 		
 		$query = $this->db->get();
