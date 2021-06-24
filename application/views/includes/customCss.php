@@ -47,21 +47,21 @@
 <?php } elseif ($this->view === 'sendbags') { ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 <?php } elseif ($this->view === 'nolabels') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/nolabaels.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/sliderstyle.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/hotel-page.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/timeline-page.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/nolabaels.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/sliderstyle.css">
 <?php } elseif ($this->view === 'nolabelsconsumer') { ?>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/hotel-page.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/timeline-page.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/nolabaels.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/sliderstyle.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/hotel-page.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/timeline-page.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/nolabaels.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/sliderstyle.css">
 <?php } elseif ($this->view === 'publicorders/makeOrder') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrder.css">
 <!-- swipe slider -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick.css">    
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/slick-theme.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick-theme.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'warehouse/vatreport' || $this->view === 'warehouse/dayreport') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/bower_components/font-awesome/css/font-awesome.min.css" />
@@ -78,26 +78,26 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 }
 </style>
 <?php } elseif ($this->view === 'warehouse/orders') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/sliderstyle.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/sliderstyle.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/orderList.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/orderList.css">
 <?php } elseif ($this->view === 'warehouse/warehouse') { ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/jquery.datetimepicker.min.css">
 <?php } elseif ($this->view === 'warehouse/products' || $this->view === 'productsonoff/index') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery.datetimepicker.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/warehouseProducts.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/warehouseProducts.css">
 <?php } elseif ($this->view === 'publicorders/checkoutOrder') { ?>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'publicorders/payOrder') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_custom.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_theme.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_select2.min.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_custom.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_theme.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_select2.min.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_style.min.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_customTwo.css">
 <style>
     /* fix problem with prePaid and posPaid modal */
     .modal-backdrop {
@@ -231,8 +231,8 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 </style>
 <?php } elseif ($this->view === 'publicorders/selectSpot') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/form-list.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/form-list.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/selectSpot.css">
 <?php } elseif ($this->view === 'warehouse/productCategories') { ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
@@ -245,54 +245,54 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <?php } elseif ($this->view === 'check424/selectVendor') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/checkin.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/checkin.css">
 <?php  } elseif ($this->view === 'check424/registerVisitor') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/checkin.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/checkin.css">
 <?php  } elseif ($this->view === 'bizdir/index') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bizdirstyle.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/bizdirstyle.css">
 <?php } elseif ($this->view === 'publicorders/selectType') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/selectSpot.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/bigsquare.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/selectSpot.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/bigsquare.css">
 <?php } elseif ($this->view === 'publicorders/makeOrderNew') { ?>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/makeOrderItemSlider.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/shop-with-slider.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/order-popup.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrderUpdate.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrderItemSlider.css" />
 <?php } elseif ($this->view === 'paysuccesslink') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'publicorders/buyerDetails') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'warehouse/design' || $this->view === 'booking/design' || $this->view === 'events/design') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/devices.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/design.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/devices.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/design.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 <?php } elseif ($this->view === 'publicorders/closed') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/closed.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/closed.css">
 <?php } elseif ($this->view === 'pos/pos') { ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/bootstrap3.min.css" />  
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/order-popup.css"/>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/shop-with-slider.css"/>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/order-popup.css"/>
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
 
-<!-- <link rel="stylesheet" href="<?php #echo base_url(); ?>assets/home/styles/payorder_custom.css" />  -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_theme.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_select2.min.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/pos.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/posPin.css" />
+<!-- <link rel="stylesheet" href="<?php #echo $this->baseUrl; ?>assets/home/styles/payorder_custom.css" />  -->
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_theme.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_select2.min.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_style.min.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_customTwo.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/pos.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/posPin.css" />
 <style>
     /* fix problem with prePaid and posPaid modal */
     .modal-backdrop {
@@ -303,28 +303,28 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     }
 </style>
 <?php } elseif (strpos($this->view, 'paysuccesslink/') !== false) { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/makeOrder.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/slickCss/custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrder.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
 
     <?php if ($this->view === 'paysuccesslink/success') { ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/animation.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/animation.css" />
     <?php } elseif ($this->view === 'paysuccesslink/pending') { ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/animation.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/animation.css" />
     <?php } ?>
 
 <?php }  elseif ($this->view  === 'blackbox/login') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/blackbox.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/blackbox.css">
 <?php } elseif ($this->view === 'publicorders/temporarilyClosed') { ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/temporarilyClosed.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/temporarilyClosed.css">
 <?php  } elseif ($this->view === 'voucher/create') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <?php  } elseif ($this->view === 'events/step-one' || $this->view === 'events/edit_event') { ?>
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <link href="<?php echo base_url(); ?>assets/css/main.jbox.min.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
+    <link href="<?php echo $this->baseUrl; ?>assets/css/main.jbox.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $this->baseUrl;?>assets/css/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <style>
     @media only screen and (max-width: 400px) {
         .upload-image {
@@ -339,7 +339,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     }
     </style>
 <?php  } elseif ($this->view === 'events/clearing_tickets') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <style>
     .b-top {
         border-top: 1px solid #dfdfdf;
@@ -388,9 +388,9 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     </style>
 <?php } elseif ($this->view === 'events/reports') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css">
     <style>
     .dataTables_wrapper .dataTables_paginate .paginate_button {
         padding: 0px !important;
@@ -434,17 +434,17 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
       url('//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg'); } 
    </style>
 <?php  } elseif ($this->view === 'pos/pos_login') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/posLogin.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/posLogin.css">
 <?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports' || $this->view === 'finance/reports' || $this->view === 'finance/clearing' || $this->view === 'marketing/targeting') { ?>
 <?php   if($this->view === 'marketing/targeting'): ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/targetingstyle.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/targetingstyle.css">
 <?php endif; ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css">
     <style>
         td.details-control {
 		  background: url("<?php echo base_url('assets/images/datatables/details_open.png') ?>") no-repeat center center;
@@ -467,12 +467,12 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     </style>
 <?php  } elseif ($this->view === 'events/step-two') { ?>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css"/>
-    <link href="<?php echo base_url();?>assets/css/quill.snow.css" rel="stylesheet">
+    <link href="<?php echo $this->baseUrl;?>assets/css/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/file-uploader.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiny_a4_format.css">
     <link href='https://css.gg/user-list.css' rel='stylesheet'>
     <style>
     .btn, .paginate_button, .btn-success, .btn-primary, .btn-danger{
@@ -483,8 +483,8 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css">
 	<link href='https://css.gg/user-list.css' rel='stylesheet'>
 	<link href='https://css.gg/pen.css' rel='stylesheet'>
     <style>
@@ -594,25 +594,25 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php  } elseif ($this->view === 'booking_agenda/shop') { ?>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css'>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/splideShop.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/flatpickrCalendar.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/splideShop.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/flatpickrCalendar.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900" rel="stylesheet">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'>
 <?php  } elseif ($this->view === 'booking_agenda2/shop') { ?>
 	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css'>
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/splideShop.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/flatpickrCalendar.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/pay-main.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/splideShop.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/flatpickrCalendar.css" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900" rel="stylesheet">
 	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'>
 
 <?php  } elseif ($this->view === 'events/shop' || $this->view === 'events/tickets') { ?>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
 
     <style>
@@ -627,14 +627,14 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     }
     </style>
 <?php  } elseif ($this->view === 'events/selectpayment') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/select-pay.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_custom.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_theme.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_select2.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_custom.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_theme.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_select2.min.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_style.min.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_customTwo.css">
     <style> 
         .header__checkout{
             position: sticky;
@@ -652,14 +652,14 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         }
     </style>
 <?php  } elseif ($this->view === 'bookings/select_payment_type' || $this->view === 'new_bookings/select_payment_type' || $this->view === 'booking_agenda/select_payment_type') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/select-pay.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/select-pay.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/pay-main.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_custom.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_theme.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_select2.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_style.min.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/payorder_customTwo.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_custom.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_theme.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_select2.min.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_style.min.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/payorder_customTwo.css">
     <style> 
     .header__checkout{
 		position: sticky;
@@ -687,19 +687,19 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 
 </style>
 <?php  } elseif ($this->view === 'events/pay') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/pay-main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/pay-main.css" />
 <?php  } elseif ($this->view === 'events/tags_stats') { ?>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
 <?php  } elseif ($this->view === 'email_designer') { ?>
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/emaildesigner/css/colpick.css" rel="stylesheet"  type="text/css"/>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/emaildesigner/css/colpick.css" rel="stylesheet"  type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/themes/default.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/template.editor.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/emaildesigner/css/responsive-table.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/emaildesigner/css/themes/default.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/emaildesigner/css/template.editor.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/emaildesigner/css/responsive-table.css" />
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiny_a4_format.css">
     <style>
     body {
         margin-left: 0px;
@@ -711,12 +711,12 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
     <style> div.dataTables_wrapper div.dataTables_length select { width: 76px !important; } </style>
 <?php  } elseif ($this->view === 'new_bookings/agenda_booking_design') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/design.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/home/styles/agenda_booking_design.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/design.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/agenda_booking_design.css"/>
 <?php  } elseif ($this->view === 'new_bookings/spots_booking') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/css/card-style.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/css/card-style.css">
 <?php  } elseif ($this->view === 'new_bookings/index') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/agendaCalendar.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/agendaCalendar.css">
     <style>
     .legend {
         display: none;
@@ -751,41 +751,41 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <?php  } elseif ($this->view === 'appsettings/index') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'events/tags') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'events/inputs') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'voucher/index') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiny_a4_format.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/file-uploader.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
 <?php  } elseif ($this->view === 'events/marketing') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/file-uploader.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiny_a4_format.css">
 
 <?php } elseif ($this->view === 'templates/updateTemplate') { ?>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiny_a4_format.css">
 <?php } elseif ($this->view === 'voucher/templates/updateTemplate') { ?>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/tiny_a4_format.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiny_a4_format.css">
 
 <?php  } elseif ($this->view === 'voucher/send') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/cdn/css/multiselect.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/cdn/css/multiselect.css">
     <style>
         #voucherId_multiSelect {
             width: 220px;
@@ -793,11 +793,11 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 		}
     </style>
 <?php  } elseif ($this->view === 'customer_panel/manual_reservations') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'events/guestlist') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/file-uploader.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/file-uploader.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <style>
     .btn-export {
@@ -815,7 +815,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 
     </style>
 <?php  } elseif ($this->view === 'qrcodeview/index') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'translation-table') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
@@ -823,12 +823,12 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme"/>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme"/>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css">
 <?php } elseif ($this->view === 'businessreport/paymentMethods') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <?php }  elseif ($this->view === 'ladnigPages/template') { ?>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/home/styles/landingPages.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/landingPages.css" />
 <?php } elseif ($this->view === 'publicorders/makeOrder2021') { ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css" />
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -836,41 +836,41 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" />
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/slickCss/slick.css" />
-    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/slickCss/slick-theme.css"/>
-    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/slickCss/shop-with-slider.css"/>
-    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/order-popup.css"/>
-    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/makeOrderUpdate.css" />
-    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/makeOrderItemSlider.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo $this->baseUrl; ?>assets/home/slickCss/slick.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo $this->baseUrl; ?>assets/home/slickCss/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php #echo $this->baseUrl; ?>assets/home/slickCss/shop-with-slider.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php #echo $this->baseUrl; ?>assets/home/styles/order-popup.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php #echo $this->baseUrl; ?>assets/home/styles/makeOrderUpdate.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo $this->baseUrl; ?>assets/home/styles/makeOrderItemSlider.css" />
     -->
-    <link rel="stylesheet" type="text/css" href="<?php #echo base_url() ?>assets/home/styles/makeOrder2021.css" />
+    <link rel="stylesheet" type="text/css" href="<?php #echo $this->baseUrl; ?>assets/home/styles/makeOrder2021.css" />
 <?php } elseif ($this->view === 'events/financial_report'){ ?>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css" />
 <?php } elseif ($this->view === 'customer_panel/financial_report'){ ?>
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/query-builder.default.css" id="qb-theme" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css" />
     <style>
         .modal-body {
             overflow: hidden !important;
         }
     </style>
 <?php } elseif ($this->view === 'scanner/scanner') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/scanner.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/scanner.css" />
 <?php } elseif ($this->view === 'bookings/timeslot_booking') { ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/home/styles/timeslotBooking.css" />
-<?php } elseif ($this->view === 'floorplans/addFloorplan') { ?>
-    <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/floorplan/assets/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/timeslotBooking.css" />
+<?php } elseif ($this->view === 'floorplans/manageFloorplan') { ?>
+    <link rel="stylesheet" type="text/css"  href="<?php echo $this->baseUrl; ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/floorplan/assets/css/main.css" />
 <?php } elseif ($this->view === 'login/resendActivationLink') { ?>
-    <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/home/styles/resend_activation_link.css" />
+    <link rel="stylesheet" type="text/css"  href="<?php echo $this->baseUrl; ?>assets/home/styles/resend_activation_link.css" />
 <?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css"  href="<?php echo base_url(); ?>assets/home/styles/buyerOrders.css" />
+    <link rel="stylesheet" type="text/css"  href="<?php echo $this->baseUrl; ?>assets/home/styles/buyerOrders.css" />
 <?php }  ?>

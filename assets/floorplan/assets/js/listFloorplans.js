@@ -5,14 +5,7 @@ function showFloorplans(floorplans) {
     let floorplanLenght = floorplans.length;
     let floorplan
     for( i = 0; i < floorplanLenght; i++) {
-        floorplan = new FloorShow({
-            imgEl: $('#' + floorplans[i]['imageId']),
-            floorElementID: floorplans[i]['canvasId'],
-            floorplanID: floorplans[i].floorplanID,
-            floor_name: floorplans[i].floor_name,
-            areas: floorplans[i].areas,
-            canvasJSON: floorplans[i].canvasJSON,    
-        });
+        floorplan = showFloorplan(floorplans[i]);
 
         floorplansGlobals['floorplanObjects'].push(floorplan);
     }
