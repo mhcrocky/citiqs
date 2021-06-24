@@ -19,6 +19,10 @@ $(document).ready(function () {
         data: 'bookandpay_id'
       },
       {
+        title: 'Event',
+        data: 'eventname'
+      },
+      {
         title: 'Buyer Name',
         data: 'name'
       },
