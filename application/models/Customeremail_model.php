@@ -44,6 +44,7 @@
 
         public function updateValidate(array $data): bool
         {
+            $this->load->helper('validate_data_helper');
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
             if (isset($data['email']) && !Validate_data_helper::validateEmail($data['email'])) return false;            
