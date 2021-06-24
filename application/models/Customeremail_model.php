@@ -111,7 +111,7 @@
                 if ($data['active'] === '0') continue;
 
                 $arguments = $rawArguments;         
-                array_unshift($prepareArguments, $data['email']);
+                array_unshift($arguments, $data['email']);
 
                 if (empty(call_user_func_array([ucfirst($helperName), $methodToCall], $arguments))) {
                     $sent++;
