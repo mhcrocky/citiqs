@@ -1325,7 +1325,7 @@ class Events extends BaseControllerWeb
             'message' => 'Emails are not sent successfully!'
         ];
 
-        if(Ticketingemail_helper::sendEmailReservation($reservations, true, true, false, '', $emailId)){
+        if(Ticketingemail_helper::sendEmailReservation($reservations, false, true, false, '', $emailId)){
             $response = [
                 'status' => 'success',
                 'message' => 'Emails are sent successfully!'
