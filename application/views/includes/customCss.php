@@ -772,6 +772,18 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
+<?php  } elseif ($this->view === 'events/marketing') { ?>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/file-uploader.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
+<?php  } elseif ($this->view === 'customeremail/index') { ?>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/file-uploader.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
 	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/tiny_a4_format.css">
 
