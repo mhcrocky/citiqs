@@ -7,22 +7,25 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-    Class List_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+
+    Class Campaign_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
 
         public $id;
         public $vendorId;
-        public $list;
+        public $templateId;
+        public $campaign;
+        public $description;
         public $active;
 
-        private $table = 'tbl_lists';
+        private $table = 'tbl_campaigns';
 
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateNumber($value)) return;
 
-            if ($property === 'id' || $property === 'vendorId') {
+            if ($property === 'id' || $property === 'vendorId' || $property === 'templateId') {
                 $value = intval($value);
             }
 
@@ -36,7 +39,7 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['vendorId']) && isset($data['list'])) {
+            if (isset($data['vendorId']) && isset($data['templateId']) && isset($data['campaign'])) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -47,23 +50,27 @@
             $this->load->helper('validate_data_helper');
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
-            if (isset($data['list']) && !Validate_data_helper::validateStringImproved($data['list'])) return false;
+            if (isset($data['templateId']) && !Validate_data_helper::validateInteger($data['templateId'])) return false;
+            if (isset($data['campaign']) && !Validate_data_helper::validateString($data['campaign'])) return false;
+            if (isset($data['description']) && !Validate_data_helper::validateStringImproved($data['description'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
+
             return true;
         }
+
 
         /**
          * checkIsExists
          *
-         * This method checks is list with set value already exists for vendor with venodrId
+         * This method checks is campaign with set value already exists for vendor with venodrId
          * @see AbstractCrud_model::readImproved
          * @return boolean
          */
         private function checkIsExists(): bool
         {
             $where = [
-                $this->table . '.vendorId' => $this->vendorId,
-                $this->table . '.list' => $this->list,
+                $this->table. '.vendorId' => $this->vendorId,
+                $this->table. '.campaign' => $this->campaign,
             ];
 
             if (!is_null($this->id)) {
@@ -71,7 +78,7 @@
             }
 
             $id = $this->readImproved([
-                'what' => ['id'],
+                'what' => [$this->table. '.id'],
                 'where' => $where
             ]);
 
@@ -79,14 +86,14 @@
         }
 
         /**
-         * isVendorList
+         * isVendorCampaign
          *
-         * Method checks is this list belong to this vendor
+         * Method checks is this campaign belong to this vendor
          *
          * @see AbstractCrud_model::readImproved
          * @return boolean
          */
-        private function isVendorList(): bool
+        private function isVendorCampaign(): bool
         {
             $id = $this->readImproved([
                 'what' => [$this->table. '.id'],
@@ -100,68 +107,69 @@
         }
 
         /**
-         * insertList
+         * insertCampaign
          *
-         * Method inserts new list for vendor.
-         *
+         * Method inserts new campaign for vendor.
          * $data = [
-         *      'vendorId' => $vendorIdValue,   // mandatory
-         *      'list' => $listValue,           // mandatory
-         *      'active' => $active             // not mandatory default is 1
+         *      'vendorId' => $vendorId,        // mandatory
+         *      'campaign' => $campaign         // mandatory
+         *      'templateId' => $templateId     // mandatory
+         *      'description' => $description   // not mandatory
+         *      'active' => $campaign           // not mandatory
          * ]
          *
-         * @access public
-         * @see List_model::checkIsExists
+         * @see Campaign_model::checkIsExists
          * @see AbstractSet_model::setObjectFromArray
          * @see AbstractCrud_model::create
+         * @access public
          * @param array $data
          * @return boolean
          */
-        public function insertList(array $data): bool
+        public function insertCampaign(array $data): bool
         {
             $this->setObjectFromArray($data);
-            // first we check is list with name already exists for this vendor
             return $this->checkIsExists() ? false : $this->create();
         }
 
+
         /**
-         * updateList
+         * updateCampaign
          *
-         * Method updates list
+         * Method updates campaign
          *
          * $data = [
-         *      'vendorId' => $vendorIdValue,    // mandatory field
-         *      'list' => $listValue             // not mandatory field
-         *      'active' => $active              // not mandatory default is 1
+         *      'vendorId' => $vendorId,        // mandatory
+         *      'campaign' => $campaign         // not mandatory
+         *      'templateId' => $templateId     // not mandatory
+         *      'description' => $description   // not mandatory
+         *      'active' => $campaign           // not mandatory
          * ]
+         *
          * $this->id MUST be set. See $this->setObjectId($id)), it is defined in application/abstract/AbstractSet_model.php
          *
-         *
-         * @see List_model::checkIsListExists
-         * @see List_model::isVendorList
+         * @see Campaign_model::checkIsExists
          * @see AbstractSet_model::setObjectFromArray
          * @see AbstractCrud_model::update
          * @param integer $id
          * @param array $data
          * @return boolean
          */
-        public function updateList(array $data): bool
+        public function updateCampaign(array $data): bool
         {
             $this->setObjectFromArray($data);
-            return ($this->checkIsExists() || !$this->isVendorList()) ? false : $this->update();
+            return ($this->checkIsExists() || !$this->isVendorCampaign())? false : $this->update();
         }
 
-
         /**
-         * fetchVendorLists
+         * fetchCampaigns
          *
-         * Method fetches all vendor's lists
+         * Method fetches vendor's campaigns.
          * $this->vendorId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
          *
          * @see AbstractCrud_model::readImproved
          * @return array|null
          */
-        public function fetchVendorLists(): ?array
+        public function fetchCampaigns(): ?array
         {
             return $this->readImproved([
                 'what' => [$this->table . '.*'],
@@ -169,6 +177,5 @@
                     $this->table . '.vendorId' => $this->vendorId
                 ]
             ]);
-        }       
-
+        }
     }

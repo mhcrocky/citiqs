@@ -51,6 +51,14 @@
             return true;
         }
 
+        /**
+         * checkIsExists
+         *
+         * This method checks is already inserted row with this listId and emailId
+         *
+         * @see AbstractCrud_model::readImproved
+         * @return boolean
+         */
         private function checkIsExists(): bool
         {
             $id = $this->readImproved([
@@ -69,10 +77,13 @@
          *
          * Method inserts new list for vendor.
          * $data = [
-         *      'listId => $listId, // mandatory
-         *      'emailId => emailId // mandatory
+         *      'listId' => $listId,    // mandatory
+         *      'emailId' => $emailId   // mandatory
          * ]
          *
+         * @see Emaillist_model::checkIsExists
+         * @see AbstractSet_model::setObjectFromArray
+         * @see AbstractCrud_model::create
          * @access public
          * @param array $data
          * @return boolean
@@ -88,14 +99,16 @@
         /**
          * deleteList
          *
-         * Method deletes list. $this->listId must be set
+         * Method deletes list.
+         * $this->listId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
          *
+         * @see AbstractCrud_model::customDelete
          * @return boolean
          */
         public function deleteList(): bool
         {
             $where = [
-                $this->table . '.listId' => $this->id
+                $this->table . '.listId' => $this->listId
             ];
 
             return $this->customDelete($where);
@@ -104,8 +117,10 @@
         /**
          * deleteEmailFromList
          *
-         * Method delets list. $this->id must be set
+         * Method delets list
+         * $this->id MUST be set. See $this->setObjectId($id)), it is defined in application/abstract/AbstractSet_model.php
          *
+         * @see AbstractCrud_model::delete
          * @return boolean
          */
         public function deleteEmailFromList(): bool
@@ -113,13 +128,13 @@
             return $this->delete();
         }
 
-
         /**
          * getListEmails
          *
-         * Method return emails on list.
-         * $this->listId MUST be set.
+         * Method returns emails on list.
+         * $this->listId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
          *
+         * @see AbstractCrud_model::readImproved
          * @return array|null
          */
         public function getListEmails(): ?array
