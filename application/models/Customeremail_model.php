@@ -13,6 +13,7 @@
         public $id;
         public $vendorId;
         public $email;
+        public $name;
         public $active;
 
         private $table = 'tbl_customer_emails';
@@ -47,7 +48,8 @@
             $this->load->helper('validate_data_helper');
             if (!count($data)) return false;
             if (isset($data['vendorId']) && !Validate_data_helper::validateInteger($data['vendorId'])) return false;
-            if (isset($data['email']) && !Validate_data_helper::validateEmail($data['email'])) return false;            
+            if (isset($data['name']) && !Validate_data_helper::validateStringImproved($data['name'])) return false;
+            if (isset($data['email']) && !Validate_data_helper::validateEmail($data['email'])) return false;
             if (isset($data['active']) && !($data['active'] === '1' || $data['active'] === '0')) return false;
             return true;
         }
