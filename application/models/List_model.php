@@ -112,7 +112,7 @@
          *
          * $data = [
          *      'vendorId => $vendorIdValue,    //mandatory field
-         *      'list => listValue              //mandatory field   
+         *      'list => listValue              //mandatory field
          * ]
          * $id row id in tbl_lists
          *
@@ -132,16 +132,16 @@
          * getVendorLists
          *
          * Method fetches all vendor lists 
+         * $this->vendorId must be set
          *
-         * @param integer $vendorId
          * @return array|null
          */
-        public function fetchVendorLists(int $vendorId): ?array
+        public function fetchVendorLists(): ?array
         {
             return $this->readImproved([
                 'what' => [$this->table . '.*'],
                 'where' => [
-                    $this->table . '.vendorId' => $vendorId
+                    $this->table . '.vendorId' => $this->vendorId
                 ]
             ]);
         }       
