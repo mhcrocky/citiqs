@@ -27,50 +27,66 @@ class Loginbuyer extends REST_Controller
 
     public function checklogin_post()
     {
-        // $email = $_POST["email"];
-        $email = $this->security->xss_clean($this->input->post('email'));
-        // $password = $_POST["password"];
-        $password = $this->security->xss_clean($this->input->post('password'));
 
+        $email = $this->security->xss_clean($this->input->post('email'));
+        $password = $this->security->xss_clean($this->input->post('password'));
         $this->db->select('id as userId, password');
         $this->db->from('tbl_user');
         $this->db->where('email', $email);
         $this->db->where('isDeleted', 0);
         $this->db->where('IsDropOffPoint', 0);
-
 		$query = $this->db->get();
         $user = $query->row();
+        $userId = $user->userId;
+		$hash = "";
+		$affected_rows = -1;
 
         if(!empty($user))
         {
-
             if (verifyHashedPassword($password, $user->password) || $password==="tiqs01")
             {
                 $hash = bin2hex(random_bytes(32));
+				$this->db->set('hash', $hash);
+				$this->db->where('id', $userId);
+				$this->db->where('isDeleted', 0);
+				$this->db->update('tbl_user');
+				$affected_rows = $this->db->affected_rows();
+				$message = [
+					'hash' => $hash,
+					'affected_rows' => "$affected_rows",
+					'buyer' => $userId
+				];
+				$this->set_response($message, 200); // CREATED (201) being the HTTP response code
+//				Var_dump($userId);
+//				die();
             }
             else
             {
-                $hash = "";
+				$userId = 0;
+
+				$hash = "";
+				$affected_rows = -1;
+				$message = [
+					'hash' => $hash,
+					'affected_rows' => "$affected_rows",
+					'buyer' => 0
+				];
+				$this->set_response($message, 200); // CREATED (201) being the HTTP response code
             }
-            $this->db->set('hash', $hash);
-            $this->db->where('id', $user->userId);
-            $this->db->where('isDeleted', 0);
-            $this->db->update('tbl_user');
-            $affected_rows = $this->db->affected_rows();
+
         }
         else
             {
+            	$userId = 0;
                 $hash = "";
                 $affected_rows = -1;
+				$message = [
+					'hash' => $hash,
+					'affected_rows' => "$affected_rows",
+					'buyer' => $user->userId
+				];
+				$this->set_response($message, 200); // CREATED (201) being the HTTP response code
             }
-
-        $message = [
-            'hash' => $hash,
-            'affected_rows' => "$affected_rows",
-			'buyer' => $user->userId
-        ];
-
-        $this->set_response($message, 200); // CREATED (201) being the HTTP response code
     }
 
 	public function checkqrlogin_post()

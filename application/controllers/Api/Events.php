@@ -99,6 +99,34 @@ class Events extends REST_Controller
 		$this->response($result, 200);
 	}
 
+	public function Ticketsbuyer_post()
+	{
+//		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
+//		$eventid = $this->security->xss_clean($this->input->post('eventId'));
+//		$changetimein = $this->security->xss_clean($this->input->post('changeTimeIn'));
+//		$changetimeout = $this->security->xss_clean($this->input->post('changeTimeOut'));
+
+		$email = $this->security->xss_clean($this->input->post('email'));
+//		echo var_dump($vendorId);
+//		echo var_dump($eventid);
+//		echo var_dump($changetimein);
+//		echo var_dump($changetimeout);
+
+//		die();
+
+		$this->db->where('email', $email);
+//		$this->db->where('eventid', $eventid);
+//		$this->db->where('scannedtime >=', date_create($changetimein)->format('Y-m-d H:i:s'));
+//		$this->db->where('scannedtime <=', date_create($changetimeout)->format('Y-m-d H:i:s'));
+
+		$this->db->from('tbl_bookandpay');
+		$query = $this->db->get();
+		$result = $query->result_array();
+		$this->response($result, 200);
+	}
+
+
+
 	public function index_get()
 	{
 		$data = "No function called like this";
