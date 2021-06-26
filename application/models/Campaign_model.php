@@ -157,7 +157,7 @@
         public function updateCampaign(array $data): bool
         {
             $this->setObjectFromArray($data);
-            return ($this->checkIsExists() || !$this->isVendorCampaign())? false : $this->update();
+            return ($this->checkIsExists() || !$this->isVendorCampaign()) ? false : $this->update();
         }
 
         /**

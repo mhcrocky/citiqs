@@ -7,21 +7,21 @@
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-    Class Emaillist_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
+    Class Campaignlist_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
 
         public $id;
         public $listId;
-        public $emailId;
+        public $campaignId;
 
-        private $table = 'tbl_emails_lists';
+        private $table = 'tbl_campaigns_lists';
 
         protected function setValueType(string $property,  &$value): void
         {
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateNumber($value)) return;
 
-            if ($property === 'id' || $property === 'listId' || $property === 'emailId') {
+            if ($property === 'id' || $property === 'listId' || $property === 'campaignId') {
                 $value = intval($value);
             }
 
@@ -35,7 +35,7 @@
 
         public function insertValidate(array $data): bool
         {
-            if (isset($data['listId']) && isset($data['emailId'])) {
+            if (isset($data['listId']) && isset($data['campaignId'])) {
                 return $this->updateValidate($data);
             }
             return false;
@@ -46,7 +46,7 @@
             $this->load->helper('validate_data_helper');
             if (!count($data)) return false;
             if (isset($data['listId']) && !Validate_data_helper::validateInteger($data['listId'])) return false;
-            if (isset($data['emailId']) && !Validate_data_helper::validateInteger($data['emailId'])) return false;
+            if (isset($data['campaignId']) && !Validate_data_helper::validateInteger($data['campaignId'])) return false;
 
             return true;
         }
@@ -54,7 +54,7 @@
         /**
          * checkIsExists
          *
-         * This method checks is already inserted row with this listId and emailId
+         * This method checks is already inserted row with this listId and campaignId
          *
          * @see AbstractCrud_model::readImproved
          * @return boolean
@@ -65,7 +65,7 @@
                 'what' => [$this->table. '.id'],
                 'where' => [
                     $this->table. '.listId' => $this->listId,
-                    $this->table. '.emailId' => $this->emailId,
+                    $this->table. '.campaignId' => $this->campaignId,
                 ]
             ]);
 
@@ -73,12 +73,12 @@
         }
 
         /**
-         * insertEmailList
+         * insertCampaignList
          *
-         * Method inserts new email list for vendor.
+         * Method inserts new campaign list for vendor.
          * $data = [
-         *      'listId' => $listId,    // mandatory
-         *      'emailId' => $emailId   // mandatory
+         *      'listId' => $listId,            // mandatory
+         *      'campaignId' => $campaignId     // mandatory
          * ]
          *
          * @see Emaillist_model::checkIsExists
@@ -88,7 +88,7 @@
          * @param array $data
          * @return boolean
          */
-        public function insertEmailList(array $data): bool
+        public function insertCampaignList(array $data): bool
         {
             $this->setObjectFromArray($data);
 
@@ -97,25 +97,25 @@
 
 
         /**
-         * deleteList
+         * deleteCampaign
          *
-         * Method deletes list.
-         * $this->listId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
+         * Method deletes campaignId.
+         * $this->campaignId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
          *
          * @see AbstractCrud_model::customDelete
          * @return boolean
          */
-        public function deleteList(): bool
+        public function deleteCampaign(): bool
         {
             $where = [
-                $this->table . '.listId' => $this->listId
+                $this->table . '.campaignId' => $this->campaignId
             ];
 
             return $this->customDelete($where);
         }
 
         /**
-         * deleteEmailFromList
+         * deleteListFromCampaign
          *
          * Method delets list
          * $this->id MUST be set. See $this->setObjectId($id)), it is defined in application/abstract/AbstractSet_model.php
@@ -123,37 +123,37 @@
          * @see AbstractCrud_model::delete
          * @return boolean
          */
-        public function deleteEmailFromList(): bool
+        public function deleteListFromCampaign(): bool
         {
             return $this->delete();
         }
 
         /**
-         * getListEmails
+         * getCampaignLists
          *
-         * Method returns emails on list.
-         * $this->listId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
+         * Method returns campaign's lists.
+         * $this->campaignId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
          *
          * @see AbstractCrud_model::readImproved
          * @return array|null
          */
-        public function getListEmails(): ?array
+        public function getCampaignLists(): ?array
         {
             return $this->readImproved([
                 'what' => [
-                    'tbl_customer_emails.id AS customerEmailId',
-                    'tbl_customer_emails.email AS customerEmail',
-                    'tbl_customer_emails.name AS customerName',
-                    'tbl_customer_emails.active AS customerActive',
+                    'tbl_campaigns.id AS campaignId',
+                    'tbl_campaigns.campaign AS campaignName',
+                    'tbl_campaigns.description AS campaignDescription',
+                    'tbl_campaigns.active AS campaignActive',
                     'tbl_lists.id AS listId',
                     'tbl_lists.list AS list',
                     'tbl_lists.active AS listActive',
                 ],
                 'where' => [
-                    $this->table . '.listId' => $this->listId
+                    $this->table . '.campaignId' => $this->campaignId
                 ],
                 'joins' => [
-                    ['tbl_customer_emails', 'tbl_customer_emails.id = ' . $this->table . '.emailId', 'INNER'],
+                    ['tbl_campaigns', 'tbl_campaigns.id = ' . $this->table . '.campaignId', 'INNER'],
                     ['tbl_lists', 'tbl_lists.id = ' . $this->table . '.listId', 'INNER'],
                 ]
             ]);
