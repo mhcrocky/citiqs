@@ -52,16 +52,37 @@ $(document).ready(function () {
         data: "transactionId",
       },
       {
-        title: 'Resend',
+        title: 'Exists in Bookandpay',
         data: null,
         "render": function(data, type, row) {
+          if(data.bookandpay_id == null){
+            return 'No';
+          }
+          return 'Yes';
+        }
+      },
+      {
+        title: 'Send',
+        data: null,
+        "render": function(data, type, row) {
+          if(data.bookandpay_id == null){
+            return '<button class="btn btn-primary" onclick="sendTicket(\''+data.id+'\')">Send</button>';
+          }
           return '<button class="btn btn-primary" onclick="confirmResendTicket(\''+data.transactionId+'\')">Resend</button>';
+          
+        }
+      },
+      {
+        title: 'Delete',
+        data: null,
+        "render": function(data, type, row) {
+          return '<button class="btn btn-danger" onclick="confirmDelete(\''+data.id+'\')">Delete</button>';
         }
       }
       
       
     ],
-    order: [[1, 'asc']]
+    order: [[0, 'asc']]
   });
 
   $('#report_filter').addClass('text-right');
@@ -123,16 +144,20 @@ function importExcelFile(){
       jsonData: $('#jsonData').text(),
   }
 
+  if(data.guestName == "" || data.guestEmail == "" || data.ticketQuantity == "" || data.ticketId == ""){
+    alertify['error']('All fields are required!');
+    return ;
+  }
+
   //console.log(data);
 
   $.post(globalVariables.baseUrl + "events/import_guestlist", data, function(data){
       $("#guestlist").DataTable().ajax.reload();
       $('#resetUpload').click();
-      $('#fileForm').removeClass('d-none');
-      $('#filterFormSection').addClass('d-none');
-      $('#uploadExcel').removeClass('d-none');
-      $('#importExcelFile').addClass('d-none');
-      $('#guestlistModal').modal('toggle');
+      $('.fileForm').removeClass('d-none');
+      $('.filterFormSection').addClass('d-none');
+      $('#closeGuestModal').click();
+
       $('#tab01').click();
       alertify['success']('The guest list is imported successfully');
   });
@@ -167,6 +192,30 @@ function confirmResendTicket(transactionId){
 });
 }
 
+function confirmDelete(id, multiple = false){
+  bootbox.confirm({
+    message: "Are you sure?",
+    buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-success'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-danger'
+        }
+    },
+    callback: function (result) {
+      if(result === false) return ;
+      if(multiple){
+        multipleDelete();
+      } else {
+        deleteGuest(id);
+      }
+    }
+});
+}
+
 function resendTicket(transactionId, email = '', sendTo = 0) {
   let data = {
     transactionId: transactionId,
@@ -182,6 +231,28 @@ function resendTicket(transactionId, email = '', sendTo = 0) {
       } else {
         alertify.error("Something went wrong!");
       }
+    }
+  );
+}
+
+function deleteGuest(id) {
+
+  $.post(globalVariables.baseUrl + "events/delete_guest",{id: id},
+    function (data) {
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+      $("#guestlist").DataTable().ajax.reload();
+    }
+  );
+}
+
+function sendTicket(id) {
+
+  $.post(globalVariables.baseUrl + "events/send_guest_ticket",{id: id},
+    function (data) {
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+      $("#guestlist").DataTable().ajax.reload();
     }
   );
 }

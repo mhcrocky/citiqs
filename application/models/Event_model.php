@@ -43,6 +43,23 @@ class Event_model extends CI_Model {
 		return $this->db->insert('tbl_guestlist',$data);
 	}
 
+	public function delete_guest($vendorId, $id)
+	{
+		$where = ['id' => $id, 'vendorId' => $vendorId];
+		$this->db->delete('tbl_guestlist', $where);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+	public function get_guest_by_id($vendorId, $guestId)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_guestlist');
+		$this->db->where("id", $guestId);
+		$this->db->where("vendorId", $vendorId);
+		$query = $this->db->get();
+		return ($query->num_rows() > 0) ? $query->first_row() : false;
+	}
+
 	public function save_multiple_guests($data)
 	{
 		return $this->db->insert_batch('tbl_guestlist',$data);
@@ -938,11 +955,11 @@ class Event_model extends CI_Model {
 
 	public function get_guestlist($eventId, $vendorId)
 	{
-		$this->db->select('tbl_guestlist.*');
+		$this->db->select('tbl_guestlist.*, tbl_bookandpay.id as bookandpay_id');
 		$this->db->from('tbl_guestlist');
-		$this->db->join('tbl_events', 'tbl_events.id = tbl_guestlist.eventId', 'left');
-		$this->db->where('tbl_events.id', $eventId);
-		$this->db->where('tbl_events.vendorId', $vendorId);
+		$this->db->join('tbl_bookandpay', 'tbl_bookandpay.TransactionID = tbl_guestlist.transactionId', 'left');
+		$this->db->where('vendorId', $vendorId);
+		$this->db->group_by('tbl_guestlist.id');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -1442,7 +1459,41 @@ class Event_model extends CI_Model {
 
 		return $newData;
 
-	} 
+	}
+	
+	public function save_guest_to_bookandpay($vendorId, $guestId){
+		$guest = $this->get_guest_by_id($vendorId, $guestId);
+		
+		if(!$guest) return false;
+		$dt = new DateTime( 'now');
+        $bookdatetime = $dt->format('Y-m-d H:i:s');
+		$ticket = $this->get_ticket_by_id($vendorId, $guest->ticketId);
+
+		$booking = [
+			'customer' => $vendorId,
+			'eventId' => $guest->ticketId,
+			'eventdate' => date('Y-m-d', strtotime($ticket->StartDate)),
+			'bookdatetime' => $bookdatetime,
+			'timefrom' => $ticket->StartTime,
+			'timeto' => $ticket->EndTime,
+			'price' => $ticket->ticketPrice,
+            'ticketFee' => ($ticket->ticketFee != null) ? $ticket->ticketFee : 0,
+            'paid' => 3,
+			'numberofpersons' => 1,
+			'name' => $guest->guestName,
+			'email' => $guest->guestEmail,
+			'ticketDescription' => $ticket->ticketDescription,
+			'ticketType' => $ticket->ticketType,
+            'guestlist' => 1,
+            'TransactionID' => $guest->transactionId,
+            'isTicket' => 1
+        ];
+
+		//var_dump($booking);
+
+		return $this->save_guest_reservations($booking, $guest->ticketQuantity);
+		
+	}
 
 	private function generateNewVoucher() : string
 	{
