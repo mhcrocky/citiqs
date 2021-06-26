@@ -133,14 +133,16 @@
          *
          * Method returns emails on list.
          * $this->listId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
+         * Argument $what is array with properties to fetch. It is not mandatory, by default is empty array
          *
+         * @param array $what not mandatory, default is []
          * @see AbstractCrud_model::readImproved
          * @return array|null
          */
-        public function getListEmails(): ?array
+        public function getListEmails(array $what = []): ?array
         {
-            return $this->readImproved([
-                'what' => [
+            if (empty($what)) {
+                $what = [
                     'tbl_customer_emails.id AS customerEmailId',
                     'tbl_customer_emails.email AS customerEmail',
                     'tbl_customer_emails.name AS customerName',
@@ -148,9 +150,51 @@
                     'tbl_lists.id AS listId',
                     'tbl_lists.list AS list',
                     'tbl_lists.active AS listActive',
-                ],
+                ];
+            }
+
+            return $this->readImproved([
+                'what' => $what,
                 'where' => [
                     $this->table . '.listId' => $this->listId
+                ],
+                'joins' => [
+                    ['tbl_customer_emails', 'tbl_customer_emails.id = ' . $this->table . '.emailId', 'INNER'],
+                    ['tbl_lists', 'tbl_lists.id = ' . $this->table . '.listId', 'INNER'],
+                ]
+            ]);
+        }
+
+
+        /**
+         * getActiveListEmails
+         *
+         * Method returns active emails on list.
+         * $this->listId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
+         * Argument $what is array with properties to fetch. It is not mandatory, by default is empty array
+         *
+         * @param array $what not mandatory, default is []
+         * @see AbstractCrud_model::readImproved
+         * @return array|null
+         */
+        public function getActiveListEmails(array $what = []): ?array
+        {
+            if (empty($what)) {
+                $what = [
+                    'tbl_customer_emails.id AS customerEmailId',
+                    'tbl_customer_emails.email AS customerEmail',
+                    'tbl_customer_emails.name AS customerName',
+                    'tbl_lists.id AS listId',
+                    'tbl_lists.list AS list',
+                    'tbl_lists.active AS listActive',
+                ];
+            }
+
+            return $this->readImproved([
+                'what' => $what,
+                'where' => [
+                    $this->table . '.listId' => $this->listId,
+                    'tbl_customer_emails.active' => '1'
                 ],
                 'joins' => [
                     ['tbl_customer_emails', 'tbl_customer_emails.id = ' . $this->table . '.emailId', 'INNER'],

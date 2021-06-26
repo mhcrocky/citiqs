@@ -134,11 +134,13 @@
          * Method returns campaign's lists.
          * $this->campaignId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php
          *
+         * @param array $where
          * @see AbstractCrud_model::readImproved
          * @return array|null
          */
-        public function getCampaignLists(): ?array
+        public function getCampaignLists(array $where = []): ?array
         {
+            $where[$this->table . '.campaignId'] = $this->campaignId;
             return $this->readImproved([
                 'what' => [
                     'tbl_campaigns.id AS campaignId',
@@ -149,9 +151,7 @@
                     'tbl_lists.list AS list',
                     'tbl_lists.active AS listActive',
                 ],
-                'where' => [
-                    $this->table . '.campaignId' => $this->campaignId
-                ],
+                'where' => $where,
                 'joins' => [
                     ['tbl_campaigns', 'tbl_campaigns.id = ' . $this->table . '.campaignId', 'INNER'],
                     ['tbl_lists', 'tbl_lists.id = ' . $this->table . '.listId', 'INNER'],
