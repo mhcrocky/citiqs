@@ -215,4 +215,30 @@
 
             return self::sendEmail($ambasador['email'], $subject, $message);
         }
+
+
+        public static function sendCampaignEmail(
+            int $campaignId,
+            string $email,
+            string $subject,
+            string $message
+        ): bool
+        {
+            $message .= ' Campaign id is: ' . $campaignId;
+            $config = self::getConfig();
+            $CI =& get_instance();
+            $CI->load->library('email', $config);
+            $CI->email->clear(TRUE);
+            $CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
+            $CI->email->set_newline("\r\n");
+            $CI->email->from(EMAIL_FROM);
+            $CI->email->to($email);
+            $CI->email->subject($subject);
+            $CI->email->message($message);
+
+            $send = $CI->email->send();
+
+            return $send;
+        }
+
     }

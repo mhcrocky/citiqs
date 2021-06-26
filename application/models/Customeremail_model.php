@@ -56,28 +56,26 @@
 
         public function insertEmails(array $data): bool
         {
-            $keys = '';
+            $keys = array_keys($data[0]);
             $allValues = [];
 
             foreach($data as $insert) {
-                if (!$this->insertValidate($insert)) continue;
-                if (empty($keys)) $keys = array_keys($insert);
+                if (!$this->insertValidate($insert) || $this->checkIsExists(intval($insert['vendorId']), $insert['email'])) continue;
 
                 $values = array_values($insert);
                 $escapeValues = array_map(function($value) {
                     return $this->db->escape($value);
                 }, $values);
-                array_push($allValues, '(' . implode(',', $escapeValues) . ')');;
+                array_push($allValues, '(' . implode(',', $escapeValues) . ')');
             }
 
-            if (!$keys || empty($allValues)) return false;
+            if (empty($allValues)) return false;
 
             $query =  '';
             $query  = 'INSERT INTO ' . $this->getThisTable() . ' ';
             $query .= '(' . implode(',' , $keys) . ')  ';
             $query .= 'VALUES ';
-            $query .= implode(',', $allValues) ;
-            $query .= ' ON DUPLICATE KEY UPDATE email = VALUES(email);';
+            $query .= implode(',', $allValues) . ';';
 
             return $this->db->query($query);
         }
@@ -98,40 +96,17 @@
             ]);
         }
 
-        public function sendEmails(int $checkBreak, string $helperName, string $methodToCall, array $rawArguments, string $campaignName = ''): void
+        private function checkIsExists(int $vendorId, string $email): bool
         {
-            $emails = $this->fetchVendorEmails();
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.vendorId' => $vendorId,
+                    $this->table . '.email' => $email,
+                ]
+            ]);
 
-            if (is_null($emails)) return;
-
-            $this->load->model('customeremailsent_model');
-            $this->load->helper(strtolower($helperName));
-
-            $sent = 0;
-
-            while ($emails) {
-                $data = array_pop($emails);
-
-                if ($data['active'] === '0') continue;
-
-                $insertSent = [
-                    'emailId' => $data['id'],
-                    'campaign' => $campaignName,
-                ];
-
-                $arguments = $rawArguments;
-                array_unshift($arguments, $data['email']);
-
-                if (!empty(call_user_func_array([ucfirst($helperName), $methodToCall], $arguments))) {
-                    $sent++;
-                    $insertSent['emailSent'] = '1';
-                    if ($sent % $checkBreak === 0) sleep(10);
-                } else {
-                    $insertSent['emailSent'] = '0';
-                }
-
-                $this->customeremailsent_model->setObjectFromArray($insertSent)->create();
-            }
+            return !is_null($id);
         }
 
     }
