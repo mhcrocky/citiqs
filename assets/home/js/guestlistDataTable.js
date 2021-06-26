@@ -32,6 +32,10 @@ $(document).ready(function () {
         data: "id",
       },
       {
+        title: "ID",
+        data: "id",
+      },
+      {
         title: "Guest Name",
         data: "guestName",
       },
@@ -82,6 +86,20 @@ $(document).ready(function () {
       
       
     ],
+    createdRow: function(row, data, dataIndex){
+      $(row).attr('id', 'row-' + data.id);
+    },
+    columnDefs: [
+      {
+        targets: 0,
+        checkboxes: {
+          selectRow: true
+        }
+      }
+    ],
+    select: {
+      style: 'multi'
+    },
     order: [[0, 'asc']]
   });
 
@@ -155,7 +173,7 @@ function importExcelFile(){
       $("#guestlist").DataTable().ajax.reload();
       $('#resetUpload').click();
       $('.fileForm').removeClass('d-none');
-      $('.filterFormSection').addClass('d-none');
+      $('#tab01').click();
       $('#closeGuestModal').click();
 
       $('#tab01').click();
@@ -208,7 +226,7 @@ function confirmDelete(id, multiple = false){
     callback: function (result) {
       if(result === false) return ;
       if(multiple){
-        multipleDelete();
+        deleteMultipleGuest();
       } else {
         deleteGuest(id);
       }
@@ -255,6 +273,41 @@ function sendTicket(id) {
       $("#guestlist").DataTable().ajax.reload();
     }
   );
+}
+
+function sendMultipleTickets() {
+  var rows_selected = $("#guestlist").DataTable().column(0).checkboxes.selected();
+
+
+
+  if(rows_selected.length < 1){
+    alertify['error']('You must select a row!');
+    return ;
+  }
+  
+  var rowIds = [];
+
+  $.each(rows_selected, function(index, rowId){
+    let rowData = $("#guestlist").DataTable().row('#row-' + rowId).data();
+    let bookandpay_id = rowData.bookandpay_id;
+    if(bookandpay_id == null){
+      rowIds.push(rowId);
+    }
+  });
+
+  if(rowIds.length < 1){
+    alertify['error']("You must select rows that aren't send yet!");
+    return ;
+  }
+
+  $.post(globalVariables.baseUrl + "events/send_multiple_guests_ticket",{ids: JSON.stringify(rowIds)},
+    function (data) {
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+      $("#guestlist").DataTable().ajax.reload();
+    }
+  );
+
 }
 
 function validateEmail(email) {

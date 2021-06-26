@@ -237,6 +237,40 @@ class Events extends BaseControllerWeb
         return ;
     }
 
+    public function send_multiple_guests_ticket()
+    {
+        $guest_ids = json_decode($this->input->post('ids'));
+        $bookandpay_ids = $this->event_model->save_multiple_guests_to_bookandpay($this->vendor_id, $guest_ids);
+        //var_dump($ids);
+        if(count($bookandpay_ids) < 1){
+            $response = [
+                'status' => 'error',
+                'message' => 'The guest ticket is not sent!'
+            ];
+            echo json_encode($response);
+            return ;
+        }
+
+        $reservations = $this->bookandpay_model->getBookingsByIds($bookandpay_ids);
+
+        if(Ticketingemail_helper::sendEmailReservation($reservations, true, true)){
+            $response = [
+                'status' => 'success',
+                'message' => 'The guest ticket is sent successfully!'
+            ];
+            echo json_encode($response);
+            return ;
+
+        }
+        
+        $response = [
+            'status' => 'error',
+            'message' => 'The guest ticket is sent successfully!'
+        ];
+        echo json_encode($response);
+        return ;
+    }
+
     public function import_guestlist()
     {
        $data_post = $this->input->post(null, true);
