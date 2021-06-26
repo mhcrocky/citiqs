@@ -79,13 +79,18 @@ document
                     });
 
 
-                    $('#fileForm').addClass('d-none');
-                    $('#filterFormSection').removeClass('d-none');
-                    $('#uploadExcel').addClass('d-none');
-                    $('#importExcelFile').removeClass('d-none');
-                    //console.log(jsonObject);
+                    $('.upload-excel-file').addClass('d-none');
+                    $('.filterFormSection').removeClass('d-none');
+
                 });
             };
             fileReader.readAsBinaryString(selectedFile);
         }
     });
+
+
+function goBackToUpload() {
+    $('.upload-excel-file').removeClass('d-none');
+    $('.filterFormSection').addClass('d-none');
+
+}

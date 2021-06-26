@@ -209,7 +209,7 @@
                 <fieldset id="tab021">
 
 
-                    <form id="fileForm" action="" method="post" class="mt-5" enctype="multipart/form-data">
+                    <form id="fileForm" action="" method="post" class="mt-5 upload-excel-file" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-8 mx-auto">
                                 <div class="form-group">
@@ -239,7 +239,7 @@
                     </form>
 
 
-                    <div class="w-100 d-none" id="filterFormSection">
+                    <div class="w-100 filterFormSection d-none" id="filterFormSection">
                         <form action="#" method="POST" class="w-100" id="filterForm"
                             onsubmit="return import_csv(event)">
                             <div class="w-100 mt-5" id="DrpDwn">
@@ -297,10 +297,11 @@
                 </fieldset>
                 <fieldset id="tab022">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="uploadExcel" class="btn btn-primary">Upload
+                    <button type="button" id="uploadExcel" class="btn btn-primary upload-excel-file">Upload
                         File</button>
+                    <button type="button" onclick="goBackToUpload()" class="btn btn-warning filterFormSection d-none">Go Back</button>
                     <button type="submit" onclick="importExcelFile()" id="importExcelFile"
-                        class="btn btn-primary d-none">Import Excel File</button>
+                        class="btn btn-primary filterFormSection d-none">Import Excel File</button>
                 </fieldset>
             </div>
         </div>
