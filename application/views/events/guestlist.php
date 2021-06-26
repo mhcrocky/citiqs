@@ -46,118 +46,25 @@
             </span>
         </div>
     </div>
-
-</div>
-
-
-<!-- Add Guestlist Modal -->
-<!--
-<div class="modal fade" id="guestlistModal" tabindex="-1" role="dialog" aria-labelledby="guestlistModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title font-weight-bold text-dark" id="addVoucherModalLabel">Add Guest</h5>
-                <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div role="tabpanel">
-                    
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#addGuestTab" aria-controls="addGuestTab" role="tab"
-                                data-toggle="tab">Add Guest</a>
-
-                        </li>
-                        <li role="presentation"><a href="#browseTab" aria-controls="browseTab" role="tab"
-                                data-toggle="tab">Upload</a>
-
-                        </li>
-                    </ul>
-                    
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="addGuestTab">
-                            <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
-                                onsubmit="return addGuest(event)" novalidate>
-
-
-                                <div class="form-group row">
-                                    <label for="guestName" class="col-md-4 col-form-label text-md-left">
-                                        Name
-                                    </label>
-                                    <div class="col-md-6">
-
-                                        <input type="text" id="guestName" class="input-w border-50 form-control"
-                                            name="guestName" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email" class="col-md-4 col-form-label text-md-left">
-                                        Email
-                                    </label>
-                                    <div class="col-md-6">
-
-                                        <input type="email" id="guestEmail" class="input-w border-50 form-control"
-                                            name="guestEmail" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="guestTickets" class="col-md-4 col-form-label text-md-left">
-                                        Tickets
-                                    </label>
-                                    <div class="col-md-6">
-
-                                        <input type="number" id="guestTickets" class="input-w border-50 form-control"
-                                            name="guestTickets" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="guestTicketId" class="col-md-4 col-form-label text-md-left">Ticket
-                                    </label>
-                                    <div class="col-md-6">
-                                        <select id="guestTicketId" name="guestTicketId"
-                                            class="form-control input-w border-50 field" required>
-                                            <option value="">Select option</option>
-                                            <?php #foreach($tickets as $ticket): ?>
-                                            <option value="<?php #echo $ticket['ticketId']; ?>">
-                                                <?php #echo $ticket['ticketDescription']; ?>
-                                            </option>
-                                            <?php #endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" id="guestTicketId">
-                                <input type="hidden" id="eventId" value="<?php #echo $eventId; ?>">
-
-                                <input type="reset" id="resetGuestForm" class="d-none" value="Reset">
-                                <input type="submit" class="d-none" id="submitGuestlist" value="Submit">
-
-                            </form>
-
-
-
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="browseTab">browseTab</div>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="closeGuestModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" onclick="addGuestForm()" class="btn btn-primary">Add Guest</button>
-            </div>
+    <div class="col-md-4 mb-3">
+        <div class="input-group">
+            <input type="button" onclick="confirmDelete(0, true)"
+                value="<?php echo $this->language->tline('Delete Selected Guests'); ?>"
+                style="background: #d9534f !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left">
+            <span onclick="confirmDelete(0, true)" style="background: #6b1d18; padding-top: 14px;"
+                class="input-group-addon pl-2 pr-2 mb-3">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-trash"></i>
+            </span>
         </div>
     </div>
-</div>
--->
 
-<!-- Modal -->
+</div>
+
+
+
+
+<!-- Add Guest Modal -->
 <div class="modal fade text-left" id="guestlistModal" tabindex="-1" role="dialog" aria-labelledby="guestlistModalLabel"
     aria-hidden="true">
     <div role="document" class="modal-dialog">

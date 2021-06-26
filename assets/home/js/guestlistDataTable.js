@@ -264,6 +264,30 @@ function deleteGuest(id) {
   );
 }
 
+function deleteMultipleGuest() {
+  var rows_selected = $("#guestlist").DataTable().column(0).checkboxes.selected();
+
+  if(rows_selected.length < 1){
+    alertify['error']('You must select a row!');
+    return ;
+  }
+  
+  var rowIds = [];
+
+  $.each(rows_selected, function(index, rowId){
+    rowIds.push(rowId);
+  });
+
+  $.post(globalVariables.baseUrl + "events/delete_multiple_guests",{ids: JSON.stringify(rowIds)},
+    function (data) {
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+      $("#guestlist").DataTable().ajax.reload();
+    }
+  );
+
+}
+
 function sendTicket(id) {
 
   $.post(globalVariables.baseUrl + "events/send_guest_ticket",{id: id},

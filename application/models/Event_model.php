@@ -50,6 +50,14 @@ class Event_model extends CI_Model {
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 
+	public function delete_multiple_guests($vendorId, $ids)
+	{
+		$this->db->where_in('id', $ids);
+		$this->db->where('vendorId', $vendorId);
+		$this->db->delete('tbl_guestlist');
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
 	public function get_guest_by_id($vendorId, $guestId)
 	{
 		$this->db->select('*');

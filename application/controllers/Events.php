@@ -203,6 +203,27 @@ class Events extends BaseControllerWeb
         return ;
     }
 
+    public function delete_multiple_guests()
+    {
+        $ids = json_decode($this->input->post('ids'));
+
+        if($this->event_model->delete_multiple_guests($this->vendor_id, $ids)){
+            $response = [
+                'status' => 'success',
+                'message' => 'The guests are deleted successfully!'
+            ];
+            echo json_encode($response);
+            return ;
+        }
+
+        $response = [
+            'status' => 'error',
+            'message' => 'The guests are not deleted successfully!'
+        ];
+        echo json_encode($response);
+        return ;
+    }
+
     public function send_guest_ticket()
     {
         $id = $this->input->post('id');
