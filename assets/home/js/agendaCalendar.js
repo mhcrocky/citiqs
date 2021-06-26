@@ -14,7 +14,7 @@
         self.openDay(current);
       }, 500);
     }
-  }
+  } 
   
   Calendar.prototype.draw = function() {
     //Create Header
@@ -56,8 +56,10 @@
     
     this.events.forEach(function(ev) {
      let date = moment(ev.dateTime);
-     ev.date = self.current.clone().date(Math.random() * (29 - 1) + 1);
-     ev.date._d = date;
+     
+        ev.date = self.current.clone().date(Math.random() * (29 - 1) + 1);
+        ev.date._d = date;
+      
     });
     
     
@@ -155,7 +157,8 @@
   Calendar.prototype.drawEvents = function(day, element) {
     if(day.month() === this.current.month()) {
       var todaysEvents = this.events.reduce(function(memo, ev) {
-        if(ev.date.isSame(day, 'day')) {
+
+        if(ev.date.isSame(day, 'day') && ev.date >= today)  {
           memo.push(ev);
         }
         return memo;
@@ -224,7 +227,7 @@
     }
   
     var todaysEvents = this.events.reduce(function(memo, ev) {
-      if(ev.date.isSame(day, 'day')) {
+      if(ev.date.isSame(day, 'day') && ev.date >= today) {
         memo.push(ev);
       }
       return memo;
