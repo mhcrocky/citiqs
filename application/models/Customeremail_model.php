@@ -56,28 +56,26 @@
 
         public function insertEmails(array $data): bool
         {
-            $keys = '';
+            $keys = array_keys($data[0]);
             $allValues = [];
 
             foreach($data as $insert) {
-                if (!$this->insertValidate($insert)) continue;
-                if (empty($keys)) $keys = array_keys($insert);
+                if (!$this->insertValidate($insert) || $this->checkIsExists(intval($insert['vendorId']), $insert['email'])) continue;
 
                 $values = array_values($insert);
                 $escapeValues = array_map(function($value) {
                     return $this->db->escape($value);
                 }, $values);
-                array_push($allValues, '(' . implode(',', $escapeValues) . ')');;
+                array_push($allValues, '(' . implode(',', $escapeValues) . ')');
             }
 
-            if (!$keys || empty($allValues)) return false;
+            if (empty($allValues)) return false;
 
             $query =  '';
             $query  = 'INSERT INTO ' . $this->getThisTable() . ' ';
             $query .= '(' . implode(',' , $keys) . ')  ';
             $query .= 'VALUES ';
-            $query .= implode(',', $allValues) ;
-            $query .= ' ON DUPLICATE KEY UPDATE email = VALUES(email);';
+            $query .= implode(',', $allValues) . ';';
 
             return $this->db->query($query);
         }
@@ -96,6 +94,19 @@
                 'what' => [$this->table . '.*'],
                 'where' => $where
             ]);
+        }
+
+        private function checkIsExists(int $vendorId, string $email): bool
+        {
+            $id = $this->readImproved([
+                'what' => ['id'],
+                'where' => [
+                    $this->table . '.vendorId' => $vendorId,
+                    $this->table . '.email' => $email,
+                ]
+            ]);
+
+            return !is_null($id);
         }
 
     }

@@ -151,9 +151,9 @@
         }
 
         /**
-         * sentCampaignEmails
+         * sendCampaignEmails
          *
-         * Method sents campaign emails
+         * Method sends campaign emails
          * $this->campaignId MUST be set. See $this->setProperty($key, $value), it is defined in application/abstract/AbstractSet_model.php 
          *
          * @param integer   $break          pause mailing process after $break mails sent
