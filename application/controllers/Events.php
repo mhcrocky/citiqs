@@ -183,12 +183,66 @@ class Events extends BaseControllerWeb
         echo json_encode($response);
     }
 
+    public function delete_guest()
+    {
+        $id = $this->input->post('id');
+        if($this->event_model->delete_guest($this->vendor_id, $id)){
+            $response = [
+                'status' => 'success',
+                'message' => 'The guest is deleted successfully!'
+            ];
+            echo json_encode($response);
+            return ;
+        }
+
+        $response = [
+            'status' => 'error',
+            'message' => 'The guest is not deleted successfully!'
+        ];
+        echo json_encode($response);
+        return ;
+    }
+
+    public function send_guest_ticket()
+    {
+        $id = $this->input->post('id');
+        $ids = $this->event_model->save_guest_to_bookandpay($this->vendor_id, $id);
+        //var_dump($ids);
+        if(!$ids){
+            $response = [
+                'status' => 'error',
+                'message' => 'The guest ticket is not sent!'
+            ];
+            echo json_encode($response);
+            return ;
+        }
+
+        $reservations = $this->bookandpay_model->getBookingsByIds($ids);
+
+        if(Ticketingemail_helper::sendEmailReservation($reservations, true, true)){
+            $response = [
+                'status' => 'success',
+                'message' => 'The guest ticket is sent successfully!'
+            ];
+            echo json_encode($response);
+            return ;
+
+        }
+        
+        $response = [
+            'status' => 'error',
+            'message' => 'The guest ticket is sent successfully!'
+        ];
+        echo json_encode($response);
+        return ;
+    }
+
     public function import_guestlist()
     {
        $data_post = $this->input->post(null, true);
-       $guestName = $data_post['guestEmail'];
+       $guestName = $data_post['guestName'];
        $guestEmail = $data_post['guestEmail'];
-       $ticketQuantity = $data_post['ticketQuantity'];
+       $ticketQuantity = is_numeric($data_post['ticketQuantity']) ? $data_post['ticketQuantity'] : 1;
        $jsonData = json_decode($data_post['jsonData']);
        $dt = new DateTime( 'now');
        $bookdatetime = $dt->format('Y-m-d H:i:s');
@@ -215,18 +269,18 @@ class Events extends BaseControllerWeb
             'guestlist' => 1,
             'TransactionID' => $transactionId,
             'isTicket' => 1
-        ];
+        ]; 
 
-        $this->event_model->save_guest_reservations($booking, $data->guest);
-        
+        //$this->event_model->save_guest_reservations($booking, $ticketQuantity); save to tbl_bookandpay
            
            $guestlist[] = [
                'guestName' => $data->$guestName,
                'guestEmail' => $data->$guestEmail,
-               'ticketQuantity' => intval($data->$ticketQuantity),
+               'ticketQuantity' => intval($ticketQuantity),
                'eventId' => intval($data_post['eventId']),
                'ticketId' => intval($data_post['ticketId']),
-               'transactionId' => $transactionId
+               'transactionId' => $transactionId,
+               'vendorId' => $this->vendor_id
            ];
        }
        $this->event_model->save_multiple_guests($guestlist);
