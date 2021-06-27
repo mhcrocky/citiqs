@@ -79,8 +79,9 @@ document
                     });
 
 
-                    $('.upload-excel-file').addClass('d-none');
+                    $('.upload-excel-file').hide();
                     $('.filterFormSection').removeClass('d-none');
+                    $('.filterFormSection').show();
 
                 });
             };
@@ -90,7 +91,7 @@ document
 
 
 function goBackToUpload() {
-    $('.upload-excel-file').removeClass('d-none');
-    $('.filterFormSection').addClass('d-none');
+    $('.upload-excel-file').show();
+    $('.filterFormSection').hide();
 
 }

@@ -10,6 +10,8 @@ $(document).ready(function () {
     $('#resetTicketOptions').click();
   });
 
+  $('.btn-export').hide();
+
   $('#guestlistModal').on('hidden.bs.modal', function () {
     $('#tab01').click();
   });
@@ -165,7 +167,7 @@ $(document).ready(function () {
         title: "Guestlist",
         data: null,
         render: function (data, type, row) {
-          return '<a style="padding-top: 10px;display: inline-flex;" class="text-dark" href="javascript:;" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal"><span class="font-weight-bold mr-2">'+data.guestlistCount+'</span><i class="gg-user-list ml-2"></i></a>';
+          return '<a style="padding-top: 10px;display: inline-flex;" class="text-dark" href="#" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal" ><span class="font-weight-bold mr-2">'+data.guestlistCount+'</span><i class="gg-user-list ml-2"></i></a>';
 
         },
         createdCell: function (td, cellData, rowData, row, col) {
@@ -181,7 +183,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<input style="min-width: 120px;" type="text" id="event-name" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketDescription\')" name="event-name" value="' +
+            '<input style="min-width: 120px;" type="text" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketDescription\')" name="event-name" value="' +
             data.ticketDescription +
             '">'
           );
@@ -199,7 +201,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<input style="width: 80px;" type="text" id="price" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketPrice\')" name="price" value="' +
+            '<input style="width: 80px;" type="text" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketPrice\')" name="price" value="' +
             data.ticketPrice +
             '">'
           );
@@ -210,7 +212,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           var html =
-            '<select style="width: 100px;" class="form-control" id="currency" onchange="updateTicket('+data.ticketId+', this, \'ticketCurrency\')">';
+            '<select style="width: 100px;" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketCurrency\')">';
           html += '<option value="0" disabled>Select Option</option>';
           var selectedEuro = "";
           var selectedUsd = "";
@@ -233,7 +235,7 @@ $(document).ready(function () {
         data: null,
         render: function (data, type, row) {
           return (
-            '<input type="text" id="quantity" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketQuantity\')" name="quantity" value="' +
+            '<input type="text" class="form-control" onchange="updateTicket('+data.ticketId+', this, \'ticketQuantity\')" name="quantity" value="' +
             data.ticketQuantity +
             '">'
           );
@@ -268,7 +270,7 @@ $(document).ready(function () {
             color = '#df0000';
           }
           var html =
-            '<select style="min-width: 150px;border: 1px solid '+color+' !important" class="form-control" id="email_template" onchange="updateEmailTemplate(this, ' +
+            '<select style="min-width: 150px;border: 1px solid '+color+' !important" class="form-control" onchange="updateEmailTemplate(this, ' +
             data.ticketId +
             ')">';
           html += '<option value="0">Select Template</option>';
@@ -303,7 +305,7 @@ $(document).ready(function () {
           return (
             "<div class='bg-success btn-edit' style='width: 30px;height: 30px;'><a class='text-light' onclick='getTicketOptions(" +
             data.ticketId +
-            ", `"+data.ticketDescription+"`)' id='edit' href='javascript:' data-toggle='modal' data-target='#editModal'><i class='fa fa-pencil p-2'><i></a></div>"
+            ", `"+data.ticketDescription+"`)' href='javascript:' data-toggle='modal' data-target='#editModal'><i class='fa fa-pencil p-2'><i></a></div>"
           );
         },
       },
@@ -385,7 +387,7 @@ $(document).ready(function () {
                     "<td>" +
                     html +
                     '</td><td colspan="4">' +
-                    '<input type="text" id="group-name" class="form-control" name="group-name" onchange="updateGroup(this, '+data.ticketGroupId+', \'groupname\')" value="' +
+                    '<input type="text" class="form-control" name="group-name" onchange="updateGroup(this, '+data.ticketGroupId+', \'groupname\')" value="' +
                     groupname +
                     '">' +
                     '</td><td><input type="text" class="form-control" onchange="updateGroup(this, '+data.ticketGroupId+', \'groupQuantity\')" name="quantity" value="' +data.groupQuantity +'">'+
@@ -447,54 +449,6 @@ $(document).ready(function () {
 
 
 
-  var guestlistTable = $("#guestlist").DataTable({
-    processing: true,
-    lengthMenu: [
-      [5, 10, 20, 50, 100, 200, 500, -1],
-      [5, 10, 20, 50, 100, 200, 500, "All"],
-    ],
-    pageLength: 5,
-    ajax: {
-      type: "get",
-      url: globalVariables.baseUrl + "events/get_guestlists",
-      dataSrc: "",
-    },
-    columns: [
-      {
-        title: "ID",
-        data: "id",
-      },
-      {
-        title: "Guest Name",
-        data: "guestName",
-      },
-      {
-        title: "Guest Email",
-        data: "guestEmail",
-      },
-      {
-        title: "Ticket Quantity",
-        data: "ticketQuantity",
-      },
-      {
-        title: "Ticket ID",
-        data: "ticketId",
-      },
-      {
-        title: "Transaction ID",
-        data: "transactionId",
-      },
-      {
-          title: 'Resend',
-          data: null,
-          "render": function(data, type, row) {
-            return '<button class="btn btn-primary" onclick="confirmResendTicket(\''+data.transactionId+'\')">Resend</button>';
-        }
-       }
-      
-    ],
-    order: [[1, 'asc']]
-  });
 
   /*Order by the grouping
     $('#tickets tbody').on('click', 'tr.group', function() {
@@ -853,7 +807,8 @@ function createTicketEmailTemplateResponse(selectTemplate, customTemplate, respo
 }
 
 function addGuestModal(ticketId) {
-  $('#guestTicketId').val(ticketId);
+  $("#guestlist").DataTable().columns( 0 ).visible(false);
+  $("#guestlist")
   $("#guestlist").DataTable()
         .columns( 4 )
         .search( '^'+ticketId+'$', true, false )
@@ -862,42 +817,6 @@ function addGuestModal(ticketId) {
 
 function addGuestForm() {
   $('#submitGuestlist').click();
-}
-
-function addGuest(e){
-  e.preventDefault();
-  $('.form-control').removeClass('input-clear');
-  let guestName = $('#guestName').val();
-  let guestEmail = $('#guestEmail').val();
-  let ticketQuantity = $('#guestTickets').val();
-
-  if (guestName == '' || guestEmail == '' || ticketQuantity == '') {
-    return;
-  }
-  let data = {
-      guestName: guestName,
-      guestEmail: guestEmail,
-      ticketQuantity: ticketQuantity,
-      eventId:  $('#eventId').val(),
-      ticketId: $('#guestTicketId').val()
-  }
-
-
-  //console.log(data);
-
-  $('#submitGuestlist').prop('disabled', true);
-
-  $.post(globalVariables.baseUrl + "events/add_guest", data, function(data){
-      $('#submitGuestlist').prop('disabled', false);
-      $('#resetGuestForm').click();
-      $('#closeModal').click();
-      $('.form-control').addClass('input-clear');
-      $("#tickets").DataTable().ajax.reload();
-      $("#guestlist").DataTable().ajax.reload();
-      alertify['success']('Guest is added successfully');
-
-  });
-
 }
 
 
@@ -912,15 +831,18 @@ function importExcelFile(){
       jsonData: $('#jsonData').text(),
   }
 
+  if(data.guestName == "" || data.guestEmail == "" || data.ticketQuantity == "" || data.ticketId == ""){
+    alertify['error']('All fields are required!');
+    return ;
+  }
+
   //console.log(data);
 
   $.post(globalVariables.baseUrl + "events/import_guestlist", data, function(data){
       $("#guestlist").DataTable().ajax.reload();
       $('#resetUpload').click();
-      $('#fileForm').removeClass('d-none');
-      $('#filterFormSection').addClass('d-none');
-      $('#uploadExcel').removeClass('d-none');
-      $('#importExcelFile').addClass('d-none');
+      $('.upload-excel-file').show();
+      $('.filterFormSection').hide();
       $('#guestlistModal').modal('toggle');
       $('#tab01').click();
       $("#tickets").DataTable().ajax.reload();

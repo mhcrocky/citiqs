@@ -172,11 +172,10 @@ function importExcelFile(){
   $.post(globalVariables.baseUrl + "events/import_guestlist", data, function(data){
       $("#guestlist").DataTable().ajax.reload();
       $('#resetUpload').click();
-      $('.fileForm').removeClass('d-none');
+      $('.upload-excel-file').show();
+      $('.filterFormSection').hide();
       $('#tab01').click();
       $('#closeGuestModal').click();
-
-      $('#tab01').click();
       alertify['success']('The guest list is imported successfully');
   });
 

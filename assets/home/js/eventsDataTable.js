@@ -24,19 +24,16 @@ $(document).ready(function() {
                 data: 'eventname'
 
             },
-            /*
             {
 
-                title: 'Description',
+                title: 'Buyers',
                 data: null,
                 "render": function(data, type, row) {
-                    let eventdescript = data.eventdescript;
-                    eventdescript = eventdescript.replace(/(<([^>]+)>)/gi, "");
-                    eventdescript = eventdescript.substring(0,25) + '...';
-                    return eventdescript;
+                    return '<a href="' + globalVariables.baseUrl + 'events/report/' + data.id + '" class="btn btn-primary mr-2" style="background: #10b981;">Go to Buyers</a>';
                 }
 
             },
+            /*
             {
 
                 title: 'Venue',
@@ -188,16 +185,16 @@ $(document).ready(function() {
                 let val = $('#selectTime option:selected').val();
                 let current_timestamp = dayjs();
                 let today = dayjs().format('YYYY-MM-DD');
-                let start_date = data[2];
+                let start_date = data[3];
                 //let end_str_timestamp = data[8] + ' ' + data[10];
                 //let end_timestamp = dayjs(end_str_timestamp);
-                let start_str_timestamp = data[4] + ' ' + data[5];
+                let start_str_timestamp = data[5] + ' ' + data[6];
                 let start_timestamp = dayjs(start_str_timestamp);
                 
                 if (val == 'past' && current_timestamp >= start_timestamp) { return true;}
-                if(val == 'archived' && data[7] == 'Yes') { return true; }
-                if(val == 'today' && today == start_date && data[5] != 'Yes') {return true;}
-                if(val == 'future' && current_timestamp <= start_timestamp && data[7] != 'Yes') {return true;}
+                if(val == 'archived' && data[8] == 'Yes') { return true; }
+                if(val == 'today' && today == start_date && data[6] != 'Yes') {return true;}
+                if(val == 'future' && current_timestamp <= start_timestamp && data[8] != 'Yes') {return true;}
                 
                 if(val == 'all') { return true; }
                 return false;
