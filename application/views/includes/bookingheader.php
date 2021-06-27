@@ -81,9 +81,9 @@
 <?php } ?>
 <header class="header">
 	<nav class="header-nav">
-		<a href="<?php echo base_url(); ?>thuishaven" class="nav-logo">
-			<img src="<?php echo base_url(); ?>assets/home/images/thuishaven.png" alt="">
-		</a>
+<!--		<a href="--><?php //echo base_url(); ?><!--thuishaven" class="nav-logo">-->
+<!--			<img src="--><?php //echo base_url(); ?><!--assets/home/images/thuishaven.png" alt="">-->
+<!--		</a>-->
 		<div class="header-menu" id="header-menu" style="text-align:right">
 
 			<a style="color: #E25F2A" href="<?php echo $this->baseUrl; ?>home#dhl-section" id='dhl-button'></a>

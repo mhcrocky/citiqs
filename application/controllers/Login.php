@@ -406,9 +406,12 @@ class Login extends BaseControllerWeb
 
 		$data['email'] = $email;
 		$data['activation_code'] = $activation_id;
-
+		//#####
 		if ($is_correct == 1) {
-			$this->load->view('newPassword', $data);
+			$this->global['pageTitle'] = 'TIQS : VERIFY CODE';
+			$this->loadViews("newPassword", $data, NULL, "nofooter", "noheader");
+//
+//			$this->load->view('newPassword', $data);
 		} else {
 			redirect('/login');
 		}

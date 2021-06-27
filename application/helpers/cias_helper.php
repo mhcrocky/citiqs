@@ -146,15 +146,12 @@ if (!function_exists('resetPasswordEmail')) {
         $data["data"] = $detail;
         // pre($detail);
         // die;
-
         $CI = setProtocol();
-
         $CI->email->from('noreply@tiqs.com', 'tiqs');
-        $CI->email->subject("TIQS lost and found Reset Password");
+        $CI->email->subject("TIQS Account Reset Password");
         $CI->email->message($CI->load->view('email/resetPassword', $data, TRUE));
         $CI->email->to($detail["email"]);
         $status = $CI->email->send();
-
         return $status;
     }
 

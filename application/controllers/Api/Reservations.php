@@ -23,6 +23,7 @@ class Reservations extends REST_Controller
 		$vendorId = $this->security->xss_clean($this->input->post('vendorId'));
 
 		$this->db->where('Customer', $vendorId);
+		$this->db->where('ReservationDateTime =', date_create(date('Y-m-d 00:00:00'))->format('Y-m-d H:i:s'));
 		$this->db->from('tbl_bookandpayagenda');
 		$query = $this->db->get();
 		$result = $query->result_array();
