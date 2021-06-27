@@ -62,6 +62,12 @@
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick-theme.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
+<?php } elseif ($this->view === 'resetPasswordConfirmUser') { ?>
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/makeOrder.css">
+	<!-- swipe slider -->
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/slick-theme.css">
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/slickCss/custom.css">
 <?php } elseif ($this->view === 'warehouse/vatreport' || $this->view === 'warehouse/dayreport') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/bower_components/font-awesome/css/font-awesome.min.css" />
