@@ -166,6 +166,7 @@ class Events extends BaseControllerWeb
             return;
         };
         $data['transactionId'] = $transactionId;
+        $data['vendorId'] = $this->vendor_id;
         if (!$this->event_model->save_guest($data)) {
             $response = [
                 'status' => '0',
