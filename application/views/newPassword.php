@@ -8,7 +8,6 @@
       <div class="login-box-body">
         <?php $this->load->helper('form'); ?>
           <div class="login-box-body">
-              <!-- <p class="login-box-msg" style="font-weight: bold font-family:"Century Gothic" font-size: larger">Login</p> -->
               <p  style="font-family:campton-bold; font-size:300%; text-align: center">RESET PASSWORD</p>
               <?php $this->load->helper('form'); ?>
               <?php echo $this->session->flashdata('fail'); ?>
@@ -16,11 +15,6 @@
                   <div class="col-md-12" id="mydivs">
                       <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
                   </div>
-<!--                  <script>-->
-<!--                      setTimeout(function() {-->
-<!--                          $('#mydivs').hide('fade');-->
-<!--                      }, 5000);-->
-<!--                  </script>-->
               </div>
         <?php
         $this->load->helper('form');
