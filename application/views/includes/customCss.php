@@ -797,6 +797,9 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php  } elseif ($this->view === 'campaigns/index') { ?>
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<?php  } elseif ($this->view === 'emaillists/index') { ?>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php  } elseif ($this->view === 'campaigns/lists') { ?>
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
