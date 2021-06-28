@@ -978,6 +978,7 @@ class Event_model extends CI_Model {
 		$this->db->from('tbl_guestlist');
 		$this->db->join('tbl_bookandpay', 'tbl_bookandpay.TransactionID = tbl_guestlist.transactionId', 'left');
 		$this->db->where('vendorId', $vendorId);
+		$this->db->where('tbl_guestlist.eventId', $eventId);
 		$this->db->group_by('tbl_guestlist.id');
 		$query = $this->db->get();
 		return $query->result_array();
