@@ -198,6 +198,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_guestlist.js"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsDataTable.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/guestlistDataTable.js"></script>
 <?php } elseif ($this->view === 'events/events') { ?>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
@@ -331,6 +332,24 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_emails.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/customerEmailDataTable.js"></script>
+<?php } elseif ($this->view === 'campaigns/index') { ?>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.validate.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/campaignsDataTable.js"></script>
+<?php } elseif ($this->view === 'campaigns/lists') { ?>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.validate.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/campaignsListsDataTable.js"></script>
+<?php } elseif ($this->view === 'lists/index') { ?>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.validate.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/listsDataTable.js"></script>
 <?php } elseif ($this->view === 'voucher/send') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/multiselect/helper.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/cdn/js/multiselect/multiselect.core.js"></script>
