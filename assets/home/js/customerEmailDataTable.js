@@ -73,9 +73,24 @@ function sendMultipleEmailsModal(){
 
   $('#sendEmailsModal').modal('show');
 
+}
+
+
+function saveEmailsListModal(){
+  
+  var rows_selected = $("#customeremail").DataTable().column(0).checkboxes.selected();
+  if(rows_selected.length < 1){
+    $('#emails').text('empty');
+    return ;
+  }
+  
+
+  $('#saveEmailsListModal').modal('show');
+
 
 
 }
+
 
 
 
@@ -102,6 +117,36 @@ function sendMultipleEmails(){
   }
 
   $.post(globalVariables.baseUrl + "customeremail/send_multiple_emails", data, function(data){
+      $('.close').click();
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+  });
+
+}
+
+function saveEmailsList(){
+
+  var rows_selected = $("#customeremail").DataTable().column(0).checkboxes.selected();
+  let listId = $('#listId option:selected').val();
+
+  if(listId == 0){
+    alertify['error']('You must select a list id');
+    return ;
+  }
+
+  var rowIds = [];
+
+  $.each(rows_selected, function(index, rowId){
+    rowIds.push(rowId);
+
+  });
+
+  let data = {
+    ids: JSON.stringify(rowIds),
+    listId: listId
+  }
+
+  $.post(globalVariables.baseUrl + "customeremail/save_emails_list", data, function(data){
       $('.close').click();
       data = JSON.parse(data);
       alertify[data.status](data.message);

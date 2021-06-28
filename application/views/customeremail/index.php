@@ -9,6 +9,19 @@
 
     <div class="col-md-4 mb-3">
         <div class="input-group">
+            <input type="button" onclick="saveEmailsListModal()"
+                value="<?php echo $this->language->tLine('Save Emails To List'); ?>"
+                style="background: #10b981 !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left">
+            <span onclick="saveEmailsListModal()" style="background: #275C5D; padding-top: 14px;"
+                class="input-group-addon pl-2 pr-2 mb-3">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-envelope"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="input-group">
             <input type="button" onclick="sendMultipleEmailsModal()"
                 value="<?php echo $this->language->tLine('Send Multiple Emails'); ?>"
                 style="background: #10b981 !important;border-radius:0;height:45px;"
@@ -171,6 +184,52 @@
                 <button type="button" id="closeEmailModal" class="btn btn-secondary"
                     data-dismiss="modal">Close</button>
                 <button type="button" onclick="sendMultipleEmails()" class="btn btn-primary">Send Email</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Save Emails List Modal -->
+<div class="modal fade" id="saveEmailsListModal" tabindex="-1" role="dialog" aria-labelledby="saveEmailsListModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="saveEmailsListModalLabel"><?php echo $this->language->tLine('Create Emails List'); ?></h5>
+                <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label for="list" class="col-md-4 col-form-label text-md-left">
+                            List
+                        </label>
+                        <div class="col-md-6">
+
+                            <select id="listId" name="listId" style="height: 35px !important;padding-top: 6px;"
+                                class="form-control input-w">
+                                <option value="0">Select option</option>
+                                <?php if(is_array($lists) && count($lists) > 0): ?>
+                                <?php foreach($lists as $list): ?>
+                                <option value="<?php echo $list['id']; ?>">
+                                    <?php echo $list['list']; ?>
+                                </option>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                            
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeEmailModal" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" onclick="saveEmailsList()" class="btn btn-primary">Save Emails List</button>
             </div>
         </div>
     </div>

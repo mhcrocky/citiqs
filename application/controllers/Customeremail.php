@@ -13,6 +13,8 @@ class Customeremail extends BaseControllerWeb
         $this->load->model('customeremail_model');
         $this->load->model('campaign_model');
         $this->load->model('customeremailsent_model');
+        $this->load->model('emaillist_model');
+        $this->load->model('list_model');
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->helper('utility_helper');
 		$this->isLoggedIn();
@@ -26,7 +28,9 @@ class Customeremail extends BaseControllerWeb
         $this->campaign_model->vendorId = $this->vendor_id;
         $campaigns = $this->campaign_model->fetchCampaigns();
         $data['campaigns'] = ($campaigns === null) ? [] : $campaigns;
-
+        $this->list_model->vendorId = $this->vendor_id;
+        $lists = $this->list_model->fetchVendorLists();
+        $data['lists'] = ($lists === null) ? [] : $lists;
         $this->loadViews("customeremail/index", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
@@ -67,7 +71,7 @@ class Customeremail extends BaseControllerWeb
         $customer_emails_sent = ($customer_emails_sent === null) ? [] : $customer_emails_sent;
 
         echo json_encode($customer_emails_sent);
-    }
+    } 
 
 
     public function send_multiple_emails()
@@ -87,6 +91,39 @@ class Customeremail extends BaseControllerWeb
         $response = [
             'status' => 'success',
             'message' => 'Emails are sent successfully!'
+        ];
+        echo json_encode($response);
+        return ;   
+
+    }
+
+    public function save_emails_list()
+	{
+        $ids = json_decode($this->input->post('ids'));
+        $listId = $this->input->post('listId');
+        $data = [];
+        foreach($ids as $key => $id){
+            $data[$key] = [
+                'emailId' => $id,
+                'listId' => $listId
+            ];
+        }
+			
+		if($this->emaillist_model->multipleCreate($data)){
+            $response = [
+                'status' => 'success',
+                'message' => 'Emails list is saved successfully!'
+            ];
+            echo json_encode($response);
+            return ;   
+
+        }
+
+       
+        
+        $response = [
+            'status' => 'error',
+            'message' => 'Emails list is saved successfully!'
         ];
         echo json_encode($response);
         return ;   
