@@ -241,4 +241,36 @@
             return $send;
         }
 
+        public static function sendCampaignEmailWithTemplate(
+            int $campaignId,
+            string $email,
+            string $subject
+        ): bool
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            $CI->load->model('campaign_model');
+            $CI->load->model('email_templates_model');
+            $result = $CI->campaign_model->read(['templateId', 'vendorId'], $where = ['id' => $campaignId]);
+            $templateId = $result[0]['templateId'];
+            $vendorId = $result[0]['vendorId'];
+            $emailTemplate = $CI->email_templates_model->get_emails_by_id($templateId);
+            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$vendorId.'/'.$emailTemplate->template_file .'.'.$CI->config->item('template_extension'));
+            $message = $mailtemplate;
+            $config = self::getConfig();
+            $CI =& get_instance();
+            $CI->load->library('email', $config);
+            $CI->email->clear(TRUE);
+            $CI->email->set_header('X-SES-CONFIGURATION-SET', 'ConfigSet');
+            $CI->email->set_newline("\r\n");
+            $CI->email->from(EMAIL_FROM);
+            $CI->email->to($email);
+            $CI->email->subject($subject);
+            $CI->email->message($message);
+
+            //$send = $CI->email->send(true);
+
+            return $CI->email->send(true);
+        }
+
     }

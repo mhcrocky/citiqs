@@ -82,9 +82,14 @@ class Customeremail extends BaseControllerWeb
 
         $this->customeremailsent_model->campaignId = (int) $campaignId;
         
-        $this->customeremailsent_model->sendEmails($emails, 1, 'email_helper', 'sendCampaignEmail', ['email', 'subject', 'email message']);
-
+        $this->customeremailsent_model->sendEmails($emails, 1, 'email_helper', 'sendCampaignEmailWithTemplate', ['email', 'subject']);
         
+        $response = [
+            'status' => 'success',
+            'message' => 'Emails are sent successfully!'
+        ];
+        echo json_encode($response);
+        return ;   
 
     }
 
