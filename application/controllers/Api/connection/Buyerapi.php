@@ -157,7 +157,14 @@
             if (!$this->checkApiIdentifier($apiIdentifier)) return;
 
             $buyerData = Sanitize_helper::sanitizePhpInput();
+
+
+
+
             if (!$this->checkPutBuyerData($buyerData)) return;
+
+
+
 
             $updateBuyer = [];
             if (!$this->setUpdateBuyerData($buyerData, $updateBuyer)) return;
@@ -184,11 +191,13 @@
                 return false;
             }
 
+
             return true;
         }
 
         private function checkTrimBuyerData(?array &$buyer): bool
         {
+
             $update = false;
             foreach($buyer as $key => $value) {
                 if (trim($value) && !$update) {
@@ -301,9 +310,12 @@
 
         private function checkPutBuyerData(?array &$buyerData): bool
         {
+
             if (!$this->checkBuyerData($buyerData)) return false;
+
             $buyerData = reset($buyerData);
             if (!$this->checkTrimBuyerData($buyerData)) return false;
+
             return true;
         }
 

@@ -21,7 +21,12 @@
         <ul class="collapse">
             <li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-gift"></i> <span><?php echo $this->language->tLine('Vouchers add/edit'); ?></span></a>
             <li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Send Vouchers'); ?></span></a>
-			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>customeremail"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Mail campaigns'); ?></span></a>
+			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>campaigns"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Make campaign'); ?></span></a>
+			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>lists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Make lists'); ?></span></a>
+			<li data-menuid="2.9"><a href="<?php echo $this->baseUrl; ?>emaillists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Connect emails lists'); ?></span></a>
+			<li data-menuid="2.10"><a href="<?php echo $this->baseUrl; ?>campaignslists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Connect campaign & lists'); ?></span></a>
+			<li data-menuid="2.10"><a href="<?php echo $this->baseUrl; ?>customeremail"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('list members'); ?></span></a>
+			<li data-menuid="2.11"><a href="<?php echo $this->baseUrl; ?>customeremail/sent"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Campaigns Sent'); ?></span></a>
 				tiqs.com/alfred/customeremail/
 <!--            <li data-menuid="2.1"><a href="--><?php //echo $this->baseUrl; ?><!--marketing/targeting"><i class="ti-pin-alt"></i><span>--><?php //echo $this->language->tLine('Targeting'); ?><!--</span></a></li>-->
 <!--            <li data-menuid="2.2"><a href="--><?php //echo $this->baseUrl; ?><!--marketing/selection"><i class="ti-comment"></i> <span>--><?php //echo $this->language->tLine('Notification Messaging'); ?><!--</span></a></li>-->
