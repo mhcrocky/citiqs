@@ -79,10 +79,9 @@ document
                     });
 
 
-                    $('#fileForm').addClass('d-none');
-                    $('#filterFormSection').removeClass('d-none');
-                    $('#uploadExcel').addClass('d-none');
-                    $('#importExcelFile').removeClass('d-none');
+                    $('.upload-excel-file').hide();
+                    $('.filterFormSection').removeClass('d-none');
+                    $('.filterFormSection').show();
                     //console.log(jsonObject);
                 });
             };
@@ -95,24 +94,36 @@ document
 function importExcelFile(){
 
     let emailCol = $('#importEmail option:selected').val();
+    let nameCol = $('#importName option:selected').val();
     let jsonData = JSON.parse($('#jsonData').text());
-    let emails = [];
+    let customers = [];
+
+    if(nameCol == '' || emailCol == ''){
+        alertify['error']('All fields are required!');
+        return ;
+    }
 
     $.each(jsonData, function(index, data) {
         
         if(!validEmail(data[emailCol])){ return; }
-        emails.push(encodeURI(data[emailCol]));
+        customers.push(
+            {
+                name: data[nameCol],
+                email: encodeURI(data[emailCol])
+            }
+        );
     });
 
-    if(emails.length < 1){
+    if(customers.length < 1){
         alertify['error']('Please select a column with emails!');
         return ;
     }
 
-    emails = JSON.stringify(emails);
-    $.post(globalVariables.baseUrl + 'customeremail/import_emails', {emails: emails}, function (data) {
+    customers = JSON.stringify(customers);
+    $.post(globalVariables.baseUrl + 'customeremail/import_customers', {customers: customers}, function (data) {
         $('#customeremail').DataTable().ajax.reload();
-        $('#importEmailsModal').modal('show');
+        $('#importEmailsModal').modal('hide');
+        goBackToUpload();
         data = JSON.parse(data);
         alertify[data.status](data.message);
     })
@@ -125,4 +136,10 @@ function importExcelFile(){
 function validEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
-};
+}
+
+function goBackToUpload() {
+    $('.upload-excel-file').show();
+    $('.filterFormSection').hide();
+
+}
