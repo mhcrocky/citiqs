@@ -142,6 +142,7 @@ $(document).ready(function () {
       },
       dataSrc: "",
     },
+    retrieve: true,
     paging:   false,
     rowCallback: function(row, data, index) {
       if(data.ticketId == 0){
