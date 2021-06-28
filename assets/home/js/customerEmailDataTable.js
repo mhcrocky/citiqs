@@ -153,3 +153,7 @@ function saveEmailsList(){
   });
 
 }
+
+function goToEmailLists()  {
+  window.location.href = globalVariables.baseUrl + 'emaillists';
+}
