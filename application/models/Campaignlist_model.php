@@ -143,6 +143,7 @@
             $where[$this->table . '.campaignId'] = $this->campaignId;
             return $this->readImproved([
                 'what' => [
+                     $this->table . '.id',
                     'tbl_campaigns.id AS campaignId',
                     'tbl_campaigns.campaign AS campaignName',
                     'tbl_campaigns.description AS campaignDescription',
