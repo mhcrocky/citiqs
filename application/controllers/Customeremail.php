@@ -31,6 +31,7 @@ class Customeremail extends BaseControllerWeb
         $this->list_model->vendorId = $this->vendor_id;
         $lists = $this->list_model->fetchVendorLists();
         $data['lists'] = ($lists === null) ? [] : $lists;
+
         $this->loadViews("customeremail/index", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
@@ -88,6 +89,24 @@ class Customeremail extends BaseControllerWeb
         
         $this->customeremailsent_model->sendEmails($emails, 1, 'email_helper', 'sendCampaignEmailWithTemplate', ['email', 'subject']);
         
+        $response = [
+            'status' => 'success',
+            'message' => 'Emails are sent successfully!'
+        ];
+        echo json_encode($response);
+        return ;   
+
+    }
+
+    public function send_emails_from_campaign()
+	{
+
+		$campaignId = $this->input->post('campaignId');
+
+        $this->customeremailsent_model->campaignId = (int) $campaignId;
+        
+        $this->customeremailsent_model->sendCampaignEmails(1, 'email_helper', 'sendCampaignEmailWithTemplate', ['email', 'subject']);
+
         $response = [
             'status' => 'success',
             'message' => 'Emails are sent successfully!'

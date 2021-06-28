@@ -2,6 +2,18 @@
 
     <div class="col-md-4 mb-3">
         <div class="input-group">
+            <input type="button"  value="<?php echo $this->language->tLine('Send Emails Campaign'); ?>"
+                style="background: #10b981 !important;border-radius:0;height:45px;"
+                class="btn btn-primary form-control mb-3 text-left" data-toggle="modal" data-target="#sendEmailsToCampaign" >
+            <span style="background: #275C5D; padding-top: 14px;"
+                class="input-group-addon pl-2 pr-2 mb-3">
+                <i style="color: #fff;font-size: 18px;" class="fa fa-envelope" data-toggle="modal" data-target="#sendEmailsToCampaign" ></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="input-group">
             <input type="button"  value="<?php echo $this->language->tLine('Go To Email Lists'); ?>"
                 style="background: #10b981 !important;border-radius:0;height:45px;"
                 class="btn btn-primary form-control mb-3 text-left" onclick="goToEmailLists()" >
@@ -205,6 +217,52 @@
 
 
 
+<!-- Send Emails Modal -->
+<div class="modal fade" id="sendEmailsToCampaign" tabindex="-1" role="dialog" aria-labelledby="sendEmailsToCampaignLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="sendEmailsToCampaignLabel"><?php echo $this->language->tLine('Send Emails To Campaign'); ?></h5>
+                <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label for="email" class="col-md-4 col-form-label text-md-left">
+                            Campaign
+                        </label>
+                        <div class="col-md-6">
+
+                            <select id="campaign" name="campaign" style="height: 35px !important;padding-top: 6px;"
+                                class="form-control input-w">
+                                <option value="0">Select option</option>
+                                <?php if(is_array($campaigns) && count($campaigns) > 0): ?>
+                                <?php foreach($campaigns as $campaign): ?>
+                                <option value="<?php echo $campaign['id']; ?>">
+                                    <?php echo $campaign['campaign']; ?>
+                                </option>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                            
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeEmailModal" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" onclick="sendCampaignEmails()" class="btn btn-primary">Send Email</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Save Emails List Modal -->
 <div class="modal fade" id="saveEmailsListModal" tabindex="-1" role="dialog" aria-labelledby="saveEmailsListModalLabel"
     aria-hidden="true">
@@ -248,3 +306,5 @@
         </div>
     </div>
 </div>
+
+

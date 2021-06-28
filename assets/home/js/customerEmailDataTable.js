@@ -124,6 +124,25 @@ function sendMultipleEmails(){
 
 }
 
+
+function sendCampaignEmails(){
+
+  let campaignId = $("#campaign option:selected").val();
+
+
+  if(campaignId == 0){
+    alertify['error']('You must select a campaign id');
+    return ;
+  }
+
+  $.post(globalVariables.baseUrl + "customeremail/send_emails_from_campaign", {campaignId: campaignId}, function(data){
+      $('.close').click();
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+  });
+
+}
+
 function saveEmailsList(){
 
   var rows_selected = $("#customeremail").DataTable().column(0).checkboxes.selected();
