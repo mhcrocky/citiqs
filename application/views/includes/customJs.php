@@ -332,6 +332,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_emails.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/customerEmailDataTable.js"></script>
+<?php } elseif ($this->view === 'customeremail/sent') { ?>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/customerEmailSentDataTable.js"></script>
 <?php } elseif ($this->view === 'campaigns/index') { ?>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
