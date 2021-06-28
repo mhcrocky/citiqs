@@ -1297,7 +1297,7 @@ class Events extends BaseControllerWeb
 
         $GLOBALS['eventId'] = $eventId;
         $GLOBALS['startDate'] = $dateRange[0] . ' 00:00:00';
-        $GLOBALS['endDate'] = $dateRange[1] . ' 00:00:00';
+        $GLOBALS['endDate'] = $dateRange[1] . ' 23:59:59';
 
         $graph = DrillDown::create(array(
             "name" => "saleDrillDown",
