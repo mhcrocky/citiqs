@@ -71,13 +71,14 @@ class Customeremail extends BaseControllerWeb
 
     }
 
-    public function import_emails(){
-        $emails = json_decode($this->input->post('emails'));
+    public function import_customers(){
+        $customers = json_decode($this->input->post('customers'));
         $data = [];
-        foreach($emails as $key => $email){
+        foreach($customers as $key => $customer){
             $data[$key] = [
-                'email' => urldecode($email),
-                'vendorId' => $this->vendor_id
+                'email' => urldecode($customer->email),
+                'vendorId' => $this->vendor_id,
+                'name' => $customer->name
             ];
         }
 

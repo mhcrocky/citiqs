@@ -19,6 +19,10 @@ $(document).ready(function () {
         data: 'id'
       },
       {
+        title: 'Name',
+        data: 'name'
+      },
+      {
         title: 'Email',
         data: 'email'
       },
