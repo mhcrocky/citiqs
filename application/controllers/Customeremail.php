@@ -11,6 +11,8 @@ class Customeremail extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->model('customeremail_model');
+        $this->load->model('campaign_model');
+        $this->load->model('customeremailsent_model');
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->helper('utility_helper');
 		$this->isLoggedIn();
@@ -20,17 +22,19 @@ class Customeremail extends BaseControllerWeb
 
     public function index()
     {
-        $this->global['pageTitle'] = 'TIQS: Customer Email';
+        $this->global['pageTitle'] = 'TIQS: Customer Emails';
+        $this->campaign_model->vendorId = $this->vendor_id;
+        $campaigns = $this->campaign_model->fetchCampaigns();
+        $data['campaigns'] = ($campaigns === null) ? [] : $campaigns;
 
-        $this->loadViews("customeremail/index", $this->global, '', 'footerbusiness', 'headerbusiness');
+        $this->loadViews("customeremail/index", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
 
     public function sent()
     { 
-        $this->global['pageTitle'] = 'TIQS: Create Event';
-        //$data['countries'] = Country_helper::getCountries();
-        $this->loadViews("events/step-one", $this->global, $data, 'footerbusiness', 'headerbusiness');
+        $this->global['pageTitle'] = 'TIQS: Customer Emails Sent';
+        $this->loadViews("customeremail/sent", $this->global, '', 'footerbusiness', 'headerbusiness');
 
     }
 
@@ -45,29 +49,42 @@ class Customeremail extends BaseControllerWeb
         echo json_encode($customer_emails);
     }
 
+    public function get_customer_emails_sent()
+    {
+        $join = [
+			0 => [
+				'tbl_customer_emails',
+				'tbl_customer_emails.id = tbl_customer_emails_sent.emailId',
+				'left',
+            ]
+		];
+		$what = ['tbl_customer_emails_sent.*'];
+
+        $where = ["vendorId" => $this->vendor_id];
+			
+		$customer_emails_sent = $this->customeremailsent_model->read($what, $where, $join, 'group_by', ['tbl_customer_emails_sent.id']);
+
+        $customer_emails_sent = ($customer_emails_sent === null) ? [] : $customer_emails_sent;
+
+        echo json_encode($customer_emails_sent);
+    }
+
 
     public function send_multiple_emails()
 	{
         $ids = json_decode($this->input->post('ids'));
-        $emails = $this->input->post('emails');
+
+        $where = ["vendorId" => $this->vendor_id];
+			
+		$emails = $this->customeremail_model->read(['*'], $where, [], 'where_in', [$ids]);
+
+        $campaignId = $this->input->post('campaignId');
+
+        $this->customeremailsent_model->campaignId = (int) $campaignId;
         
+        $this->customeremailsent_model->sendEmails($emails, 1, 'email_helper', 'sendCampaignEmail', ['email', 'subject', 'email message']);
 
-        $response = [
-            'status' => 'error',
-            'message' => 'Emails are not sent successfully!'
-        ];
-
-        if(Ticketingemail_helper::sendEmailReservation($reservations, false, true, false, '', $emailId)){
-            $response = [
-                'status' => 'success',
-                'message' => 'Emails are sent successfully!'
-            ];
-
-        }
-
-        echo json_encode($response);
-
-        return ;
+        
 
     }
 

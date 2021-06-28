@@ -62,21 +62,14 @@ $(document).ready(function () {
 
 
 function sendMultipleEmailsModal(){
-  var rows_selected = $("#marketing").DataTable().column(0).checkboxes.selected();
-
+  
+  var rows_selected = $("#customeremail").DataTable().column(0).checkboxes.selected();
   if(rows_selected.length < 1){
     $('#emails').text('empty');
     return ;
   }
   
-  var rowIds = [];
 
-  $.each(rows_selected, function(index, rowId){
-    rowIds.push(rowId);
-
-  });
-
-  $('#reservationIds').text(JSON.stringify(rowIds));
 
   $('#sendEmailsModal').modal('show');
 
@@ -88,25 +81,28 @@ function sendMultipleEmailsModal(){
 
 function sendMultipleEmails(){
 
-  let ids = $('#reservationIds').text();
-  let templateId = $('#templateId option:selected').val();
-  if(reservationIds == 'empty'){
-    alertify['error']('Please select rows');
-    return;
+  var rows_selected = $("#customeremail").DataTable().column(0).checkboxes.selected();
+  let campaignId = $('#campaignId option:selected').val();
+
+  if(campaignId == 0){
+    alertify['error']('You must select a campaign id');
+    return ;
   }
 
-  if(templateId == 0){
-    alertify['error']('Please select a email template!');
-    return;
-  }
+  var rowIds = [];
+
+  $.each(rows_selected, function(index, rowId){
+    rowIds.push(rowId);
+
+  });
 
   let data = {
-      ids: ids,
-      templateId: templateId
+    ids: JSON.stringify(rowIds),
+    campaignId: campaignId
   }
 
-  $.post(globalVariables.baseUrl + "events/send_multiple_emails", data, function(data){
-      $('#closeEmailModal').click();
+  $.post(globalVariables.baseUrl + "customeremail/send_multiple_emails", data, function(data){
+      $('.close').click();
       data = JSON.parse(data);
       alertify[data.status](data.message);
   });

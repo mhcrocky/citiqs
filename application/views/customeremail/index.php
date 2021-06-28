@@ -151,22 +151,19 @@
                         </label>
                         <div class="col-md-6">
 
-                            <select id="templateId" name="templateId" style="height: 35px !important;padding-top: 6px;"
+                            <select id="campaignId" name="campaignId" style="height: 35px !important;padding-top: 6px;"
                                 class="form-control input-w">
                                 <option value="0">Select option</option>
-                                <?php if(is_array($templates) && count($templates) > 0): ?>
-                                <?php foreach($templates as $template): ?>
-                                <option value="<?php echo $template->id; ?>">
-                                    <?php echo $template->template_name; ?>
+                                <?php if(is_array($campaigns) && count($campaigns) > 0): ?>
+                                <?php foreach($campaigns as $campaign): ?>
+                                <option value="<?php echo $campaign['id']; ?>">
+                                    <?php echo $campaign['campaign']; ?>
                                 </option>
                                 <?php endforeach; ?>
                                 <?php endif; ?>
                             </select>
                             
                         </div>
-                    </div>
-
-                    <div class="d-none" id="reservationIds">
                     </div>
 
             </div>
