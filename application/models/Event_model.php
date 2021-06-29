@@ -1519,6 +1519,19 @@ class Event_model extends CI_Model {
 
 	}
 
+	public function get_events_by_buyer($userId) : array
+	{
+		$query = $this->db->query("SELECT tbl_events.*
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_event_shop_tags.userId ='".$userId."'
+		GROUP BY tbl_events.id");
+
+		$results = ($query->num_rows > 0) ? $query->result_array() : [];
+
+	}
+
 	public function get_tags_ticket_sold_stats_for_buyer($userId, $eventId, $startDate, $endDate) : array
 	{
 		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, COUNT(tbl_bookandpay.id) as sold_tickets, tbl_event_shop_tags.tag
