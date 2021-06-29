@@ -132,7 +132,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
        }
 
        html.${CLASS_RULER}, html.${CLASS_RULER} body {
-         background: transparent;
+         /*background: transparent;*/
          box-shadow: none
        }
        html.${CLASS_RULER} body {
@@ -366,7 +366,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
 			      "table",
 			      "textcolor",
             "emoticons",
-            'bootstrap'
+            'bootstrap',
         ],
         ruler: true,
         toolbar: "insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | emoticons | tags | qrcode | help | fullpage | preview | fullscreen | print | bootstrap",
@@ -403,6 +403,25 @@ function tinyMceInit(textAreaId, templateContent = '') {
         setup: function(editor) {
             editor.on('init', function (e) {
                 editor.setContent(templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png'));
+            });
+            editor.on('change', function (e) {
+              let color = $('#tox-icon-highlight-bg-color__color').attr('fill');
+              
+              let content = editor.getContent();
+              var mySubString = content.substring(
+                content.lastIndexOf("<body"), 
+                content.lastIndexOf(">")
+                );
+              let firstvariable = '<body';
+              let secondvariable = '>';
+              let replaceStr = content.match(new RegExp(firstvariable + "(.*)" + secondvariable));
+              if(typeof color === 'undefined') {   
+                content = content.replace(replaceStr[0], '<body style="background: #fff">');
+                editor.setContent(content);
+                return ;
+              }
+              content = content.replace(replaceStr[0], '<body style="background: '+ color +'">');
+              editor.setContent(content);
             });
           //   editor.addButton('tags', {
           //       type: 'menubutton',

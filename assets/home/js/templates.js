@@ -404,6 +404,25 @@ function tinyMceInit(textAreaId, templateContent = '') {
             editor.on('init', function (e) {
                 editor.setContent(templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png'));
             }),
+            editor.on('change', function (e) {
+              let color = $('#tox-icon-highlight-bg-color__color').attr('fill');
+              
+              let content = editor.getContent();
+              var mySubString = content.substring(
+                content.lastIndexOf("<body"), 
+                content.lastIndexOf(">")
+                );
+              let firstvariable = '<body';
+              let secondvariable = '>';
+              let replaceStr = content.match(new RegExp(firstvariable + "(.*)" + secondvariable));
+              if(typeof color === 'undefined') {   
+                content = content.replace(replaceStr[0], '<body style="background: #fff">');
+                editor.setContent(content);
+                return ;
+              }
+              content = content.replace(replaceStr[0], '<body style="background: '+ color +'">');
+              editor.setContent(content);
+            }),
             editor.addButton('tags', {
                 type: 'menubutton',
                 text: 'Tags',
