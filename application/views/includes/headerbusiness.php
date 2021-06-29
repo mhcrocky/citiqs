@@ -293,7 +293,7 @@
                                                 if (($this->session->userdata('userId'))) {
                                                     echo $this->session->userdata('userId') . '&nbsp;' . $this->session->userdata('name');
                                                 } else {
-                                                    echo $this->session->userdata('name');
+                                                    echo $this->session->userdata('buyerId') . '&nbsp;' . $this->session->userdata('name');
                                                 }
                                             ?>
                                         </p>
