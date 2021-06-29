@@ -227,7 +227,7 @@
     }
   
     var todaysEvents = this.events.reduce(function(memo, ev) {
-      if(ev.date.isSame(day, 'day') && ev.date >= today) {
+      if(ev.date.isSame(day, 'day') ) {
         memo.push(ev);
       }
       return memo;

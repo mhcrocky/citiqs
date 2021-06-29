@@ -103,6 +103,8 @@ class Events extends REST_Controller
 	{
 		$email = $this->security->xss_clean($this->input->post('email'));
 		$this->db->where('email', $email);
+		$where = "paid=1 OR paid=3";
+		$this->db->where($where);
 		$this->db->from('tbl_bookandpay');
 		$query = $this->db->get();
 		$result = $query->result_array();

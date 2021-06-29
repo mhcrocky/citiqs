@@ -21,8 +21,8 @@
         <ul class="collapse">
             <li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-gift"></i> <span><?php echo $this->language->tLine('Vouchers add/edit'); ?></span></a>
             <li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Send Vouchers'); ?></span></a>
-			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>campaigns"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Make campaign'); ?></span></a>
-			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>lists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Make lists'); ?></span></a>
+			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>campaigns"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Create campaign'); ?></span></a>
+			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>lists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Create lists'); ?></span></a>
 			<li data-menuid="2.9"><a href="<?php echo $this->baseUrl; ?>emaillists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Connect emails lists'); ?></span></a>
 			<li data-menuid="2.10"><a href="<?php echo $this->baseUrl; ?>campaignslists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Connect campaign & lists'); ?></span></a>
 			<li data-menuid="2.10"><a href="<?php echo $this->baseUrl; ?>customeremail"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('list members'); ?></span></a>
@@ -107,7 +107,8 @@
     <?php if ($_SESSION['businessTypeId'] != 26) { ?>
     <li data-menuid="4"><a href="javascript:void(0)" aria-expanded="true"><i class="ti-view-grid"></i><span><?php echo $this->language->tLine('QR Menu'); ?> & <?php echo $this->language->tLine('Cash desk'); ?></span></a>
         <ul class="collapse">
-            <li data-menuid="4.1"><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span><?php echo $this->language->tLine('Orders'); ?></span></a></li>
+			<li data-menuid="10.7"><a href="<?php echo $this->baseUrl; ?>openandclose"><i class="ti-time"></i> <span><?php echo $this->language->tLine('Open and Close'); ?></span></a></li>
+			<li data-menuid="4.1"><a href="<?php echo $this->baseUrl; ?>orders"><i class="ti-stats-up"></i><span><?php echo $this->language->tLine('Orders'); ?></span></a></li>
             <li data-menuid="4.2"><a href="<?php echo $this->baseUrl; ?>pos"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Cash desk'); ?></span></a></li>
             <li data-menuid="4.3"><a href="<?php echo $this->baseUrl; ?>productsonoff/active"><i class="ti-power-off"></i> <span><?php echo $this->language->tLine('Products ON/OFF'); ?></span></a></li>
 			<li data-menuid="4.4.3"><a href="<?php echo $this->baseUrl; ?>products/active"><i class="ti-bag"></i> <span><?php echo $this->language->tLine('Products ADD/EDIT'); ?></span></a></li>
