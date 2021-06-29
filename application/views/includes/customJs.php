@@ -509,7 +509,7 @@
 <?php } elseif ($this->view === 'buyer/buyerTickets') { ?>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	<script src='<?php echo $this->baseUrl; ?>assets/home/js/tagsStats.js'></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/tagsBuyerStats.js'></script>
 <?php } elseif ($this->view === 'floorplans/floorplans') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
