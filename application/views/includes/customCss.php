@@ -908,4 +908,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css"  href="<?php echo $this->baseUrl; ?>assets/home/styles/buyerOrders.css" />
+<?php } elseif ($this->view === 'buyer/buyerTickets') { ?>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
 <?php }  ?>

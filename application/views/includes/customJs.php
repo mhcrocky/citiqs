@@ -506,6 +506,10 @@
 <?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
 	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/buyer.js'></script>
+<?php } elseif ($this->view === 'buyer/buyerTickets') { ?>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src='<?php echo $this->baseUrl; ?>assets/home/js/tagsStats.js'></script>
 <?php } elseif ($this->view === 'floorplans/floorplans') { ?>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/fabric_v4.0.0-beta.8.js"></script>
