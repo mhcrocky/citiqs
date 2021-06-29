@@ -15,6 +15,8 @@
             $this->load->model('shoptemplates_model');
             $this->load->model('shoplandingpages_model');
 
+            $this->load->helper('utility_helper');
+
             $this->load->config('custom');
 
             $this->load->library('language', array('controller' => $this->router->class));
