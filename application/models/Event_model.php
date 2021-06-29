@@ -885,6 +885,44 @@ class Event_model extends CI_Model {
 
 	}
 
+	public function get_reservations_stats_by_tags_for_buyer($userId)
+	{
+		$query = $this->db->query("SELECT tbl_events.eventname, tbl_bookandpay.price, tbl_event_shop_tags.tag
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		INNER JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_event_shop_tags.userId ='".$userId."' AND paid='1' AND tbl_bookandpay.ticketDescription <> '' 
+		GROUP BY tbl_bookandpay.id");
+		$results = $query->result_array();
+		$reservations = [];
+		if($query->num_rows() < 1){
+			return $reservations;
+		}
+		
+		foreach($results as $key => $result){
+			$tag = $result['tag'];
+			$event = $result['eventname'];
+
+			$reservations['tags'][] = $tag;
+			$reservations['events'][] = $event;
+			
+			if(!isset($reservations['sold_tickets'][$tag][$event])) {
+				$reservations['sold_tickets'][$tag][$event] = 1;
+				$reservations['amount'][$tag][$event] = floatval($result['price']);
+				
+			} else {
+				$reservations['sold_tickets'][$tag][$event] += 1;
+				$reservations['amount'][$tag][$event] += floatval($result['price']);
+			}
+			
+			
+			
+		}
+
+		return $reservations;
+
+	}
+
 	function get_tickets_report($vendor_id, $eventId, $days = true, $sql=''){
 		if(!$days){
 		    $results = $this->get_booking_report_of_tickets($vendor_id, $eventId, $sql);
@@ -1425,6 +1463,132 @@ class Event_model extends CI_Model {
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
 		WHERE tbl_bookandpay.customer ='".$vendorId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' AND (reservationtime >= '" . $startDate . "' AND reservationtime <= '" . $endDate . "')
+		GROUP BY reservationdate, tbl_event_shop_tags.id");
+
+		if($query->num_rows() < 1) return [];
+
+		$results = $query->result_array();
+		
+		$newData = [];
+		$tags = [];
+
+		foreach($results as $result){
+			$tags[] = ($result['tag'] == null) ? 'No Tags' : $result['tag'];
+		}
+
+		$tags = array_unique($tags);
+
+		
+		foreach($results as $key => $result){
+			$date = $result['reservationdate'];
+			$tag = ($result['tag'] == null) ? 'basic' : $result['tag'];
+			
+			$exists = isset($newData[$date]);
+
+			if(!$exists) {
+
+			
+			$newData[$date] = [
+				"date" => $result['reservationdate']
+			];
+		} 
+			$newData[$date][$tag] = floatval($result['amount']);
+
+			foreach($tags as $key => $tag){
+					
+				if(!isset($newData[$date][$tag])) { 
+					$newData[$date] = array_merge($newData[$date], array("$tag" => 0));
+					//$data[$tag] = 0;
+					//continue;
+				}
+			}
+
+			
+			
+			
+
+
+
+			
+		}
+
+
+		//$newData['tickets'] = $tickets;
+
+		return $newData;
+
+	}
+
+	public function get_tags_ticket_sold_stats_for_buyer($userId, $eventId, $startDate, $endDate) : array
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, COUNT(tbl_bookandpay.id) as sold_tickets, tbl_event_shop_tags.tag
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_event_shop_tags.userId ='".$userId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' AND (reservationtime >= '" . $startDate . "' AND reservationtime <= '" . $endDate . "')
+		GROUP BY reservationdate, tbl_event_shop_tags.id");
+
+		if($query->num_rows() < 1) return [];
+
+		$results = $query->result_array();
+		
+		$newData = [];
+		$tags = [];
+
+		foreach($results as $result){
+			$tags[] = ($result['tag'] == null) ? 'basic' : $result['tag'];
+		}
+
+		$tags = array_unique($tags);
+
+		
+		foreach($results as $key => $result){
+			$date = $result['reservationdate'];
+			$tag = ($result['tag'] == null) ? 'No Tags' : $result['tag'];
+			
+			$exists = isset($newData[$date]);
+
+			if(!$exists) {
+
+			
+				$newData[$date] = [
+					"date" => $result['reservationdate']
+				];
+			} 
+				$newData[$date][$tag] = floatval($result['sold_tickets']);
+	
+				foreach($tags as $key => $tag){
+						
+					if(!isset($newData[$date][$tag])) { 
+						$newData[$date] = array_merge($newData[$date], array("$tag" => 0));
+						//$data[$tag] = 0;
+						//continue;
+					}
+				}
+	
+				
+				
+				
+	
+	
+	
+				
+			}
+	
+	
+			//$newData['tickets'] = $tickets;
+	
+			return $newData;
+
+	} 
+
+	public function get_tags_amount_stats_for_buyer($userId, $eventId, $startDate, $endDate) : array
+	{
+		$query = $this->db->query("SELECT DATE(reservationtime) as reservationdate, SUM(tbl_bookandpay.price) as amount, tbl_event_shop_tags.tag
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		WHERE tbl_event_shop_tags.userId ='".$userId."' AND tbl_events.id = ".$eventId." AND paid='1' AND tbl_bookandpay.ticketDescription <> '' AND (reservationtime >= '" . $startDate . "' AND reservationtime <= '" . $endDate . "')
 		GROUP BY reservationdate, tbl_event_shop_tags.id");
 
 		if($query->num_rows() < 1) return [];
