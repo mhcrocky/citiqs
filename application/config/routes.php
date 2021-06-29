@@ -744,6 +744,7 @@ $route['buyer'] = 'Buyer/index';
 $route['buyer_orders'] = 'Buyer/buyerOrders';
 $route['buyer_tickets'] = 'Buyer/buyerTickets';
 $route['buyer_reservations'] = 'Buyer/buyerReservations';
+$route['buyer/get_tags_stats'] = 'Buyer/get_tags_stats';
 
 //buyer ajax
 $route['get_buyer_orders'] = 'Ajaxbuyer/getBuyerOrders';
