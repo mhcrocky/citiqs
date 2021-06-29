@@ -2,7 +2,7 @@
     declare(strict_types=1);
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
-    
+
     include(APPPATH . '/libraries/koolreport/core/autoload.php');
 
     require APPPATH . '/libraries/BaseControllerWeb.php';
@@ -60,7 +60,7 @@
 
             $this->global['pageTitle'] = 'TIQS: Tags Graphs';
             $reservations = $this->event_model->get_reservations_stats_by_tags_for_buyer($this->buyerId);
-            $events = $this->event_model->get_all_events($this->buyerId);
+            $events = $this->event_model->get_events_by_buyer($this->buyerId);
             $data['events'] = $events;
             
             $data['graph'] = isset($events[0]) ? $this->get_tags_stats($events[0]['id'], true) : [];
