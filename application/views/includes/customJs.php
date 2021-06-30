@@ -283,7 +283,7 @@
 	<?php if (Utility_helper::testingVendors(intval($_SESSION['userId']))) { ?>
 		<!-- <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
 		<script src='<?php echo $this->baseUrl; ?>assets/tinymce/tinymce.min.js'></script>		
-		<script src='<?php echo $this->baseUrl; ?>assets/tinymce/plugins/tinymce-bootstrap-plugin/plugin/plugin.min.js'></script>
+		<script src='<?php echo $this->baseUrl; ?>assets/tinymce/plugins/bootstrap/plugin/plugin.min.js'></script>
 		<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates2.js'></script>
 	<?php } else { ?>
 		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
