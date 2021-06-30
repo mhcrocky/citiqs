@@ -405,7 +405,15 @@ function tinyMceInit(textAreaId, templateContent = '') {
                 editor.setContent(templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png'));
             }),
             editor.on('change', function (e) {
-              let color = $('#tox-icon-highlight-bg-color__color').attr('fill');
+              let style = $('#mceu_11-preview').attr('style');
+
+              if(style == $('#lastStyle').val()){
+                return ;
+              }
+
+              let lastStyle = $('#lastStyle').val(style);
+
+              console.log(style);
               
               let content = editor.getContent();
               var mySubString = content.substring(
@@ -415,12 +423,12 @@ function tinyMceInit(textAreaId, templateContent = '') {
               let firstvariable = '<body';
               let secondvariable = '>';
               let replaceStr = content.match(new RegExp(firstvariable + "(.*)" + secondvariable));
-              if(typeof color === 'undefined') {   
-                content = content.replace(replaceStr[0], '<body style="background: #fff">');
-                editor.setContent(content);
+              if(typeof style === 'undefined') {   
+               // content = content.replace(replaceStr[0], '<body style="background: #fff">');
+                //editor.setContent(content);
                 return ;
               }
-              content = content.replace(replaceStr[0], '<body style="background: '+ color +'">');
+              content = content.replace(replaceStr[0], '<body style=" '+ style +'">');
               editor.setContent(content);
             }),
             editor.addButton('tags', {

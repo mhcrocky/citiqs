@@ -406,6 +406,12 @@ function tinyMceInit(textAreaId, templateContent = '') {
             });
             editor.on('change', function (e) {
               let color = $('#tox-icon-highlight-bg-color__color').attr('fill');
+
+              if(color == $('#lastColor').val()){
+                return ;
+              }
+
+              let lastColor = $('#lastColor').val(color);
               
               let content = editor.getContent();
               var mySubString = content.substring(
