@@ -48,8 +48,6 @@
                 'landingPagesEdit' => true,
                 'defaultTemplates' => $this->email_templates_model->getDefaultTemplate(),
             ];
-            $dataLog = json_decode($data);
-            Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/add_template.txt', "Data: $dataLog");
 
             $this->global['pageTitle'] = 'TIQS : ADD TEMPLATE';
             $this->loadViews('templates/addTemplate', $this->global, $data, 'footerbusiness', 'headerbusiness');
