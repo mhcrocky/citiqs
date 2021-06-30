@@ -19,5 +19,4 @@
         Object.freeze(globals);
         return globals;
     }());
-    console.dir(globalVariables);
 </script>

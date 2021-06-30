@@ -328,6 +328,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
 	// 	toolbar: 'fullpage'
 
     tinymce.init({
+        
         selector: id,
 		    resize: 'both',
         relative_urls : false,
@@ -347,7 +348,6 @@ function tinyMceInit(textAreaId, templateContent = '') {
             "charmap",
             "preview",
             "anchor",
-            "textcolor",
             "searchreplace",
             "visualblocks",
             "code",
@@ -355,7 +355,6 @@ function tinyMceInit(textAreaId, templateContent = '') {
             "insertdatetime",
             "media",
             "table",
-            "contextmenu",
             "paste",
             "help",
             "wordcount",
@@ -364,9 +363,8 @@ function tinyMceInit(textAreaId, templateContent = '') {
             "print",
             "ruler",
 			      "table",
-			      "textcolor",
             "emoticons",
-            'bootstrap',
+            "bootstrap",
         ],
         ruler: true,
         toolbar: "insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | emoticons | tags | qrcode | help | fullpage | preview | fullscreen | print | bootstrap",
@@ -548,9 +546,9 @@ function tinyMceInit(textAreaId, templateContent = '') {
           //   });
         },
         bootstrapConfig: {
-          url: globalVariables.baseUrl + 'assets/home/js/tinyMce/plugins/tinymce-bootstrap-plugin/',
+          url: globalVariables.baseUrl + 'assets/home/js/tinyMce/tinymce-bootstrap-plugin/',
           iconFont: 'fontawesome5',
-          imagesPath: '/demo/demo-images',
+          // imagesPath: '/demo/demo-images',
           key: globalVariables.bootstrapTinymceKey
         },
 
