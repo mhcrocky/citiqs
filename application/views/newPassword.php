@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <div class="login-box">
+    <div class="login-box" style="margin-top: 120px">
 		<!--      <div class="login-logo">-->
 		<!--          <img border="0" src="--><?php //echo base_url(); ?><!--assets/home/images/tiqslogonew.png" alt="tiqs" width="125" height="auto" />-->
-		<!--      </div>
-      <div class="login-box-body">
+		<!--      </div> -->
+      <div class="login-box-body" style="margin-top: 120px">
         <?php $this->load->helper('form'); ?>
-          <div class="login-box-body">
+          <div class="login-box-body"style="margin-top: 120px">
               <p  style="font-family:campton-bold; font-size:300%; text-align: center">RESET PASSWORD</p>
               <?php $this->load->helper('form'); ?>
               <?php echo $this->session->flashdata('fail'); ?>

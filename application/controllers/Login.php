@@ -410,7 +410,7 @@ class Login extends BaseControllerWeb
 		if ($is_correct == 1) {
 			$this->global['pageTitle'] = 'TIQS : VERIFY CODE';
 			$this->loadViews("newPassword", $data, NULL, "nofooter", "noheader");
-//
+
 //			$this->load->view('newPassword', $data);
 		} else {
 			redirect('/login');
