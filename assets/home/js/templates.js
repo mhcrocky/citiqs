@@ -132,7 +132,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
        }
 
        html.${CLASS_RULER}, html.${CLASS_RULER} body {
-         background: transparent;
+         /*background: transparent;*/
          box-shadow: none
        }
        html.${CLASS_RULER} body {
@@ -405,15 +405,19 @@ function tinyMceInit(textAreaId, templateContent = '') {
                 editor.setContent(templateContent.replaceAll('[QRlink]', globalVariables.baseUrl+'assets/images/qrcode_preview.png'));
             }),
             editor.on('change', function (e) {
-              let style = $('#mceu_11-preview').attr('style');
+              setTimeout(() => {
+                
+              
+              let color = $('#mceu_11-preview').css('background-color');
 
-              if(style == $('#lastStyle').val()){
+              console.log(color);
+
+              if(color == $('#lastStyle').val()){
                 return ;
               }
 
-              let lastStyle = $('#lastStyle').val(style);
+              $('#lastStyle').val(color);
 
-              console.log(style);
               
               let content = editor.getContent();
               var mySubString = content.substring(
@@ -423,13 +427,15 @@ function tinyMceInit(textAreaId, templateContent = '') {
               let firstvariable = '<body';
               let secondvariable = '>';
               let replaceStr = content.match(new RegExp(firstvariable + "(.*)" + secondvariable));
-              if(typeof style === 'undefined') {   
+              console.log(replaceStr);
+              if(typeof color === 'undefined') {   
                // content = content.replace(replaceStr[0], '<body style="background: #fff">');
                 //editor.setContent(content);
                 return ;
               }
-              content = content.replace(replaceStr[0], '<body style=" '+ style +'">');
+              content = content.replace(replaceStr[0], '<body style="background: '+ color +'">');
               editor.setContent(content);
+            }, 10);
             }),
             editor.addButton('tags', {
                 type: 'menubutton',

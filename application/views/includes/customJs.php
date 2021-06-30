@@ -279,7 +279,9 @@
   }
 });
 	</script>
-<?php } elseif ($this->view === 'templates/addTemplate') { ?>
+<?php } elseif ($this->view === 'templates/addTemplate') {
+	$this->load->helper('utility_helper'); ?>
+	?>
 <!--	<script src='--><?php //echo $this->baseUrl; ?><!--assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>-->
 	<?php if (Utility_helper::testingVendors(intval($_SESSION['userId']))) { ?>
 		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
