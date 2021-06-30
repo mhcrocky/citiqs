@@ -738,3 +738,10 @@ function sendTestEmailResponse(email, response) {
 
 showTemplates();
 setTimeout(hideTemplateEditor, 1000);
+
+
+$(document).on('focusin', function(e) {
+  if ($(e.target).closest(".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
+    e.stopImmediatePropagation();
+  }
+});
