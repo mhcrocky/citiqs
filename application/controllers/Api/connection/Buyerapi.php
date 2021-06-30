@@ -345,6 +345,13 @@
 
         private function setUpdateBuyerData(array $buyerData, array &$updateBuyer): bool
         {
+
+            if (!empty($buyerData['first_name'])) {
+                $updateBuyer['first_name'] = $buyerData['first_name'];
+            }
+            if (!empty($buyerData['second_name'])) {
+                $updateBuyer['second_name'] = $buyerData['second_name'];
+            }
             if (!empty($buyerData['mobile'])) {
                 if (!$this->checkBuyerMobile($buyerData, true)) return false;
                 $updateBuyer['mobile'] = $buyerData['mobile'];
