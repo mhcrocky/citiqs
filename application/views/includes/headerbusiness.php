@@ -10,7 +10,8 @@
         <title><?php echo $pageTitle ? $pageTitle : 'TIQS'; ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/png" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png">
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;?>assets/css/business_dashboard/bootstrap.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;?>assets/css/business_dashboard/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl;?>assets/css/css/customer_style.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/home/styles/main-style.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/css/font-awesome-4.min.css">
@@ -160,36 +161,36 @@
             
         </style>
         <?php if (!isset($_SESSION['masterAccounts'])) { ?>
-        <style>
-        @media only screen and (min-width: 600px) {
-            #navRowElement {
-                width: 550px;
-            }
-        }
-        </style>
+            <style>
+                @media only screen and (min-width: 600px) {
+                    #navRowElement {
+                        width: 550px;
+                    }
+                }
+            </style>
         <?php } ?>
 
 
         <?php if($this->session->userdata('menuOptions')): ?>
         
-        <style>
-            [data-menuid] {
-                display: none;
-            }
-            
-            <?php $menuOptions = array_unique($this->session->userdata('menuOptions'));
-                  foreach($menuOptions as $menuOption): ?>
-            [data-menuid="<?php echo $menuOption; ?>"] {
-                display: block !important;
-            }
-            <?php endforeach; ?>
-        </style>
+            <style>
+                [data-menuid] {
+                    display: none;
+                }
+                
+                <?php $menuOptions = array_unique($this->session->userdata('menuOptions'));
+                    foreach($menuOptions as $menuOption): ?>
+                [data-menuid="<?php echo $menuOption; ?>"] {
+                    display: block !important;
+                }
+                <?php endforeach; ?>
+            </style>
         
         <?php endif; ?>
         <!-- modernizr css -->
         <script src="<?php echo $this->baseUrl; ?>assets/js/business_dashboard/jquery-2.2.4.min.js"></script>
         <script src="<?php echo $this->baseUrl; ?>assets/js/popper.min.js"></script>
-        <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script src="<?php echo $this->baseUrl; ?>assets/js/modernizr-2.8.3.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

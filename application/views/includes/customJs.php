@@ -279,12 +279,14 @@
   }
 });
 	</script>
-<?php } elseif ($this->view === 'templates/addTemplate') {
-	$this->load->helper('utility_helper'); ?>
-	?>
-<!--	<script src='--><?php //echo $this->baseUrl; ?><!--assets/home/js/tinymce.min.js?apiKey=pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu'></script>-->
+<?php } elseif ($this->view === 'templates/addTemplate') { ?>
 	<?php if (Utility_helper::testingVendors(intval($_SESSION['userId']))) { ?>
-		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<?php if (ENVIRONMENT === 'development') { ?>
+			<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<?php } else { ?>
+			<script src='<?php echo $this->baseUrl; ?>assets/tinymce/tinymce.min.js'></script>
+		<?php } ?>
+		<script src='<?php echo $this->baseUrl; ?>assets/tinymce/plugins/bootstrap/plugin/plugin.js'></script>
 		<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates2.js'></script>
 	<?php } else { ?>
 		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>

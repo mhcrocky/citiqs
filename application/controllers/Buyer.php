@@ -15,6 +15,7 @@
     class Buyer extends BaseControllerWeb
     {
         private $buyerId;
+
         public function __construct()
         {
             parent::__construct();
@@ -57,19 +58,19 @@
         public function buyerTickets(): void
         {
             $this->global['pageTitle'] = 'TIQS : BUYER TICKETS';
-
             $this->global['pageTitle'] = 'TIQS: Tags Graphs';
-            $reservations = $this->event_model->get_reservations_stats_by_tags_for_buyer($this->buyerId);
-            $events = $this->event_model->get_events_by_buyer($this->buyerId);
+            $buyerId=$this->session->userdata('buyerId');
+			$events = $this->event_model->get_events_by_buyer($buyerId);
             $data['events'] = $events;
             
             $data['graph'] = isset($events[0]) ? $this->get_tags_stats($events[0]['id'], true) : [];
-
             $this->loadViews('buyer/buyerTickets', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
 
         public function get_tags_stats($eventId = false, $dateRange = false)
         {
+
+        	$buyerId=$this->session->userdata('buyerId');
 
             $issetEventId = ($eventId) ? true : false;
             $eventId = ($eventId) ? $eventId : $this->input->post('eventId');
@@ -97,7 +98,9 @@
                                 'endDate' => $endDate
                             ];
 
-                            $tags = $this->event_model->get_tags_ticket_sold_stats_for_buyer($this->buyerId, $eventId, $startDate, $endDate);
+								$buyerId=$this->session->userdata('buyerId');
+
+								$tags = $this->event_model->get_tags_ticket_sold_stats_for_buyer($buyerId, $eventId, $startDate, $endDate);
 
                             $columnArr['date'] = [
                                 "type" => "string",
@@ -146,7 +149,9 @@
                             $startDate = $conditions['startDate'];
                             $endDate = $conditions['endDate'];
 
-                            $tags = $this->event_model->get_tags_amount_stats_for_buyer($this->buyerId, $eventId, $startDate, $endDate);
+							$buyerId=$this->session->userdata('buyerId');
+
+							$tags = $this->event_model->get_tags_amount_stats_for_buyer($buyerId, $eventId, $startDate, $endDate);
 
                             $tags = array_values($tags);
 
