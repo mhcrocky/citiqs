@@ -6072,9 +6072,9 @@
         if (this.enableTemplateEdition === true) {
           tinymce.dom.DomQuery(this.editor.dom.select('body')).addClass('templatesEnabled');
         }
-        if (this.key.match(/key-here$/g) !== null) {
-          this.throwRegistrationAlert();
-        }
+        // if (this.key.match(/key-here$/g) !== null) {
+        //   this.throwRegistrationAlert();
+        // }
         this.editor.ui.registry.addContextMenu('bootstrap', {
           update: function (element) {
             var ctxElements = 'addParagraphBefore addParagraphAfter | addParagraphAtBeginning addParagraphAtEnd';
