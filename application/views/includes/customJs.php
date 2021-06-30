@@ -281,8 +281,11 @@
 	</script>
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
 	<?php if (Utility_helper::testingVendors(intval($_SESSION['userId']))) { ?>
-		<!-- <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
-		<script src='<?php echo $this->baseUrl; ?>assets/tinymce/tinymce.min.js'></script>		
+		<?php if (ENVIRONMENT === 'development') { ?>
+			<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<?php } else { ?>
+			<script src='<?php echo $this->baseUrl; ?>assets/tinymce/tinymce.min.js'></script>
+		<?php } ?>
 		<script src='<?php echo $this->baseUrl; ?>assets/tinymce/plugins/bootstrap/plugin/plugin.js'></script>
 		<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates2.js'></script>
 	<?php } else { ?>

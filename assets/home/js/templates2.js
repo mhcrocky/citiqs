@@ -427,123 +427,147 @@ function tinyMceInit(textAreaId, templateContent = '') {
               content = content.replace(replaceStr[0], '<body style="background: '+ color +'">');
               editor.setContent(content);
             });
-          //   editor.addButton('tags', {
-          //       type: 'menubutton',
-          //       text: 'Tags',
-          //       icon: false,
-          //       menu: [
-          //           {
-          //               text: '[buyerName]',
-          //               onclick: function(){editor.insertContent('[buyerName]')}
-          //           },
-          //           {
-          //               text: '[buyerEmail]',
-          //               onclick: function(){editor.insertContent('[buyerEmail]')}
-          //           },
-          //           {
-          //               text: '[buyerMobile]',
-          //               onclick: function(){editor.insertContent('[buyerMobile]')}
-          //           },
-          //           {
-          //               text: '[customer]',
-          //               onclick: function(){editor.insertContent('[customer]')}
-          //           },
-          //           {
-          //               text: '[reservationId]',
-          //               onclick: function(){editor.insertContent('[reservationId]')}
-          //           },
-          //           {
-          //               text: '[spotId]',
-          //               onclick: function(){editor.insertContent('[spotId]')}
-          //           },
-          //           {
-          //               text: '[spotLabel]',
-          //               onclick: function(){editor.insertContent('[spotLabel]')}
-          //           },
-          //           {
-          //               text: '[numberOfPersons]',
-          //               onclick: function(){editor.insertContent('[numberOfPersons]')}
-          //           },
-          //           {
-          //               text: '[startTime]',
-          //               onclick: function(){editor.insertContent('[startTime]')}
-          //           },
-          //           {
-          //               text: '[endTime]',
-          //               onclick: function(){editor.insertContent('[endTime]')}
-          //           },
-          //           {
-          //               text: '[price]',
-          //               onclick: function(){editor.insertContent('[price]')}
-          //           },
-          //           {
-          //               text: '[eventName]',
-          //               onclick: function(){editor.insertContent('[eventName]')}
-          //           },
-          //           {
-          //               text: '[eventDate]',
-          //               onclick: function(){editor.insertContent('[eventDate]')}
-          //           },
-          //           {
-          //               text: '[eventVenue]',
-          //               onclick: function(){editor.insertContent('[eventVenue]')}
-          //           },
-          //           {
-          //               text: '[eventAddress]',
-          //               onclick: function(){editor.insertContent('[eventAddress]')}
-          //           },
-          //           {
-          //               text: '[eventCity]',
-          //               onclick: function(){editor.insertContent('[eventCity]')}
-          //           },
-          //           {
-          //               text: '[eventCountry]',
-          //               onclick: function(){editor.insertContent('[eventCountry]')}
-          //           },
-          //           {
-          //               text: '[eventZipcode]',
-          //               onclick: function(){editor.insertContent('[eventZipcode]')}
-          //           },
-          //           {
-          //               text: '[ticketDescription]',
-          //               onclick: function(){editor.insertContent('[ticketDescription]')}
-          //           },
-          //           {
-          //               text: '[ticketPrice]',
-          //               onclick: function(){editor.insertContent('[ticketPrice]')}
-          //           },
-          //           {
-          //               text: '[ticketQuantity]',
-          //               onclick: function(){editor.insertContent('[ticketQuantity]')}
-          //           },
-          //           {
-          //               text: '[orderId]',
-          //               onclick: function(){editor.insertContent('[orderId]')}
-          //           },
-          //           {
-          //               text: '[orderAmount]',
-          //               onclick: function(){editor.insertContent('[orderAmount]')}
-          //           },
-					// {
-					// 	text: '[VoucherCode]',
-					// 	onclick: function(){editor.insertContent('[voucherCode]')}
-					// },
-					// {
-					// 	text: '[WalletCode]',
-					// 	onclick: function(){editor.insertContent('[WalletCode]')}
-					// },
-          //       ],
-          //   });
-
-          //   editor.addButton('qrcode', {
-          //       text: 'QRCode',
-          //       onclick: function(){
-          //           let html = '<div style="width:100%;">'+
-          //           '<img class="qr-code-image"  border="0"  align="one_image" style="display:block;width:150px;padding:50px;" alt="" src="'+globalVariables.baseUrl+'assets/images/qrcode_preview.png" tabindex="0">'+
-          //           '</div>';
-          //           editor.insertContent(html);
-          //       }
-          //   });
+            editor.ui.registry.addMenuButton('tags', {
+              text: 'Tags',
+              fetch: function (callback) {
+                var items = [
+                  {
+                    type: 'menuitem',
+                    text: '[buyerName]',
+                    onAction: function(){editor.insertContent('[buyerName]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[buyerEmail]',
+                    onAction: function(){editor.insertContent('[buyerEmail]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[buyerMobile]',
+                    onAction: function(){editor.insertContent('[buyerMobile]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[customer]',
+                    onAction: function(){editor.insertContent('[customer]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[reservationId]',
+                    onAction: function(){editor.insertContent('[reservationId]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[spotId]',
+                    onAction: function(){editor.insertContent('[spotId]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[spotLabel]',
+                    onAction: function(){editor.insertContent('[spotLabel]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[numberOfPersons]',
+                    onAction: function(){editor.insertContent('[numberOfPersons]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[startTime]',
+                    onAction: function(){editor.insertContent('[startTime]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[endTime]',
+                    onAction: function(){editor.insertContent('[endTime]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[price]',
+                    onAction: function(){editor.insertContent('[price]')}
+                  },
+                  {
+                      text: '[eventName]',
+                      onAction: function(){editor.insertContent('[eventName]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[eventDate]',
+                    onAction: function(){editor.insertContent('[eventDate]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[eventVenue]',
+                    onAction: function(){editor.insertContent('[eventVenue]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[eventAddress]',
+                    onAction: function(){editor.insertContent('[eventAddress]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[eventCity]',
+                    onAction: function(){editor.insertContent('[eventCity]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[eventCountry]',
+                    onAction: function(){editor.insertContent('[eventCountry]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[eventZipcode]',
+                    onAction: function(){editor.insertContent('[eventZipcode]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[ticketDescription]',
+                    onAction: function(){editor.insertContent('[ticketDescription]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[ticketPrice]',
+                    onAction: function(){editor.insertContent('[ticketPrice]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[ticketQuantity]',
+                    onAction: function(){editor.insertContent('[ticketQuantity]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[orderId]',
+                    onAction: function(){editor.insertContent('[orderId]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[orderAmount]',
+                    onAction: function(){editor.insertContent('[orderAmount]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[VoucherCode]',
+                    onAction: function(){editor.insertContent('[voucherCode]')}
+                  },
+                  {
+                    type: 'menuitem',
+                    text: '[WalletCode]',
+                    onAction: function(){editor.insertContent('[WalletCode]')}
+                  },
+                ];
+                callback(items);
+              }
+            });
+            editor.ui.registry.addButton('qrcode', {
+                text: 'QRCode',
+                onAction: function(){
+                    let html = '<div style="width:100%;">'+
+                    '<img class="qr-code-image"  border="0"  align="one_image" style="display:block;width:150px;padding:50px;" alt="" src="'+globalVariables.baseUrl+'assets/images/qrcode_preview.png" tabindex="0">'+
+                    '</div>';
+                    editor.insertContent(html);
+                }
+            });
         },
         bootstrapConfig: {
           url: globalVariables.baseUrl + 'assets/tinymce/plugins/bootstrap/',
