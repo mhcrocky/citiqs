@@ -293,6 +293,10 @@
 		</div>
 	</div>
 </div>
+
+<input type="hidden" id="lastColor">
+<input type="hidden" id="lastStyle">
+
 <script>
 const templateGlobals = (function() {
     let globals = {
