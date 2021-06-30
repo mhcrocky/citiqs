@@ -546,7 +546,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
           //   });
         },
         bootstrapConfig: {
-          url: globalVariables.baseUrl + 'assets/home/js/plugins/tinyMce/tinymce-bootstrap-plugin/',
+          url: globalVariables.baseUrl + 'assets/home/js/tinymce/plugins/tinymce-bootstrap-plugin/',
           iconFont: 'fontawesome5',
           // imagesPath: '/demo/demo-images',
           key: globalVariables.bootstrapTinymceKey
