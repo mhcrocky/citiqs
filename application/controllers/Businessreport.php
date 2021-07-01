@@ -120,11 +120,12 @@ class Businessreport extends BaseControllerWeb
 		$result = array();
 
 		foreach($data as $val) {
-			if(array_key_exists($key, $val)){
+			if(array_key_exists($key, $val)) {
 				$result[$val[$key]][] = $val;
-			}else{
+			} else {
 				$result[""][] = $val;
 			}
+
 		}
 
 		return $result;

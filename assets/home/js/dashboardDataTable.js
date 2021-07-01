@@ -1,3 +1,28 @@
+function showCategories(categories) {
+  let html = '';
+  let category;
+  console.dir(categories);
+
+
+  html += '<tr>';
+  html +=   '<th class="text-right" colspan="4"><b id="daterange">' + $('#reportDateTime').val() + '</b></th>';
+  html +=   '<th class="text-center">Amount excl. service fee</th>';
+  html += '</tr>';
+
+
+  for (category in categories) {
+    console.dir(category);
+    console.dir(categories[category]);
+    html += '<tr>';
+    html +=   '<td class="text-right" colspan="4"><b id="daterange">' + category + '</b></th>';
+    html +=   '<td class="text-center">' + categories[category].toFixed(2) + '</th>';
+    html += '</tr>';
+  }
+
+  $("#total_categories").empty();
+  $("#total_categories").html(html);
+}
+
 $(document).ready( function () {
       var options = {
         allow_empty: true,
@@ -460,7 +485,6 @@ $(document).ready( function () {
           title: 'Total without voucher amount',
           data: null,
           "render": function (data, type, row) {
-            console.dir(data);
             return data.amountWithoutVoucher;
           }
         },
@@ -562,7 +586,6 @@ function format(d) {
 				'</tr>';
       var productsVat = [];
 			$.each(d.child, function(indexInArray, val) {
-        console.log(val);
         if(productsVat[String(val.productVat)] !== undefined){
           productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.EXVAT);
           productsVat[String(val.productVat)][1] = parseFloat(productsVat[String(val.productVat)][1]) + parseFloat(val.VAT);
@@ -661,7 +684,9 @@ function format(d) {
           var totalServiceFeeExVat = 0;
           var waiterTipVat = 0;
           var percentageVat = 0;
+          let categories = {};
           $.each(tbl_datas, function( index, tbl_data ) {
+            // TO DO SUM CATEGORIES
             totalAmountVat = totalAmountVat + parseFloat(tbl_data.total_AMOUNT);
             totaVoucherAmount = totaVoucherAmount + parseFloat(tbl_data.voucherAmount);
             totaAmountExVoucher = totaAmountExVoucher + parseFloat(tbl_data.amountWithoutVoucher);
@@ -673,7 +698,10 @@ function format(d) {
             $.each(tbl_data, function( index, value ) {
               if(index == 'child'){
                 $.each(value, function( index, val ) {
-                  
+                  if (!categories.hasOwnProperty(val['productCategory'])) {
+                    categories[val['productCategory']] = 0;
+                  }
+                  categories[val['productCategory']] += parseFloat(val['AMOUNT']);
                   if(productsVat[String(val.productVat)] !== undefined){
 
                     productsVat[String(val.productVat)][0] = parseFloat(productsVat[String(val.productVat)][0]) + parseFloat(val.AMOUNT);
@@ -689,7 +717,6 @@ function format(d) {
           
           });
           //console.log(productsVat);
-          
           html += '<tr>' +
           '<td class="text-right" colspan="4"><b id="daterange">'+$('#reportDateTime').val()+'</b></td>' +
           '<th class="text-center">Amount incl. VAT</td>' +
@@ -736,6 +763,8 @@ function format(d) {
           $("#total-percentage").show();
           $("#total-percentage").empty();
           $("#total-percentage").html(html);
+
+          showCategories(categories);
 
         }
       });

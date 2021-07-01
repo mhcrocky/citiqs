@@ -16,7 +16,7 @@ tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.price * tbl_
 ((tbl_shop_products_extended.price * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.vatpercentage+100) AS EXVAT,
 (tbl_shop_orders.serviceFee*100)/(tbl_shop_vendors.serviceFeeTax+100) AS EXVATSERVICE,tbl_shop_orders.serviceFee,
 tbl_shop_products_extended.price * tbl_shop_order_extended.quantity-tbl_shop_products_extended.price * tbl_shop_order_extended.quantity * 100 / (tbl_shop_products_extended.vatpercentage+100) AS VAT,
-tbl_shop_voucher.code AS voucherCode
+tbl_shop_voucher.code AS voucherCode, tbl_shop_categories.id AS categoryId, tbl_shop_categories.category AS productCategory
 FROM tbl_shop_orders INNER JOIN tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId 
 INNER JOIN tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
 INNER JOIN tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id
@@ -41,7 +41,7 @@ tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.deliveryPric
 (tbl_shop_orders.serviceFee - (tbl_shop_orders.serviceFee*100)/(tbl_shop_vendors.serviceFeeTax+100)) AS VATSERVICE,tbl_shop_vendors.serviceFeeTax,
 ((tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.deliveryVatpercentage+100)
 AS EXVAT,tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity-tbl_shop_products_extended.deliveryPrice * tbl_shop_order_extended.quantity * 100 / (tbl_shop_products_extended.deliveryVatpercentage+100) AS VAT,
-tbl_shop_voucher.code AS voucherCode
+tbl_shop_voucher.code AS voucherCode, tbl_shop_categories.id AS categoryId, tbl_shop_categories.category AS productCategory
 FROM tbl_shop_orders INNER JOIN tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
 INNER JOIN tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
 INNER JOIN tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id
@@ -66,7 +66,7 @@ tbl_shop_spot_types.type AS service_type,tbl_shop_products_extended.pickupPrice 
 (tbl_shop_orders.serviceFee - (tbl_shop_orders.serviceFee*100)/(tbl_shop_vendors.serviceFeeTax+100)) AS VATSERVICE,tbl_shop_vendors.serviceFeeTax,
 ((tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity) * 100)/(tbl_shop_products_extended.pickupVatpercentage+100) AS EXVAT,
 tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity-tbl_shop_products_extended.pickupPrice * tbl_shop_order_extended.quantity * 100 / (tbl_shop_products_extended.pickupVatpercentage+100) AS VAT,
-tbl_shop_voucher.code AS voucherCode
+tbl_shop_voucher.code AS voucherCode, tbl_shop_categories.id AS categoryId, tbl_shop_categories.category AS productCategory
 FROM tbl_shop_orders INNER JOIN tbl_shop_order_extended ON tbl_shop_orders.id = tbl_shop_order_extended.orderId
 INNER JOIN tbl_shop_products_extended ON tbl_shop_order_extended.productsExtendedId = tbl_shop_products_extended.id
 INNER JOIN tbl_shop_products ON  tbl_shop_products_extended.productId = tbl_shop_products.id

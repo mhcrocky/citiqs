@@ -198,6 +198,8 @@
 
             if ($order['paid'] === '1') return false;
 
+            if (is_null($order) || $order['paid'] === '1') return false;
+
             $this->active = '1';
             ($this->percent) ? $this->percentUsed = '0' : $this->amount += floatval($order['voucherAmount']);
             ($this->productId) ? intval($this->productId) : $this->productId = null;
