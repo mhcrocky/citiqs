@@ -37,6 +37,8 @@
                         <th></th>
                         <th></th>
                         <th></th>
+                        <th id="total_amount"></th>
+                        <th id="total_numberofpersons"></th>
                         <th></th>
                     </tr>
             </tfoot>
@@ -46,10 +48,12 @@
             </div>
 
         </div>
-        <table style="display: none;" id="total-percentage" class="table table-striped table-bordered mt-3"
-            cellspacing="0" width="100%">
+        <div class="w-100 mt-3 table-responsive">
+            <table style="display: none;" id="total-percentage" class="table table-striped table-bordered mt-3"
+                cellspacing="0" width="100%">
 
-        </table>
+             </table>
+        </div>
     </div>
     </div>
 
