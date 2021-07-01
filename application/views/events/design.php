@@ -16,7 +16,7 @@
     </ul>
  
     <div class="tab-content" style="border-radius: 50px; margin-left: -10px">
-        <form action="<?php echo base_url(); ?>events/save_design/<?php echo $eventId; ?>" method="POST">
+        <form action="<?php echo base_url(); ?>events/save_design/<?php echo $eventId; ?>" method="POST" enctype="multipart/form-data">
             <div id="design" class="container tab-pane active" style="background: none;">
                 <?php include_once FCPATH . 'application/views/events/includes/design/designMain.php'; ?>
             </div>
