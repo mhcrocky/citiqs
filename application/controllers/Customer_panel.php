@@ -44,6 +44,9 @@ class  Customer_panel extends BaseControllerWeb
     {
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
         $this->global['js'] = [
+            'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.js',
+            'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js',
+            'https://cdn.jsdelivr.net/npm/vue@2.6.14',
             base_url().'assets/bower_components/bootstrap-colorselector/bootstrap-colorselector.min.js',
             'https://unpkg.com/vuejs-datepicker',
             'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js',
@@ -93,9 +96,11 @@ class  Customer_panel extends BaseControllerWeb
     {
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
         $this->global['js'] = [
+            'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.js',
+            'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js',
+            'https://cdn.jsdelivr.net/npm/vue@2.6.14',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js',
-            'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
             'https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js',
             base_url() . 'assets/home/js/templates.js',
             'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
@@ -154,7 +159,9 @@ class  Customer_panel extends BaseControllerWeb
     {
         $this->user_model->setUniqueValue($this->userId)->setWhereCondtition()->setUser();
         $this->global['js'] = [
-            'https://cdn.jsdelivr.net/npm/vue/dist/vue.js',
+            'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.js',
+            'https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js',
+            'https://cdn.jsdelivr.net/npm/vue@2.6.14',
             'https://unpkg.com/vuejs-datepicker',
             'https://cdn.jsdelivr.net/npm/vue-search-select@2.9.3/dist/VueSearchSelect.umd.min.js',
             'https://unpkg.com/moment@2.18.1/min/moment.min.js',

@@ -47,6 +47,15 @@ $(document).ready( function () {
         size: 30,
         unique: true
       },
+      {
+        id: 'tbl_bookandpay.Spotlabel',
+        label: 'Spot Label',
+        type: 'string',
+        class: 'Spotlabel',
+        default_value: '',
+        size: 30,
+        unique: true
+      }
     ]
   };
   
@@ -133,7 +142,14 @@ $(document).ready( function () {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-      $(tfoot).find('th').eq(8).html(round_up(amountTotal));
+      let numberOfPersonsTotalData = api.column( 10,{ search: 'applied' } ).cache('search');
+      let numberOfPersonsTotal = numberOfPersonsTotalData.length ? 
+            numberOfPersonsTotalData.reduce( function (a, b) {
+             return parseInt(a) + parseInt(b);
+           }) : 0;
+
+      $('#total_amount').text(round_up(amountTotal));
+      $('#total_numberofpersons').text(numberOfPersonsTotal);
     },
     rowId: function(a) {
       return 'row_id_' + a.id;
@@ -211,7 +227,14 @@ $(document).ready( function () {
     {
       title: 'Date',
       data: 'eventdate'
+    },
+    {
+      title: 'Spot ID',
+      data: 'SpotId'
     }
+    ],
+    columnDefs: [
+      { visible: false, "targets": [12] }
     ],
   });
 
@@ -232,6 +255,7 @@ $(document).ready( function () {
 
     $.fn.dataTable.ext.search.push(
       function (settings, data, dataIndex) {
+        
         let full_timestamp = $('input[name="datetimes"]').val();
         var date = full_timestamp.split(" - ");
         var min = moment(date[0]);
@@ -241,7 +265,7 @@ $(document).ready( function () {
         if (min == '' && startDate <= max) { return true;}
         if(max == '' && startDate >= min) {return true;}
         if (startDate <= max && startDate >= min) { return true; }
-          return false;
+        return false;
       });
     
     $('input[name="datetimes"]').change(function () {
@@ -258,6 +282,80 @@ $(document).ready( function () {
     .draw();
     */
   });
+
+
+  // Report Table
+
+  table.on( 'search.dt', function () {
+    if(table['context'][0]['aiDisplay'].length == 0){
+      $("#total-percentage").hide();
+    } else {
+      let tbl_datas = table.rows({ search: 'applied'}).data()
+      var reservationStats = [];
+      var html = '';
+      var totalAmount = 0;;
+      let totalNumberOfPersons = 0;
+
+      $.each(tbl_datas, function( index, tbl_data ) {
+
+        totalAmount = totalAmount + parseFloat(tbl_data.price);
+        totalNumberOfPersons = totalNumberOfPersons + parseInt(tbl_data.numberofpersons);
+
+        if(reservationStats[parseInt(tbl_data.SpotId)] !== undefined){
+          reservationStats[parseInt(tbl_data.SpotId)]['spotId'] = tbl_data.SpotId;
+          reservationStats[parseInt(tbl_data.SpotId)]['description'] = tbl_data.Spotlabel;
+          reservationStats[parseInt(tbl_data.SpotId)]['amount'] = parseFloat(reservationStats[parseInt(tbl_data.SpotId)]['amount']) + parseFloat(tbl_data.price);
+          reservationStats[parseInt(tbl_data.SpotId)]['numberofpersons'] = parseInt(reservationStats[parseInt(tbl_data.SpotId)]['numberofpersons']) + parseInt(tbl_data.numberofpersons);
+        } else {
+          reservationStats[parseInt(tbl_data.SpotId)] = [];
+          reservationStats[parseInt(tbl_data.SpotId)]['spotId'] = tbl_data.SpotId;
+          reservationStats[parseInt(tbl_data.SpotId)]['description'] = tbl_data.Spotlabel;
+          reservationStats[parseInt(tbl_data.SpotId)]['amount'] = parseFloat(tbl_data.price);
+          reservationStats[parseInt(tbl_data.SpotId)]['numberofpersons'] = parseInt(tbl_data.numberofpersons);
+        }
+
+      
+      });
+
+      reservationStats = reservationStats.filter(function (el) {
+        return el != null;
+      });
+      
+      html += '<tr>' +
+      '<td class="text-right" colspan="4"><b id="daterange">'+$('#reportDateTime').val()+'</b></td>' +
+      '<th class="text-center">Amount</td>' +
+      '<th class="text-center">Number Of Persons</td>' +
+      '</tr>' +
+      '<tr>';
+
+      $.each(reservationStats, function(index, reservationStat) {
+        
+        html += '<tr class="tr-totals">' +
+        '<td class="text-right" colspan="4"><b> Spot ID: ' + reservationStat['spotId'] + ' |  Spot Label: ' + reservationStat['description'] + '</b></td>' +
+        '<td class="text-center">' + reservationStat['amount'].toFixed(2) + '</td>' +
+        '<td class="text-center">' + parseInt(reservationStat['numberofpersons']) + '</td>' +
+        '</tr>';
+        
+      });
+
+      
+
+      html += '<tr>' +
+      '<td class="text-right" colspan="4"><b>Total:</b></td>' +
+      '<td class="text-center">' + totalAmount.toFixed(2) + '</td>' +
+      '<td class="text-center">' + parseInt(totalNumberOfPersons) + '</td>' +
+      '</tr>' ;
+      $("#total-percentage").show();
+      $("#total-percentage").empty();
+      $("#total-percentage").html(html);
+
+    }
+  });
+
+
+
+
+
 });
 
 function round_up(val){

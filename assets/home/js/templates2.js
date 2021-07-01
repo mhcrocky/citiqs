@@ -367,6 +367,7 @@ function tinyMceInit(textAreaId, templateContent = '') {
             "bootstrap",
         ],
         ruler: true,
+        extended_valid_elements: "canvas[*],width[*],height[*],script[*]",
         toolbar: "insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | emoticons | tags | qrcode | help | fullpage | preview | fullscreen | print | bootstrap",
         contextmenu: "image imagetools table bootstrap",
         content_css: [
@@ -405,23 +406,22 @@ function tinyMceInit(textAreaId, templateContent = '') {
             editor.on('change', function (e) {
               let color = $('#tox-icon-highlight-bg-color__color').attr('fill');
 
+              console.log(color == $('#lastColor').val());
+
               if(color == $('#lastColor').val()){
                 return ;
               }
 
-              let lastColor = $('#lastColor').val(color);
+              $('#lastColor').val(color);
               
               let content = editor.getContent();
-              var mySubString = content.substring(
-                content.lastIndexOf("<body"), 
-                content.lastIndexOf(">")
-                );
+
               let firstvariable = '<body';
               let secondvariable = '>';
               let replaceStr = content.match(new RegExp(firstvariable + "(.*)" + secondvariable));
               if(typeof color === 'undefined') {   
-                content = content.replace(replaceStr[0], '<body style="background: #fff">');
-                editor.setContent(content);
+                //content = content.replace(replaceStr[0], '<body style="background: #fff">');
+                //editor.setContent(content);
                 return ;
               }
               content = content.replace(replaceStr[0], '<body style="background: '+ color +'">');
@@ -768,4 +768,5 @@ $(document).on('focusin', function(e) {
   if ($(e.target).closest(".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
     e.stopImmediatePropagation();
   }
+  
 });
