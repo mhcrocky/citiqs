@@ -1,41 +1,5 @@
 <div class="row">
     <div class="col-lg-6">
-        <div style="margin-top:20px">
-            <input type="button" id="triggerButton" class="btn btn-primary" onclick="triggerIdClick('backGroundImage')"
-                value="Upload background image" />
-            <input type="file" id="backGroundImage" onchange="uploadViewBgImage(this)" hidden />
-            <input type="button" id="removeBgImageButton" class="btn btn-danger"
-                onclick="removeBgImage(this, 'bgImage', 'removeImage')" value="Remove background image"
-                <?php if (empty($design['bgImage'])) { ?> style="display:none" <?php } ?> />
-        </div>
-
-
-            <input type="number" name="vendorId" required hidden readonly value="<?php echo $vendorId; ?>" />
-                <input
-                    type="text"
-                    id="bgImage"
-                    name="bgImage"
-                    hidden
-                    <?php if (!empty($design['bgImage'])) { ?>
-                        value = "<?php echo $design['bgImage']; ?>"
-                        data-value="1"
-                    <?php } ?>
-                />                            
-                <input
-                    type="text"
-                    id="removeImage"
-                    name="removeImage"
-                    hidden readonly
-                    value = "0"
-                    <?php if (!empty($design['bgImage'])) { ?>
-                        value = "<?php echo $design['bgImage']; ?>"
-                    <?php } else { ?>
-                        value = "0"
-                    <?php } ?>
-                />
-
-
-
 
         <div class="row" id="controls">
             <div class="col-md-6">
@@ -51,12 +15,12 @@
             </div>
             <div class="col-md-6">
                 <select style="border-radius: 50px" id="device" class="form-control">
-                <?php if(count($devices) > 0): ?>
+                    <?php if(count($devices) > 0): ?>
                     <?php foreach($devices as $device): ?>
                     <option value="<?php echo $device['width']."x".$device['height']; ?>">
                         <?php echo $device['device']; ?></option>
                     <?php endforeach; ?>
-                <?php endif; ?>
+                    <?php endif; ?>
                 </select>
                 <div id="views">
                     <button style="border-radius: 50px" onclick="return false" value="3">View 1 - Front</button>
@@ -65,13 +29,15 @@
                 </div>
             </div>
         </div>
-        <div style="height: 500px; width: 100%; overflow-y: scroll;">
-        <?php
+        <div style="height: 500px; width: 100%; overflow-y: scroll;overflow-x: hidden;">
+            <?php
                     include_once FCPATH . 'application/views/events/includes/design/shopView.php';
                     include_once FCPATH . 'application/views/events/includes/design/ticketsView.php';
                 ?>
         </div>
-        <input type="submit" class="btn btn-primary mt-3" value="submit" />
+        <div class="text-right mt-3 mb-3">
+            <input type="submit" class="btn btn-primary" value="Save Design" />
+        </div>
         </form>
 
     </div>
@@ -85,3 +51,40 @@
 
     </div>
 </div>
+
+<script>
+$(document).on("click", ".browse", function() {
+    var file = $(this).parents().find(".file");
+    file.trigger("click");
+});
+$('#file').change(function(e) {
+    var fileName = e.target.files[0].name;
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById("preview").src = e.target.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
+$('#background-file').change(function(e) {
+    var fileName = e.target.files[0].name;
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById("background-preview").src = e.target.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
+
+function imageUpload(el) {
+    $('.img-thumbnail').attr('style', '');
+    var img_name = el.files[0].name;
+    if (img_name.length > 10) img_name = img_name.substring(0, 10) + '...';
+    $('#img-background').hover(function() {
+        $(this).attr('data-content', img_name);
+    });
+
+}
+</script>
