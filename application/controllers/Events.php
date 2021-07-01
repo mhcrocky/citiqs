@@ -1292,7 +1292,7 @@ class Events extends BaseControllerWeb
 
         $issetEventId = ($eventId) ? true : false;
         $eventId = ($eventId) ? $eventId : $this->input->post('eventId');
-        $dateRange = (!$dateRange) ? urldecode($this->input->post('dateRange')) : '0000-00-00 - 0000-00-00';
+        $dateRange = (!$dateRange) ? urldecode($this->input->post('dateRange')) : '1970-01-01 - 2100-01-01';
         $dateRange = explode(' - ', $dateRange);
 
         $GLOBALS['eventId'] = $eventId;
