@@ -23,6 +23,14 @@ class Event_model extends CI_Model {
 		return $this->db->update('tbl_events',$data);
 	}
 
+	public function update_event_background_image($vendorId, $eventId, $backgroundImage)
+	{
+		$this->db->where("id", $eventId);
+		$this->db->where("vendorId", $vendorId);
+		$this->db->set('backgroundImage', $backgroundImage);
+		return $this->db->update('tbl_events');
+	}
+
 	public function update_event_archived($vendorId, $eventId, $value)
 	{
 		$this->db->where("id", $eventId);
