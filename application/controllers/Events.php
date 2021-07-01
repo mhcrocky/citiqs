@@ -559,6 +559,10 @@ class Events extends BaseControllerWeb
             'analytics' => $this->event_model->get_shopsettings($this->vendor_id)
         ];
 
+        if($eventId){
+            $data['event'] = (object) $this->event_model->get_event_by_id($this->vendor_id, $eventId, false)[0];
+        }
+
         $this->global['pageTitle'] = 'TIQS : DESIGN';
         $this->loadViews('events/design', $this->global, $data, 'footerbusiness', 'headerbusiness');
         return;
@@ -567,12 +571,38 @@ class Events extends BaseControllerWeb
     public function save_design($eventId = false)
     {
         $design = serialize($this->input->post(null,true));
+
+        $config['upload_path']   = FCPATH . 'assets/images/events';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+
+        $event['backgroundImage'] = '';
+
+        //$data['vendorId'] = $this->vendor_id;
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('backgroundfile')) {
+            $errors   = $this->upload->display_errors('', '');
+            //var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();
+			$file_name = $upload_data['file_name'];
+            $backgroundImage = $file_name;
+            if($eventId){
+                $this->event_model->update_event_background_image($this->vendor_id, $eventId, $backgroundImage);
+            }
+        }
+
         if($eventId){
             $this->event_model->save_event_design($this->vendor_id, $eventId, $design);
             redirect('events/viewdesign/'.$eventId);
             return ;
         }
+
         $this->event_model->save_vendor_design($this->vendor_id, $design);
+
+
         redirect('events/viewdesign');
     }
 
