@@ -69,9 +69,20 @@
             </div>
 
         </div>
-        <table style="display: none;" id="total-percentage" class="table table-striped table-bordered mt-3"
-            cellspacing="0" width="100%">
-
+        <table
+            style="display: none;"
+            id="total-percentage"
+            class="table table-striped table-bordered mt-3"
+            cellspacing="0"
+            width="100%"
+        >
+        </table>
+        <table
+            id="total_categories"
+            class="table table-striped table-bordered mt-3"
+            cellspacing="0"
+            width="100%"
+        >
         </table>
     </div>
     </div>
