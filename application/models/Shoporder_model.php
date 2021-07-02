@@ -6,7 +6,7 @@
     require_once APPPATH . 'abstract/AbstractSet_model.php';
 
     if (!defined('BASEPATH')) exit('No direct script access allowed');
-
+    
     Class Shoporder_model extends AbstractSet_model implements InterfaceCrud_model, InterfaceValidate_model
     {
         public $id;
@@ -1172,7 +1172,7 @@
             return $result ? reset($result) : null;
         }
 
-        public function fetchReportDetailsPaid(int $venodrId, string $from = '', string $to = '', string $reportType): ?array
+        public function fetchReportDetailsPaid(int $venodrId, string $reportType, string $from = '', string $to = ''): ?array
         {
             $this->load->config('custom');
             $concatGroupSeparator = $this->config->item('contactGroupSeparatorNumber');

@@ -71,7 +71,7 @@ class Reports extends REST_Controller
 
 	private function getOrders(int $vendorId, string $from, string $to, string $reportType): array
 	{
-		$orders = $this->shoporder_model->fetchReportDetailsPaid($vendorId, $from, $to, $reportType);
+		$orders = $this->shoporder_model->fetchReportDetailsPaid($vendorId, $reportType, $from, $to);
 		if (!$orders) exit;
 		return $orders;
 	}
