@@ -179,7 +179,7 @@
 
 			<div style="text-align:left; margin-bottom:10px" id="customerLogin">
 				<p style="font-family:'caption-bold'; font-size:300%; color:#ffffff;">
-					<?php echo $this->language->tLine('PERSONAL LOGIN.'); ?>
+					<?php echo $this->language->tLine('USER LOGIN.'); ?>
 				</p>
 			</div>
 

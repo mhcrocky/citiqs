@@ -74,18 +74,7 @@ class Login extends REST_Controller
 
 	public function checkqrlogin_post()
 	{
-		// $email = $_POST["email"];
 		$code = $this->security->xss_clean($this->input->post('code'));
-		// $password = $_POST["password"];
-//		$password = $this->security->xss_clean($this->input->post('password'));
-//		if ($code==='123456'){
-//			$email="demo@tiqs.com";
-//			$password="tiqs01";
-//		}
-
-		//		var_dump($code);
-//		var_dump($user);
-//		die();
 
 		$this->db->select('ownerId');
 		$this->db->from('tbl_employee');
@@ -93,18 +82,13 @@ class Login extends REST_Controller
 		$query = $this->db->get();
 		$owner = $query->row();
 
-		$this->db->select('id as userId, password');
+		$this->db->select('id as userId, password, email');
 		$this->db->from('tbl_user');
 		$this->db->where('id',$owner->ownerId );
 		$this->db->where('isDeleted', 0);
 		$this->db->where('IsDropOffPoint', 1);
 		$query = $this->db->get();
 		$user = $query->row();
-
-//		var_dump($owner);
-//		var_dump($user);
-//		die();
-
 
 		if(!empty($user))
 		{
@@ -122,18 +106,23 @@ class Login extends REST_Controller
 			$this->db->where('isDeleted', 0);
 			$this->db->update('tbl_user');
 			$affected_rows = $this->db->affected_rows();
+			$message = [
+				'hash' => $hash,
+				'affected_rows' => "$affected_rows",
+				'vendor' => $user->userId,
+				'email' => $user->email
+			];
 		}
 		else
 		{
-			$hash = "";
-			$affected_rows = -1;
-		}
+			$message = [
+				'hash' => "",
+				'affected_rows' => "-1",
+				'vendor' => "",
+				'email' => ""
+			];
 
-		$message = [
-			'hash' => $hash,
-			'affected_rows' => "$affected_rows",
-			'vendor' => $user->userId
-		];
+		}
 
 		$this->set_response($message, 200); // CREATED (201) being the HTTP response code
 	}

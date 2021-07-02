@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 
-class Events extends REST_Controller
+class Eventsnew extends REST_Controller
 {
 
 	function __construct()
@@ -64,7 +64,7 @@ class Events extends REST_Controller
 		$this->db->select("id,vendorId,eventname,eventdescript,eventVenue,
 		eventAddress,eventCity,eventZipcode,
 		eventCountry,StartDate,EndDate,
-        StartTime,EndTime");
+        StartTime,EndTime, eventImage");
 		$this->db->from('tbl_events');
 		$this->db->where('vendorId', $vendorId);
 		$query = $this->db->get();
@@ -80,13 +80,11 @@ class Events extends REST_Controller
 		$changetimein = $this->security->xss_clean($this->input->post('changeTimeIn'));
 		$changetimeout = $this->security->xss_clean($this->input->post('changeTimeOut'));
 
-
-//		echo var_dump($vendorId);
-//		echo var_dump($eventid);
-//		echo var_dump($changetimein);
-//		echo var_dump($changetimeout);
-
-//		die();
+		//		echo var_dump($vendorId);
+		//		echo var_dump($eventid);
+		//		echo var_dump($changetimein);
+		//		echo var_dump($changetimeout);
+		//		die();
 
 		$this->db->where('customer', $vendorId);
 		$this->db->where('eventid', $eventid);
@@ -101,11 +99,78 @@ class Events extends REST_Controller
 
 	public function Ticketsbuyer_post()
 	{
+
+		/*
+		 *
+		"id": "243148",
+        "customer": "45846",
+        "eventid": "53",
+        "eventdate": "2021-08-28",
+        "reservationId": "T-MBxmfQwcATVEkr3j",
+        "bookdatetime": "2021-04-28 21:42:47",
+        "ticketType": "1",
+        "ticketDescription": "Early Bird",
+        "paymentMethod": null,
+        "isTicket": "0",
+        "SpotId": "0",
+        "price": "0",
+        "reservationFee": "0.00",
+        "ticketFee": "0.00",
+        "Spotlabel": "",
+        "numberofpersons": "1",
+        "name": "Uncle John VVK",
+        "email": "support@tiqs.com",
+        "gender": null,
+        "age": null,
+        "Address": "",
+        "city": "",
+        "zipcode": "",
+        "country": "",
+        "mobilephone": "",
+        "reservationset": "0",
+        "reservationtime": "2021-04-28 21:42:47",
+        "timefrom": "12:00:00",
+        "timeto": "23:00:00",
+        "paid": "3",
+        "timeslot": "0",
+        "timeslotId": "0",
+        "voucher": null,
+        "TransactionID": "",
+        "bookingsequenceId": "0",
+        "bookingsequenceamount": "0",
+        "numberin": "1",
+        "mailsend": "1",
+        "scanned": "2",
+        "scannedtime": "2021-06-28 13:50:03",
+        "guestlist": "0",
+        "tag": "0",
+        "refundRequested": "0"
+		 *
+		 * event
+    	 "id": "131",
+        "vendorId": "43533",
+        "eventname": "Den Haag Outdoor",
+        "eventdescript": "<p>text and more......</p><p><span xss=removed>text and more......</span></p><p><span xss=removed>text and more......text and more......</span></p><p><span xss=removed>text and more......</span></p><p><span xss=removed>text and more......text and more....",
+        "eventVenue": "Henriëtte Roland Holstweg",
+        "eventAddress": "Zuiderpark",
+        "eventCity": "Den Haag",
+        "eventZipcode": "2533ST ",
+        "eventCountry": "Netherlands",
+        "StartDate": "2021-07-31",
+        "EndDate": "2021-07-31",
+        "StartTime": "16:00:00",
+        "EndTime": "18:00:00",
+        "eventImage": "4d0a5eda8277b7381f0cb9ca738e7898.png"
+		 *
+		 */
 		$email = $this->security->xss_clean($this->input->post('email'));
+		$this->db->select('tbl_events.eventname, tbl_events.eventImage, tbl_bookandpay.*');
+		$this->db->from('tbl_bookandpay');
+		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'inner');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'ínner');
 		$this->db->where('email', $email);
 		$where = "paid=1 OR paid=3";
-		$this->db->where('paid', 1);
-		$this->db->from('tbl_bookandpay');
+		$this->db->where($where);
 		$query = $this->db->get();
 		$result = $query->result_array();
 		$this->response($result, 200);
