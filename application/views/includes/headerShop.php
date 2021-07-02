@@ -58,6 +58,7 @@
                 display: block;
             }
         }
+
         <?php
             $eventDescript = '';
             $eventTitle = '';
@@ -86,6 +87,15 @@
                         echo array_values($design_class)[0].'!important } ';
                     }
                 }
+
+                if(isset($shopdesign['background-image'])){
+                    echo '.bg-image {background-image: url("'.base_url().'assets/images/events/'.$design['shop']['background-image'].'");';
+                    echo 'height: 100%;';
+                    echo 'background-position: center;';
+                    echo 'background-repeat: no-repeat;';
+                    echo 'background-size: cover; }';
+                }
+                
             }
         ?>
     </style>
@@ -142,7 +152,7 @@
     </script>
 </head>
 
-<body id="body">
+<body class="bg-image" id="body">
 
     <!-- HEADER -->
     <header class="header">
