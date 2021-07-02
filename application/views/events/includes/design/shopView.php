@@ -90,6 +90,32 @@ if ( isset($design['shop']['eventDescript']) ) {
                 value="<?php echo $design['shop']['id']['body']['background-color']?>" data-value="1" <?php } ?> />
         </label>
     </div>
+    <div class="form-group row mt-3">
+            <label for="image" class="col-md-4 col-form-label text-md-left text-dark">
+            Body background image:</label>
+            <div class="col-md-8">
+
+
+                <label class="file">
+                    <input type="file" class="border-50" name="backgroundimage" id="background-image"
+                        onchange="backgroundImageUpload(this)" aria-label="File browser">
+                    <span style="width: 220px !important" class="file-custom" id="background-img"
+                        data-content="Choose image ..."></span>
+                </label>
+                <div style="padding-left: 0;" class="col-sm-6">
+                <?php if ( !isset($design['shop']['background-image']) ) : ?>
+                    <img src="<?php echo base_url(); ?>assets/images/img-preview.png" id="background-img-preview"
+                        class="img-thumbnail">
+                    <?php else: ?>
+                    <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $design['shop']['background-image']; ?>"
+                        id="background-img-preview" class="img-thumbnail">
+                    <input type="hidden" name="shop[background-image]" value="<?php echo $design['shop']['background-image']; ?>">
+                    <?php endif; ?>
+                </div>
+
+
+            </div>
+        </div>
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
