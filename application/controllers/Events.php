@@ -570,17 +570,31 @@ class Events extends BaseControllerWeb
 
     public function save_design($eventId = false)
     {
-        $design = serialize($this->input->post(null,true));
+        $design = $this->input->post(null,true);
+        
+        $upload_background_image = $this->uploadBodyBackgroundImg();
+        $background_image = isset($design['shop']['background-image']) ? $design['shop']['background-image'] : '';
+        $design['shop']['background-image'] = (!$upload_background_image) ? $design['shop']['background-image'] : $upload_background_image;
+
+        if($design['shop']['background-image'] == ''){
+            unset($design['shop']['background-image']);
+        }
+        
+        $design = serialize($design);
 
         $config['upload_path']   = FCPATH . 'assets/images/events';
         $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
         $config['max_size']      = '102400'; // 102400 100mb
         $config['encrypt_name'] = TRUE;
 
+
         $event['backgroundImage'] = '';
 
         //$data['vendorId'] = $this->vendor_id;
         $this->load->library('upload', $config);
+
+
+        
 
         if (!$this->upload->do_upload('backgroundfile')) {
             $errors   = $this->upload->display_errors('', '');
@@ -604,6 +618,30 @@ class Events extends BaseControllerWeb
 
 
         redirect('events/viewdesign');
+    }
+
+    private function uploadBodyBackgroundImg(){
+        $config['upload_path']   = FCPATH . 'assets/images/events';
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['file_name'] = 'background_img' . "." . pathinfo($_FILES['backgroundimage']['name'], PATHINFO_EXTENSION);
+        $config['overwrite'] = TRUE;
+
+        $this->load->library('upload', $config);
+        //$this->upload->intialize($config);
+
+        $img_name = false;
+
+        if (!$this->upload->do_upload('backgroundimage')) {
+            $errors   = $this->upload->display_errors('', '');
+            //var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();
+			$img_name = $upload_data['file_name'];
+        }
+
+        return $img_name;
+
     }
 
     public function save_shopsettings()
