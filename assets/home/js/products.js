@@ -80,6 +80,20 @@ function deleteProduct(productId, productName) {
     );
 }
 
+function downloadPricelist() {
+    let url = globalVariables.ajax + 'downloadPriceList';
+
+    sendGetRequest(url, downloadPricelistCallback);
+}
+
+function downloadPricelistCallback(response) {
+    alertifyAjaxResponse(response);
+    if (response['status'] === '1') {
+        // window.open(response['csvFile'], '_blank').focus();
+        window.open(response['csvFile'], '_blank');
+    }
+}
+
 $(document).ready(function(){
     $('.productTimePickers').datetimepicker({
         dayOfWeekStart : 1,

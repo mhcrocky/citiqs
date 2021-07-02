@@ -48,6 +48,7 @@ class Ajax extends CI_Controller
         $this->load->model('shopreportemail_model');
         $this->load->model('bookandpay_model');
         $this->load->model('floorplan_model');
+        $this->load->model('shopprodutctype_model');
 
         $this->load->helper('cookie');
         $this->load->helper('validation_helper');
@@ -2831,6 +2832,70 @@ class Ajax extends CI_Controller
         }
 
         echo json_encode($response);
+    }
+
+    public function downloadPriceList(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $csvFile = 'assets/csv/pricelists/' . $_SESSION['userId'] . '_pricelist.csv';
+        $csvData = $this->prepareCsvData();
+        $csvFileFullPath = FCPATH . $csvFile;
+
+        if (file_exists($csvFileFullPath)) unlink($csvFileFullPath);
+
+        $csvFileUrl  = Utility_helper::saveArrayToCsv($csvData, $csvFile);
+
+        if (is_null($csvFile)) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Download failed']
+            ];
+        } else {
+            $response = [
+                'status' => '1',
+                'messages' => ['Download success'],
+                'csvFile' => $csvFileUrl,
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
+
+    private function prepareCsvData(): array
+    {
+        $csvData = [];
+        $userId = intval($_SESSION['userId']);
+        $products = $this->shopproductex_model->getUserProductsNew($userId);  
+        $types = $this->shopprodutctype_model->fetchProductTypes($userId, ['tbl_shop_products_types.type AS productType' ]);
+        $types = array_map(function($element){
+            return $element['productType'];
+        }, $types);
+
+        // var_dump($types);
+        foreach($products as $product) {
+            $productToCsv['name'] = $product[0]['productDetails'][0]['name'];
+
+            // set all type prices to zero
+            foreach ($types as $type) {
+                $productToCsv[$type . ' local price'] = '0';
+                $productToCsv[$type . ' delivery price'] = '0';
+                $productToCsv[$type . ' pickup price'] = '0';
+            }
+
+            // now fetch prices
+            $details = $product[0]['productDetails'];
+            foreach ($details as $typeDetails) {
+                $productToCsv[$typeDetails['productType'] . ' local price'] = $typeDetails['price'];
+                $productToCsv[$typeDetails['productType'] . ' delivery price'] = $typeDetails['deliveryPrice'];
+                $productToCsv[$typeDetails['productType'] . ' pickup price'] = $typeDetails['pickupPrice'];
+            }
+
+            array_push($csvData, $productToCsv);
+        }
+
+        return $csvData;
     }
 
 }
