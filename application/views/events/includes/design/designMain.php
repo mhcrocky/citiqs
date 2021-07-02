@@ -53,18 +53,9 @@
 </div>
 
 <script>
-$(document).on("click", ".browse", function() {
-    var file = $(this).parents().find(".file");
+$(document).on("click", "#img-background", function() {
+    var file = $(this).parents().find("#background-file");
     file.trigger("click");
-});
-$('#file').change(function(e) {
-    var fileName = e.target.files[0].name;
-
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        document.getElementById("preview").src = e.target.result;
-    };
-    reader.readAsDataURL(this.files[0]);
 });
 
 $('#background-file').change(function(e) {
@@ -77,12 +68,37 @@ $('#background-file').change(function(e) {
     reader.readAsDataURL(this.files[0]);
 });
 
+$(document).on("click", "#background-img", function() {
+    var file = $(this).parents().find("#background-image");
+    file.trigger("click");
+});
+
+$('#background-image').change(function(e) {
+    var fileName = e.target.files[0].name;
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById("background-img-preview").src = e.target.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
 
 function imageUpload(el) {
     $('.img-thumbnail').attr('style', '');
     var img_name = el.files[0].name;
     if (img_name.length > 10) img_name = img_name.substring(0, 10) + '...';
     $('#img-background').hover(function() {
+        $(this).attr('data-content', img_name);
+    });
+
+}
+
+function backgroundImageUpload(el) {
+    $('.img-thumbnail').attr('style', '');
+    var img_name = el.files[0].name;
+    if (img_name.length > 10) img_name = img_name.substring(0, 10) + '...';
+    $('#background-img').hover(function() {
         $(this).attr('data-content', img_name);
     });
 
