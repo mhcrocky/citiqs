@@ -56,18 +56,23 @@
             return true;
         }
 
-        public function fetchProductTypes(int $userId): ?array
+        public function fetchProductTypes(int $userId, array $what = []): ?array
         {
-            $where = [$this->table . '.vendorId=' => $userId];
-            $filter = [
-                'what' => [
+            if ($what) {
+                $what = $what;
+            } else {
+                $what = [
                     $this->table . '.id',
                     $this->table . '.type AS productType',
                     $this->table . '.active AS active',
                     $this->table . '.isMain AS isMain',
                     $this->table . '.additionalNumber AS additionalNumber',
                     $this->table . '.isBoolean AS isBoolean',
-                ],
+                ];
+            }
+            $where = [$this->table . '.vendorId=' => $userId];
+            $filter = [
+                'what' => $what,
                 'where' => $where,
                 'conditions' => [
                     'order_by' => [$this->table . '.type ASC']

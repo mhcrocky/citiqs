@@ -110,6 +110,23 @@
           
         }
 
+        public function getUserProductsNew(int $userId): ?array
+        {
+            $where = [
+                'tbl_shop_categories.userId=' => $userId,
+                'tbl_shop_categories.archived' => '0',
+                'tbl_shop_products.archived' => '0',
+            ];
+            $filter = [
+                'where' => $where,
+                'conditions' => [
+                    'GROUP_BY' => [$this->table. '.productId'],
+                ]
+            ];
+            $resetBy = 'productId';
+            return $this->filterProducts($userId, $filter, $resetBy, false);
+        }
+
         public function getAllUserProducts(int $userId): ?array
         {
 

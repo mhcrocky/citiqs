@@ -81,27 +81,9 @@ function deleteProduct(productId, productName) {
 }
 
 function downloadPricelist() {
-    let productName;
-
-    for (productName in productGloablsPriceList) {
-        let item;
-        for (item of productGloablsPriceList.types) {
-            if (!productGloablsPriceList[productName].hasOwnProperty(item)) {
-                productGloablsPriceList[productName][item] = {
-                    'localPrice' : '0',
-                    'deliveryPrice' : '0',
-                    'pickupPrice' : '0',
-                }
-            }
-        }
-    }
-
     let url = globalVariables.ajax + 'downloadPriceList';
-    let post = {
-        'data' : JSON.stringify(productGloablsPriceList)
-    }
 
-    sendAjaxPostRequestImproved(post, url, downloadPricelistCallback);
+    sendGetRequest(url, downloadPricelistCallback);
 }
 
 function downloadPricelistCallback(response) {

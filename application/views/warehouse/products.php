@@ -1,7 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <script>
     var productGloabls = {};
-    var productGloablsPriceList = {};
 </script>
 
 <!-- ADD Modal -->
@@ -337,23 +336,6 @@
 
                             foreach($product['productDetails'] as $details) {
                                 array_push($productDetailsIds, $details['productTypeId']);
-                                ?>
-                                    <script>
-                                        if (!productGloablsPriceList.hasOwnProperty('<?php echo $details['name']; ?>')) {
-                                            productGloablsPriceList['<?php echo $details['name']; ?>'] = {};
-                                        }
-                                        if (!productGloablsPriceList.hasOwnProperty('types')) {
-                                            productGloablsPriceList['types'] = new Set();
-                                        }
-                                        productGloablsPriceList['types'].add('<?php echo $details['productType']; ?>');
-                                        productGloablsPriceList['<?php echo $details['name']; ?>']['<?php echo $details['productType']; ?>'] = {
-                                            'localPrice' : '<?php echo $details['price']; ?>',
-                                            'deliveryPrice' : '<?php echo $details['deliveryPrice']; ?>',
-                                            'pickupPrice' : '<?php echo $details['pickupPrice']; ?>',
-                                        }
-                                    </script>
-                                <?php
-
                                 $string = 'Name: ' . $details['productType'];
                                 if ($details['productTypeIsMain'] === '1') {
                                     $isMain = true;
