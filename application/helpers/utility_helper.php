@@ -599,7 +599,7 @@
             ];
         }
 
-        public static function arrayToCsv(array $csv, string $fileRelaitvePath): void
+        public static function saveArrayToCsv(array $csv, string $fileRelaitvePath): ?string
         {
             $csvFile = FCPATH . $fileRelaitvePath;
             $csvFile = fopen($csvFile, 'w');
@@ -609,17 +609,24 @@
 
                 if (is_null($firstLine)) {
                     $firstLine = array_keys($data);
-                    fputcsv($csvFile, $firstLine, ';');
+                    if (!fputcsv($csvFile, $firstLine, ';')) return null;
                 }
 
                 $dataToScv = array_values($data);
-                fputcsv($csvFile, $dataToScv, ';');
+                if (!fputcsv($csvFile, $dataToScv, ';')) return null;
             }
 
             fclose($csvFile);
             $fileLocation = base_url() . $fileRelaitvePath;
-            redirect($fileLocation);
 
+            return $fileLocation;
+        }
+
+        public static function arrayToCsv(array $csv, string $fileRelaitvePath): void
+        {
+            $fileLocation = self::saveArrayToCsv($csv, $fileRelaitvePath);
+            if (is_null($fileLocation)) return;
+            redirect($fileLocation);
             return;
         }
 

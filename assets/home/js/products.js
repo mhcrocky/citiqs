@@ -80,6 +80,38 @@ function deleteProduct(productId, productName) {
     );
 }
 
+function downloadPricelist() {
+    let productName;
+
+    for (productName in productGloablsPriceList) {
+        let item;
+        for (item of productGloablsPriceList.types) {
+            if (!productGloablsPriceList[productName].hasOwnProperty(item)) {
+                productGloablsPriceList[productName][item] = {
+                    'localPrice' : '0',
+                    'deliveryPrice' : '0',
+                    'pickupPrice' : '0',
+                }
+            }
+        }
+    }
+
+    let url = globalVariables.ajax + 'downloadPriceList';
+    let post = {
+        'data' : JSON.stringify(productGloablsPriceList)
+    }
+
+    sendAjaxPostRequestImproved(post, url, downloadPricelistCallback);
+}
+
+function downloadPricelistCallback(response) {
+    alertifyAjaxResponse(response);
+    if (response['status'] === '1') {
+        // window.open(response['csvFile'], '_blank').focus();
+        window.open(response['csvFile'], '_blank');
+    }
+}
+
 $(document).ready(function(){
     $('.productTimePickers').datetimepicker({
         dayOfWeekStart : 1,

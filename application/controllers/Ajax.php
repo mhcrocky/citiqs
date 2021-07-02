@@ -2833,4 +2833,47 @@ class Ajax extends CI_Controller
         echo json_encode($response);
     }
 
+    public function downloadPriceList(): void
+    {
+        if (!$this->input->is_ajax_request()) return;
+
+        $pricelist = $this->security->xss_clean($_POST['data']);
+        $pricelist = json_decode($pricelist, true);
+        $csvFile = 'assets/csv/pricelists/' . $_SESSION['userId'] . '_pricelist.csv';
+        $csvFileFullPath = FCPATH . $csvFile;
+        $csvData = [];
+
+        if(file_exists($csvFileFullPath)) {
+            unlink($csvFileFullPath);
+        }
+        unset($pricelist['types']);
+
+        foreach ($pricelist as $productName => $types) {
+            $product['name'] = $productName;
+            foreach($types as $type => $typePrices) {
+                $product[$type . ' local price'] = $typePrices['localPrice'];
+                $product[$type . ' delivery price'] = $typePrices['deliveryPrice'];
+                $product[$type . ' pickup price'] = $typePrices['pickupPrice'];
+            }
+            array_push($csvData, $product);
+        }
+        $csvFile  = Utility_helper::saveArrayToCsv($csvData, $csvFile);
+
+
+        if (is_null($csvFile)) {
+            $response = [
+                'status' => '0',
+                'messages' => ['Download failed']
+            ];
+        } else {
+            $response = [
+                'status' => '1',
+                'messages' => ['Download success'],
+                'csvFile' => $csvFile,
+            ];
+        }
+
+        echo json_encode($response);
+        return;
+    }
 }
