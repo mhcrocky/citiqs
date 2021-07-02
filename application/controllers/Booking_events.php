@@ -408,10 +408,6 @@ class Booking_events extends BaseControllerWeb
         if(count($orderData) < 1){
             redirect(base_url());
         }
-
-        $buyerLog = json_encode($buyerInfo);
-        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "Buyer info: $buyerLog");
-        
         
         $tickets = $orderData['tickets'];
         $customer = $orderData['vendorId'];
@@ -570,8 +566,6 @@ class Booking_events extends BaseControllerWeb
         }
 
         //$this->loadViews('events/selectpayment', $this->global, $data, null, 'headerWarehousePublic');
-        $orderLog = json_encode($orderData);
-        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "Order Data: $orderLog");
 
         $this->loadViews("events/selectpayment", $this->global, $data, 'footerShop', 'headerShop');
     }
@@ -632,12 +626,8 @@ class Booking_events extends BaseControllerWeb
 
         }
 
-        $arrArgLog = json_encode($arrArguments);
-        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "paymentType: $paymentType; paymentOptionSubId: $paymentOptionSubId;arrArguments: $arrArgLog");
-
         $strUrl = Pay_helper::getPayNlUrl($namespace,$function,$version,$arrArguments);
 
-        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/event_payment.txt', $strUrl);
         // if ($orderData['vendorId'] === 49456) {
         //     $file = FCPATH . 'application/tiqs_logs/payment_logs.txt';
         //     Utility_helper::logMessage($file, serialize($arrArguments));
@@ -681,7 +671,6 @@ class Booking_events extends BaseControllerWeb
 	{
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
-        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
         $result = json_decode($strResult);
         //Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
 

@@ -276,7 +276,21 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif ($this->view === 'warehouse/design' || $this->view === 'booking/design' || $this->view === 'events/design') { ?>
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/devices.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/design.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<style>
+    @media only screen and (max-width: 400px) {
+        .upload-image {
+            margin-top: 125px;
+        }
+    }
+
+    @media only screen and (max-width: 600px) and (min-width: 401px)  {
+        .upload-image {
+            margin-top: 90px;
+        }
+    }
+    </style>
 
 <?php } elseif ($this->view === 'publicorders/closed') { ?>
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/closed.css">

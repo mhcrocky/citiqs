@@ -293,22 +293,26 @@ $(document).ready( function () {
       let tbl_datas = table.rows({ search: 'applied'}).data()
       var reservationStats = [];
       var html = '';
-      var totalAmount = 0;;
-      let totalNumberOfPersons = 0;
+      var totalAmount = 0;
+      var totalNumberOfPersons = 0;
+      var totalBookings = 0;
 
       $.each(tbl_datas, function( index, tbl_data ) {
 
         totalAmount = totalAmount + parseFloat(tbl_data.price);
         totalNumberOfPersons = totalNumberOfPersons + parseInt(tbl_data.numberofpersons);
+        totalBookings = totalBookings + 1;
 
         if(reservationStats[parseInt(tbl_data.SpotId)] !== undefined){
           reservationStats[parseInt(tbl_data.SpotId)]['spotId'] = tbl_data.SpotId;
+          reservationStats[parseInt(tbl_data.SpotId)]['bookings'] = reservationStats[parseInt(tbl_data.SpotId)]['bookings'] + 1;
           reservationStats[parseInt(tbl_data.SpotId)]['description'] = tbl_data.Spotlabel;
           reservationStats[parseInt(tbl_data.SpotId)]['amount'] = parseFloat(reservationStats[parseInt(tbl_data.SpotId)]['amount']) + parseFloat(tbl_data.price);
           reservationStats[parseInt(tbl_data.SpotId)]['numberofpersons'] = parseInt(reservationStats[parseInt(tbl_data.SpotId)]['numberofpersons']) + parseInt(tbl_data.numberofpersons);
         } else {
           reservationStats[parseInt(tbl_data.SpotId)] = [];
           reservationStats[parseInt(tbl_data.SpotId)]['spotId'] = tbl_data.SpotId;
+          reservationStats[parseInt(tbl_data.SpotId)]['bookings'] = 1;
           reservationStats[parseInt(tbl_data.SpotId)]['description'] = tbl_data.Spotlabel;
           reservationStats[parseInt(tbl_data.SpotId)]['amount'] = parseFloat(tbl_data.price);
           reservationStats[parseInt(tbl_data.SpotId)]['numberofpersons'] = parseInt(tbl_data.numberofpersons);
@@ -323,6 +327,7 @@ $(document).ready( function () {
       
       html += '<tr>' +
       '<td class="text-right" colspan="4"><b id="daterange">'+$('#reportDateTime').val()+'</b></td>' +
+      '<th class="text-center">Spot Number</td>' +
       '<th class="text-center">Amount</td>' +
       '<th class="text-center">Number Of Persons</td>' +
       '</tr>' +
@@ -332,6 +337,7 @@ $(document).ready( function () {
         
         html += '<tr class="tr-totals">' +
         '<td class="text-right" colspan="4"><b> Spot ID: ' + reservationStat['spotId'] + ' |  Spot Label: ' + reservationStat['description'] + '</b></td>' +
+        '<td class="text-center">' + parseInt(reservationStat['bookings']) + '</td>' +
         '<td class="text-center">' + reservationStat['amount'].toFixed(2) + '</td>' +
         '<td class="text-center">' + parseInt(reservationStat['numberofpersons']) + '</td>' +
         '</tr>';
@@ -342,6 +348,7 @@ $(document).ready( function () {
 
       html += '<tr>' +
       '<td class="text-right" colspan="4"><b>Total:</b></td>' +
+      '<td class="text-center">' + parseInt(totalBookings) + '</td>' +
       '<td class="text-center">' + totalAmount.toFixed(2) + '</td>' +
       '<td class="text-center">' + parseInt(totalNumberOfPersons) + '</td>' +
       '</tr>' ;
