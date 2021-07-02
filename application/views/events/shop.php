@@ -90,10 +90,10 @@
                     </div>
                 </a>
                 <div style="align-items: end;background: transparent !important;" class="w-100 mt-4 bg-white pr-4 text-center">
-                    <a href="javascript:;" style="background: #60a5fa !important;" type="button" class="btn btn-info mb-1 show-info" data-toggle="modal"
+                    <button style="background: #60a5fa !important;" type="button" class="btn btn-info mb-1 show-info" data-toggle="modal"
                         data-target="#eventModal<?php echo $event['id']; ?>">
                         <?php echo $this->language->tLine('Show Info'); ?>
-                    </a>
+                    </button>
                 </div>
             </div>
             <!-- Button trigger modal -->

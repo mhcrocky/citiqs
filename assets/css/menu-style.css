@@ -116,7 +116,7 @@ h2{
 	top: 0;
 	clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
     -webkit-clip-path: polygon(51% 12%, 85% 1%, 100% 0, 100% 59%, 75% 88%, 0 100%, 0 100%, 16% 41%, 0 12%);
-	z-index: 1;
+	z-index: -1;
 }
 
 .hero__background img{
@@ -135,7 +135,17 @@ h2{
 	margin-top: 100px;
 	background-color: white;
 	border-radius: 8px;
+	position: sticky;
 	z-index: 9;
+	background-color: rgba(0, 0, 0, 0.08) !important;
+	background-position-x: 0% !important;
+	background-position-y: 0% !important;
+	background-repeat: repeat !important;
+	background-attachment: scroll !important;
+	background-image: none !important;
+	background-size: auto !important;
+	background-origin: padding-box !important;
+	background-clip: border-box !important;
 }
 
 .single-item__grid > div{
