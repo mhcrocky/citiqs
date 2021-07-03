@@ -247,51 +247,38 @@
             <!-- end url editor -->
         <?php } ?>
 
-
-        <!-- editor -->
-        <label class="editTemplate" for="templateHtml">Edit template</label>
-        <textarea id="templateHtml" name="templateHtml"></textarea>
-        <!-- end editor -->
-
-
-        <?php if ($emailTemplatesEdit === true) { ?>
-            <!-- email template action -->
-            <div class="w-100 text-right mt-1 emailTemplate">
-                <button style="height:35px;" class="btn btn-primary mr-auto"
-                    <?php if (empty($templateId)) { ?>
-                        onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType')"
-                    <?php } else { ?>
-                        onclick="customUpdateEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType', '<?php echo $templateId; ?>')"
-                    <?php } ?>
-                >
-                    <?php echo empty($templateId) ? 'Create new template' : 'Update'; ?>
-                </button>
-            </div>
-        <?php } ?>
-
-        <?php if ($landingPagesEdit === true) { ?>
-            <!-- landing page action -->
-            <div
-                class="w-100 text-right mt-1 landingPage"
-                <?php if ($emailTemplatesEdit === true) { ?>
-                    style="display:none"
-                <?php } ?>
-            >
-                <button style="height:35px;" class="btn btn-primary mr-auto"
-                    onclick="createLandingPage('selectProductGroup', 'selectLandingPage', 'selectLandingType', 'ladningPageName', 'ladningPageUrl')"
-                >
-                    <?php echo  empty($landingPage) ? 'Create new landing page' : 'Update landing page'; ?>
-                </button>
-            </div>
+        <?php if ($testing) { ?>
+            <!-- ADD NEW TEMPLATE -->
+            <?php if (!isset($templateId)) { ?>
+                <ul class="nav nav-tabs" style="border-bottom: none" role="tablist">
+                    <li class="nav-item">
+                        <a style="border-radius: 50px" class="nav-link active" data-toggle="tab" href="#tinyMce">Use TinyMCE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="border-radius: 50px" class="nav-link" data-toggle="tab" href="#useUnlayer">Use unlayer</a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="border-radius: 50px; margin-left: -10px">
+                    <div id="tinyMce" class="container tab-pane active" style="background: none;">
+                        <?php include_once FCPATH . 'application/views/templates/includes/useTinyMce.php'; ?>
+                    </div>
+                    <div id="useUnlayer" class="container tab-pane" style="background: none;">
+                        <?php include_once FCPATH . 'application/views/templates/includes/useUnlayer.php'; ?>
+                    </div>
+                </div>
+            <?php } else { ?>
+                <?php
+                    if (empty($unlayerDesign)) {
+                        include_once FCPATH . 'application/views/templates/includes/useTinyMce.php';
+                    } else {
+                        include_once FCPATH . 'application/views/templates/includes/useUnlayer.php';
+                    }
+                ?>
+             <?php } ?>
+        <?php } else { ?>
+            <?php include_once FCPATH . 'application/views/templates/includes/useTinyMce.php'; ?>
         <?php } ?>
     </div>
-
-	<div class="input-group mt-5 mb-3 col-lg-8 col-sm-12">
-		<input type="email" name="email" id="email" class="form-control" placeholder="Email">
-		<div class="input-group-append">
-			<button class="btn btn-success" onclick="sendTestEmail('email', 'templateHtml')" type="button">Send Test Email</button>
-		</div>
-	</div>
 </div>
 
 <input type="hidden" id="lastColor">
@@ -301,25 +288,29 @@
 const templateGlobals = (function() {
     let globals = {
         'templateHtmlId': 'templateHtml',
+        'templateHtmlIdUnLayer': 'templateHtmlUnlayer',
     }
 
     <?php if (!empty($templateType)) { ?>
-        globals['templateType'] = `<?php echo $templateType; ?>`
+        globals['templateType'] = `<?php echo $templateType; ?>`;
     <?php } ?>
     <?php if (!empty($templateContent)) { ?>
-        globals['templateContent'] = decodeHtml(`<?php echo htmlentities($templateContent); ?>`)
+        globals['templateContent'] = decodeHtml(`<?php echo htmlentities($templateContent); ?>`);
     <?php } ?>
     <?php if (!empty($templateId)) { ?>
-        globals['templateId'] = '<?php echo $templateId; ?>'
+        globals['templateId'] = '<?php echo $templateId; ?>';
     <?php } ?>
     <?php if (!empty($urlType)) { ?>
-        globals['urlType'] = '<?php echo $urlType; ?>'
+        globals['urlType'] = '<?php echo $urlType; ?>';
     <?php } ?>
     <?php if (!empty($landingPage) && $landingPage->landingType === $urlType) { ?>
-        globals['hideTemplateEditor'] = true
+        globals['hideTemplateEditor'] = true;
     <?php } ?>
     <?php if (!empty($landingPage)) { ?>
-        globals['landingPageId'] = parseInt(<?php echo $landingPage->id; ?>)
+        globals['landingPageId'] = parseInt(<?php echo $landingPage->id; ?>);
+    <?php } ?>
+    <?php if (!empty($unlayerDesign)) { ?>
+        globals['unlayerDesign'] = JSON.parse('<?php echo $unlayerDesign; ?>');
     <?php } ?>
 
     Object.freeze(globals);
