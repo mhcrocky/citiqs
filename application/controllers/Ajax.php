@@ -2076,7 +2076,8 @@ class Ajax extends CI_Controller
         $html = $_POST['templateHtml'];
         $id = intval($this->input->post('templateId', true));
         $userId = intval($_SESSION['userId']);
-        $unlayerDesign = $this->input->post('unlayerDesign', true);
+        $unlayerDesign = $this->input->post('unlayerDesign', true) ?? '';
+
 
         if ($this->shoptemplates_model->saveTemplate($templateName, $templateSubject, $html, $templateType, $userId, $id, $unlayerDesign)) {
             $response = [
