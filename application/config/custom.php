@@ -590,3 +590,6 @@ $config['reportPeriods'] = [$config['dayPeriod'],$config['weekPeriod'], $config[
 $config['messageToBuyerTags'] = ['{orderId}', '{buyerName}'];
 
 $config['testingIds'] = [417, 43533, 46244, 59413, 45960 ];
+
+$config['eventImagesFolder'] = 'assets/images/events/';
+$config['facebookDescrpiton'] = 'og:description';

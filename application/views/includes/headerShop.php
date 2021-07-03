@@ -6,6 +6,16 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <?php
+        if (!empty($facebook)) {
+            foreach($facebook as $key => $content) {
+                ?>
+                    <meta property="<?php echo $key; ?>" content="<?php echo $content; ?>" />
+                <?php
+            }
+        }
+    ?>
     <link rel="shortcut icon" href="<?php echo $this->baseUrl; ?>assets/home/images/tiqsiconlogonew.png" />
 
     <!-- Analytics -->

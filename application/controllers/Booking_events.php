@@ -96,6 +96,7 @@ class Booking_events extends BaseControllerWeb
 
         if($get_by_event_id){
             $events = $this->event_model->get_event_by_id($customer->id, $eventId);
+            $this->setGlobalMetaProperties($events[0]);
             $design = ($this->event_model->get_event_design($customer->id, $eventId)) ? $this->event_model->get_event_design($customer->id, $eventId) : $design;
         } else {
             $events = $this->event_model->get_events($customer->id);
@@ -138,6 +139,23 @@ class Booking_events extends BaseControllerWeb
 
         $this->loadViews("events/shop", $this->global, $data, 'footerShop', 'headerShop');
 
+    }
+
+    private function setGlobalMetaProperties(array $event): void
+    {
+        $this->global['facebook'] = [
+            'og:title' => $event['eventname'],
+            'og:description' => strip_tags($event['eventdescript']),
+        ];
+        if (!empty($event['backgroundImage'])) {
+            $imageFile = FCPATH . $this->config->item('eventImagesFolder') . $event['eventImage'];
+            $imageUrl = base_url() . $this->config->item('eventImagesFolder') . $event['eventImage'];
+            $imageData = (getimagesize($imageFile));
+            $this->global['facebook']['og:image'] = $imageUrl;
+            $this->global['facebook']['og:image:width'] = $imageData[0];
+            $this->global['facebook']['og:image:height'] = $imageData[1];
+        }
+        return;
     }
 
     public function tickets($eventId)
