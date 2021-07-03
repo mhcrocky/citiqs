@@ -592,3 +592,5 @@ $config['messageToBuyerTags'] = ['{orderId}', '{buyerName}'];
 $config['testingIds'] = [417, 43533, 46244, 59413, 45960 ];
 
 $config['eventImagesFolder'] = 'assets/images/events/';
+
+$config['facebookAppId'] = '236297284755592';
