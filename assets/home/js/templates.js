@@ -410,9 +410,8 @@ function tinyMceInit(textAreaId, templateContent = '') {
               
               let color = $('#mceu_11-preview').css('background-color');
 
-              console.log(color);
 
-              if(color == $('#lastStyle').val()){
+              if(color == $('#lastStyle').val() || color == 'rgb(128, 128, 128)'){
                 return ;
               }
 
@@ -420,14 +419,11 @@ function tinyMceInit(textAreaId, templateContent = '') {
 
               
               let content = editor.getContent();
-              var mySubString = content.substring(
-                content.lastIndexOf("<body"), 
-                content.lastIndexOf(">")
-                );
+
               let firstvariable = '<body';
               let secondvariable = '>';
               let replaceStr = content.match(new RegExp(firstvariable + "(.*)" + secondvariable));
-              console.log(replaceStr);
+
               if(typeof color === 'undefined') {   
                // content = content.replace(replaceStr[0], '<body style="background: #fff">');
                 //editor.setContent(content);
