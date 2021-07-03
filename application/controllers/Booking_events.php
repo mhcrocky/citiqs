@@ -145,7 +145,7 @@ class Booking_events extends BaseControllerWeb
     {
         $this->global['facebook'] = [
             'fb:app_id'         => $this->config->item('facebookAppId'),
-            'og:site_name'      => 'https://tiqs.com/',
+            'og:site_name'      => 'https://tiqs.com/alfred/',
             'og:url'            => base_url() . 'events/shop/' . $event['id'],
             'og:title'          => $event['eventname'],
             'og:description'    => strip_tags($event['eventdescript']),
