@@ -144,12 +144,14 @@ class Booking_events extends BaseControllerWeb
     private function setGlobalMetaProperties(array $event): void
     {
         $this->global['facebook'] = [
-            'fb:app_id'            => $this->config->item('facebookAppId'),
+            'fb:app_id'         => $this->config->item('facebookAppId'),
             'og:site_name'      => 'https://tiqs.com/',
             'og:url'            => base_url() . 'events/shop/' . $event['id'],
             'og:title'          => $event['eventname'],
             'og:description'    => strip_tags($event['eventdescript']),
+            'og:type'           => 'website'
         ];
+
         if (!empty($event['backgroundImage'])) {
             $imageFile = FCPATH . $this->config->item('eventImagesFolder') . $event['eventImage'];
             $imageUrl = base_url() . $this->config->item('eventImagesFolder') . $event['eventImage'];
