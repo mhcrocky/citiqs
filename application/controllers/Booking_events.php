@@ -73,8 +73,17 @@ class Booking_events extends BaseControllerWeb
         $sessionData['logoUrl'] = $logoUrl;
         $sessionData['eventId'] = $eventId;
         $sessionData['ip_address'] = $ip_address;
-        
 
+        if(count($orderData) < 1 || $orderData['ip_address'] != $ip_address){
+            $shopSessionData = $this->shopsession_model->insertSessionData($sessionData);
+            $orderData = (array) Jwt_helper::decode($shopSessionData->orderData);
+            $orderRandomKey = $shopSessionData->randomKey;
+            
+        }
+
+        /*
+
+        Redirection
         if(count($orderData) < 1 || $orderData['ip_address'] != $ip_address){
             $orderData = $this->shopsession_model->insertSessionData($sessionData);
             $userShortUrl = ($tag != '0') ? base_url() . 'events/shop/' . $shortUrl . '?tag=' . $tag . '&order=' . $orderData->randomKey : base_url() . 'events/shop/' . $shortUrl . '?order=' . $orderData->randomKey;
@@ -82,6 +91,8 @@ class Booking_events extends BaseControllerWeb
             $redirectUrl = ($get_by_event_id) ? $eventUrl : $userShortUrl;
             redirect($redirectUrl);
         }
+
+        */
        
         
 
