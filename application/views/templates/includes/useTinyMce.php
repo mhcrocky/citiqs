@@ -10,9 +10,9 @@
     <div class="w-100 text-right mt-1 emailTemplate">
         <button style="height:35px;" class="btn btn-primary mr-auto"
             <?php if (empty($templateId)) { ?>
-                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType')"
+                onclick="createEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType', 0, true)"
             <?php } else { ?>
-                onclick="customUpdateEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType', '<?php echo $templateId; ?>')"
+                onclick="customUpdateEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType', '<?php echo $templateId; ?>', true)"
             <?php } ?>
         >
             <?php echo empty($templateId) ? 'Create new template' : 'Update'; ?>

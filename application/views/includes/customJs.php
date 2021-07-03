@@ -280,25 +280,28 @@
 });
 	</script>
 <?php } elseif ($this->view === 'templates/addTemplate') { ?>
-	<?php #if (Utility_helper::testingVendors(intval($_SESSION['userId']))) { ?>
-		<?php #if (ENVIRONMENT === 'development') { ?>
-			<!-- <script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
-		<?php #} else { ?>
-			<!-- <script src='<?php #echo $this->baseUrl; ?>assets/tinymce/tinymce.min.js'></script> -->
-		<?php #} ?>
-		<!-- <script src='<?php #echo $this->baseUrl; ?>assets/tinymce/plugins/bootstrap/plugin/plugin.js'></script>
-		<script src='<?php #echo $this->baseUrl; ?>assets/home/js/templates2.js'></script> -->
-	<?php #} else { ?>
+	<?php if (Utility_helper::testingVendors(intval($_SESSION['userId']))) { ?>
+		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<script src='https://editor.unlayer.com/embed.js'></script>
+		<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates2.js'></script> -->
+	<?php } else { ?>
 		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+		<script src='https://editor.unlayer.com/embed.js'></script>
 		<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
-	<?php #} ?>
+	<?php } ?>
 	 
 <?php } elseif ($this->view === 'templates/listTemplates') { ?>
 	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/listTemplates.js'></script>
 <?php } elseif ($this->view === 'templates/updateTemplate') { ?>
-	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
-	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
+	<?php if (Utility_helper::testingVendors(intval($_SESSION['userId']))) { ?>
+		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<script src='https://editor.unlayer.com/embed.js'></script>
+		<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates2.js'></script> -->
+	<?php } else { ?>
+		<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
+		<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
+	<?php } ?>
 <?php } elseif ($this->view === 'voucher/templates/updateTemplate') { ?>
 	<script src="https://cdn.tiny.cloud/1/pcevs107srjcf31ixiyph3zij2nlhhl6fd10hxmer5lyzgsu/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/voucherTemplates.js'></script>

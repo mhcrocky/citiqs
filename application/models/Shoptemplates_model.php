@@ -15,6 +15,7 @@
         public $template_name;
         public $template_subject;
         public $template_type;
+        public $unlayerDesign;
 
         private $table = 'tbl_email_templates';
 
@@ -54,7 +55,7 @@
 
             if (!count($data)) return false;
             if (isset($data['template_name']) &&  !Validate_data_helper::validateString($data['template_name'])) return false;
-            
+            if (isset($data['unlayerDesign']) &&  !Validate_data_helper::validateStringImproved($data['unlayerDesign'])) return false;
             
             return true;
         }
@@ -93,12 +94,13 @@
             return $this->templateFile;
         }
 
-        public function saveTemplate(string $templateName, string $templateSubject, string $html, string $templateType, int $userId, int $id): bool
+        public function saveTemplate(string $templateName, string $templateSubject, string $html, string $templateType, int $userId, int $id, string $unlayerDesign): bool
         {
             $this->template_name = $templateName;
             $this->template_subject = $templateSubject;
             $this->user_id = $userId;
             $this->id = $id ? $id : null;
+            $this->unlayerDesign = $unlayerDesign;
             $filename = str_replace(' ', '_', $templateName);
             $filename .= '_' . time();
             $this->template_file = $filename;

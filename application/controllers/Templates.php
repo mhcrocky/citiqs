@@ -47,6 +47,7 @@
                 'emailTemplatesEdit' => true,
                 'landingPagesEdit' => true,
                 'defaultTemplates' => $this->email_templates_model->getDefaultTemplate(),
+                'testing' => Utility_helper::testingVendors(intval($_SESSION['userId']))
             ];
 
             $this->global['pageTitle'] = 'TIQS : ADD TEMPLATE';
@@ -61,6 +62,7 @@
                 'vendorId' => intval($_SESSION['userId']),
                 'tiqsId' => $this->config->item('tiqsId'),
                 'defaultTemplates' => $this->email_templates_model->getDefaultTemplate(),
+                'testing' => Utility_helper::testingVendors(intval($_SESSION['userId']))
             ];
    
             if (empty($isLandingPage)) {
@@ -84,7 +86,12 @@
             $data['templateName'] = $this->shoptemplates_model->template_name;
             $data['templateSubject'] = $this->shoptemplates_model->template_subject;
             $data['templateType'] = $this->shoptemplates_model->template_type;
-            $data['templateContent'] = file_get_contents($this->shoptemplates_model->getTemplateFile());
+            if ($this->shoptemplates_model->unlayerDesign) {
+                $data['unlayerDesign'] = $this->shoptemplates_model->unlayerDesign;
+            } else {
+                $data['templateContent'] = file_get_contents($this->shoptemplates_model->getTemplateFile());
+            }
+
             $data['emailTemplatesEdit'] = true;
             $data['landingPagesEdit'] = false;
 

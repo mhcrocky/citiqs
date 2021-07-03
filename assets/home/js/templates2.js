@@ -5,53 +5,76 @@ function reloadTable(id) {
 
 
 // used in email templates
-function createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId = 0) {
-    let selectTemplate = document.getElementById(selectTemplateValueId);
-    let customTemplate = document.getElementById(customTemplateNameId);
-    let customTemplateSubject = document.getElementById(customTemplateSubjectId);
-    console.log(customTemplateSubjectId);
-    let customTemplateType = document.getElementById(customTemplateTypeId);
+function createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId, useTinyMce) {
+  let selectTemplate = document.getElementById(selectTemplateValueId);
+  let customTemplate = document.getElementById(customTemplateNameId);
+  let customTemplateSubject = document.getElementById(customTemplateSubjectId);
+  let customTemplateType = document.getElementById(customTemplateTypeId);
 
-    let selectTemplateName = selectTemplate.value.trim();
-    let customTemplateName = customTemplate.value.trim();
-    let templateSubject = customTemplateSubject.value.trim();
-    let templateType = customTemplateType.value.trim();
+  let selectTemplateName = selectTemplate.value.trim();
+  let customTemplateName = customTemplate.value.trim();
+  let templateSubject = customTemplateSubject.value.trim();
+  let templateType = customTemplateType.value.trim();
+
+  if (useTinyMce) {
     let templateHtml = tinyMCE.get(templateGlobals.templateHtmlId).getContent().replaceAll(globalVariables.baseUrl + 'assets/images/qrcode_preview.png', '[QRlink]').trim();
-    if (!templateHtml) {
-        let message = 'Empty template.'
-        alertify.error(message);
-        return;
-    }
+    saveTemplate(templateHtml, selectTemplateName, customTemplateName, selectTemplate, customTemplate, templateSubject, templateType, templateId);
+  } else {
+    unlayer.exportHtml(function(data) {
+      let templateHtml = data.html;
+      let unlayerDesign = JSON.stringify(data.design);
+      saveTemplate(templateHtml, selectTemplateName, customTemplateName, selectTemplate, customTemplate, templateSubject, templateType, templateId, unlayerDesign);
+    });
+  }
+}
 
-    if (selectTemplateName && customTemplateName) {
-        let message = 'Not allowed. Select template or give template custom name.';
-        alertify.error(message);
-        selectTemplate.style.border = '1px solid #f00';
-        customTemplate.style.border = '1px solid #f00';
-        return;
-    }
+function saveTemplate(
+  templateHtml,
+  selectTemplateName,
+  customTemplateName,
+  selectTemplate,
+  customTemplate,
+  templateSubject,
+  templateType,
+  templateId,
+  unlayerDesign = ''
+) {
+  if (!templateHtml) {
+    let message = 'Empty template.'
+    alertify.error(message);
+    return;
+  }
 
-    if (!selectTemplateName && !customTemplateName) {
-        alertify.error('Select template or give template custom name');
-        selectTemplate.style.border = '1px solid #f00';
-        customTemplate.style.border = '1px solid #f00';
-        return;
-    }
+  if (selectTemplateName && customTemplateName) {
+      let message = 'Not allowed. Select template or give template custom name.';
+      alertify.error(message);
+      selectTemplate.style.border = '1px solid #f00';
+      customTemplate.style.border = '1px solid #f00';
+      return;
+  }
 
-    selectTemplate.style.border = 'initial';
-    customTemplate.style.border = 'initial';
+  if (!selectTemplateName && !customTemplateName) {
+      alertify.error('Select template or give template custom name');
+      selectTemplate.style.border = '1px solid #f00';
+      customTemplate.style.border = '1px solid #f00';
+      return;
+  }
 
-    let templateName = (selectTemplateName) ? selectTemplateName : customTemplateName;
-    let url = globalVariables.ajax + 'createEmailTemplate';
-    let post = {
-        'templateName' : templateName,
-        'templateHtml' : templateHtml,
-        'templateId' : templateId,
-        'templateType' : templateType,
-        'templateSubject' : templateSubject,
-    };
+  selectTemplate.style.border = 'initial';
+  customTemplate.style.border = 'initial';
 
-    sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse, [selectTemplate, customTemplateSubject, customTemplate]);
+  let templateName = (selectTemplateName) ? selectTemplateName : customTemplateName;
+  let url = globalVariables.ajax + 'createEmailTemplate';
+  let post = {
+      'templateName' : templateName,
+      'templateHtml' : templateHtml,
+      'templateId' : templateId,
+      'templateType' : templateType,
+      'templateSubject' : templateSubject,
+      'unlayerDesign' : unlayerDesign
+  };
+
+  sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse, [selectTemplate, customTemplateSubject, customTemplate]);
 }
 
 function createEmailTemplateResponse(selectTemplate, customTemplateSubject, customTemplate, response) {
@@ -63,6 +86,10 @@ function createEmailTemplateResponse(selectTemplate, customTemplateSubject, cust
         customTemplate.value = '';
         if (response.update === '0') {
             tinymce.get(templateGlobals.templateHtmlId).setContent('');
+        } else {
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
         }
     }
 
@@ -363,13 +390,12 @@ function tinyMceInit(textAreaId, templateContent = '') {
             "print",
             "ruler",
 			      "table",
-            "emoticons",
-            "bootstrap",
+            "emoticons"
         ],
         ruler: true,
         extended_valid_elements: "canvas[*],width[*],height[*],script[*]",
-        toolbar: "insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | emoticons | tags | qrcode | help | fullpage | preview | fullscreen | print | bootstrap",
-        contextmenu: "image imagetools table bootstrap",
+        toolbar: "insert | undo redo | styleselect | fontselect | fontsizeselect | formatselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | copy | cut | paste | pagebreak | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | emoticons | tags | qrcode | help | fullpage | preview | fullscreen | print ",
+        contextmenu: "image imagetools table",
         content_css: [
             "//fonts.googleapis.com/css?family=Lato:300,300i,400,400i",
             "//www.tiny.cloud/css/codepen.min.css"
@@ -405,8 +431,6 @@ function tinyMceInit(textAreaId, templateContent = '') {
             });
             editor.on('change', function (e) {
               let color = $('#tox-icon-highlight-bg-color__color').attr('fill');
-
-              console.log(color == $('#lastColor').val());
 
               if(color == $('#lastColor').val()){
                 return ;
@@ -568,31 +592,26 @@ function tinyMceInit(textAreaId, templateContent = '') {
                     editor.insertContent(html);
                 }
             });
-        },
-        bootstrapConfig: {
-          url: globalVariables.baseUrl + 'assets/tinymce/plugins/bootstrap/',
-          iconFont: 'fontawesome5',
-          // imagesPath: '/demo/demo-images',
-          key: globalVariables.bootstrapTinymceKey
-        },
-
+        }
     });
 
 }
 
 function showTemplates() {
     if (templateGlobals.hasOwnProperty('templateContent')) {
-        tinyMceInit(templateGlobals.templateHtmlId, templateGlobals['templateContent']);
-    } else if(templateGlobals.templateHtmlId){
-        tinyMceInit(templateGlobals.templateHtmlId);
+        tinyMceInit(templateGlobals['templateHtmlId'], templateGlobals['templateContent']);
+    } else if (templateGlobals['templateHtmlId']) {
+        tinyMceInit(templateGlobals['templateHtmlId']);
+    }
+
+    if (templateGlobals.hasOwnProperty('unlayerDesign') || !templateGlobals.hasOwnProperty('templateId')) {
+      useUnlayer();
+      unlayer.loadDesign(templateGlobals['unlayerDesign'])
     }
 }
 
-function customUpdateEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId = 0){
-    createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
+function customUpdateEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId, useTinyMce) {
+    createEmailTemplate(selectTemplateValueId, customTemplateNameId, customTemplateSubjectId, customTemplateTypeId, templateId, useTinyMce);
 }
 
 function checkiIsLandingPage(element, landingPage, emailElements, landingPageElemenst) {
@@ -760,13 +779,21 @@ function sendTestEmailResponse(email, response) {
   return;
 }
 
+
+
+function useUnlayer(settings = null)  {
+  if (!settings) {
+    settings = {};
+  }
+  settings['id'] = templateGlobals.templateHtmlIdUnLayer;
+  settings['displayMode'] = 'email';
+  unlayer.init(settings);
+
+}
+
+
 showTemplates();
 setTimeout(hideTemplateEditor, 1000);
 
-
-$(document).on('focusin', function(e) {
-  if ($(e.target).closest(".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root").length) {
-    e.stopImmediatePropagation();
-  }
-  
-});
+// var design = {...}; // template JSON
+// unlayer.loadDesign();
