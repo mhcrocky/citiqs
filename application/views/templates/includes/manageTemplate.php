@@ -289,6 +289,133 @@ const templateGlobals = (function() {
     let globals = {
         'templateHtmlId': 'templateHtml',
         'templateHtmlIdUnLayer': 'templateHtmlUnlayer',
+        'items' : [
+            {
+                type: 'menuitem',
+                text: '[buyerName]',
+                name: 'Buyer name'
+            },
+            {
+                type: 'menuitem',
+                text: '[buyerEmail]',
+                name: 'Buyer email'
+            },
+            {
+                type: 'menuitem',
+                text: '[buyerMobile]',
+                name: 'Buyer mobile'
+            },
+            {
+                type: 'menuitem',
+                text: '[customer]',
+                name: 'Customer'
+            },
+            {
+                type: 'menuitem',
+                text: '[reservationId]',
+                name: 'Reservation id'
+            },
+            {
+                type: 'menuitem',
+                text: '[spotId]',
+                name: 'Spot id'
+            },
+            {
+                type: 'menuitem',
+                text: '[spotLabel]',
+                name: 'Spot label'
+            },
+            {
+                type: 'menuitem',
+                text: '[numberOfPersons]',
+                name: 'Number of persons'
+            },
+            {
+                type: 'menuitem',
+                text: '[startTime]',
+                name: 'Start time'
+            },
+            {
+                type: 'menuitem',
+                text: '[endTime]',
+                name: 'End time'
+            },
+            {
+                type: 'menuitem',
+                text: '[price]',
+                name: 'Price'
+            },
+            {
+                type: 'menuitem',
+                text: '[eventName]',
+                name: 'Event name'
+            },
+            {
+                type: 'menuitem',
+                text: '[eventDate]',
+                name: 'Event date'
+            },
+            {
+                type: 'menuitem',
+                text: '[eventVenue]',
+                name: 'Event venue'
+            },
+            {
+                type: 'menuitem',
+                text: '[eventAddress]',
+                name: 'Event address'
+            },
+            {
+                type: 'menuitem',
+                text: '[eventCity]',
+                name: 'Event city'
+            },
+            {
+                type: 'menuitem',
+                text: '[eventCountry]',
+                name: 'Event country'
+            },
+            {
+                type: 'menuitem',
+                text: '[eventZipcode]',
+                name: 'Event zip code'
+            },
+            {
+                type: 'menuitem',
+                text: '[ticketDescription]',
+                name: 'Ticket description'
+            },
+            {
+                type: 'menuitem',
+                text: '[ticketPrice]',
+                name: 'Ticket price'
+            },
+            {
+                type: 'menuitem',
+                text: '[ticketQuantity]',
+                name: 'Ticket quantity'
+            },
+            {
+                type: 'menuitem',
+                text: '[orderId]',
+                name: 'Order id'
+            },
+            {
+                type: 'menuitem',
+                text: '[orderAmount]',
+                name: 'Order amount'
+            },
+            {
+                type: 'menuitem',
+                text: '[VoucherCode]',
+                name: 'Voucher code'
+            },
+            {
+                type: 'menuitem',
+                text: '[WalletCode]',
+                name: 'Wallet code'
+            },
+        ]
     }
 
     <?php if (!empty($templateType)) { ?>
