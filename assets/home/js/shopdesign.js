@@ -1,4 +1,82 @@
 'use strict';
+
+$(document).on("click", "#img-background", function() {
+    var file = $(this).parents().find("#background-file");
+    file.trigger("click");
+});
+
+$('#background-file').change(function(e) {
+    var fileName = e.target.files[0].name;
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById("background-preview").src = e.target.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
+$(document).on("click", "#background-img", function() {
+    var file = $(this).parents().find("#background-image");
+    file.trigger("click");
+});
+
+$('#background-image').change(function(e) {
+    var fileName = e.target.files[0].name;
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById("background-img-preview").src = e.target.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
+
+function imageUpload(el) {
+    $('.img-thumbnail').attr('style', '');
+    var img_name = el.files[0].name;
+    if (img_name.length > 10) img_name = img_name.substring(0, 10) + '...';
+    $('#img-background').hover(function() {
+        $(this).attr('data-content', img_name);
+    });
+
+}
+
+function backgroundImageUpload(el) {
+    $('.img-thumbnail').attr('style', '');
+    var img_name = el.files[0].name;
+    if (img_name.length > 10) img_name = img_name.substring(0, 10) + '...';
+    $('#background-img').hover(function() {
+        $(this).attr('data-content', img_name);
+    });
+
+    $('#img_delete').val('0');
+}
+
+function confirmDelete(id){
+  bootbox.confirm({
+    message: "Are you sure?",
+    buttons: {
+        confirm: {
+            label: 'Yes',
+            className: 'btn-success'
+        },
+        cancel: {
+            label: 'No',
+            className: 'btn-danger'
+        }
+    },
+    callback: function (result) {
+      if(result === false) return ;
+      deleteBackgroundImage();
+     }
+});
+}
+
+function deleteBackgroundImage() {
+    $('#img_delete').val('1');
+    document.getElementById("background-img-preview").src = globalVariables.baseUrl + 'assets/images/img-preview.png';
+}
+
 function styleELements(element) {
     let selector = getJquerySelector(element.dataset.cssSelector, element.dataset.cssSelectorValue);
     let property = element.dataset.cssProperty;
@@ -284,7 +362,7 @@ function nav_link(el){
     
 }
 
-
+/*
 function checkForBgImage() {
     let bgImage = document.getElementById('bgImage').value;
     if (bgImage) {
@@ -293,6 +371,8 @@ function checkForBgImage() {
         removeBgImageFromIframe();
     }
 }
+
+
 function removeBgImageFromIframe() {
 
     let selector = getJquerySelector('class', designGlobals.designBackgroundImageClass);
@@ -324,6 +404,7 @@ function removeBgImageFromIframe() {
         }
     }
 }
+*/
 
 function saveAnalytics(form) {
     let url = globalVariables.ajax + 'saveAnalytics/' + form.id;
@@ -348,7 +429,7 @@ $(document).ready(function(){
     
         iframe.onload = function () {
             setDesign();
-            checkForBgImage();
+            //checkForBgImage();
         }
     }
 
