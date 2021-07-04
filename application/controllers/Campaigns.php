@@ -11,6 +11,7 @@ class Campaigns extends BaseControllerWeb
     {
         parent::__construct();
         $this->load->model('campaign_model');
+        $this->load->model('list_model');
         $this->load->model('email_templates_model');
         $this->load->library('language', array('controller' => $this->router->class));
         $this->load->helper('utility_helper');
@@ -23,7 +24,13 @@ class Campaigns extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Campaigns';
         $data['templates'] = $this->email_templates_model->get_mailing_email_by_user($this->vendor_id);
+        $campaigns = $this->campaign_model->fetchCampaigns();
+        $data['campaigns'] = ($campaigns === null) ? [] : $campaigns;
+        $this->list_model->vendorId = $this->vendor_id;
+        $lists = $this->list_model->fetchVendorLists();
+        $data['lists'] = ($lists === null) ? [] : $lists;
         $this->loadViews("campaigns/index", $this->global, $data, 'footerbusiness', 'headerbusiness');
+
 
     }
 
