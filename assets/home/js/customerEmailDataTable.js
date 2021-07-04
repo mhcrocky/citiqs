@@ -120,6 +120,7 @@ function sendMultipleEmails(){
       $('.close').click();
       data = JSON.parse(data);
       alertify[data.status](data.message);
+      $("#campaignslists").DataTable().ajax.reload();
   });
 
 }
@@ -127,7 +128,7 @@ function sendMultipleEmails(){
 
 function sendCampaignEmails(){
 
-  let campaignId = $("#campaign option:selected").val();
+  let campaignId = $("#fromCampaignId option:selected").val();
 
 
   if(campaignId == 0){
