@@ -143,8 +143,9 @@ function getTicketsView(eventId, first = false) {
     let isAjax = true;
     $('div.bg-light').removeClass('bg-light').addClass('bg-white');
     $("#event_" + eventId).addClass('bg-light').removeClass('bg-white');
-    let img_src = $('#background_img_' + eventId).val();
-    let isSquared = $('#background_img_' + eventId).attr('data-isSquared');
+    var img_src = $('#background_img_' + eventId).val();
+    var isSquared = $('#background_img_' + eventId).attr('data-isSquared');
+    var isShowed = $('#background_img_' + eventId).attr('data-isShowed');
     $.post(globalVariables.baseUrl + "events/tickets/" + eventId, {
         isAjax: isAjax,
         order: globalKey.orderRandomKey
@@ -157,10 +158,13 @@ function getTicketsView(eventId, first = false) {
             $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/" + img_src);
         }
 
+        var visibility = (isShowed == '0') ? 'hidden' : 'visible';
+
         if(isSquared == '1'){
-            $('.hero__background').attr('style', 'clip-path: none !important;width: 100%;max-width: 65%; height: auto !important');
+            
+            $('.hero__background').attr('style', 'clip-path: none !important;width: 100%;max-width: 65%; height: auto !important;visibility:'+visibility);
         } else {
-            $('.hero__background').attr('style', '');
+            $('.hero__background').attr('style', 'visibility:'+visibility);
         }
         
         $("#tickets").fadeIn("slow", function() {
