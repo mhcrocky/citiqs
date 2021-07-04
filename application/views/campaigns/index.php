@@ -455,12 +455,12 @@
             <div class="modal-body">
 
                     <div class="form-group row">
-                        <label for="email" class="col-md-4 col-form-label text-md-left">
+                        <label for="fromCampaignId" class="col-md-4 col-form-label text-md-left">
                             Campaign
                         </label>
                         <div class="col-md-6">
 
-                            <select id="campaign" name="campaign" style="height: 35px !important;padding-top: 6px;"
+                            <select id="fromCampaignId" name="fromCampaignId" style="height: 35px !important;padding-top: 6px;"
                                 class="form-control input-w campaigns">
                                 <option value="">Select option</option>
                                 <?php if(is_array($campaigns) && count($campaigns) > 0): ?>
@@ -552,12 +552,12 @@
             <div class="modal-body">
 
                     <div class="form-group row">
-                        <label for="campaignId" class="col-md-4 col-form-label text-md-left">
+                        <label for="campaignListId" class="col-md-4 col-form-label text-md-left">
                             Campaign
                         </label>
                         <div class="col-md-6">
 
-                            <select id="campaignId" name="campaignId"
+                            <select id="campaignListId" name="campaignListId"
                                 class="form-control input-w campaigns" required>
                                 <option value="">Select option</option>
                                 <?php if(is_array($campaigns) && count($campaigns) > 0): ?>
@@ -573,12 +573,12 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="listId" class="col-md-4 col-form-label text-md-left">
+                        <label for="campListId" class="col-md-4 col-form-label text-md-left">
                             List
                         </label>
                         <div class="col-md-6">
 
-                            <select id="listId" name="listId"
+                            <select id="campListId" name="campListId"
                                 class="form-control input-w lists" required>
                                 <option value="">Select option</option>
                                 <?php if(is_array($lists) && count($lists) > 0): ?>
