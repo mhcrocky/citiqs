@@ -52,7 +52,7 @@ $(document).ready(function () {
         title: 'Delete',
         data: null,
         render: function (data, type, row) {
-          return '<button class="btn btn-danger" onclick="confirmDelete('+ data.id + ')">Delete</button>';
+          return '<button class="btn btn-danger" onclick="confirmCampaignDelete('+ data.id + ')">Delete</button>';
         }
       }
     ],
@@ -71,13 +71,22 @@ function saveCampaign(data){
   $.post(globalVariables.baseUrl + "campaigns/save_campaign", data, function(data){
       $('#createCampaignModal').modal('hide');
       $("#campaigns").DataTable().ajax.reload();
+      setTimeout(() => {
+        let campaigns = $("#campaigns").DataTable().data().toArray();
+        let html = '<option value="">Select Option</option>';
+        $.each(campaigns, function(index, campaign) {
+          html += '<option value="'+campaign.id+'">'+campaign.campaign+'</option>';
+        });
+        $('.campaigns').html(html);
+      }, 1500);
+      
       data = JSON.parse(data);
       alertify[data.status](data.message);
   });
 
 }
 
-function confirmDelete(id){
+function confirmCampaignDelete(id){
   bootbox.confirm({
     message: "Are you sure?",
     buttons: {
@@ -103,6 +112,15 @@ function deleteCampaign(id) {
       data = JSON.parse(data);
       alertify[data.status](data.message);
       $("#campaigns").DataTable().ajax.reload();
+      $("#campaigns").DataTable().ajax.reload();
+      setTimeout(() => {
+        let campaigns = $("#campaigns").DataTable().data().toArray();
+        let html = '<option value="">Select Option</option>';
+        $.each(campaigns, function(index, campaign) {
+          html += '<option value="'+campaign.id+'">'+campaign.campaign+'</option>';
+        });
+        $('.campaigns').html(html);
+      }, 1500);
     }
   );
 }
