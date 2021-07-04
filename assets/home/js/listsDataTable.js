@@ -63,6 +63,14 @@ function saveList(data){
   $.post(globalVariables.baseUrl + "lists/save_list", data, function(data){
       $('#createListModal').modal('hide');
       $("#lists").DataTable().ajax.reload();
+      setTimeout(() => {
+        let lists = $("#lists").DataTable().data().toArray();
+        let html = '<option value="">Select Option</option>';
+        $.each(lists, function(index, list) {
+          html += '<option value="'+list.id+'">'+list.list+'</option>';
+        });
+        $('.lists').html(html);
+      }, 1500);
       data = JSON.parse(data);
       alertify[data.status](data.message);
   });
@@ -95,6 +103,14 @@ function deleteList(id) {
       data = JSON.parse(data);
       alertify[data.status](data.message);
       $("#lists").DataTable().ajax.reload();
+      setTimeout(() => {
+        let lists = $("#lists").DataTable().data().toArray();
+        let html = '<option value="">Select Option</option>';
+        $.each(lists, function(index, list) {
+          html += '<option value="'+list.id+'">'+list.list+'</option>';
+        });
+        $('.lists').html(html);
+      }, 1500);
     }
   );
 }
