@@ -86,7 +86,27 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group row">
+                                <label for="showBackgroundImage" class="col-md-4 col-form-label text-md-left">
+                                    Show Background Image
+                                </label>
+                                <div class="col-md-6">
+                                    <select
+                                        id="showBackgroundImage"
+                                        name="showBackgroundImage"
+                                        class="form-control input-w border-50 field"
+                                        onchange="toggleBgImgItems()"
+                                        required
+                                    >
+                                        <option value="">Select option</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0" selected>No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row backgroundImage d-none">
                                 <label for="background-file" class="col-md-4 col-form-label text-md-left">
                                     Upload Background Image
                                 </label>
@@ -117,7 +137,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row backgroundImage d-none">
                                 <label for="isSquared" class="col-md-4 col-form-label text-md-left">
                                     Square Background Image
                                 </label>
