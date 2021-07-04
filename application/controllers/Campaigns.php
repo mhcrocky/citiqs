@@ -24,6 +24,7 @@ class Campaigns extends BaseControllerWeb
     {
         $this->global['pageTitle'] = 'TIQS: Campaigns';
         $data['templates'] = $this->email_templates_model->get_mailing_email_by_user($this->vendor_id);
+        $this->campaign_model->vendorId = $this->vendor_id;
         $campaigns = $this->campaign_model->fetchCampaigns();
         $data['campaigns'] = ($campaigns === null) ? [] : $campaigns;
         $this->list_model->vendorId = $this->vendor_id;
