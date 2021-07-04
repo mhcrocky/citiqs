@@ -111,6 +111,9 @@ class Booking_events extends BaseControllerWeb
             $design = ($this->event_model->get_event_design($customer->id, $eventId)) ? $this->event_model->get_event_design($customer->id, $eventId) : $design;
         } else {
             $events = $this->event_model->get_events($customer->id);
+            if(isset($events[0])){
+                $this->setGlobalMetaProperties($events[0]);
+            }
         }
 
         
