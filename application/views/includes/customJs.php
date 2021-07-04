@@ -362,6 +362,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/emailListsDataTable.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/customerEmailDataTable.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/listsDataTable.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/campaignsListsDataTable.js"></script>
 <?php } elseif ($this->view === 'campaigns/lists') { ?>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
