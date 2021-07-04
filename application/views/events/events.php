@@ -370,9 +370,9 @@
             </div>
             <div style="overflow: auto !important;" class="modal-body">
                 <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
-                    <div class="col-md-9 text-center"><?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?></div>
+                    <div class="col-md-9 text-center"><?php echo $fullBaseUrl; ?>events/shop/<?php echo $shortUrl; ?></div>
                     <div class="col-md-3 text-left">
-                        <button class="btn btn-clear text-primary" onclick="textToClipboard('<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>')">Copy URL</button>
+                        <button class="btn btn-clear text-primary" onclick="textToClipboard('<?php echo $fullBaseUrl; ?>events/shop/<?php echo $shortUrl; ?>')">Copy URL</button>
                     </div>
                 </div>
             </div>
@@ -395,7 +395,7 @@
             </div>
             <div style="overflow: auto !important;" class="modal-body">
                 <div style="flex-wrap: unset;-ms-flex-wrap: unset;" class="d-flex row text-center align-items-center">
-                    <div class="col-md-9 text-center shopUrlText"><?php echo base_url(); ?></div>
+                    <div class="col-md-9 text-center shopUrlText"><?php echo $fullBaseUrl; ?></div>
                     <input type="text" class="d-none" id="shopUrl">
                     <div class="col-md-3 text-left">
                         <button class="btn btn-clear text-primary" onclick="copyShopUrl()">Copy URL</button>
@@ -405,7 +405,7 @@
                 <?php if(count($tags) > 0): ?>
                 <div id="tag_url" style="flex-wrap: unset;-ms-flex-wrap: unset;" class="row text-center align-items-center mt-3">
 
-                    <div class="col-md-9 text-center"><span class="shopUrlText"><?php echo base_url(); ?></span>?tag=
+                    <div class="col-md-9 text-center"><span class="shopUrlText"><?php echo $fullBaseUrl; ?></span>?tag=
                         <select style="width: auto; padding-right: 25px;" id="tagUrl" name="tag"
                             class="form-control custom-select custom-select-sm form-control-sm">
                             <?php foreach($tags as $tag): ?>
@@ -427,6 +427,7 @@
 </div>
 
 <script>
+const fullBaseUrl = '<?php echo $fullBaseUrl; ?>';
 (function() {
     document.querySelector('.query-main').style.borderRadius = "0px";
     var shopsettings = '<?php echo json_encode($shopsettings); ?>';
