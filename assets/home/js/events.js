@@ -192,3 +192,12 @@ function timestampOnFocus(){
     $('#timestamp-error').empty();
     return ;
 }
+
+function toggleBgImgItems(){
+    let value = $('#showBackgroundImage option:selected').val();
+    if(value == '1'){
+        $('.backgroundImage').removeClass('d-none');
+    } else {
+        $('.backgroundImage').addClass('d-none');
+    }
+}
