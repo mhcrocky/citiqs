@@ -109,7 +109,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                     <?php else: ?>
                     <img src="<?php echo base_url(); ?>assets/images/events/<?php echo $design['shop']['background-image']; ?>"
                         id="background-img-preview" class="img-thumbnail">
+                    <button type="button" class="btn btn-danger mt-2" onclick="confirmDelete()">Delete Image</button>
                     <input type="hidden" name="shop[background-image]" value="<?php echo $design['shop']['background-image']; ?>">
+                    <input type="hidden" name="img_delete" id="img_delete" value="0">
                     <?php endif; ?>
                 </div>
 
