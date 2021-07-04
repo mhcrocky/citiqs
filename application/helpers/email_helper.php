@@ -265,7 +265,7 @@
             $CI->email->set_newline("\r\n");
             $CI->email->from(EMAIL_FROM);
             $CI->email->to($email);
-            $CI->email->subject($subject);
+            $CI->email->subject($emailTemplate->template_subject);
             $CI->email->message($message);
 
             //$send = $CI->email->send(true);
