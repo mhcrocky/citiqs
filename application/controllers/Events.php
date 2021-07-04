@@ -572,11 +572,17 @@ class Events extends BaseControllerWeb
     {
         $design = $this->input->post(null,true);
         
-        $upload_background_image = $this->uploadBodyBackgroundImg();
+        $upload_background_image = (!$eventId) ? $this->uploadBodyBackgroundImg() : $this->uploadBodyBackgroundImg($eventId);
         $background_image = isset($design['shop']['background-image']) ? $design['shop']['background-image'] : '';
         $design['shop']['background-image'] = (!$upload_background_image) ? $design['shop']['background-image'] : $upload_background_image;
 
-        if($design['shop']['background-image'] == ''){
+        if($design['img_delete'] == '1'){
+            unlink(FCPATH . 'assets/images/events/' . $design['shop']['background-image']);
+            unset($design['shop']['background-image']);
+            unset($design['img_delete']);
+        }
+
+        if(isset($design['shop']['background-image']) && $design['shop']['background-image'] == ''){
             unset($design['shop']['background-image']);
         }
         
@@ -620,11 +626,11 @@ class Events extends BaseControllerWeb
         redirect('events/viewdesign');
     }
 
-    private function uploadBodyBackgroundImg(){
+    private function uploadBodyBackgroundImg($eventId = 'main'){
         $config['upload_path']   = FCPATH . 'assets/images/events';
         $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
         $config['max_size']      = '102400'; // 102400 100mb
-        $config['file_name'] = 'background_img' . "." . pathinfo($_FILES['backgroundimage']['name'], PATHINFO_EXTENSION);
+        $config['file_name'] = 'background_img_' . $eventId . "." . pathinfo($_FILES['backgroundimage']['name'], PATHINFO_EXTENSION);
         $config['overwrite'] = TRUE;
 
         $this->load->library('upload', $config);
