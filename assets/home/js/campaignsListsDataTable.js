@@ -85,7 +85,10 @@ $(document).ready(function () {
 });
 
 function saveCampaignList(data){
-
+  data.campaignId = data.campaignListId;
+  data.listId = data.campListId;
+  delete data.campaignListId;
+  delete data.campListId;
   $.post(globalVariables.baseUrl + "campaignslists/save_campaign_list", data, function(data){
       $('.close').click();
       $("#campaignslists").DataTable().ajax.reload();
