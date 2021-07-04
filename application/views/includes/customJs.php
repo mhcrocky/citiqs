@@ -355,7 +355,13 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.validate.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/campaignsDataTable.js"></script>
+	<script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_emails.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/campaignsDataTable.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/emailListsDataTable.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/customerEmailDataTable.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/listsDataTable.js"></script>
 <?php } elseif ($this->view === 'campaigns/lists') { ?>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
