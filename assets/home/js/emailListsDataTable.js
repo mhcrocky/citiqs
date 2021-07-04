@@ -64,7 +64,7 @@ $(document).ready(function () {
         title: 'Delete',
         data: null,
         render: function (data, type, row) {
-          return '<button class="btn btn-danger" onclick="confirmDelete('+ data.id + ')">Delete</button>';
+          return '<button class="btn btn-danger" onclick="confirmEmailListDelete('+ data.id + ')">Delete</button>';
         }
       }
     ],
@@ -79,7 +79,7 @@ $(document).ready(function () {
 });
 
 
-function confirmDelete(id){
+function confirmEmailListDelete(id){
   bootbox.confirm({
     message: "Are you sure?",
     buttons: {
