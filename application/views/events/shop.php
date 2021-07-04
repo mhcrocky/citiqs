@@ -22,7 +22,8 @@
 
 
 <section id="main-content" class='hero-section position-relative' <?php if(isset($closedShopMessage)){?> style="display:none" <?php } ?> >
-    <div <?php if(isset($events[0])) { ?> style="clip-path: none !important;width: 100%;max-width: 65%; height: auto !important" <?php } ?>
+    <div <?php if(isset($events[0])) { ?> style="clip-path: none !important;width: 100%;max-width: 65%; height: auto !important;
+    <?php if(isset($events[0]) ){ ?> visibility: hidden; <?php } ?>" <?php } ?>
         class="d-none d-md-flex px-0 hero__background">
         <?php if(isset($events[0]) && $events[0]['backgroundImage'] != ''): ?>
         <img id="background-image" style="max-height: 750px;"
@@ -62,7 +63,7 @@
             <?php endif; ?>
             <h5 class="text-dark mb-4 mt-5 h-div"><?php echo ucwords($event['eventVenue']) .' ' . $eventDate; ?></h5>
 
-            <input type="hidden" id="background_img_<?php echo $event['id']; ?>"
+            <input type="hidden" id="background_img_<?php echo $event['id']; ?>" data-isShowed="<?php echo $event['showBackgroundImage']; ?>"
                 data-isSquared="<?php echo $event['isSquared']; ?>" value="<?php echo $event['backgroundImage']; ?>">
             <div style="display: grid !important;" id="event_<?php echo $event['id']; ?>"
                 class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4 d-table-cell">
