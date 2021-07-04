@@ -43,6 +43,8 @@ class Events extends BaseControllerWeb
         $where = ['vendorId' => $this->vendor_id];
         $data['tags'] = $this->event_model->get_event_tags($where);
         $data['shortUrl'] = $this->session->userdata('userShortUrl');
+        $data['fullBaseUrl'] = (strpos(base_url(), 'https://') !== false) ? str_replace('https://', 'https://www.', base_url()) : str_replace('http://', 'http://www.', base_url());
+
 
         if(isset($_COOKIE['eventId'])){
             $data['cookieEventId'] = $_COOKIE['eventId'];
