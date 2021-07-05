@@ -662,11 +662,11 @@ class Bookandpay_model extends CI_Model
 
 	public function getReservationsByTransactionId($TransactionId, $what = [])
 	{
-		if ($what) {
+		if (count($what) > 0) {
 			$this->db->select(implode(',', $what));
 		}
 		$this->db->from('tbl_bookandpay');
-		$this->db->where('TransactionID', $TransactionId);
+		$this->db->where_in('TransactionID', $TransactionId);
 		$query = $this->db->get();
         $result = $query->result();
 		return $result;
