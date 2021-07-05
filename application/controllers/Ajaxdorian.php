@@ -696,4 +696,26 @@ class Ajaxdorian extends CI_Controller
         if (file_put_contents($path, $html)) return true;
         return false;
     }
+
+    public function upload_unlayer_image()
+    {
+        $config['upload_path']   = $this->config->item('unlayerUploadFolder');
+        $config['allowed_types'] = 'jpg|png|jpeg|webp|bmp';
+        $config['max_size']      = '102400'; // 102400 100mb
+        $config['encrypt_name'] = TRUE;
+        $file_name = '';
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('file')) {
+            $errors   = $this->upload->display_errors('', '');
+            var_dump($errors);
+        } else {
+            $upload_data = $this->upload->data();
+			$file_name = $upload_data['file_name'];
+  
+        }
+
+        $data['filelink'] = base_url() . $this->config->item('unlayerRelativeUploadFolder') . $file_name;
+
+        echo json_encode($data);
+    }
 }
