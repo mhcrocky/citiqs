@@ -980,6 +980,27 @@
 </div>
 -->
 <div id="result"></div>
+
+
+
+
+
+<!-- Generate PDF -->
+<div style="opacity: 0; position: fixed; top:0; z-index: -1;">
+    <div id="HTMLtoPDF">
+	    <div class="pages">
+		    <p>Page 1</p>
+		</div>
+		<div class="pages">
+		    <p>Page 2</p>
+		</div>
+    </div>
+
+</div>
+<!-- End Generate PDF -->
+
+
+
 <script>
 const emailsTemplates = `<?php echo json_encode($emails); ?>`;
 
@@ -994,4 +1015,11 @@ const templateGlobals = (function() {
 
     return globals;
 }());
+
+$(document).ready(function() {
+    setTimeout(() => {
+        $('#guestlist').DataTable().column( 0 ).visible( false );
+    }, 2000);
+    
+});
 </script>
