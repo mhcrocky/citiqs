@@ -1,7 +1,7 @@
 <div style="margin-top: 10%" class="col-sm-12">
 	<div style="margin-left: 8%">
 		<h1 class="heading" id="backOfficeMainH1">
-				OPTIMIZING
+				OPTIMISING
 		</h1>
 		<h3 class="heading" style="color:#717171">
 				VALUE FOR YOUR CUSTOMERS, IS BETTER BUSINESS

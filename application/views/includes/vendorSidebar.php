@@ -13,19 +13,18 @@
     <?php } ?>
     <?php if ($_SESSION['businessTypeId'] != 26) { ?>
         <li data-menuid="0"><a href="<?php echo $this->baseUrl;?>loggedin"><i class="ti-home"></i><span><?php echo $this->language->tLine('Homepage'); ?></span></a></li>
-        <li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-dashboard"></i><span><?php echo $this->language->tLine('Dashboard'); ?></span></a></li>
-    <?php } ?>
+     <?php } ?>
     <?php if ($_SESSION['businessTypeId'] != 26) { ?>
     <li data-menuid="2">
         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-shopping-cart-full"></i><span><?php echo $this->language->tLine('Marketing & Loyalty'); ?></span></a>
         <ul class="collapse">
             <li data-menuid="2.6"><a href="<?php echo $this->baseUrl; ?>voucher/index"><i class="ti-gift"></i> <span><?php echo $this->language->tLine('Vouchers add/edit'); ?></span></a>
             <li data-menuid="2.7"><a href="<?php echo $this->baseUrl; ?>voucher/send"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Send Vouchers'); ?></span></a>
-			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>campaigns"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Create campaign'); ?></span></a>
-			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>lists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Create lists'); ?></span></a>
-			<li data-menuid="2.9"><a href="<?php echo $this->baseUrl; ?>emaillists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Connect emails lists'); ?></span></a>
-			<li data-menuid="2.10"><a href="<?php echo $this->baseUrl; ?>campaignslists"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Connect campaign & lists'); ?></span></a>
-			<li data-menuid="2.10"><a href="<?php echo $this->baseUrl; ?>customeremail"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('list members'); ?></span></a>
+			<li data-menuid="2.5"><a href="<?php echo $this->baseUrl; ?>campaigns"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Campaign add/edit'); ?></span></a>
+<!--			<li data-menuid="2.5"><a href="--><?php //echo $this->baseUrl; ?><!--lists"><i class="ti-receipt"></i> <span>--><?php //echo $this->language->tLine('Create lists'); ?><!--</span></a>-->
+<!--			<li data-menuid="2.9"><a href="--><?php //echo $this->baseUrl; ?><!--emaillists"><i class="ti-receipt"></i> <span>--><?php //echo $this->language->tLine('Connect emails lists'); ?><!--</span></a>-->
+<!--			<li data-menuid="2.10"><a href="--><?php //echo $this->baseUrl; ?><!--campaignslists"><i class="ti-receipt"></i> <span>--><?php //echo $this->language->tLine('Connect campaign & lists'); ?><!--</span></a>-->
+<!--			<li data-menuid="2.10"><a href="--><?php //echo $this->baseUrl; ?><!--customeremail"><i class="ti-receipt"></i> <span>--><?php //echo $this->language->tLine('list members'); ?><!--</span></a>-->
 			<li data-menuid="2.11"><a href="<?php echo $this->baseUrl; ?>customeremail/sent"><i class="ti-receipt"></i> <span><?php echo $this->language->tLine('Campaigns Sent'); ?></span></a>
 				tiqs.com/alfred/customeremail/
 <!--            <li data-menuid="2.1"><a href="--><?php //echo $this->baseUrl; ?><!--marketing/targeting"><i class="ti-pin-alt"></i><span>--><?php //echo $this->language->tLine('Targeting'); ?><!--</span></a></li>-->
@@ -57,7 +56,6 @@
         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-bar-chart"></i><span><?php echo $this->language->tLine('Finance'); ?></span></a>
 
 			<ul class="collapse">
-
 				<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>businessreports"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions QR Menu'); ?></span></a></li>
 				<li data-menuid="3.2"><a href="<?php echo $this->baseUrl; ?>customer_panel/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions Reservations'); ?></span></a></li>
 				<li data-menuid="3.3"><a href="<?php echo $this->baseUrl; ?>events/financial_report"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('Transactions E-Tickets'); ?></span></a></li>
@@ -211,7 +209,8 @@
         <li data-menuid="6">
         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-ticket"></i><span><?php echo $this->language->tLine('e-ticketing'); ?></span></a>
         <ul class="collapse">
-            <li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your event'); ?></span></a></li>
+			<li data-menuid="1"><a href="<?php echo $this->baseUrl;?>dashboard"><i class="ti-dashboard"></i><span><?php echo $this->language->tLine('Dashboard'); ?></span></a></li>
+			<li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your event'); ?></span></a></li>
             <li data-menuid="6.2"><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span><?php echo $this->language->tLine('Your Events'); ?></span></a></li>
 			<li data-menuid="5.3"><a href="<?php echo $this->baseUrl;?>events/tags_stats"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
 			<li data-menuid="6.3"><a href="<?php echo $this->baseUrl;?>events/marketing"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email marketing'); ?></span></a></li>
