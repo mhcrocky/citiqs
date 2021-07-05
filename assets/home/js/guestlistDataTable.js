@@ -70,9 +70,9 @@ $(document).ready(function () {
         data: null,
         "render": function(data, type, row) {
           if(data.bookandpay_id == null){
-            return '<button class="btn btn-primary" onclick="sendTicket(\''+data.id+'\')">Send</button>';
+            return '<button class="btn btn-primary" onclick="saveTicketPdf(\''+data.id+'\')">Download</button>';
           }
-          return '<button class="btn btn-primary" onclick="confirmResendTicket(\''+data.transactionId+'\')">Resend</button>';
+          return '<button class="btn btn-primary" onclick="saveAgainTicketPdf(\''+data.transactionId+'\')">Download</button>';
           
         }
       },
@@ -252,6 +252,36 @@ function resendTicket(transactionId, email = '', sendTo = 0) {
   );
 }
 
+function saveAgainTicketPdf(transactionId, email = '', sendTo = 0) {
+  let data = {
+    transactionId: transactionId,
+    email: encodeURI(email),
+    sendTo: sendTo
+  };
+  $.post(
+    globalVariables.baseUrl + "events/save_again_guest_ticket",
+    data,
+    function (data) {
+      data = JSON.parse(data);
+      if(data.status == 'success'){
+        var templates = data.templates;
+        var html = '';
+        $.each(templates, function (index, template) {
+          html += '<div class="pages">';
+          html += template;
+          html += '</div>';
+        });
+        $('#HTMLtoPDF').html(html);
+        setTimeout(() => {
+          ExportPdf();
+        }, 200);
+      } else {
+        alertify[data.status](data.message);
+      }
+    }
+  );
+}
+
 function deleteGuest(id) {
 
   $.post(globalVariables.baseUrl + "events/delete_guest",{id: id},
@@ -298,6 +328,33 @@ function sendTicket(id) {
   );
 }
 
+function saveTicketPdf(id) {
+
+  $.post(globalVariables.baseUrl + "events/save_guest_ticket_pdf",{id: id},
+    function (data) {
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+      $("#guestlist").DataTable().ajax.reload();
+      $("#guestlist").DataTable().ajax.reload();
+      if(data.status == 'success'){
+        var templates = data.templates;
+        var html = '';
+        $.each(templates, function (index, template) {
+          html += '<div class="pages">';
+          html += template;
+          html += '</div>';
+        });
+        $('#HTMLtoPDF').html(html);
+        setTimeout(() => {
+          ExportPdf();
+        }, 200);
+      } else {
+        alertify[data.status](data.message);
+      }
+    }
+  );
+}
+
 function sendMultipleTickets() {
   var rows_selected = $("#guestlist").DataTable().column(0).checkboxes.selected();
 
@@ -333,7 +390,74 @@ function sendMultipleTickets() {
 
 }
 
+function saveMultipleTicketsPdf() {
+  var rows_selected = $("#guestlist").DataTable().column(0).checkboxes.selected();
+
+
+
+  if(rows_selected.length < 1){
+    alertify['error']('You must select a row!');
+    return ;
+  }
+  
+  var rowIds = [];
+  var bookIds = [];
+
+  $.each(rows_selected, function(index, rowId){
+    let rowData = $("#guestlist").DataTable().row('#row-' + rowId).data();
+    let bookandpay_id = rowData.bookandpay_id;
+    if(bookandpay_id == null){
+      rowIds.push(rowId);
+    } else {
+      bookIds.push(rowId);
+    }
+  });
+
+  let data = {
+    ids: JSON.stringify(rowIds),
+    bookIds: JSON.stringify(bookIds),
+  }
+
+  $.post(globalVariables.baseUrl + "events/save_multiple_guests_ticket", data,
+    function (data) {
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+      $("#guestlist").DataTable().ajax.reload();
+      if(data.status == 'success'){
+        var templates = data.templates;
+        var html = '';
+        $.each(templates, function (index, template) {
+          html += '<div class="pages">';
+          html += template;
+          html += '</div>';
+        });
+        $('#HTMLtoPDF').html(html);
+        setTimeout(() => {
+          ExportPdf();
+        }, 200);
+      } else {
+        alertify[data.status](data.message);
+      }
+    }
+  );
+
+}
+
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+}
+
+function ExportPdf() {
+  kendo.drawing
+  .drawDOM('#HTMLtoPDF', {
+    paperSize: "A4",
+    margin: {top: "1cm", bottom: "1cm", right: "1cm", left: "1cm"},
+    scale: 0.61,
+    height: 500,
+    multiPage: true
+  })
+  .then(function(group){
+    kendo.drawing.pdf.saveAs(group, "Guestlist.pdf");
+  });
 }
