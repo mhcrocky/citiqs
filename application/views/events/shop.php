@@ -48,7 +48,7 @@
         <?php if (!empty($events)): ?>
 
         <div id="events" style="box-shadow: 0 0 70px 30px #00000014;background: #00000014;padding: 0px 0px;"
-            class="row single-item__grid">
+            class="row single-item__grid <?php if(count($events) == 1){ ?> d-none <?php } ?>">
             <?php foreach ($events as $key => $event): 
                 if(!$get_by_event_id && $event['visibleToShop'] == '0'){
                     unset($events[$key]);
