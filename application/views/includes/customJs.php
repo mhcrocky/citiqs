@@ -199,6 +199,8 @@
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/templates.js'></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketsDataTable.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/guestlistDataTable.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/js/html2pdf/jszip.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/html2pdf/kendo.all.min.js"></script>
 <?php } elseif ($this->view === 'events/events') { ?>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
 	<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
