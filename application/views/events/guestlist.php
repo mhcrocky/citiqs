@@ -36,11 +36,11 @@
 <div class="row mt-5 p-4">
     <div class="col-md-4 mb-3">
         <div class="input-group">
-            <input type="button" onclick="sendMultipleTickets()"
+            <input type="button" onclick="saveMultipleTicketsPdf()"
                 value="<?php echo $this->language->tLine('Send Multiple Emails'); ?>"
                 style="background: #10b981 !important;border-radius:0;height:45px;"
                 class="btn btn-primary form-control mb-3 text-left">
-            <span onclick="sendMultipleTickets()" style="background: #275C5D; padding-top: 14px;"
+            <span onclick="saveMultipleTicketsPdf()" style="background: #275C5D; padding-top: 14px;"
                 class="input-group-addon pl-2 pr-2 mb-3">
                 <i style="color: #fff;font-size: 18px;" class="fa fa-envelope"></i>
             </span>
@@ -229,3 +229,19 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Generate PDF -->
+<div style="opacity: 0; position: fixed; top:0">
+    <div id="HTMLtoPDF">
+	    <div class="pages">
+		    <p>Page 1</p>
+		</div>
+		<div class="pages">
+		    <p>Page 2</p>
+		</div>
+    </div>
+
+</div>
+<!-- End Generate PDF -->
