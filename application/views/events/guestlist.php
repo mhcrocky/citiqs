@@ -37,7 +37,7 @@
     <div class="col-md-4 mb-3">
         <div class="input-group">
             <input type="button" onclick="saveMultipleTicketsPdf()"
-                value="<?php echo $this->language->tLine('Send Multiple Emails'); ?>"
+                value="<?php echo $this->language->tLine('Download Multiple Emails'); ?>"
                 style="background: #10b981 !important;border-radius:0;height:45px;"
                 class="btn btn-primary form-control mb-3 text-left">
             <span onclick="saveMultipleTicketsPdf()" style="background: #275C5D; padding-top: 14px;"
@@ -233,7 +233,7 @@
 
 
 <!-- Generate PDF -->
-<div style="opacity: 0; position: fixed; top:0">
+<div style="opacity: 0; position: fixed; top:0; z-index: -1;">
     <div id="HTMLtoPDF">
 	    <div class="pages">
 		    <p>Page 1</p>
