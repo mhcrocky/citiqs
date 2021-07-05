@@ -66,7 +66,7 @@ $(document).ready(function () {
         }
       },
       {
-        title: 'Send',
+        title: 'PDF',
         data: null,
         "render": function(data, type, row) {
           if(data.bookandpay_id == null){
