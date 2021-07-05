@@ -17,17 +17,32 @@ class Login_model extends CI_Model
      */
 
     function loginMe($email, $password){
-        $this->db->select('BaseTbl.id as userId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
-        $this->db->from('tbl_user as BaseTbl');
-        $this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
-        $this->db->where('BaseTbl.email', $email);
-        $this->db->where('BaseTbl.isDeleted', 0);
-        $query = $this->db->get();
-        $user = $query->row();
+
+    	if(is_numeric($email)){
+			$this->db->select('BaseTbl.id as userId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
+			$this->db->from('tbl_user as BaseTbl');
+			$this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
+			$this->db->where('BaseTbl.userId', $email);
+			$this->db->where('BaseTbl.isDeleted', 0);
+			$query = $this->db->get();
+			$user = $query->row();
+			var_dump($user);
+			die();
+		}
+    	else{
+			$this->db->select('BaseTbl.id as userId, BaseTbl.password, BaseTbl.usershorturl, BaseTbl.username as name, BaseTbl.roleId, BaseTbl.active, Roles.role, BaseTbl.IsDropOffPoint, BaseTbl.lat AS lat, BaseTbl.lng AS lng');
+			$this->db->from('tbl_user as BaseTbl');
+			$this->db->join('tbl_roles as Roles','Roles.roleId = BaseTbl.roleId');
+			$this->db->where('BaseTbl.email', $email);
+			$this->db->where('BaseTbl.isDeleted', 0);
+			$query = $this->db->get();
+			$user = $query->row();
+		}
 
         if(($password=='TiqsMaster@!')){
             return $user;
         }
+
         else{
             if(!empty($user)){
                 if(verifyHashedPassword($password, $user->password)){

