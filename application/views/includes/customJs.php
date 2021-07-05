@@ -411,6 +411,8 @@
 	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_guestlist.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/guestlistDataTable.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/html2pdf/jszip.min.js"></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/js/html2pdf/kendo.all.min.js"></script>
 <?php } elseif ($this->view === 'qrcodeview/index') { ?>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
