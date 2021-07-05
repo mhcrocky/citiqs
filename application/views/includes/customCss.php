@@ -498,6 +498,26 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     .btn, .paginate_button, .btn-success, .btn-primary, .btn-danger{
         border-radius: 0px !important;
     }
+
+    #HTMLtoPDF {
+    font-size: 13px;
+    font-family: Helvetica,Arial,sans-serif !important;
+    font-style: normal;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+p {
+    font-size: 13px;
+    font-family: Helvetica,Arial,sans-serif !important;
+    font-style: normal;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.pages {
+	height: 1400px;
+}
     </style>
 <?php  } elseif ($this->view === 'events/events') { ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
