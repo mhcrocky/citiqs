@@ -197,6 +197,139 @@
             
         }
 
+        public static function getTemplates(array $reservations) : array
+        {
+            $CI =& get_instance();
+            $CI->load->config('custom');
+            $CI->load->helper('utility_helper');
+            $CI->load->model('sendreservation_model');
+            $CI->load->model('email_templates_model');
+
+            $templates = [];
+            
+
+            foreach ($reservations as $key => $reservation):
+                $result = $CI->sendreservation_model->getEventTicketingData($reservation->reservationId);
+                
+                
+                foreach ($result as $record) {
+                    $customer = $record->customer;
+                    $Spotlabel = $record->Spotlabel;
+                    $eventDate = $record->eventdate;
+                    $endDate = $record->EndDate;
+                    $eventName = $record->eventname;
+                    $eventVenue = $record->eventVenue;
+                    $eventAddress = $record->eventAddress;
+                    $eventCity = $record->eventCity;
+                    $eventCountry = $record->eventCountry;
+                    $eventZipcode = $record->eventZipcode;
+				    $reservationId = $record->reservationId;
+				    $ticketPrice = $record->price;
+                    $ticketFee = $record->ticketFee;
+                    $ticketId = $record->ticketId;
+                    $ticketDescription = $record->ticketDescription;
+				    $ticketQuantity = $record->numberofpersons;
+                    $orderAmount = intval($ticketQuantity) * (floatval($record->price) + floatval($record->ticketFee));
+                    $orderAmount = number_format($orderAmount, 2, '.', '');
+                    $buyerName = $record->name;
+                    $buyerEmail = $record->email;
+				    $buyerMobile = $record->mobilephone;
+				    $reservationset = $record->reservationset;
+                    $orderId = $record->orderId;
+				    $fromtime = $record->timefrom;
+				    $totime = $record->timeto;
+				    $paid = $record->paid;
+				    $TransactionId = $record->TransactionID;
+                    $voucher = $record->voucher;
+                    $mailsend = $record->mailsend;
+                    
+
+                    $qrtext = $reservationId;
+
+
+						$SERVERFILEPATH = FCPATH . 'uploads/qrcodes/';
+						$text = $qrtext;
+						$folder = $SERVERFILEPATH;
+						$file_name1 = $qrtext . ".png";
+						$file_name = $folder . $file_name1;
+
+						QRcode::png($text, $file_name, QR_ECLEVEL_H, 10);
+
+						switch (strtolower($_SERVER['HTTP_HOST'])) {
+							case 'tiqs.com':
+								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+								break;
+							case '127.0.0.1':
+								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+								break;
+							default:
+								break;
+                        }
+
+                        $emailId = $record->emailId ;
+                        
+                        
+						switch (strtolower($_SERVER['HTTP_HOST'])) {
+							case 'tiqs.com':
+								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
+								break;
+							case '127.0.0.1':
+								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
+								break;
+							default:
+								break;
+                        }
+ 
+                        
+						if($emailId) {
+                            $emailTemplate = $CI->email_templates_model->get_emails_by_id($emailId);
+                            
+                            
+                            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$CI->config->item('template_extension'));
+                            $qrlink = $SERVERFILEPATH . $file_name1;
+							if($mailtemplate) {
+                                $dt = new DateTime('now');
+                                $date = $dt->format('Y.m.d');
+                                $mailtemplate = str_replace('[currentDate]', $buyerName, $mailtemplate);
+                                $mailtemplate = str_replace('[orderId]', $orderId, $mailtemplate);
+                                $mailtemplate = str_replace('[orderAmount]', $orderAmount, $mailtemplate);
+                                $mailtemplate = str_replace('[buyerName]', $buyerName, $mailtemplate);
+								$mailtemplate = str_replace('[buyerEmail]', $buyerEmail, $mailtemplate);
+                                $mailtemplate = str_replace('[buyerMobile]', $buyerMobile, $mailtemplate);
+                                $mailtemplate = str_replace('[eventName]', $eventName, $mailtemplate);
+								$mailtemplate = str_replace('[eventDate]', date('d.m.Y', strtotime($eventDate)), $mailtemplate);
+								$mailtemplate = str_replace('[eventVenue]', $eventVenue, $mailtemplate);
+								$mailtemplate = str_replace('[eventAddress]', $eventAddress, $mailtemplate);
+                                $mailtemplate = str_replace('[eventCity]', $eventCity, $mailtemplate);
+								$mailtemplate = str_replace('[eventCountry]', $eventCountry, $mailtemplate);
+								$mailtemplate = str_replace('[eventZipcode]', $eventZipcode, $mailtemplate);
+								$mailtemplate = str_replace('[ticketDescription]', $ticketDescription, $mailtemplate);
+								$mailtemplate = str_replace('[ticketPrice]', $ticketPrice, $mailtemplate);
+                                $mailtemplate = str_replace('[price]', $ticketPrice, $mailtemplate);
+								$mailtemplate = str_replace('[ticketQuantity]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[numberOfPersons]', $ticketQuantity, $mailtemplate);
+                                $mailtemplate = str_replace('[startTime]', $fromtime, $mailtemplate);
+								$mailtemplate = str_replace('[endTime]', $totime, $mailtemplate);
+								$mailtemplate = str_replace('[timeSlot]', '', $mailtemplate);
+                                $mailtemplate = str_replace('[reservationId]', $reservationId, $mailtemplate);
+                                $mailtemplate = str_replace('[spotLabel]', $Spotlabel, $mailtemplate);
+								$mailtemplate = str_replace('[transactionId]', $TransactionId, $mailtemplate);
+								$mailtemplate = str_replace('[WalletCode]', $voucher, $mailtemplate);
+								$mailtemplate = str_replace('[QRlink]', $qrlink, $mailtemplate);
+
+                                $templates[] = $mailtemplate;
+
+                                
+                            }
+                        }
+                    
+                }
+            endforeach;
+
+            return $templates;
+            
+        }
+
         private static function sendEmail($email, $subject, $message, $icsContent=false, $fromEmail = 'support@tiqs.com')
         {
             $configemail = array(
