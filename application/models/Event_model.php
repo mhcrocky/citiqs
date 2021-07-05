@@ -625,7 +625,7 @@ class Event_model extends CI_Model {
 		return $this->db->insert_id();
 	}
 
-	function save_guest_reservations($data, $ticketQuantity){
+	public function save_guest_reservations($data, $ticketQuantity){
 		$reservationIds = [];
 		for($i = 0; $i < $ticketQuantity; $i++){
 			$data['voucher'] = $this->generateNewVoucher();
@@ -634,7 +634,7 @@ class Event_model extends CI_Model {
 		return $reservationIds;
 	}
 
-	function update_reservation_amount($reservationId, $amount){
+	public function update_reservation_amount($reservationId, $amount){
 		$this->db->where('reservationId', $reservationId);
 		$this->db->update('tbl_bookandpay',['amount' => $amount]);
 		return true;
@@ -1662,6 +1662,7 @@ class Event_model extends CI_Model {
 	
 	public function save_guest_to_bookandpay($vendorId, $guestId){
 		$guest = $this->get_guest_by_id($vendorId, $guestId);
+		var_dump($guest);
 		
 		if(!$guest) return false;
 		$dt = new DateTime( 'now');
