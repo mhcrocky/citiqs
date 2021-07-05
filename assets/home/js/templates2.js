@@ -812,6 +812,33 @@ function useUnlayer(settings = null)  {
   settings['displayMode'] = 'email';
   unlayer.init(settings);
 
+
+    // Custom Image Upload
+    unlayer.registerCallback('image', function(file, done) {
+      var data = new FormData()
+      data.append('file', file.attachments[0])
+    
+      fetch(globalVariables.baseUrl +'Ajaxdorian/upload_unlayer_image', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: data
+      }).then(response => {
+        if (response.status >= 200 && response.status < 300) {
+          return response
+        } else {
+          var error = new Error(response.statusText)
+          error.response = response
+          throw error
+        }
+      }).then(response => {
+        return response.json()
+      }).then(data => {
+        done({ progress: 100, url: data.filelink })
+      });
+    });
+
 }
 
 
