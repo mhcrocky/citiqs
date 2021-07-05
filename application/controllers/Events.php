@@ -178,7 +178,7 @@ class Events extends BaseControllerWeb
             return;
         }
 
-        $this->emailReservation($transactionId);
+        //$this->emailReservation($transactionId);
         $response = [
             'status' => '1',
             'messages' => ['Guest is added successfully']
@@ -227,6 +227,7 @@ class Events extends BaseControllerWeb
         return ;
     }
 
+    /*
     public function send_guest_ticket()
     {
         $id = $this->input->post('id');
@@ -260,7 +261,45 @@ class Events extends BaseControllerWeb
         echo json_encode($response);
         return ;
     }
+    */
 
+    public function save_guest_ticket_pdf()
+    {
+        $id = $this->input->post('id');
+        $ids = $this->event_model->save_guest_to_bookandpay($this->vendor_id, $id);
+        //var_dump($ids);
+        if(!$ids){
+            $response = [
+                'status' => 'error',
+                'message' => 'The pdf file is not generate successfully!'
+            ];
+            echo json_encode($response);
+            return ;
+        }
+
+        $reservations = $this->bookandpay_model->getBookingsByIds($ids);
+        $template = Ticketingemail_helper::getTemplates($reservations);
+
+        if(count($template) > 0){
+            $response = [
+                'status' => 'success',
+                'message' => 'The pdf file is generate successfully!',
+                'templates' => $template
+            ];
+            echo json_encode($response);
+            return ;
+
+        }
+        
+        $response = [
+            'status' => 'error',
+            'message' => 'The pdf file is not generate successfully!'
+        ];
+        echo json_encode($response);
+        return ;
+    }
+
+    /*
     public function send_multiple_guests_ticket()
     {
         $guest_ids = json_decode($this->input->post('ids'));
@@ -290,6 +329,96 @@ class Events extends BaseControllerWeb
         $response = [
             'status' => 'error',
             'message' => 'The guest ticket is sent successfully!'
+        ];
+        echo json_encode($response);
+        return ;
+    }
+    */
+
+    public function save_multiple_guests_ticket()
+    {
+        $guest_ids = json_decode($this->input->post('ids'));
+        $bookIds = json_decode($this->input->post('bookIds'));
+        $guests = $this->event_model->get_guests_by_ids($this->vendor_id, $bookIds);
+        $bookandpay_ids = [];
+        if(is_countable($guest_ids) && count($guest_ids) > 0){
+            $bookandpay_ids = $this->event_model->save_multiple_guests_to_bookandpay($this->vendor_id, $guest_ids);
+        }
+
+        $transactionIds = [];
+
+        if(count($guests) > 0){
+            foreach($guests as $guest){
+                $transactionIds[] = $guest->transactionId;
+            }
+        }
+        
+        
+        //var_dump($ids);
+        if(count($bookandpay_ids) < 1 && count($transactionIds) < 1){
+            $response = [
+                'status' => 'error',
+                'message' => 'Something went wrong!'
+            ];
+            echo json_encode($response);
+            return ;
+        }
+
+        $reservationsByIds = [];
+        $reservationsByTransactionIds = [];
+
+        if(count($bookandpay_ids) > 1){
+            $reservationsByIds = $this->bookandpay_model->getBookingsByIds($bookandpay_ids);
+        }
+
+        if(count($transactionIds) > 1){
+            $reservationsByTransactionIds = $this->bookandpay_model->getReservationsByTransactionId($transactionIds);
+        }
+
+        $reservations = array_merge($reservationsByIds, $reservationsByTransactionIds);
+        
+        $templates = Ticketingemail_helper::getTemplates($reservations);
+
+        if(count($templates) > 0){
+            $response = [
+                'status' => 'success',
+                'message' => 'The pdf files are generate successfully!',
+                'templates' => $templates
+            ];
+            echo json_encode($response);
+            return ;
+
+        }
+        
+        
+        $response = [
+            'status' => 'error',
+            'message' => 'The pdf files are not generate successfully!'
+        ];
+        echo json_encode($response);
+        return ;
+    }
+
+    public function save_again_guest_ticket()
+    {
+        $transactionId = $this->input->post('transactionId');
+        $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
+        $template = Ticketingemail_helper::getTemplates($reservations);
+
+        if(count($template) > 0){
+            $response = [
+                'status' => 'success',
+                'message' => 'The pdf file is generate successfully!',
+                'templates' => $template
+            ];
+            echo json_encode($response);
+            return ;
+
+        }
+        
+        $response = [
+            'status' => 'error',
+            'message' => 'The pdf file is not generate successfully!'
         ];
         echo json_encode($response);
         return ;
@@ -329,7 +458,7 @@ class Events extends BaseControllerWeb
             'isTicket' => 1
         ]; 
 
-        //$this->event_model->save_guest_reservations($booking, $ticketQuantity); save to tbl_bookandpay
+        $this->event_model->save_guest_reservations($booking, $ticketQuantity); //save to tbl_bookandpay
            
            $guestlist[] = [
                'guestName' => $data->$guestName,
@@ -342,7 +471,7 @@ class Events extends BaseControllerWeb
            ];
        }
        $this->event_model->save_multiple_guests($guestlist);
-       $this->emailReservation($transactionId);
+       //$this->emailReservation($transactionId);
 
     }
 
