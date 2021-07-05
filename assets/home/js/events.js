@@ -201,3 +201,4 @@ function toggleBgImgItems(){
         $('.backgroundImage').addClass('d-none');
     }
 }
+
