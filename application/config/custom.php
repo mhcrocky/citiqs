@@ -49,6 +49,8 @@ $config['labelFolderBig']  = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . 'LabelIm
 $config['dhlXmlRequests']  = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . 'xmlrequest' . DIRECTORY_SEPARATOR;
 $config['floorPlansFolder'] = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . 'floorPlans';
 $config['floorPlansImagesPath'] = 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'floorplan_objects' . DIRECTORY_SEPARATOR;
+$config['unlayerUploadFolder']    = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . 'campaigns';
+$config['unlayerRelativeUploadFolder']    = 'uploads' . DIRECTORY_SEPARATOR . 'campaigns/';
 
 // SENSITIVE DATA CATEGORIES ID
 $config['creditCard'] = 11;
