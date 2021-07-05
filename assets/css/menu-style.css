@@ -871,3 +871,7 @@ transition: all .5s ease-out;
     width: 100%;
 	font-size: 13px;
 }
+
+.modal-backdrop {
+	z-index: 2 !important;
+}
