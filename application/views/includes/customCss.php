@@ -864,6 +864,26 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
         padding-bottom: 15px;
     }
 
+    #HTMLtoPDF {
+    font-size: 13px;
+    font-family: Helvetica,Arial,sans-serif !important;
+    font-style: normal;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+p {
+    font-size: 13px;
+    font-family: Helvetica,Arial,sans-serif !important;
+    font-style: normal;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.pages {
+	height: 1400px;
+}
+
     </style>
 <?php  } elseif ($this->view === 'qrcodeview/index') { ?>
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
