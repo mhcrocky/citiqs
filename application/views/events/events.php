@@ -36,7 +36,7 @@
             </div>
             <div class="input-group col-md-3 justify-content-center">
                 <a style="width: 80%" href="<?php echo base_url(); ?>events/shop/<?php echo $shortUrl; ?>" data-toggle="modal" data-target="#copyMainShopUrlModal">
-                    <input type="button" value="Go to Main Shop"
+                    <input type="button" value="Multiple shop metalinks"
                         style="background: #10b997 !important;border-radius:0;height:45px;"
                         class="btn btn-success form-control mb-3 text-left">
                     <a style="background: #0a6661;padding-top: 14px;" class="input-group-addon pl-2 pr-2 mb-3" data-toggle="modal" data-target="#copyMainShopUrlModal">

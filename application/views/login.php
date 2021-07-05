@@ -51,7 +51,7 @@
 						<?php echo $this->language->tLine('Use your e-mail to login');?>
 					</p>
 					<div class="form-group has-feedback" style="text-align:center">
-						<input type="email" id="businessEmail" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
+						<input type="text" id="businessEmail" class="form-control" style="font-family:'caption-light'; border:none; border-radius: 50px; " placeholder="<?php echo $this->language->Line("registerbusiness-3600",'Your e-mail');?>" name="email" required />
 						<div class="virtual-keyboard-hook" data-target-id="businessEmail" data-keyboard-mapping="qwerty"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
 					</div>
 					<p style="font-family:'caption-light'; color: #ffffff; font-size:100%; text-align: center">

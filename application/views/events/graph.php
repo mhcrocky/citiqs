@@ -15,7 +15,7 @@
                 <td><?php echo $event->EndTime; ?></td>
                 <td>
                     <a href="<?php echo base_url(); ?>events/shop/<?php echo $this->session->userdata('userShortUrl'); ?>"
-                        class="btn btn-primary" style="background: #10b981;">Go to Shop</a>
+                        class="btn btn-primary" style="background: #10b981;">Meta link</a>
                 </td>
             </tr>
         </table>
