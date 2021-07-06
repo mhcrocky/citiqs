@@ -1,5 +1,23 @@
 'use strict';
 
+function getArguments() {
+    let florplanArguments = {
+        floorElementID: 'canvas',
+        imgEl: $('#floor_image'),
+        // <?php #if ($floorplan_images) { ?>
+        // 	// objectsImages: $.parseJSON('<?php #echo json_encode($floorplan_images); ?>'),
+        // <?php #} ?>
+    }
+    if (globalFloorplan.hasOwnProperty('floorplanID')) {
+        florplanArguments['floorplanID'] = globalFloorplan['floorplanID'];
+        florplanArguments['imageUploaded'] = true;
+        florplanArguments['floor_name'] = globalFloorplan['floor_name'];
+        florplanArguments['canvasJSON'] = globalFloorplan['canvasJSON'];
+        florplanArguments['areas'] = globalFloorplan['areas'];
+    }
+
+    return florplanArguments;
+}
 var floorplan;
 $(document).ready(function () {
     $('#occupied_color').colorpicker({format: "rgb", useAlpha: false});
@@ -11,21 +29,7 @@ $(document).ready(function () {
     var active_cat = $('#images_category').val();
     $('#cat_'+active_cat).show();
 
-    floorplan = new FloorEditor({
-        floorElementID: 'canvas',
-        imgEl: $('#floor_image'),
-        // <?php #if ($floorplan_images) { ?>
-        // 	// objectsImages: $.parseJSON('<?php #echo json_encode($floorplan_images); ?>'),
-        // <?php #} ?>
-
-        // <?php if (isset($floorplan) AND $floorplan) { ?>
-        // 	floorplanID: <?php echo $floorplan->id; ?>,
-        // 	imageUploaded: <?php echo $floorplan->file_name ? 'true' : 'false'; ?>,
-        // 	floor_name: '<?php echo $floorplan->floor_name; ?>',
-        // 	areas: $.parseJSON('<?php echo json_encode($areas); ?>'),
-        // 	canvasJSON: '<?php echo $floorplan->canvas;?>'
-        // <?php } ?>
-    });
+    floorplan = new FloorEditor(getArguments());
 
     fabric.Object.prototype.transparentCorners = true;
     fabric.Object.prototype.cornerColor = 'red';
@@ -88,8 +92,6 @@ $(document).ready(function () {
         var object_image = $('#cat_'+active_cat + ' .images_list').val();
         floorplan.addObjectImage(active_cat, object_image);
     })
-
-
 });
 
 $(window).resize(function () {

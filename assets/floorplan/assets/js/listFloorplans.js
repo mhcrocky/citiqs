@@ -21,12 +21,20 @@ function scaleFloorplans(floorplans) {
 }
 
 function deleteFloorplan(element) {
-    let floorplanId = element.dataset.floorplanId;
-    let parentId =  element.dataset.parentId;
-    let url = globalVariables.ajax + 'deleteFloorplan/' + floorplanId;
-    sendGetRequest(url, deleteFloorplanResponse, [parentId]);
-
-    console.dir(floorplanId);
+    let message = 'Delete floorplan "' + element.dataset.name + '"';
+    alertify.confirm(
+        'Confirm delete',
+        message,
+        function() {
+            let floorplanId = element.dataset.floorplanId;
+            let parentId =  element.dataset.parentId;
+            let url = globalVariables.ajax + 'deleteFloorplan/' + floorplanId;
+            sendGetRequest(url, deleteFloorplanResponse, [parentId]);
+        },
+        function() {
+            alertify.error('Cancel')
+        }
+    );
 }
 
 function deleteFloorplanResponse(containerId, response) {
@@ -38,7 +46,10 @@ function deleteFloorplanResponse(containerId, response) {
 }
 
 $(document).ready(function () {
-    showFloorplans(floorplansGlobals['floorplans']);
+    if (typeof(floorplansGlobals) !== 'undefined') {
+        showFloorplans(floorplansGlobals['floorplans']);
+    }
+
     $(window).resize(function () {
         // check this function
         scaleFloorplans(floorplansGlobals['floorplanObjects']);

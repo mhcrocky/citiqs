@@ -91,8 +91,7 @@ class FloorEditor extends Floorplan {
 		let canvas = JSON.stringify(this.canvas.toJSON([ 'options', 'area_id', 'label_id', 'label', 'id']));
 		let areas_data = this.getAreas();
 		let _this = this;
-
-		var data = {
+		let data = {
 			'floorplan' : {
 				'floorplanName' : floorplanName,
 				'floorplanImage' : this.img_name,
@@ -101,17 +100,30 @@ class FloorEditor extends Floorplan {
 			'areas': areas_data,
 			'deleteAreas': this.deleteAreas,
 		};
+		let url = globalVariables.baseUrl + 'ajax/save_floor/';
+		if (_this.floorplanID) {
+			url += _this.floorplanID;
+		}
 
 		try {
 			return await $.ajax({
-				url: globalVariables.baseUrl + 'ajax/save_floor',
+				url: url,
 				method: 'POST',
 				data: data,
-				success: function(response){
-					var result = $.parseJSON(response);
-					_this.floorplanID = result.floorplanID;
-					_this.updateAreasData(result.areas_data);
-					alertifyAjaxResponse(result);
+				success: function(data) {
+					console.dir(_this.floorplanID);
+					var response = $.parseJSON(data);
+					if (response.status === '1') {
+						if (_this.floorplanID) {
+							alertifyAjaxResponse(response);
+							_this.floorplanID = response.floorplanID;
+							_this.updateAreasData(response.areas_data);
+						} else {
+							redirectToNewLocation('edit_floorplan/' + response.floorplanID);
+						}
+					} else {
+						alertifyAjaxResponse(response);
+					}
 				}
 			});
 		} catch (error) {

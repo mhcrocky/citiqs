@@ -29,11 +29,12 @@
                                     class="btn btn-danger"
                                     data-parent-id="<?php echo $floorplanParentELement; ?>"
                                     data-floorplan-id="<?php echo $floorplan['id']; ?>"
+                                    data-name="<?php echo  $floorplan['floorplanName']; ?>"
                                     onclick="deleteFloorplan(this)"
                                 >
                                     Delete floorplan
                                 </button>
-                                <button class="btn btn-info">Edit floorplan</button>
+                                <a href="edit_floorplan/<?php echo $floorplan['id']; ?>" class="btn btn-info">Edit floorplan</a>
                             </p>
                         </div>
                     </div>
