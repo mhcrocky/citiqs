@@ -5,7 +5,7 @@
     <div class="form-grop col-lg-8 col-sm-12">
         <?php if ($emailTemplatesEdit === true && $tiqsId === $vendorId && !empty($emailTemplates)) { ?>
             <label for="selectTemplateName">Create template for predifined event</label>
-            <select id='selectTemplateName' class="form-control">
+            <select id='selectTemplateName' class="form-control pt-2">
                 <option value="">Select template</option>
 
                 <?php foreach ($emailTemplates as $template) { ?>
@@ -27,7 +27,7 @@
             <input type="hidden" id="selectTemplateName" value="">
         <?php } ?>
         <label for="templateType">Copy Template</label>
-        <select class="form-control w-100" id="copyTemplate" onchange="copyTemplate()">
+        <select class="form-control w-100 pt-2" id="copyTemplate" onchange="copyTemplate()">
             <option value="" disabled selected>Select default template</option>
             <?php if(is_array($defaultTemplates) && count($defaultTemplates) > 0) { 
                     foreach($defaultTemplates as $defaultTemplate){ 
@@ -38,7 +38,7 @@
         <br/>
 
         <label for="templateType">Template Type</label>
-        <select class="form-control w-100" id="templateType" name="templateType" onchange="checkiIsLandingPage(this, 'landingPage', 'emailTemplate', 'landingPage')">
+        <select class="form-control w-100 pt-2" id="templateType" name="templateType" onchange="checkiIsLandingPage(this, 'landingPage', 'emailTemplate', 'landingPage')">
             <option value="" disabled>Select template</option>
             <?php if ($emailTemplatesEdit === true) { ?>
                 <option
@@ -112,7 +112,7 @@
             </label>
             <select
                 id='selectProductGroup'
-                class="form-control landingPage"
+                class="form-control landingPage pt-2"
                 <?php if ($emailTemplatesEdit === true) { ?>
                     style="display:none"
                 <?php } ?>
@@ -144,7 +144,7 @@
             </label>
             <select
                 id='selectLandingPage'
-                class="form-control landingPage"
+                class="form-control landingPage pt-2"
                 <?php if ($emailTemplatesEdit === true) { ?>
                     style="display:none"
                 <?php } ?>
@@ -197,7 +197,7 @@
             </label>
             <select
                 id='selectLandingType'
-                class="form-control landingPage"
+                class="form-control landingPage pt-2"
                 style="margin-bottom:10px;
                     <?php if ($emailTemplatesEdit === true && (empty($landingPage) || $landingPage->landingType !== $urlType)) { ?>
                         display:none;
