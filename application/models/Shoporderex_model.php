@@ -17,6 +17,7 @@
         public $remark;
         public $mainPrductOrderIndex;
         public $subMainPrductOrderIndex;
+        PUBLIC $printedCopies;
 
         private $table = 'tbl_shop_order_extended';
 
@@ -25,7 +26,7 @@
             $this->load->helper('validate_data_helper');
             if (!Validate_data_helper::validateNumber($value)) return;
 
-            if ($property === 'id' || $property === 'orderId' || $property === 'productsExtendedId') {
+            if ($property === 'id' || $property === 'orderId' || $property === 'productsExtendedId' || $property === 'printedCopies') {
                 $value = intval($value);
             }
             return;
@@ -54,6 +55,7 @@
             #if (isset($data['remark']) && !Validate_data_helper::validateString($data['remark'])) return false;
             if (isset($data['mainPrductOrderIndex']) && !Validate_data_helper::validateInteger($data['mainPrductOrderIndex'])) return false;
             if (isset($data['subMainPrductOrderIndex']) && !Validate_data_helper::validateInteger($data['subMainPrductOrderIndex'])) return false;
+            if (isset($data['printedCopies']) && !Validate_data_helper::validateInteger($data['printedCopies'])) return false;
             
             return true;
         }
@@ -79,6 +81,20 @@
                     ->setObjectId(intval($id))
                     ->setObjectFromArray(['printed' => $printStatus])
                     ->update();
+            }
+        }
+
+        public function updateCopyAndPrintStatus(array $orderExtendedIds, string $printStatus, int $printedCopies): void
+        {
+            foreach ($orderExtendedIds as $id) {
+                $this->setObjectId(intval($id));
+                // first update number of printed copies
+                $query = 'UPDATE ' . $this->table . ' SET printedCopies = printedCopies + 1 WHERE ' . $this->table . '.id = ' . $this->id .';';
+                $this->db->query($query);
+                $this->setObject(['printedCopies']);
+                if ($printedCopies === $this->printedCopies) {
+                    $this->setProperty('printed', $printStatus)->update();
+                }
             }
         }
     }

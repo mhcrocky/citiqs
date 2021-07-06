@@ -28,10 +28,10 @@
 								<label for="contactPhone">Mobile phone for alerts (country code + number):</label>
 								<input type="text" class="form-control" id="contactPhone" name="contactPhone" required />
 							</div>
-							<!-- <div>
+							<div>
 								<label for="numberOfCopies">Number of copies: </label>
 								<input type="integer" min="1" value="1" step="1" class="form-control" id="numberOfCopies" name="numberOfCopies" required />
-							</div> -->
+							</div>
 							<?php if ($printers) { ?>
 								<div>
 									<label for="masterMac">Select master printer (only for slave printer): </label>
@@ -163,7 +163,7 @@
 							<?php if ($printer['contactPhone']) { ?>
 								<p class="item-description" style="white-space: initial;">Alert phone number: <?php echo $printer['contactPhone']; ?></p>
 							<?php } ?>
-							<!-- <p class="item-description" style="white-space: initial;">Number of copies: <?php #echo $printer['numberOfCopies']; ?></p> -->
+							<p class="item-description" style="white-space: initial;">Number of copies: <?php echo $printer['numberOfCopies']; ?></p>
 							<?php if ($printer['isFod'] === '1') { ?>
 							<p class="item-description" style="white-space: initial;">FOD PRINTER</p>
 							<p class="item-description" style="white-space: initial;">Hard lock: <?php echo ($printer['isFodHardLock'] === '1') ? 'Yes' : 'No'; ?></p>
@@ -243,10 +243,10 @@
 													<label for="contactPhone<?php echo $printer['id']; ?>">Mobile phone for alerts (country code + number):</label>
 													<input type="text" class="form-control" id="contactPhone<?php echo $printer['id']; ?>" name="contactPhone" required value="<?php echo $printer['contactPhone']; ?>" />
 												</div>
-												<!-- <div>
-													<label for="numberOfCopies<?php #echo $printer['numberOfCopies']; ?>">Number of copies:</label>
-													<input type="number" min="1" step="1" class="form-control" id="numberOfCopies<?php #echo $printer['numberOfCopies']; ?>" name="numberOfCopies" required value="<?php #echo $printer['numberOfCopies']; ?>" />
-												</div> -->
+												<div>
+													<label for="numberOfCopies<?php echo $printer['numberOfCopies']; ?>">Number of copies:</label>
+													<input type="number" min="1" step="1" class="form-control" id="numberOfCopies<?php echo $printer['numberOfCopies']; ?>" name="numberOfCopies" required value="<?php echo $printer['numberOfCopies']; ?>" />
+												</div>
 												<div>
 													<label for="masterMac<?php echo $printer['id']; ?>">Select master printer (only for slave printer): </label>
 													<select class="form-control" id="masterMac<?php echo $printer['id']; ?>" name="masterMac">
