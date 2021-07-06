@@ -284,7 +284,8 @@
         public function fetchReportDetails(int $userId, string $from = '', string $to = ''): ?array
         {
             $where = [
-                'vendor.id' => $userId
+                'vendor.id' => $userId,
+                $this->table . '.paid' => '1',
             ];
 
             if ($from && $to) {
