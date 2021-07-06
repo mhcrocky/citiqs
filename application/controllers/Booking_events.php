@@ -127,6 +127,10 @@ class Booking_events extends BaseControllerWeb
 
         $data['events'] = $events;
         $data['get_by_event_id'] = $get_by_event_id;
+
+        if(isset($events[0])){
+            $data['eventTickets'] = $this->tickets($events[0]['id'], $orderData);
+        }
         
         $where = [
             'vendorId' => $customer->id,
@@ -180,11 +184,30 @@ class Booking_events extends BaseControllerWeb
         return;
     }
 
-    public function tickets($eventId)
+    public function tickets($eventId, $orderData = false)
     {
         if(!$this->input->post('isAjax')){ 
-            redirect(base_url());
-            return; 
+            $vendorId = $orderData['vendorId'];
+            $event = $this->event_model->get_event($vendorId, $eventId);
+            $event_start =  date_create($event->StartDate . " " . $event->StartTime);
+            $event_end =  date_create($event->EndDate . " " . $event->EndTime);
+
+
+            $eventVenue = ucwords($event->eventVenue);
+            $eventStartDate = date_format($event_start, "d/m/Y");
+            $eventEndDate = date_format($event_end, "d/m/Y");
+            $data = [
+                'tickets' => $this->event_model->get_event_tickets($vendorId, $eventId),
+                'checkout_tickets' => $orderData['tickets'],
+                'eventId' => $eventId,
+                'eventName' => $event->eventname,
+                'eventImage' => $event->eventImage,
+                'eventDescription' => (empty($event->descriptionInShop) || $event->descriptionInShop == '') ? $eventVenue . ' ' . $eventStartDate . ' - ' . $eventEndDate : $event->descriptionInShop,
+                'vendor_cost_paid' =>  $this->event_model->check_vendor_cost_paid($vendorId)
+            
+            ];
+
+            return $data; 
         } 
 
         $orderRandomKey = $this->input->post('order') ? $this->input->post('order') : false;
