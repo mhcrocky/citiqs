@@ -11,6 +11,9 @@
                             name="floor_plan_name"
                             class="form-control"
                             id="floor_plan_name"
+                            <?php if (!empty($floorplan['floorplanName'])) { ?>
+                            value="<?php echo $floorplan['floorplanName']; ?>"
+                            <?php } ?>
                         />
                     </div>
                 </div>
@@ -35,7 +38,6 @@
                         </select>
                     </div>
                 </div>
-
             </div>
             <div class="row images-category">
                 <!-- TO DO ADD IMAGES -->
@@ -163,3 +165,23 @@
         <p>No local spots. <a href="<?php echo $this->baseUrl; ?>spots">Add spot</a>
     </div>
 <?php } ?>
+
+<script>
+    var globalFloorplan = (function() {
+        // to do check if not areas
+        let globals = {};
+        <?php if(!empty($floorplan) && !empty($areas)) { ?>
+            globals = {
+                floorplanID: '<?php echo $floorplan['id']; ?>',
+                floor_name: '<?php echo $floorplan['floorplanName']; ?>',
+                areas: $.parseJSON('<?php echo json_encode($areas); ?>'),
+                canvasJSON: '<?php echo $floorplan['canvas']; ?>',
+                imageId: 'floor_image',
+                canvasId: 'canvas',
+            }
+        <?php } ?>
+
+        return globals;
+    }());
+    console.dir(globalFloorplan);
+</script>

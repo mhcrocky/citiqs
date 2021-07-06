@@ -37,25 +37,30 @@ class  Floorplans extends BaseControllerWeb
 
     public function addFloorplan(): void
     {
-        $this->global['pageTitle'] = 'TIQS : ADD FLOORPLAN';
-
-        $filterSpots = [
-            'tbl_shop_printers.userId' => intval($_SESSION['userId']),
-            'tbl_shop_spots.spotTypeId' => $this->config->item('local'),
-        ];
-
         $data = [
-            'spots' => $this->shopspot_model->fetchUserSpotsImporved($filterSpots),
+            'spots' => $this->shopspot_model->fetchTypeSpots(intval($_SESSION['userId']), $this->config->item('local')),
         ];
 
+		$this->global['pageTitle'] = 'TIQS : ADD FLOORPLAN';
         $this->loadViews('floorplans/manageFloorplan', $this->global, $data, 'footerbusiness', 'headerbusiness');
-
         return;
     }
 
-    public function edit_floorplan($floorplanId): void
+    public function editFloorplan($floorplanId): void
     {
-        die('000');
+		$floorplan = $this->floorplan_model->setObjectId(intval($floorplanId))->setProperty('vendorId', $_SESSION['userId'])->fetchVendorFloorplans();
+		$floorplan = reset($floorplan);
+
+        $data = [
+			'spots' => $this->shopspot_model->fetchTypeSpots(intval($_SESSION['userId']), $this->config->item('local')),
+			'floorplan' => $floorplan['floorplan'],
+			'areas' => $floorplan['areas'],
+		];
+
+		$this->global['pageTitle'] = 'TIQS : EDIT FLOORPLAN';
+        $this->loadViews('floorplans/manageFloorplan', $this->global, $data, 'footerbusiness', 'headerbusiness');
+		return;
+
     }
 	// public function editSpotObject($objectId)
 	// {

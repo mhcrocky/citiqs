@@ -95,7 +95,6 @@ class Floorplan {
 		if (scaleRatio) {
 			scaleFactor = this.scaleFactor * scaleRatio;
 		}
-		console.log('scaleFactor', scaleFactor);
 
 		this.canvas.setBackgroundImage(this.bgImage, this.canvas.renderAll.bind(this.canvas), {
 			top: top,
@@ -176,11 +175,10 @@ class Floorplan {
 				if (object.get('type') != 'text' ) {
 					var label = null;
 					_this.areas.forEach(function (area) {
-						console.dir(area);
 						if (object.area_id == area.area_id) {
 							if (area.area_status) {
 								_this.changeAreaColor(object, area.area_status)
-							}							
+							}
 							object.id = area.id;
 							object.available = area.available;
 							object.area_count = area.area_count;

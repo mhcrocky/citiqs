@@ -32,12 +32,13 @@
                 && isset($data['floorplanName'])
                 && isset($data['floorplanImage'])
                 && isset($data['canvas'])
-            )
-
-            return $this->updateValidate($data);
+            ) {
+                return $this->updateValidate($data);
+            }
+            return false;
         }
 
-        public function updateValidate($data): bool
+        public function updateValidate(array $data): bool
         {
             if (!count($data)) return false;
 
@@ -54,15 +55,21 @@
             return $this->table;
         }
 
-        public function fetchVendorFloorplans (): ?array
+        public function fetchVendorFloorplans(): ?array
         {
+            $where = [
+                $this->table . '.vendorId' => $this->vendorId
+            ];
+
+            if ($this->id) {
+                $where[$this->table . '.id'] = $this->id;
+            }
+
             $floorplans = $this->readImproved([
                 'what'  => [
                     $this->table . '.*'
                 ],
-                'where' => [
-                    $this->table . '.vendorId' => $this->vendorId
-                ]
+                'where' => $where
             ]);
 
             if (is_null($floorplans)) return null;
@@ -97,6 +104,12 @@
             if (!$this->isVendorFloorplan()) return false;
             $floorplanAreas->setProperty('floorplanID', $this->id)->deleteFloorplanAreas();
             return $this->delete();
+        }
+
+        public function updateFloorplan(array $floorplan): bool
+        {
+            $this->setObjectFromArray($floorplan);
+            return ($this->isVendorFloorplan()) ? $this->update() : false;
         }
 
         // public function fetch(): ?array

@@ -357,8 +357,10 @@ class Ajax extends CI_Controller
         $post = $this->security->xss_clean($_POST);
 
         $floorplan = $post['floorplan'];
+        $floorplan['vendorId'] = $_SESSION['userId'];
         $areas = empty($post['areas']) ? null : $post['areas'];
         $areas_result = [];
+        $floorPlanId =  intval($floorPlanId);
 
         if (!$this->manageFloorplan($floorplan, intval($floorPlanId))) return;
         if (!$this->insertFloorplanAreas($areas, $this->floorplan_model->id, $areas_result)) return;
@@ -370,13 +372,19 @@ class Ajax extends CI_Controller
 			'areas_data' => $areas_result
         ];
 
+        // if create floorplan, js redirects user to edit floorplan view
+        // message for user is set in session
+        if (!$floorPlanId) {
+            $this->session->set_flashdata('success', 'Floorplan created');
+        }
+
 		echo json_encode($response);
     }
     
     private function manageFloorplan(array $floorplan, int $floorPlanId): bool
     {
         if ($floorPlanId) {
-            if (!$this->floorplandetails_model->setObjectId(intval($floorPlanId))->setObjectFromArray($floorplan)->update()) {
+            if (!$this->floorplan_model->setObjectId($floorPlanId)->updateFloorplan($floorplan)) {
                 $response = [
                     'status' => '0',
                     'messages' => ['Floorplan did not update']
@@ -385,7 +393,7 @@ class Ajax extends CI_Controller
                 return false;
             };
 		} else {
-		    if (!$this->floorplan_model->setProperty('vendorId', $_SESSION['userId'])->setObjectFromArray($floorplan)->create()) {
+		    if (!$this->floorplan_model->setObjectFromArray($floorplan)->create()) {
                 $response = [
                     'status' => '0',
                     'messages' => ['Floorplan did not create']

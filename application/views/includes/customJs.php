@@ -521,7 +521,7 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/floorplan.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/floorEditor.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/helper.js"></script>
-	<script src ="<?php $this->baseUrl; ?>assets/floorplan/assets/js/addEditFloorplan.js"></script>
+	<script src="<?php echo $this->baseUrl; ?>assets/floorplan/assets/js/addEditFloorplan.js"></script>
 <?php } elseif ($this->view === 'buyer/buyerOrders') { ?>
 	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 	<script src='<?php echo $this->baseUrl; ?>assets/home/js/buyer.js'></script>

@@ -364,4 +364,14 @@
 
             return !is_null($result);
         }
+
+        public function fetchTypeSpots(int $userId, string $type): ?array
+        {
+            $filterSpots = [
+                'tbl_shop_printers.userId' => $userId,
+                'tbl_shop_spots.spotTypeId' => $type,
+            ];
+
+            return $this->fetchUserSpotsImporved($filterSpots);
+        }
     }
