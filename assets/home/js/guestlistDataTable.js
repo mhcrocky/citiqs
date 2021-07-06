@@ -268,9 +268,10 @@ function saveAgainTicketPdf(transactionId, email = '', sendTo = 0) {
         var html = '';
         $.each(templates, function (index, template) {
           html += '<div class="pages">';
-          html += template;
+          html += template.replaceAll("font-family: 'arial black', sans-serif", 'font-weight: bold; color: #000; line-height: 1.3');
           html += '</div>';
         });
+
         $('#HTMLtoPDF').html(html);
         setTimeout(() => {
           ExportPdf();
@@ -341,9 +342,10 @@ function saveTicketPdf(id) {
         var html = '';
         $.each(templates, function (index, template) {
           html += '<div class="pages">';
-          html += template;
+          html += template.replaceAll("font-family: 'arial black', sans-serif", 'font-weight: bold; color: #000; line-height: 1.3');
           html += '</div>';
         });
+
         $('#HTMLtoPDF').html(html);
         setTimeout(() => {
           ExportPdf();
@@ -428,9 +430,10 @@ function saveMultipleTicketsPdf() {
         var html = '';
         $.each(templates, function (index, template) {
           html += '<div class="pages">';
-          html += template;
+          html += template.replaceAll("font-family: 'arial black', sans-serif", 'font-weight: bold; color: #000; line-height: 1.3');
           html += '</div>';
         });
+
         $('#HTMLtoPDF').html(html);
         setTimeout(() => {
           ExportPdf();
