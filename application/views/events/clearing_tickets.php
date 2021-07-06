@@ -70,7 +70,7 @@
                                     </div>
 
                                     <div class="font-weight-bold">
-                                    € 0.00
+                                    € <span id="totalAmount"><?php echo isset($event_stats['totalAmount']) ? number_format($event_stats['totalAmount'], 2) : '0.00'; ?></span>
                                     </div>
 
                                 </div>
@@ -82,7 +82,7 @@
                                     </div>
 
                                     <div class="font-weight-bold">
-                                    € <span id="totalAmount"><?php echo isset($event_stats['totalAmount']) ? number_format($event_stats['totalAmount'], 2) : '0.00'; ?></span>
+                                    € 0.00
                                     </div>
 
                                 </div>
@@ -148,7 +148,7 @@
                                     </div>
 
                                     <div id="tickets-sold" class="font-weight-bold">
-                                    € <span id="totalTicketFee"><?php echo isset($event_stats['totalTicketFee']) ? number_format($event_stats['totalTicketFee']) : '0.00'; ?></span>
+                                    € <span id="totalTicketFee"><?php echo isset($event_stats['totalTicketFee']) ? number_format($event_stats['totalTicketFee'], 2) : '0.00'; ?></span>
                                     </div>
 
                                 </div>
