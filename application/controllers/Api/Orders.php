@@ -310,6 +310,16 @@
             }
         }
 
+        private function updateCopyAndPrintStatus(array $order, array $orderExtendedIds): void
+        {
+            $this->shopprinterrequest_model->setObjectFromArray(['printerEcho' => date('Y-m-d H:i:s')])->update();
+            $this->shoporderex_model->updateCopyAndPrintStatus($orderExtendedIds, '1', $this->shopprinters_model->numberOfCopies);
+
+            if ($order['paidStatus'] === '1') {
+                $this->shoporder_model->updatePrintedStatus();
+            }
+        }
+
         private function setPrinterAndMacToFetchOrder(string $mac): void
         {
             $this->shopprinters_model->setPrinterIdFromMacNumber($mac);
@@ -341,12 +351,11 @@
             }
 
             $this->shopprinterrequest_model->setObjectFromArray(['orderId' => $order['orderId']])->update();
-            $this->shoporderex_model->updatePrintStatus($orderExtendedIds, '2');
             $this->sendMessages($order);
 
+            // this prints order not receipt
             Receiptprint_helper::printPrinterReceipt($order);
-
-            $this->doFinalUpdates($order, $orderExtendedIds);
+            $this->updateCopyAndPrintStatus($order, $orderExtendedIds);
             return;
         }
 
