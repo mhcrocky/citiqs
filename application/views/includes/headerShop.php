@@ -69,6 +69,9 @@
             }
         }
 
+        </style>
+
+        <style>
         <?php
             $eventDescript = '';
             $eventTitle = '';
@@ -120,9 +123,9 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"
     ></script>
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js"></script>
-    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js" defer></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/cdn/js/alertify.min.js" defer></script>
+    <script src="<?php echo $this->baseUrl; ?>assets/home/js/alertify.js" defer></script>
 
     <?php include_once FCPATH . 'application/views/includes/jsGlobalVariables.php'; ?>
     
@@ -162,7 +165,7 @@
     </script>
 </head>
 
-<body class="bg-image" id="body">
+<body class="bg-image" id="body" style="display: block !important;">
 
     <!-- HEADER -->
     <header class="header">
