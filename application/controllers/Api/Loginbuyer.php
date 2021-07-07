@@ -30,20 +30,29 @@ class Loginbuyer extends REST_Controller
 
         $email = $this->security->xss_clean($this->input->post('email'));
         $password = $this->security->xss_clean($this->input->post('password'));
-        $this->db->select('id as userId, password');
+        $this->db->select('id, password, email', 'buyer');
         $this->db->from('tbl_user');
         $this->db->where('email', $email);
         $this->db->where('isDeleted', 0);
+//		$this->db->where('roleid', 6);
+		$this->db->where('buyerConfirmed', "1");
         $this->db->where('IsDropOffPoint', 0);
 		$query = $this->db->get();
         $user = $query->row();
-        $userId = $user->userId;
+        $userId = $user->id;
 		$hash = "";
 		$affected_rows = -1;
 
+//		var_dump($email);
+//		var_dump($userId);
+//
+//		var_dump($user);
+//		die();
+
+
         if(!empty($user))
         {
-            if (verifyHashedPassword($password, $user->password) || $password==="tiqs01")
+            if (verifyHashedPassword($password, $user->password))
             {
                 $hash = bin2hex(random_bytes(32));
 				$this->db->set('hash', $hash);
@@ -57,8 +66,8 @@ class Loginbuyer extends REST_Controller
 					'buyer' => $userId
 				];
 				$this->set_response($message, 200); // CREATED (201) being the HTTP response code
-//				Var_dump($userId);
-//				die();
+				//	Var_dump($userId);
+				//	die();
             }
             else
             {
@@ -69,6 +78,7 @@ class Loginbuyer extends REST_Controller
 				$message = [
 					'hash' => $hash,
 					'affected_rows' => "$affected_rows",
+
 					'buyer' => 0
 				];
 				$this->set_response($message, 200); // CREATED (201) being the HTTP response code
@@ -83,7 +93,7 @@ class Loginbuyer extends REST_Controller
 				$message = [
 					'hash' => $hash,
 					'affected_rows' => "$affected_rows",
-					'buyer' => $user->userId
+					'buyer' => 0
 				];
 				$this->set_response($message, 200); // CREATED (201) being the HTTP response code
             }

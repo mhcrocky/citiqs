@@ -90,10 +90,10 @@ class Login extends BaseControllerWeb
 		if (!empty($code)) {
 			$email = trim($this->security->xss_clean($this->session->userdata('email')));
 			$password = $this->security->xss_clean($this->session->userdata('password'));
-			if(is_numeric(email)){
-				var_dump($email);
-				die();
-			}
+//			if(is_numeric($email)){
+//				var_dump($email);
+//				die();
+//			}
 			$result = $this->login_model->loginMe($email, $password);
 
 			if (!empty($result)) {
@@ -113,9 +113,9 @@ class Login extends BaseControllerWeb
 //		echo var_dump(is_numeric($email));
 //		die();
 
-		if (!is_numeric($email)) {
-//			$this->form_validation->set_rules('email', 'Email', 'valid_email|max_length[128]|trim');
-		}
+		// if (!is_numeric($email)) {
+		//			$this->form_validation->set_rules('email', 'Email', 'valid_email|max_length[128]|trim');
+		// }
 
 		$this->form_validation->set_rules('password', 'Password', 'required|max_length[32]');
 
