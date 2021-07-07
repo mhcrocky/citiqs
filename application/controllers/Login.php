@@ -90,10 +90,10 @@ class Login extends BaseControllerWeb
 		if (!empty($code)) {
 			$email = trim($this->security->xss_clean($this->session->userdata('email')));
 			$password = $this->security->xss_clean($this->session->userdata('password'));
-			if(is_numeric($email)){
-				var_dump($email);
-				die();
-			}
+//			if(is_numeric($email)){
+//				var_dump($email);
+//				die();
+//			}
 			$result = $this->login_model->loginMe($email, $password);
 
 			if (!empty($result)) {
