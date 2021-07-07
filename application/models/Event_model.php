@@ -243,13 +243,14 @@ class Event_model extends CI_Model {
 		$nextFaseTickets = $this->verify_soldout_fase($eventId, $results);
 		$checkBundleMax = $this->_check_ticket_bundle_max();
 		$bundleMax = $this->get_ticket_bundle_max();
+		$tickets_used = $this->get_tickets_used($eventId);
 
 		foreach($results as $result){
 			$ticketFee = isset($result['nonSharedTicketFee']) ? number_format($result['nonSharedTicketFee'], 2, '.', '') : '0.00';
 			$result['ticketFee'] = $ticketFee;
 			$groupId = $result['ticketGroupId'];
 			$ticketId = $result['ticketId'];
-			$tickets_used = $this->get_tickets_used($eventId);
+			
 			$ticket_used = isset($tickets_used[$ticketId]) ? $tickets_used[$ticketId] : 0;
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$sold_out = false;
@@ -1121,10 +1122,11 @@ class Event_model extends CI_Model {
 	private function verify_soldout_fase($eventId, $results){
 		$dt = new DateTime('now', new DateTimeZone('Europe/Amsterdam'));
         $date = $dt->format('Y-m-d H:i:s');
+		$tickets_used = $this->get_tickets_used($eventId);
 		$tickets = [];
 		foreach($results as $result){
 			$ticketId = $result['ticketId'];
-			$tickets_used = $this->get_tickets_used($eventId);
+			
 			$ticket_used = isset($tickets_used[$ticketId]) ? $tickets_used[$ticketId] : 0;
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$tickets[$ticketId]['soldout'] = false;
