@@ -27,7 +27,7 @@
     <?php if(isset($closedShopMessage)){?> style="display:none" <?php } ?>>
     <div <?php if(isset($events[0])) { ?> style="clip-path: none !important;width: 100%;max-width: 65%; height: auto !important;
     <?php if(isset($events[0]) ){ ?> visibility: hidden; <?php } ?>" <?php } ?>
-        class="d-none d-md-flex px-0 hero__background">
+        class="d-none d-md-flex px-0 hero__background lazyload">
         <?php if(isset($events[0]) && $events[0]['backgroundImage'] != ''): ?>
         <img id="background-image" style="max-height: 750px;"
             src="<?php echo base_url(); ?>assets/images/events/<?php echo $events[0]['backgroundImage']; ?>" alt="">
@@ -181,7 +181,7 @@
                          foreach ($tickets as $ticket): 
                               $ticketId = $ticket['ticketId'];
                          ?>
-                        <div class="menu-list__item">
+                        <div class="menu-list__item lazyload">
 
                             <div class="menu-list__name">
                                 <b

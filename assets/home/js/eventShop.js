@@ -1,4 +1,5 @@
 (function() {
+    lazyload();
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
         window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;
     } else if(typeof globalTime !== 'undefined' && dayjs(globalTime.time) < dayjs()){
