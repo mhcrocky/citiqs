@@ -283,9 +283,12 @@
                         
 						if($emailId) {
                             $emailTemplate = $CI->email_templates_model->get_emails_by_id($emailId);
+                            $mailtemplate = false;
+                            if(file_exists(FCPATH . 'assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$CI->config->item('template_extension'))){
+                                $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$CI->config->item('template_extension'));
+                            }
                             
                             
-                            $mailtemplate = file_get_contents(APPPATH.'../assets/email_templates/'.$customer.'/'.$emailTemplate->template_file .'.'.$CI->config->item('template_extension'));
                             $qrlink = $SERVERFILEPATH . $file_name1;
 							if($mailtemplate) {
                                 $dt = new DateTime('now');
