@@ -197,7 +197,7 @@ class Booking_events extends BaseControllerWeb
             $eventStartDate = date_format($event_start, "d/m/Y");
             $eventEndDate = date_format($event_end, "d/m/Y");
             $data = [
-                'tickets' => $this->event_model->get_event_tickets($vendorId, $eventId),
+                'tickets' => $this->event_model->get_event_tickets($vendorId, $eventId, 6),
                 'checkout_tickets' => $orderData['tickets'],
                 'eventId' => $eventId,
                 'eventName' => $event->eventname,

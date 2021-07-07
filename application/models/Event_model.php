@@ -210,7 +210,7 @@ class Event_model extends CI_Model {
 	}
 
 
-	public function get_event_tickets($vendor_id,$eventId)
+	public function get_event_tickets($vendor_id, $eventId, $limit = false)
 	{
 		$dt = new DateTime('now', new DateTimeZone('Europe/Amsterdam'));
         $date = $dt->format('Y-m-d H:i:s');
@@ -227,6 +227,9 @@ class Event_model extends CI_Model {
 		$this->db->where('tbl_event_tickets.eventId', $eventId);
 		$this->db->group_by('tbl_event_tickets.id');
 		$this->db->order_by('tbl_ticket_groups.id, ticketOrder');
+		if($limit){
+			$this->db->limit("$limit, 0");
+		}
 		
 		$query = $this->db->get();
 		$this->db->trans_complete();

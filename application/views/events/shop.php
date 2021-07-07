@@ -21,7 +21,7 @@
 
 
 
-<?php if(count($events) > 1 && (isset($events[0]) && $events[0]['showBackgroundImage'] == 1)): ?>
+<?php if(count($events) > 1 || (isset($events[0]) && $events[0]['showBackgroundImage'] == 1)): ?>
 <!-- HERO SECTION -->
 <section id="main-content" class="hero-section position-relative <?php if(count($events) == 1){ ?> pb-0 pt-2 <?php } ?>"
     <?php if(isset($closedShopMessage)){?> style="display:none" <?php } ?>>
@@ -141,6 +141,7 @@
 <!-- END HERO SECTION -->
 <?php elseif(isset($events[0])): ?>
 <input type="hidden" id="first_element" value="<?php echo $events[0]['id']; ?>">
+
 <input type="hidden" id="background_img_<?php echo $events[0]['id']; ?>"
     data-isShowed="<?php echo $events[0]['showBackgroundImage']; ?>"
     data-isSquared="<?php echo $events[0]['isSquared']; ?>" value="<?php echo $events[0]['backgroundImage']; ?>">
