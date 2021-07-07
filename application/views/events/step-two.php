@@ -694,8 +694,8 @@
                 <fieldset class="show" id="tab011">
                     <div class="bg-light">
                         <h5 class="text-center mb-4 mt-0 pt-4">Add Guest</h5>
-                        <form name="my-form" id="my-form" class="needs-validation" action="#" method="POST"
-                            onsubmit="return addGuest(event)" novalidate>
+                        <form class="needs-validation" action="#" method="POST"
+                            onsubmit="return addGuestTicket(event)" novalidate>
                             <div class="form-group pb-2 px-3">
                                 <input type="text" id="guestName" class="form-control" name="guestName"
                                     placeholder="Name" required>
@@ -809,7 +809,7 @@
                 <fieldset class="show" id="tab012">
                     <button type="button" id="closeGuestModal" class="btn btn-secondary"
                         data-dismiss="modal">Close</button>
-                    <button type="button" onclick="addGuestForm()" class="btn btn-primary">Add Guest</button>
+                    <button type="button" onclick="addGuestTicketForm()" class="btn btn-primary">Add Guest</button>
                 </fieldset>
                 <fieldset id="tab022">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
