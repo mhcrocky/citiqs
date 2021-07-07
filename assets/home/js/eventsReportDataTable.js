@@ -184,6 +184,10 @@ $(document).ready(function () {
         data: "age",
       },
       {
+        title: "Buyer Address",
+        data: "address",
+      },
+      {
         title: "Ticket Description",
         data: "ticketDescription",
       },
@@ -265,7 +269,7 @@ $(document).ready(function () {
           var date = full_timestamp.split(" - ");
           var min = moment(date[0]);
           var max = moment(date[1]);
-          var startDate = moment(data[15]); // data['Position of date's column -1']
+          var startDate = moment(data[16]); // data['Position of date's column -1']
    
           if (min == '' && max == '') { min = todayDate; }
           if (min == '' && startDate <= max) { return true;}
