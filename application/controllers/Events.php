@@ -178,7 +178,7 @@ class Events extends BaseControllerWeb
             return;
         }
 
-        //$this->emailReservation($transactionId);
+        $this->emailReservation($transactionId);
         $response = [
             'status' => '1',
             'messages' => ['Guest is added successfully']
@@ -281,6 +281,7 @@ class Events extends BaseControllerWeb
         $template = Ticketingemail_helper::getTemplates($reservations);
 
         if(count($template) > 0){
+            Ticketingemail_helper::sendEmailReservation($reservations, true);
             $response = [
                 'status' => 'success',
                 'message' => 'The pdf file is generate successfully!',
@@ -380,6 +381,7 @@ class Events extends BaseControllerWeb
         $templates = Ticketingemail_helper::getTemplates($reservations);
 
         if(count($templates) > 0){
+            Ticketingemail_helper::sendEmailReservation($reservations, true);
             $response = [
                 'status' => 'success',
                 'message' => 'The pdf files are generate successfully!',
@@ -406,6 +408,7 @@ class Events extends BaseControllerWeb
         $template = Ticketingemail_helper::getTemplates($reservations);
 
         if(count($template) > 0){
+            Ticketingemail_helper::sendEmailReservation($reservations, true);
             $response = [
                 'status' => 'success',
                 'message' => 'The pdf file is generate successfully!',
@@ -1660,6 +1663,13 @@ class Events extends BaseControllerWeb
         $transactionId .= intval(microtime(true));
         $transactionId .= strtoupper(substr(str_shuffle($set), 0, 10));
         return $transactionId;
+    }
+
+    public function testdori(){
+        $pay = $this->event_model->get_payment_methods_stats($this->vendor_id, '10');
+        $test = $this->event_model->get_payment_methods_fee($pay, 'credit card payment');
+        var_dump($pay);
+        var_dump($test);
     }
     
 
