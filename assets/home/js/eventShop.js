@@ -29,7 +29,8 @@ $(document).ready(function(){
     }
     if ($('#first_element').val()) {
         let id = $('#first_element').val();
-        getTicketsView(id, true);
+        getBackgroundImage(id);
+        //getTicketsView(id, true);
     }
     setInterval(() => {
         var CurrentDate = moment().format();
@@ -177,6 +178,27 @@ function getTicketsView(eventId, first = false) {
             }, 1000);
         });
     });
+
+
+}
+
+function getBackgroundImage(eventId) {
+    var img_src = $('#background_img_' + eventId).val();
+    var isSquared = $('#background_img_' + eventId).attr('data-isSquared');
+    var isShowed = $('#background_img_' + eventId).attr('data-isShowed');
+    var visibility = (isShowed == '0') ? 'hidden' : 'visible';
+
+    if(img_src == ''){
+        $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/default_background.webp");
+    } else {
+        $("#background-image").attr("src", globalVariables.baseUrl + "assets/images/events/" + img_src);
+    }
+    
+    if(isSquared == '1'){
+        $('.hero__background').attr('style', 'clip-path: none !important;width: 100%;max-width: 65%; height: auto !important;visibility:'+visibility);
+    } else {
+        $('.hero__background').attr('style', 'visibility:'+visibility);
+    }
 
 
 }

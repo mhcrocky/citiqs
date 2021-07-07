@@ -20,9 +20,10 @@
 <?php endif; ?>
 
 
+
+<?php if(count($events) > 1 || (isset($events[0]) && $events[0]['showBackgroundImage'] == 1)): ?>
 <!-- HERO SECTION -->
-<section id="main-content"
-    class="hero-section position-relative <?php if(count($events) == 1 && $events[0]['showBackgroundImage'] == 0){ ?> d-none <?php } if(count($events) == 1){ ?> pb-0 pt-2 <?php } ?>"
+<section id="main-content" class="hero-section position-relative <?php if(count($events) == 1){ ?> pb-0 pt-2 <?php } ?>"
     <?php if(isset($closedShopMessage)){?> style="display:none" <?php } ?>>
     <div <?php if(isset($events[0])) { ?> style="clip-path: none !important;width: 100%;max-width: 65%; height: auto !important;
     <?php if(isset($events[0]) ){ ?> visibility: hidden; <?php } ?>" <?php } ?>
@@ -138,7 +139,13 @@
     </div>
 </section>
 <!-- END HERO SECTION -->
+<?php elseif(isset($events[0])): ?>
+<input type="hidden" id="first_element" value="<?php echo $events[0]['id']; ?>">
+<input type="hidden" id="background_img_<?php echo $events[0]['id']; ?>"
+    data-isShowed="<?php echo $events[0]['showBackgroundImage']; ?>"
+    data-isSquared="<?php echo $events[0]['isSquared']; ?>" value="<?php echo $events[0]['backgroundImage']; ?>">
 
+<?php endif; ?>
 
 <?php if(isset($eventTickets)): ?>
 <!-- TICKETS -->
@@ -147,16 +154,14 @@
         <div class="container">
             <div class="row row-menu">
                 <div class="col-12 col-md-4">
-                    <h2 id="selected_event_text" class="color-primary mb-5 selected_event_text"><?php echo $eventTickets['eventName']; ?></h2>
+                    <h2 id="selected_event_text" class="color-primary mb-5 selected_event_text">
+                        <?php echo $eventTickets['eventName']; ?></h2>
                     <ul class="items-gallery">
                         <li>
-                            <img 
-                            <?php if($eventTickets['eventImage'] == ''): ?>
-                            src="<?php echo base_url(); ?>assets/home/images/logo1.png"
-                            <?php else: ?>
-                            src="<?php echo base_url(); ?>assets/images/events/<?php echo $eventTickets['eventImage']; ?>"
-                            <?php endif; ?>
-                            alt="<?php echo $eventTickets['eventName']; ?>">
+                            <img <?php if($eventTickets['eventImage'] == ''): ?>
+                                src="<?php echo base_url(); ?>assets/home/images/logo1.png" <?php else: ?>
+                                src="<?php echo base_url(); ?>assets/images/events/<?php echo $eventTickets['eventImage']; ?>"
+                                <?php endif; ?> alt="<?php echo $eventTickets['eventName']; ?>">
                         </li>
                     </ul>
                 </div>
@@ -179,7 +184,8 @@
                         <div class="menu-list__item">
 
                             <div class="menu-list__name">
-                                <b class="menu-list__title"><?php echo ($ticket['descriptionTitle'] == null) ? 'description' : $ticket['descriptionTitle']; ?></b>
+                                <b
+                                    class="menu-list__title"><?php echo ($ticket['descriptionTitle'] == null) ? 'description' : $ticket['descriptionTitle']; ?></b>
                                 <div>
                                     <p class="menu-list__ingredients">
                                         <?php echo $ticket['ticketDescription']; ?>
@@ -188,7 +194,7 @@
                             </div>
                             <div class="menu-list__right-col menu-list_right-col ml-auto ">
                                 <?php if($ticket['soldOut']): ?>
-                                    <div class="menu-list__price">
+                                <div class="menu-list__price">
                                     <b class="menu-list__price--discount">&nbsp</b>
                                 </div>
                                 <b class="menu-list__type text-danger">&nbsp</b>
@@ -197,45 +203,48 @@
                                     &nbsp
                                 </div>
 
-                                <b class="menu-list__price--discount excluding_fee excluding_fee_text text-danger"><?php echo ($ticket['soldOutWhenExpired'] == '') ? $this->language->tLine('SOLD OUT') : $this->language->tLine($ticket['soldOutWhenExpired']); ?></b>
+                                <b
+                                    class="menu-list__price--discount excluding_fee excluding_fee_text text-danger"><?php echo ($ticket['soldOutWhenExpired'] == '') ? $this->language->tLine('SOLD OUT') : $this->language->tLine($ticket['soldOutWhenExpired']); ?></b>
                                 <?php else: ?>
                                 <div class="menu-list__price">
-                                    <b class="menu-list__price--discount ticket_price"><?php echo $ticket['ticketPrice']; ?>€</b>
+                                    <b
+                                        class="menu-list__price--discount ticket_price"><?php echo $ticket['ticketPrice']; ?>€</b>
                                 </div>
                                 <b class="menu-list__type"><?php echo $this->language->tline('quantity'); ?></b>
 
                                 <div class="quantity-section">
-                                    
+
                                     <button type="button" class="quantity-button"
                                         onclick="removeTicket('<?php echo $ticketId; ?>','<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>', 'totalBasket')">-</button>
-                                    <input type="number" min="1" 
-                                        data-bundlemax="<?php echo $ticket['bundleMax']; ?>"
+                                    <input type="number" min="1" data-bundlemax="<?php echo $ticket['bundleMax']; ?>"
                                         data-groupid="<?php echo $ticket['ticketGroupId']; ?>"
                                         data-available="<?php echo $ticket['ticketAvailable']; ?>"
                                         data-maxbooking="<?php echo $ticket['maxBooking']; ?>"
                                         <?php if(in_array($ticketId,$checkout_tickets_id)){?>
                                         value="<?php echo $checkout_tickets[$ticketId]['quantity']; ?>"
-                                        <?php } else { ?> 
-                                        value="0"  
-                                        <?php } ?> 
-                                        onkeyup="absVal(this);" placeholder="0"
+                                        <?php } else { ?> value="0" <?php } ?> onkeyup="absVal(this);" placeholder="0"
                                         id="ticketQuantityValue_<?php echo $ticketId; ?>"
-                                        class="quantity-input quantity-input_<?php echo $ticket['ticketGroupId']; ?> ticketQuantityValue_<?php echo $ticketId; ?>" disabled>
+                                        class="quantity-input quantity-input_<?php echo $ticket['ticketGroupId']; ?> ticketQuantityValue_<?php echo $ticketId; ?>"
+                                        disabled>
                                     <button type="button" class="quantity-button"
-                                    
                                         onclick="addTicket('<?php echo $ticketId; ?>', '<?php echo $ticket['ticketAvailable']; ?>', '<?php echo $ticket['ticketPrice']; ?>', '<?php echo $ticket['ticketFee']; ?>','totalBasket', '<?php echo $ticket['bundleMax']; ?>')">+</button>
                                 </div>
                                 <?php if(!$eventTickets['vendor_cost_paid']): ?>
-                                <b style="font-size: min(1.2vw, 14px);" class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> and min pay fee €0,50</b>
+                                <b style="font-size: min(1.2vw, 14px);"
+                                    class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee
+                                    €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> and min pay fee
+                                    €0,50</b>
                                 <?php else: ?>
-                                <b style="font-size: min(1.2vw, 14px);" class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> </b>
+                                <b style="font-size: min(1.2vw, 14px);"
+                                    class="menu-list__price--discount excluding_fee text-dark mt-2">Excluding fee
+                                    €<?php echo number_format($ticket['ticketFee'], 2, ',', ''); ?> </b>
                                 <?php endif; ?>
                                 <?php endif; ?>
                             </div>
-                            
-                                
-                            
-                            
+
+
+
+
                         </div>
                         <?php endforeach; ?>
                         <!-- end menu list item -->
