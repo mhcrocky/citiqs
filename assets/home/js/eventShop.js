@@ -1,5 +1,5 @@
 (function() {
-    lazyload();
+    //lazyload();
     if (typeof globalTime === 'undefined' && $('#shop').length == 0) {
         window.location.href = globalVariables.baseUrl + "booking_events/clear_tickets?order=" + globalKey.orderRandomKey;
     } else if(typeof globalTime !== 'undefined' && dayjs(globalTime.time) < dayjs()){
@@ -15,6 +15,12 @@
         hideEventElement(x);
     }
 
+    if ($('#first_element').val()) {
+        let id = $('#first_element').val();
+        //getBackgroundImage(id);
+        getTicketsView(id, true);
+    }
+
 }());
 
 window.onresize = onResizeEventElement;
@@ -28,11 +34,7 @@ $(document).ready(function(){
         var distance = countDownDate - now;
         countDownTimer(distance);
     }
-    if ($('#first_element').val()) {
-        let id = $('#first_element').val();
-        getBackgroundImage(id);
-        //getTicketsView(id, true);
-    }
+    
     setInterval(() => {
         var CurrentDate = moment().format();
         $(".current_time").val(CurrentDate);

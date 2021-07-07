@@ -1,6 +1,6 @@
 <!-- MODAL CHECKOUT -->
 <!-- MODAL ADDITIONAL OPTIONS -->
-<div class="modal fade lazyload" id="checkout-modal" tabindex="-1" role="dialog" aria-labelledby="checkout-modal"
+<div class="modal fade" id="checkout-modal" tabindex="-1" role="dialog" aria-labelledby="checkout-modal"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -240,7 +240,6 @@
     crossorigin="anonymous"
 ></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
 <script src="<?php echo $this->baseUrl; ?>assets/home/js/utility.js"></script>
 <!-- <script src="<?php #echo $this->baseUrl; ?>assets/home/js/ajax.js"></script> -->
 <script src="<?php echo $this->baseUrl; ?>assets/js/iziToast.js"></script>
