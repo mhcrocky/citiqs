@@ -17,7 +17,7 @@
 
     if ($('#first_element').val()) {
         let id = $('#first_element').val();
-        //getBackgroundImage(id);
+        getBackgroundImage(id);
         getTicketsView(id, true);
     }
 
