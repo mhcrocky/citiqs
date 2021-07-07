@@ -21,7 +21,7 @@
 
 
 
-<?php if(count($events) > 1 || (isset($events[0]) && $events[0]['showBackgroundImage'] == 1)): ?>
+<?php if(count($events) > 1 && (isset($events[0]) && $events[0]['showBackgroundImage'] == 1)): ?>
 <!-- HERO SECTION -->
 <section id="main-content" class="hero-section position-relative <?php if(count($events) == 1){ ?> pb-0 pt-2 <?php } ?>"
     <?php if(isset($closedShopMessage)){?> style="display:none" <?php } ?>>
@@ -176,7 +176,7 @@
                     <div class="menu-list">
                         <?php 
                         $checkout_tickets = $eventTickets['checkout_tickets'];
-                        $tickets = array_slice($eventTickets['tickets'], 0, 5, true);
+                        $tickets = $eventTickets['tickets'];
                         $checkout_tickets_id = array_values(array_keys($checkout_tickets));
                          foreach ($tickets as $ticket): 
                               $ticketId = $ticket['ticketId'];
