@@ -241,18 +241,30 @@ class Event_model extends CI_Model {
 		$soldoutTickets = [];
 		$positionSoldoutAtBottom = 1;
 		$nextFaseTickets = $this->verify_soldout_fase($eventId, $results);
+		$checkBundleMax = $this->_check_ticket_bundle_max();
+		$bundleMax = $this->get_ticket_bundle_max();
 
 		foreach($results as $result){
 			$ticketFee = isset($result['nonSharedTicketFee']) ? number_format($result['nonSharedTicketFee'], 2, '.', '') : '0.00';
 			$result['ticketFee'] = $ticketFee;
+			$groupId = $result['ticketGroupId'];
 			$ticketId = $result['ticketId'];
 			$tickets_used = $this->get_tickets_used($eventId);
 			$ticket_used = isset($tickets_used[$ticketId]) ? $tickets_used[$ticketId] : 0;
 			$ticket_available = intval($result['ticketQuantity']) - intval($ticket_used);
 			$sold_out = false;
-			$result['bundleMax'] = $this->get_ticket_bundle_max($result['ticketGroupId'], $result['groupQuantity']);
 
-			if($this->_check_ticket_bundle_max($result['ticketGroupId'])){
+			if(isset($bundleMax[$groupId])){
+				$group = $bundleMax[$groupId];
+				$diff = intval($group->groupQuantity) - intval($group->tickets);
+				$result['bundleMax'] = $diff;
+			} else if(is_numeric($result['groupQuantity'])){
+				$result['bundleMax'] = $result['groupQuantity'];
+			} else {
+				$result['bundleMax'] = 999;
+			}
+
+			if(isset($checkBundleMax) && $checkBundleMax[$groupId]){
 				$sold_out = true;
 				$result['soldOutWhenExpired'] = 'Sold Out';
 			}
@@ -1266,36 +1278,60 @@ class Event_model extends CI_Model {
 	}
 
 
-	public function get_ticket_bundle_max($groupId, $groupQuantity) : int
+	public function get_ticket_bundle_max() : array
 	{
-		$query = $this->db->query("SELECT count(tbl_event_tickets.id) AS tickets, groupQuantity
+		$query = $this->db->query("SELECT tbl_ticket_groups.id, count(tbl_event_tickets.id) AS tickets, groupQuantity
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_ticket_groups ON tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId 
-		WHERE tbl_ticket_groups.id = ".$groupId." AND tbl_bookandpay.ticketDescription <> '' AND paid = 1
+		WHERE tbl_bookandpay.ticketDescription <> '' AND paid = 1
 		GROUP BY tbl_ticket_groups.id");
-		$result = $query->first_row();
-		if(isset($result->groupQuantity)){
-			$diff = intval($result->groupQuantity) - intval($result->tickets);
-			return $diff;
-		} else if(is_numeric($groupQuantity)){
-			return $groupQuantity;
+		if($query->num_rows() < 1){
+			return [];
 		}
-		return 999;
+
+		$results = $query->result();
+
+		$bundle_max = [];
+
+		foreach($results as $result){
+			$groupId = $result->id;
+			$check_max[$groupId] = $result;	
+		}
+
+		return $bundle_max;
 	}
 
 
-	private function _check_ticket_bundle_max($groupId) : bool
+	private function _check_ticket_bundle_max() : array
 	{
-		$query = $this->db->query("SELECT count(tbl_event_tickets.id) AS tickets, groupQuantity
+		$query = $this->db->query("SELECT tbl_ticket_groups.id, count(tbl_event_tickets.id) AS tickets, groupQuantity
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_ticket_groups ON tbl_ticket_groups.id = tbl_event_tickets.ticketGroupId 
-		WHERE tbl_ticket_groups.id = ".$groupId." AND tbl_bookandpay.ticketDescription <> '' AND paid = 1
+		WHERE tbl_bookandpay.ticketDescription <> '' AND paid = 1
 		GROUP BY tbl_ticket_groups.id");
-		$result = $query->first_row();
-		if(isset($result->tickets) && $result->tickets >= $result->groupQuantity){
-			return true;
+
+		if($query->num_rows() < 1){
+			return [];
 		}
-		return false;
+
+		$results = $query->result();
+
+		$check_max = [];
+
+		foreach($results as $result){
+			$groupId = $result->id;
+			if(isset($result->tickets) && $result->tickets >= $result->groupQuantity){
+				$check_max[$groupId] = true;
+			} else {
+				$check_max[$groupId] = false;
+			}
+			
+		}
+
+		return $check_max;
+
+		
+		
 	}
 
 	public function check_ticket_soldout($customer, $ticketId, $ticketQuantity, $maxTicketQuantity) : bool
