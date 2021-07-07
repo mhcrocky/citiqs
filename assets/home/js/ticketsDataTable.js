@@ -168,7 +168,7 @@ $(document).ready(function () {
         title: "Guestlist",
         data: null,
         render: function (data, type, row) {
-          return '<a style="padding-top: 10px;display: inline-flex;" class="text-dark" href="#" onclick="addGuestModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal" ><span class="font-weight-bold mr-2">'+data.guestlistCount+'</span><i class="gg-user-list ml-2"></i></a>';
+          return '<a style="padding-top: 10px;display: inline-flex;" class="text-dark" href="#" onclick="addGuestTicketModal('+data.ticketId+')" data-toggle="modal" data-target="#guestlistModal" ><span class="font-weight-bold mr-2">'+data.guestlistCount+'</span><i class="gg-user-list ml-2"></i></a>';
 
         },
         createdCell: function (td, cellData, rowData, row, col) {
@@ -807,19 +807,55 @@ function createTicketEmailTemplateResponse(selectTemplate, customTemplate, respo
   return;
 }
 
-function addGuestModal(ticketId) {
+function addGuestTicketModal(ticketId) {
   $("#guestlist").DataTable().columns( 0 ).visible(false);
-  $("#guestlist")
+  $('#guestTicketId').val(ticketId);
   $("#guestlist").DataTable()
-        .columns( 4 )
+        .columns( 5 )
         .search( '^'+ticketId+'$', true, false )
         .draw();
 }
 
-function addGuestForm() {
+function addGuestTicketForm() {
   $('#submitGuestlist').click();
 }
 
+function addGuestTicket(e){
+  e.preventDefault();
+  $('.form-control').removeClass('input-clear');
+  let guestName = $('#guestName').val();
+  let guestEmail = $('#guestEmail').val();
+  let ticketQuantity = $('#guestTickets').val();
+  let ticketId = $('#guestTicketId').val();
+
+  console.log(ticketId);
+
+  if (guestName == '' || guestEmail == '' || ticketQuantity == '' || ticketId == '') {
+    return;
+  }
+  let data = {
+      guestName: guestName,
+      guestEmail: guestEmail,
+      ticketQuantity: ticketQuantity,
+      eventId: $('#eventId').val(),
+      ticketId: ticketId
+  }
+
+
+  console.log(data);
+
+
+  $('#submitGuestlist').prop('disabled', true);
+
+  $.post(globalVariables.baseUrl + "events/add_guest", data, function(response){
+      $("#guestlist").DataTable().ajax.reload();
+      $('#submitGuestlist').prop('disabled', false);
+      $('#resetGuestForm').click();
+      $('#closeGuestModal').click();
+      $('.form-control').addClass('input-clear');
+      alertifyAjaxResponse(JSON.parse(response));
+  });
+}
 
 function importExcelFile(){
 
