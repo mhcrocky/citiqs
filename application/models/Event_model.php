@@ -200,9 +200,10 @@ class Event_model extends CI_Model {
 		$query = $this->db->get();
 		$tickets = $query->result_array();
 		$groups = $this->get_ticket_groups($eventId);
+		$guestlistCount = $this->get_guestlist_count();
 		$groupIds = [];
 		foreach ($tickets as $key => $ticket) {
-			$tickets[$key]['guestlistCount'] = $this->get_guestlist_count($ticket['ticketId']);
+			$tickets[$key]['guestlistCount'] = (count($guestlistCount) > 0 && isset($guestlistCount[$ticket['ticketId']])) ? $guestlistCount[$ticket['ticketId']] : 0;
 			$groupIds[] = $ticket['groupId'];
 		}
 
@@ -668,7 +669,7 @@ class Event_model extends CI_Model {
 
 	public function get_events_report($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_bookandpay.id, reservationId, reservationtime, price,numberofpersons, price as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, eventname, TransactionID, tag
+		$query = $this->db->query("SELECT tbl_bookandpay.id, reservationId, reservationtime, price,numberofpersons, price as amount, name, age, gender, mobilephone, email, address, tbl_bookandpay.ticketDescription, eventname, TransactionID, tag
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendorId." $sql
@@ -854,10 +855,10 @@ class Event_model extends CI_Model {
 			foreach($results as $result){
 				$paymentMethodFee = $this->get_payment_methods_fee($paymentMethods, $result['paymentMethod']);
 				$percentAmount = (floatval($paymentMethodFee['percent'])*floatval($result['price'])) / 100;
-				$paymentEngineFee += $percentAmount + $paymentMethodFee['amount'];
+				$paymentEngineFee += $percentAmount + floatval($paymentMethodFee['amount']);
 
 				if($paymentMethodFee['vendorCost'] == '1'){
-					$promoterPaid += $percentAmount + $paymentMethodFee['amount'];
+					$promoterPaid += $percentAmount + floatval($paymentMethodFee['amount']);
 				}
 
 			}
@@ -1046,20 +1047,26 @@ class Event_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	private function get_guestlist_count($ticketId)
+	private function get_guestlist_count()
 	{
-		$this->db->select('sum(ticketQuantity) as count_ticket');
+		$this->db->select('ticketId, sum(ticketQuantity) as count_ticket');
 		$this->db->from('tbl_guestlist');
-		$this->db->where('ticketId', $ticketId);
-		$this->db->where('eventId<>', '0');
 		$this->db->group_by('ticketId');
 		$query = $this->db->get();
-		if($query->num_rows() > 0){
-			$result = $query->first_row();
-			return $result->count_ticket;
+		if($query->num_rows() < 1){
+			return [];
 			
 		}
-		return 0;
+
+		$results = $query->result();
+		$guestlist = [];
+
+		foreach($results as $result){
+			$ticketId = $result->ticketId;
+			$guestlist[$ticketId] = $result->count_ticket;
+		}
+
+		return $guestlist;
 	}
 
 	public function get_guestlists($vendorId)
@@ -1701,9 +1708,9 @@ class Event_model extends CI_Model {
 
 	}
 	
-	public function save_guest_to_bookandpay($vendorId, $guestId){
+	public function save_guest_to_bookandpay($vendorId, $guestId)
+	{
 		$guest = $this->get_guest_by_id($vendorId, $guestId);
-		var_dump($guest);
 		
 		if(!$guest) return false;
 		$dt = new DateTime( 'now');
@@ -1736,7 +1743,8 @@ class Event_model extends CI_Model {
 		
 	}
 
-	public function save_multiple_guests_to_bookandpay($vendorId, $guestIds){
+	public function save_multiple_guests_to_bookandpay($vendorId, $guestIds)
+	{
 		$guests = $this->get_guests_by_ids($vendorId, $guestIds);
 		
 		if(count($guests) < 1) return [];
@@ -1813,22 +1821,20 @@ class Event_model extends CI_Model {
 		return $tickets;
 	}
 
-	private function get_payment_methods_fee($paymentMethods, $paymentMethodName){
+	private function get_payment_methods_fee($paymentMethods, $paymentMethodName) : array
+	{
 
-		$paymentFee = [
-			'percent' => 0,
-			'amount' => 0,
-			'vendorCost' => 0
-		];
+
+		$percent = isset($paymentMethods[$paymentMethodName]) ? $paymentMethods[$paymentMethodName]['percent'] : 0;
+		$amount = isset($paymentMethods[$paymentMethodName]) ? $paymentMethods[$paymentMethodName]['amount'] : 0;
+		$vendorCost = isset($paymentMethods[$paymentMethodName]) ? $paymentMethods[$paymentMethodName]['vendorCost'] : 0;
+
 		
-		foreach($paymentMethods as $key => $paymentMethod){
-			if($key == $paymentMethodName){
-				$paymentFee['percent'] = $paymentMethod['percent'];
-				$paymentFee['amount'] = $paymentMethod['amount'];
-				$paymentFee['vendorCost'] = $paymentMethod['vendorCost'];
-				break;
-			}
-		}
+		$paymentFee = [
+			'percent' => $percent,
+			'amount' => $amount,
+			'vendorCost' => $vendorCost
+		];
 
 		return $paymentFee;
 	}
