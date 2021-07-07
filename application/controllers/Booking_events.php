@@ -322,6 +322,17 @@ class Booking_events extends BaseControllerWeb
 
         */
 
+        $bundleMax = $this->event_model->get_ticket_bundle_max();
+        if(isset($bundleMax[$ticketInfo->ticketGroupId])){
+            $group = $bundleMax[$ticketInfo->ticketGroupId];
+            $diff = intval($group->groupQuantity) - intval($group->tickets);
+            $bundleMax = $diff;
+        } else if(is_numeric($ticketInfo->groupQuantity)){
+            $bundleMax = $ticketInfo->groupQuantity;
+        } else {
+            $bundleMax = 999;
+        }
+
         unset($tickets[$ticketId]);
         $tickets[$ticketId] = [
             'id' => $ticketId,
@@ -335,7 +346,7 @@ class Booking_events extends BaseControllerWeb
             'ticketType' => $ticketType,
             'ticketFee' => $ticketInfo->ticketFee,
             'ticketGroupId' => $ticketInfo->ticketGroupId,
-            'bundleMax' => $this->event_model->get_ticket_bundle_max($ticketInfo->ticketGroupId, $ticketInfo->groupQuantity),
+            'bundleMax' => $bundleMax,
             'amount' => $amount,
             'startDate' => $eventInfo->StartDate,
             'startTime' => $eventInfo->StartTime,
@@ -373,7 +384,7 @@ class Booking_events extends BaseControllerWeb
             'price' => $ticketInfo->ticketPrice, 
             'ticketFee' => $ticketInfo->ticketFee,
             'groupId' => $ticketInfo->ticketGroupId,
-            'bundleMax' => $this->event_model->get_ticket_bundle_max($ticketInfo->ticketGroupId, $ticketInfo->groupQuantity),
+            'bundleMax' => $bundleMax,
             'first_ticket' => $first_ticket,
             'eventName' => $eventInfo->eventname
         ];
@@ -458,8 +469,10 @@ class Booking_events extends BaseControllerWeb
 
     public function payment_proceed()
     {
+        
         $buyerInfo = $this->input->post(null, true);
-        $orderRandomKey = $this->input->post('orderRandomKey') ? $this->input->post('orderRandomKey') : false;
+        
+        $orderRandomKey = isset($buyerInfo['orderRandomKey']) ? $buyerInfo['orderRandomKey'] : false;
 
         if(!$orderRandomKey){
             redirect(base_url());
@@ -472,9 +485,11 @@ class Booking_events extends BaseControllerWeb
             redirect(base_url());
         }
         
+        
         $tickets = $orderData['tickets'];
         $customer = $orderData['vendorId'];
         $tag = $orderData['tag'];
+        
 
         foreach($tickets as $key => $ticket){
             if($this->event_model->check_ticket_soldout($customer, $ticket['id'], $ticket['quantity'], $ticket['maxTicketQuantity'])){
@@ -494,6 +509,7 @@ class Booking_events extends BaseControllerWeb
                 ->update();
             $this->redirectToShop($orderData, $orderRandomKey);
         }
+        
         
 
         if (!isset($orderData['reservationIds'])) {
@@ -527,7 +543,6 @@ class Booking_events extends BaseControllerWeb
                 ->setIdFromRandomKey($orderRandomKey)
                 ->setProperty('orderData', Jwt_helper::encode($orderData))
                 ->update();
-
 
         redirect('/events/selectpayment?order=' . $orderRandomKey);
         
