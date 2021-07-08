@@ -437,7 +437,7 @@ const templateGlobals = (function() {
         globals['landingPageId'] = parseInt(<?php echo $landingPage->id; ?>);
     <?php } ?>
     <?php if (!empty($unlayerDesign)) { ?>
-        globals['unlayerDesign'] = JSON.parse('<?php echo str_replace('\n', '\\n', $unlayerDesign); ?>');
+        globals['unlayerDesign'] = JSON.parse('<?php echo str_replace('\n', '\\n', $unlayerDesign); ?>'.replaceAll('\n', '\\n'));
     <?php } ?>
 
     Object.freeze(globals);
