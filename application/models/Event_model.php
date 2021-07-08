@@ -1789,6 +1789,16 @@ class Event_model extends CI_Model {
 		
 	}
 
+	public function get_event_clearings()
+	{
+		$this->db->select('tbl_event_clearings.*, eventname');
+		$this->db->from('tbl_event_clearings');
+		$this->db->join('tbl_events', 'tbl_event_clearings.eventId = tbl_events', 'left');
+		$query = $this->db->get();
+		return $query->result_array();
+
+	}
+
 	private function generateNewVoucher() : string
 	{
 		$set = '3456789ABCDEFGHJKLMNPQRSTVWXY';
