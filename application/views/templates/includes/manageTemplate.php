@@ -437,7 +437,8 @@ const templateGlobals = (function() {
         globals['landingPageId'] = parseInt(<?php echo $landingPage->id; ?>);
     <?php } ?>
     <?php if (!empty($unlayerDesign)) { ?>
-        globals['unlayerDesign'] = JSON.parse('<?php echo $unlayerDesign; ?>');
+        let unlayerDesign = '<?php echo $unlayerDesign; ?>';
+        globals['unlayerDesign'] = JSON.parse(unlayerDesign);
     <?php } ?>
 
     Object.freeze(globals);

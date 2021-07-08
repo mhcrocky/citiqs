@@ -88,7 +88,7 @@
             if ($this->shoptemplates_model->unlayerDesign) {
                 $data['unlayerDesign'] = $this->shoptemplates_model->unlayerDesign;
                 $unlayerDesign = $this->shoptemplates_model->unlayerDesign;
-                $unlayerDesign = str_replace(['\n', '\"'], ['', "\'"], $unlayerDesign);
+                $unlayerDesign = str_replace(['\n', "'", 'src'], ['', "\'", ' src'], $unlayerDesign);
                 $unlayerDesign = html_entity_decode($unlayerDesign);
                 $data['unlayerDesign'] = $unlayerDesign;
             } else {
