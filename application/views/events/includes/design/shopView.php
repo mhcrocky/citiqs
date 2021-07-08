@@ -126,7 +126,11 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector="class" data-css-selector-value="header" data-css-property="background-color"
                 style="border-radius: 50px" onfocus="styleELements(this)" oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['header']['background-color']) ) { ?>
-                value="<?php echo $design['shop']['class']['header']['background-color']?>" data-value="1" <?php } ?> />
+                value="<?php echo $design['shop']['class']['header']['background-color']; ?>" data-value="1" 
+                <?php } elseif( isset($defaultDesign['shop']['class']['header']['background-color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['header']['background-color']; ?>" data-value="1" 
+                <?php } ?> 
+            />
         </label>
     </div>
 
@@ -137,7 +141,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector="class" data-css-selector-value="footer" data-css-property="background-color"
                 style="border-radius: 50px" onfocus="styleELements(this)" oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['footer']['background-color']) ) { ?>
-                value="<?php echo $design['shop']['class']['footer']['background-color']?>" data-value="1" 
+                value="<?php echo $design['shop']['class']['footer']['background-color']; ?>" data-value="1" 
+                <?php } elseif( isset($defaultDesign['shop']['class']['footer']['background-color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['footer']['background-color']; ?>" data-value="1" 
                 <?php } else { ?> 
                 value="rgba(244,242,245,1)"
                 <?php } ?> 
@@ -153,7 +159,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-property="background-color" style="border-radius: 50px" onfocus="styleELements(this)"
                 oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['navbar-toggler']['background-color']) ) { ?>
-                value="<?php echo $design['shop']['class']['navbar-toggler']['background-color']?>" data-value="1"
+                value="<?php echo $design['shop']['class']['navbar-toggler']['background-color']; ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['navbar-toggler']['background-color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['navbar-toggler']['background-color']; ?>" data-value="1" 
                 <?php } else{ ?> value="#ea2251" <?php } ?> />
         </label>
     </div>
@@ -167,6 +175,8 @@ if ( isset($design['shop']['eventDescript']) ) {
                 oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['show-info']['background']) ) { ?>
                 value="<?php echo $design['shop']['class']['show-info']['background']?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['show-info']['background']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['show-info']['background']; ?>" data-value="1" 
                 <?php } else{ ?> value="#17a2b8" <?php } ?> />
         </label>
     </div>
@@ -180,6 +190,8 @@ if ( isset($design['shop']['eventDescript']) ) {
                 oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['show-info']['color']) ) { ?>
                 value="<?php echo $design['shop']['class']['show-info']['color']?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['show-info']['color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['show-info']['color']; ?>" data-value="1" 
                 <?php } else{ ?> value="#fff" <?php } ?> />
         </label>
     </div>
@@ -192,7 +204,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-property="background-color" style="border-radius: 50px" onfocus="styleELements(this)"
                 oninput="styleELements(this)"
                 <?php if ( isset($design['shop']['class']['header__checkout']['background-color']) ) { ?>
-                value="<?php echo $design['shop']['class']['header__checkout']['background-color']?>" data-value="1"
+                value="<?php echo $design['shop']['class']['header__checkout']['background-color']; ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['header__checkout']['background-color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['header__checkout']['background-color']; ?>" data-value="1" 
                 <?php } else{ ?> value="#7855c4" <?php } ?> />
         </label>
     </div>
@@ -204,7 +218,9 @@ if ( isset($design['shop']['eventDescript']) ) {
              style="border-radius: 50px" onfocus="checkoutHoverStyle(this)"
                 oninput="checkoutHoverStyle(this)"
                 <?php if ( isset($design['shop']['header__checkout']['hover']) ) { ?>
-                value="<?php echo $design['shop']['header__checkout']['hover']?>" data-value="1"
+                value="<?php echo $design['shop']['header__checkout']['hover']; ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['header__checkout']['hover']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['header__checkout']['hover']; ?>" data-value="1" 
                 <?php } else{ ?> value="#7855c4" <?php } ?> />
         </label>
     </div>
@@ -216,7 +232,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector="class" data-css-selector-value="quantity-button" data-css-property="background-color"
                 onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['quantity-button']['background-color']) ) { ?>
-                value="<?php echo $design['shop']['class']['quantity-button']['background-color']?>" data-value="1"
+                value="<?php echo $design['shop']['class']['quantity-button']['background-color']; ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['quantity-button']['background-color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['quantity-button']['background-color']; ?>" data-value="1" 
                 <?php } else { ?> value="#ea2251" <?php } ?> />
         </label>
     </div>
@@ -229,7 +247,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-property="background-color" onfocus="styleELements(this)" oninput="styleELements(this)"
                 style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['single-item---bg-white']['background-color']) ) { ?>
-                value="<?php echo $design['shop']['class']['single-item---bg-white']['background-color']?>"
+                value="<?php echo $design['shop']['class']['single-item---bg-white']['background-color']; ?>"
+                <?php } elseif( isset($defaultDesign['shop']['class']['single-item---bg-white']['background-color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['single-item---bg-white']['background-color']; ?>"
                 data-value="1" <?php } ?> />
         </label>
     </div>
@@ -242,7 +262,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-property="background-color" onfocus="styleELements(this)" oninput="styleELements(this)"
                 style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['single-item---bg-light']['background-color']) ) { ?>
-                value="<?php echo $design['shop']['class']['single-item---bg-light']['background-color']?>"
+                value="<?php echo $design['shop']['class']['single-item---bg-light']['background-color']; ?>"
+                <?php } elseif( isset($defaultDesign['shop']['class']['single-item---bg-light']['background-color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['single-item---bg-light']['background-color']; ?>"
                 data-value="1" <?php } ?> />
         </label>
     </div>
@@ -254,7 +276,10 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector-value="event-title" data-css-property="color" onfocus="styleELements(this)"
                 oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['event-title']['color']) ) { ?>
-                value="<?php echo $design['shop']['class']['event-title']['color']?>" data-value="1" <?php } else { ?>
+                value="<?php echo $design['shop']['class']['event-title']['color']; ?>" data-value="1" 
+                <?php } elseif( isset($defaultDesign['shop']['class']['event-title']['color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['event-title']['color']; ?>" data-value="1" 
+                <?php } else { ?>
                 value="#212529" <?php } ?> />
         </label>
     </div>
@@ -266,7 +291,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector="id" data-css-selector-value="event_text_descript" data-css-property="color"
                 onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['id']['event_text_descript']['color']) ) { ?>
-                value="<?php echo $design['shop']['id']['event_text_descript']['color']?>" data-value="1"
+                value="<?php echo $design['shop']['id']['event_text_descript']['color']; ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['id']['event_text_descript']['color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['id']['event_text_descript']['color']; ?>" data-value="1" 
                 <?php } else { ?> value="#6c7581" <?php } ?> />
         </label>
     </div>
@@ -279,6 +306,8 @@ if ( isset($design['shop']['eventDescript']) ) {
                 onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['id']['selected_event_text']['color']) ) { ?>
                 value="<?php echo $design['shop']['id']['selected_event_text']['color']?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['id']['selected_event_text']['color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['id']['selected_event_text']['color']; ?>" data-value="1" 
                 <?php } else { ?> value="#7855c4" <?php } ?> />
         </label>
     </div>
@@ -290,7 +319,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector="class" data-css-selector-value="selected_event_text" data-css-property="font-size"
                 onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['selected_event_text']['font-size']) ) { ?>
-                value="<?php echo $design['shop']['class']['selected_event_text']['font-size']?>" data-value="1"
+                value="<?php echo $design['shop']['class']['selected_event_text']['font-size']; ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['selected_event_text']['font-size']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['selected_event_text']['font-size']; ?>" data-value="1" 
                 <?php } else { ?> value="40px" <?php } ?> />
         </label>
     </div>
@@ -302,7 +333,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector="class" data-css-selector-value="ticket_price" data-css-property="color"
                 onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['ticket_price']['color']) ) { ?>
-                value="<?php echo $design['shop']['class']['ticket_price']['color']?>" data-value="1"
+                value="<?php echo $design['shop']['class']['ticket_price']['color']; ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['ticket_price']['color']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['ticket_price']['color']; ?>" data-value="1" 
                 <?php } else { ?> value="#7855c4" <?php } ?> />
         </label>
     </div>
@@ -315,7 +348,9 @@ if ( isset($design['shop']['eventDescript']) ) {
                 data-css-selector-value="event-title" data-css-property="font-size" onfocus="styleELements(this)"
                 oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['class']['event-title']['font-size']) ) { ?>
-                value="<?php echo $design['shop']['class']['event-title']['font-size']?>" data-value="1"
+                value="<?php echo $design['shop']['class']['event-title']['font-size'];  ?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['class']['event-title']['font-size']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['class']['event-title']['font-size']; ?>" data-value="1" 
                 <?php } else { ?> value="40px" <?php } ?> />
         </label>
     </div>
@@ -328,6 +363,8 @@ if ( isset($design['shop']['eventDescript']) ) {
                 onfocus="styleELements(this)" oninput="styleELements(this)" style="border-radius: 50px"
                 <?php if ( isset($design['shop']['id']['event_text_descript']['font-size']) ) { ?>
                 value="<?php echo $design['shop']['id']['event_text_descript']['font-size']?>" data-value="1"
+                <?php } elseif( isset($defaultDesign['shop']['id']['event_text_descript']['font-size']) ) { ?> 
+                value="<?php echo $defaultDesign['shop']['id']['event_text_descript']['font-size']; ?>" data-value="1" 
                 <?php } else { ?> value="18px" <?php } ?> />
         </label>
     </div>
