@@ -916,6 +916,9 @@ p {
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme"/>
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css">
+<?php  } elseif ($this->view === 'events/event_clearings') { ?>
+    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <?php } elseif ($this->view === 'businessreport/paymentMethods') { ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <?php }  elseif ($this->view === 'ladnigPages/template') { ?>
