@@ -1793,10 +1793,31 @@ class Event_model extends CI_Model {
 	{
 		$this->db->select('tbl_event_clearings.*, eventname');
 		$this->db->from('tbl_event_clearings');
-		$this->db->join('tbl_events', 'tbl_event_clearings.eventId = tbl_events', 'left');
+		$this->db->join('tbl_events', 'tbl_event_clearings.eventId = tbl_events.id', 'left');
 		$query = $this->db->get();
 		return $query->result_array();
 
+	}
+
+	public function save_event_clearings($data) : bool
+	{
+		$this->db->insert('tbl_event_clearings',$data);
+		return $this->db->insert_id() ? true : false;
+	}
+
+	public function update_event_clearings($vendorId, $id, $data) : bool
+	{
+		$this->db->where("id", $id);
+		$this->db->where("vendorId", $vendorId);
+		$this->db->update('tbl_event_clearings', $data);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+	public function delete_event_clearings($vendorId, $id) : bool
+	{
+		$where = ['id' => $id, 'vendorId' => $vendorId];
+		$this->db->delete('tbl_event_clearings', $where);
+		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 
 	private function generateNewVoucher() : string
