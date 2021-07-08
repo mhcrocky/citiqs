@@ -1838,6 +1838,7 @@ class Event_model extends CI_Model {
 
 		return $paymentFee;
 	}
+	
 
 
 }
