@@ -122,6 +122,9 @@ class Booking_events extends BaseControllerWeb
         
         if(isset($design) && $design){
             $this->global['design'] = unserialize($design);
+        } else {
+            $design = $this->event_model->get_vendor_design('1');
+            if($design) $this->global['design'] = unserialize($design);
         }
 
 
