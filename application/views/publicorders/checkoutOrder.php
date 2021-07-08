@@ -146,7 +146,7 @@
                                                     >
                                                         <?php
                                                             echo
-                                                                $this->language->tLine($date . ' (' . $hours['day'] . ')',$date . ' (' . $hours['day'] . ')'). ' '
+                                                                $date . ' (' . $hours['day'] . ')' . ' '
                                                                 . $this->language->tLine(' from ') . ' ' . $hours['timeFrom'] . ' '
                                                                 . $this->language->tLine(' to ' ) . ' ' . $hours['timeTo'];
                                                         ?>
