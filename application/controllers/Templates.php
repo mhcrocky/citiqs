@@ -71,7 +71,6 @@
                 $this->setLandingPageUpdate($data, intval($id));
             }
 
-
             $this->global['pageTitle'] = 'TIQS : UPDATE TEMPLATE';
             $this->loadViews('templates/updateTemplate', $this->global, $data, 'footerbusiness', 'headerbusiness');
             return;
@@ -88,6 +87,10 @@
             $data['templateType'] = $this->shoptemplates_model->template_type;
             if ($this->shoptemplates_model->unlayerDesign) {
                 $data['unlayerDesign'] = $this->shoptemplates_model->unlayerDesign;
+                $unlayerDesign = $this->shoptemplates_model->unlayerDesign;
+                $unlayerDesign = str_replace(['\n', '\"'], ['', "\'"], $unlayerDesign);
+                $unlayerDesign = html_entity_decode($unlayerDesign);
+                $data['unlayerDesign'] = $unlayerDesign;
             } else {
                 $data['templateContent'] = file_get_contents($this->shoptemplates_model->getTemplateFile());
             }
