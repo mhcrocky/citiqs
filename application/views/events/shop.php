@@ -99,9 +99,8 @@
                 </a>
                 <div style="align-items: end;background: transparent !important;"
                     class="w-100 mt-4 bg-white pr-4 text-center">
-                    <button style="background: #60a5fa !important;" type="button" class="btn btn-info mb-1 show-info"
-                        data-toggle="modal" data-target="#eventModal<?php echo $event['id']; ?>">
-                        <?php echo $this->language->tLine('Show Info'); ?>
+                    <button type="button" onclick="getTicketsView('<?php echo $event['id']; ?>')" class="btn btn-primary mb-1 show-info">
+                        <?php echo $this->language->tLine('Go To Shop'); ?>
                     </button>
                 </div>
             </div>
@@ -169,7 +168,7 @@
                 <!-- end col -->
                 <input type="hidden" class="current_time" name="current_time">
                 <div class="col-12 col-md-8 pl-md-5">
-                    <h4 class="font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4">Tickets</h4>
+                    <h4 class="font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4"><?php echo $eventTickets['eventTitle']; ?></h4>
                     <p class="text-dark mb-5" style="font-size: 15px;">
                         <strong><?php echo $eventTickets['eventDescription']; ?></strong>
                     </p>
