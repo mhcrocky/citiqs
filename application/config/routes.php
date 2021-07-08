@@ -621,6 +621,7 @@ $route['events/update_event_archived'] = 'Events/update_event_archived';
 $route['events/scannedin'] = 'Events/scannedin';
 $route['events/copy_event'] = 'Events/copy_event';
 $route['clearingtickets'] = 'Events/clearingtickets';
+$route['events/get_event_clearings'] = 'Events/get_event_clearings';
 $route['events/tags_graphs'] = 'Events/tags_graphs';
 $route['events/tags_stats'] = 'Events/tags_stats';
 $route['events/tags_graphs'] = 'Events/tags_graphs';
