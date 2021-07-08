@@ -19,7 +19,7 @@
                 <!-- end col -->
                 <input type="hidden" class="current_time" name="current_time">
                 <div class="col-12 col-md-8 pl-md-5">
-                    <h4 class="font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4">Tickets</h4>
+                    <h4 class="font-weight-bold mt-4 mt-md-3 mb-2 mb-md-4"><?php echo ucfirst($eventTitle); ?></h4>
                     <p class="text-dark mb-5" style="font-size: 15px;">
                         <strong><?php echo $eventDescription; ?></strong>
                     </p>
