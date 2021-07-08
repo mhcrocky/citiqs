@@ -15,12 +15,14 @@
         public $template_name;
         public $template_subject;
         public $template_type;
-        public $unlayerDesign;
 
         private $table = 'tbl_email_templates';
 
         private $templateFolder;
         private $templateFile;
+
+        private $unlayerObjectFolder;
+        private $unlayerObjectFile;
 
         protected function setValueType(string $property,  &$value): void
         {
@@ -55,7 +57,6 @@
 
             if (!count($data)) return false;
             if (isset($data['template_name']) &&  !Validate_data_helper::validateString($data['template_name'])) return false;
-            if (isset($data['unlayerDesign']) &&  !Validate_data_helper::validateStringImproved($data['unlayerDesign'])) return false;
             
             return true;
         }
@@ -77,6 +78,24 @@
             return;
         }
 
+        private function setUnlayerObjectFolder(): void
+        {
+            $this->load->config('custom');
+            $this->setTemplateFolder();
+            $this->unlayerObjectFolder = $this->templateFolder . $this->config->item('unlayerObjectFolder') . DIRECTORY_SEPARATOR;
+            $this->makeUnlayerObjectFolder();
+
+            return;
+        }
+
+        private function makeUnlayerObjectFolder(): void
+        {
+            if (!is_dir($this->unlayerObjectFolder)) {
+                mkdir($this->unlayerObjectFolder);
+            }
+            return;
+        }
+
         private function setTemplateFile(): void
         {
             $this->setTemplateFolder();
@@ -85,13 +104,29 @@
             return;
         }
 
-        public function getTemplateFile(string $name = ''): string
+        public function getTemplateFile(): string
         {
             if ( !$this->templateFile ) {
-                $this->setTemplateFile($name);
+                $this->setTemplateFile();
+            }
+            return $this->templateFile;
+        }
+
+        private function setUnlayerObjectFile(): void
+        {
+            $this->setUnlayerObjectFolder();
+            $this->unlayerObjectFile = $this->unlayerObjectFolder . $this->template_file  . '.' . $this->config->item('template_extension');
+
+            return;
+        }
+
+        public function getUnlayerObjectFile(): string
+        {
+            if ( !$this->unlayerObjectFile ) {
+                $this->setUnlayerObjectFile();
             }
 
-            return $this->templateFile;
+            return $this->unlayerObjectFile;
         }
 
         public function saveTemplate(string $templateName, string $templateSubject, string $html, string $templateType, int $userId, int $id, string $unlayerDesign): bool
@@ -100,8 +135,7 @@
             $this->template_subject = $templateSubject;
             $this->user_id = $userId;
             $this->id = $id ? $id : null;
-            $this->unlayerDesign = $unlayerDesign;
-            $filename = str_replace(' ', '_', $templateName);
+            $filename = strtolower(str_replace(' ', '_', $templateName));
             $filename .= '_' . time();
             $this->template_file = $filename;
             $this->template_type = $templateType;
@@ -109,9 +143,8 @@
 
             if ($this->checkIsExists()) return false;
 
-            $this->setTemplateFile($templateName);
-
-            if (!$this->saveTemplateHtml($html)) return false;
+            if (!$this->saveTemplateFileHtml($html)) return false;
+            if (!$this->saveUnlayerDesignObject($unlayerDesign)) return false;
 
             if (!$this->id) {
                 if ($this->create()) return true;
@@ -124,24 +157,29 @@
             return false;
         }
 
-        private function insertInTable(string $templateName, int $userId): bool
+        private function saveTemplateFileHtml(string $html): bool
         {
-            $data = [
-                'template_name' => $templateName,
-            ];
+            $this->setTemplateFile();
+            return $this->saveTemplateHtml($html);
+        }
 
-            if (!$this->insertValidate($data)) return false;
-
-            $query = $this->prepareInsertQuery($data);
-
-            return $this->db->query($query);
+        private function saveUnlayerDesignObject(string $unlayerDesign): bool
+        {
+            if ($unlayerDesign) {
+                $this->setUnlayerObjectFile();
+                return $this->saveUnlayerDesignl($unlayerDesign);
+            }
+            return true;
         }
 
         private function saveTemplateHtml(string $html): bool
         {
-            if (file_put_contents($this->templateFile, $html)) return true;
+            return (file_put_contents($this->templateFile, $html)) ? true : false;
+        }
 
-            return false;
+        private function saveUnlayerDesignl(string $unlayerDesign): bool
+        {
+            return (file_put_contents($this->unlayerObjectFile, $unlayerDesign)) ? true : false;   
         }
 
         public function fetchTemplates(): ?array

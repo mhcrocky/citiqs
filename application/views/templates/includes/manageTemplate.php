@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
 <div style="margin-left:20px">
 
     <br/>
@@ -437,8 +437,8 @@ const templateGlobals = (function() {
         globals['landingPageId'] = parseInt(<?php echo $landingPage->id; ?>);
     <?php } ?>
     <?php if (!empty($unlayerDesign)) { ?>
-        let unlayerDesign = '<?php echo $unlayerDesign; ?>';
-        globals['unlayerDesign'] = JSON.parse(unlayerDesign);
+        globals['unlayerDesign'] = <?php echo $unlayerDesign; ?>;
+        // globals['unlayerDesign'] = JSON.parse('<?php echo $unlayerDesign; ?>');
     <?php } ?>
 
     Object.freeze(globals);

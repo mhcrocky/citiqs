@@ -85,11 +85,20 @@
             $data['templateName'] = $this->shoptemplates_model->template_name;
             $data['templateSubject'] = $this->shoptemplates_model->template_subject;
             $data['templateType'] = $this->shoptemplates_model->template_type;
-            if ($this->shoptemplates_model->unlayerDesign) {
-                $data['unlayerDesign'] = $this->shoptemplates_model->unlayerDesign;
-                $unlayerDesign = $this->shoptemplates_model->unlayerDesign;
-                $unlayerDesign = str_replace(['\n', "'", 'src'], ['', "\'", ' src'], $unlayerDesign);
-                $unlayerDesign = html_entity_decode($unlayerDesign);
+
+            $unlayerObjectFile = $this->shoptemplates_model->getUnlayerObjectFile();
+
+            if (file_exists($unlayerObjectFile)) {
+                $unlayerDesign = file_get_contents($unlayerObjectFile);
+                $unlayerDesign = json_decode($unlayerDesign, true);
+                // echo '<pre>';
+                // print_r(json_decode($unlayerDesign, true));
+                // die();
+
+                $unlayerDesign = json_encode( $unlayerDesign, JSON_HEX_QUOT|JSON_HEX_APOS );
+                $unlayerDesign = str_replace("\u0022", "\\\"", $unlayerDesign );
+                $unlayerDesign = str_replace("\u0027", "\\'",  $unlayerDesign );
+                
                 $data['unlayerDesign'] = $unlayerDesign;
             } else {
                 $data['templateContent'] = file_get_contents($this->shoptemplates_model->getTemplateFile());
