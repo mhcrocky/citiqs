@@ -1671,13 +1671,6 @@ class Events extends BaseControllerWeb
         $transactionId .= strtoupper(substr(str_shuffle($set), 0, 10));
         return $transactionId;
     }
-
-    public function testdori(){
-        $pay = $this->event_model->get_payment_methods_stats($this->vendor_id, '10');
-        $test = $this->event_model->get_payment_methods_fee($pay, 'credit card payment');
-        var_dump($pay);
-        var_dump($test);
-    }
     
 
 } 
