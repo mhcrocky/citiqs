@@ -168,7 +168,7 @@ if ( isset($design['shop']['eventDescript']) ) {
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Show info button background color:
+            Go to shop button background color:
             <input class="form-control colorInput" name="shop[class][show-info][background]"
                 data-jscolor="" data-css-selector="class" data-css-selector-value="show-info"
                 data-css-property="background" style="border-radius: 50px" onfocus="styleELements(this)"
@@ -183,7 +183,7 @@ if ( isset($design['shop']['eventDescript']) ) {
 
     <div class="form-group col-sm-12">
         <label style="display:block;">
-            Show info button font color:
+            Go to shop button font color:
             <input class="form-control colorInput" name="shop[class][show-info][color]"
                 data-jscolor="" data-css-selector="class" data-css-selector-value="show-info"
                 data-css-property="color" style="border-radius: 50px" onfocus="styleELements(this)"
