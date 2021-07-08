@@ -1371,6 +1371,95 @@ class Events extends BaseControllerWeb
 
     }
 
+    public function clearings()
+	{
+        $this->global['pageTitle'] = 'TIQS: Event Clearings';
+        $events = $this->event_model->get_all_events($this->vendor_id);
+        $data['events'] = $this->event_model->get_all_events($this->vendor_id);
+        $this->loadViews('events/event_clearings', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
+
+    }
+
+    public function get_event_clearings()
+	{
+        $data = $this->event_model->get_event_clearings($this->vendor_id);
+        echo json_encode($data);
+
+    }
+
+    public function save_event_clearing()
+	{
+        $data = $this->input->post(null, true);
+        $data['vendorId'] = $this->vendor_id;
+        if($this->event_model->save_event_clearings($data)){
+            $response = [
+                'status' => 'success',
+                'message' => 'The event clearing is saved successfully'
+            ];
+
+            echo json_encode($response);
+            return ;
+
+
+        }
+
+        $response = [
+            'status' => 'error',
+            'message' => 'The event clearing is not saved successfully'
+        ];
+        echo json_encode($response);
+
+    }
+
+    public function update_event_clearing()
+	{
+        $data = $this->input->post(null, true);
+        $id = $data['id'];
+        unset($data['id']);
+        if($this->event_model->update_event_clearings($this->vendor_id, $id, $data)){
+            $response = [
+                'status' => 'success',
+                'message' => 'The event clearing is updated successfully'
+            ];
+
+            echo json_encode($response);
+            return ;
+
+
+        }
+
+        $response = [
+            'status' => 'error',
+            'message' => 'The event clearing is not updated successfully'
+        ];
+        echo json_encode($response);
+
+    }
+
+    public function delete_event_clearing()
+	{
+        $id = $this->input->post('id');
+
+        if($this->event_model->delete_event_clearings($this->vendor_id, $id)){
+            $response = [
+                'status' => 'success',
+                'message' => 'The event clearing is deleted successfully'
+            ];
+
+            echo json_encode($response);
+            return ;
+
+
+        }
+
+        $response = [
+            'status' => 'error',
+            'message' => 'The event clearing is not deleted successfully'
+        ];
+        echo json_encode($response);
+
+    }
+
     public function emailReservation($transactionId)
 	{
         $reservations = $this->bookandpay_model->getReservationsByTransactionId($transactionId);
