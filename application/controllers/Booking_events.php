@@ -755,7 +755,7 @@ class Booking_events extends BaseControllerWeb
 		# Get API result
 		$strResult = @file_get_contents($strUrl);
         $result = json_decode($strResult);
-        //Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
+        Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', "strResult: $strResult");
 
         if ($result->request->result == '1') {
 			//Utility_helper::logMessage(FCPATH . 'application/tiqs_logs/ticket_payment.txt', 'updating transactionid');
