@@ -678,6 +678,7 @@ class Events extends BaseControllerWeb
             $design = $this->event_model->get_event_design($this->vendor_id, $eventId);
         }
 
+
         
         $this->load->model('user_model');
         $userShortUrl = $this->user_model->getUserShortUrlById($this->vendor_id);
@@ -696,6 +697,12 @@ class Events extends BaseControllerWeb
         if($eventId){
             $data['event'] = (object) $this->event_model->get_event_by_id($this->vendor_id, $eventId, false)[0];
         }
+
+        $defaultDesign = $this->event_model->get_vendor_design('1');
+        if($defaultDesign){
+            $data['defaultDesign'] = unserialize($defaultDesign);
+        }
+        
 
         $this->global['pageTitle'] = 'TIQS : DESIGN';
         $this->loadViews('events/design', $this->global, $data, 'footerbusiness', 'headerbusiness');
