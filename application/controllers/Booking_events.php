@@ -205,7 +205,8 @@ class Booking_events extends BaseControllerWeb
                 'eventId' => $eventId,
                 'eventName' => $event->eventname,
                 'eventImage' => $event->eventImage,
-                'eventDescription' => (empty($event->descriptionInShop) || $event->descriptionInShop == '') ? $eventVenue . ' ' . $eventStartDate . ' - ' . $eventEndDate : $event->descriptionInShop,
+                'eventTitle' => (empty($event->descriptionInShop) || $event->descriptionInShop == '') ? 'Tickets' : $event->descriptionInShop,
+                'eventDescription' => strip_tags($event->eventdescript),
                 'vendor_cost_paid' =>  $this->event_model->check_vendor_cost_paid($vendorId)
             
             ];
@@ -240,7 +241,8 @@ class Booking_events extends BaseControllerWeb
             'eventId' => $eventId,
             'eventName' => $event->eventname,
             'eventImage' => $event->eventImage,
-            'eventDescription' => (empty($event->descriptionInShop) || $event->descriptionInShop == '') ? $eventVenue . ' ' . $eventStartDate . ' - ' . $eventEndDate : $event->descriptionInShop,
+            'eventTitle' => (empty($event->descriptionInShop) || $event->descriptionInShop == '') ? 'Tickets' : $event->descriptionInShop,
+            'eventDescription' => strip_tags($event->eventdescript),
             'vendor_cost_paid' =>  $this->event_model->check_vendor_cost_paid($vendor_id)
             
         ];
