@@ -514,11 +514,11 @@ $config['sendResetPasswordLink'] = 'Send reset password link';
 $config['emailTemplates'] = [ $config['sendActivationLink'], $config['sendResetPasswordLink'] ];
 
 $config['template_extension'] = 'txt';
+$config['unlayerObjectFolder'] = 'unlayer_object';
 $config['assetsFolder'] = 'assets' . DIRECTORY_SEPARATOR;
 $config['imagesFolder'] = $config['assetsFolder'] . 'images' . DIRECTORY_SEPARATOR;
 $config['emailImagesFolder'] = $config['imagesFolder'] . 'email_images' . DIRECTORY_SEPARATOR;
 $config['emailTemplatesFolder'] = $config['assetsFolder'] . 'email_templates' . DIRECTORY_SEPARATOR;
-
 
 
 // IMAGES FOLDERS
