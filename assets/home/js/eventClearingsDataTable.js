@@ -54,7 +54,7 @@ $(document).ready(function () {
         title: 'Edit',
         data: null,
         render: function (data, type, row) {
-          let html = '<input id="eventClearingData" type="hidden" value="'+data.description+'" data-amount="'+data.amount+'" data-eventId="'+data.eventId+'"  data-date="'+data.date+'">'
+          let html = '<input id="eventClearingData_'+ data.id + '" type="hidden" value="'+data.description+'" data-amount="'+data.amount+'" data-eventId="'+data.eventId+'"  data-date="'+data.date+'">'
           html += '<button class="btn btn-primary" onclick="editEventClearing('+ data.id + ')">Edit</button>';
           return html;
         }
@@ -100,7 +100,7 @@ function updateEventClearing(data){
 }
 
 function editEventClearing(id){
-  let el = $('#eventClearingData');
+  let el = $('#eventClearingData_'+id);
   let eventId = el.attr('data-eventId');
   let amount = el.attr('data-amount');
   let date = el.attr('data-date');
@@ -108,7 +108,7 @@ function editEventClearing(id){
 
   $('#clearingId').val(id);
   $('#eventId').val(eventId);
-  $('#amount').val(amount);
+  $('.amount').val(amount);
   $('#description').val(description);
   $('#date').val(date);
 
@@ -160,4 +160,15 @@ function deleteEventClearing(id) {
 
     }
   );
+}
+
+function getPromoterAmount(el, amountId) {
+  let val = $(el).children('option:selected').val();
+  if(typeof promoterPaid[val] !== 'undefined'){
+    $('.'+amountId).val(promoterPaid[val].replaceAll(',', '.'));
+    return;
+  }
+
+  $('.'+amountId).val('0.00');
+  
 }
