@@ -37,6 +37,7 @@
             $this->load->model('bookandpayagendabooking_model');
             $this->load->model('shoparea_model');
             $this->load->model('user_model');
+            $this->load->model('shopcategorytime_model');
 
             $this->load->library('language', array('controller' => $this->router->class));
             $this->load->library('session');
@@ -98,7 +99,8 @@
             $data = [
                 'userId' => intval($_SESSION['userId']),
                 'categories' => $this->shopcategory_model->fetch($where),
-                'imgFolder' => (base_url() . $this->config->item('categoriesImagesRelPath'))
+                'imgFolder' => (base_url() . $this->config->item('categoriesImagesRelPath')),
+                'dayOfWeeks' => $this->config->item('weekDays'),
             ];
 
             $this->loadViews('warehouse/productCategories', $this->global, $data, 'footerbusiness', 'headerbusiness');
@@ -185,6 +187,48 @@
                     unlink($image);
                 }
             }
+        }
+
+        /**
+         * Add times to category
+         *
+         * @return void
+         */
+        public function addCategoryTimes($id): void
+        {
+            $redirect = empty($_SERVER['HTTP_REFERER']) ? 'products' : $_SERVER['HTTP_REFERER'];
+            if (!$this->shopcategory_model->setObjectId(intval($id))->setProperty('userId', $_SESSION['userId'])->isVendorCategory()) {
+                $this->session->set_flashdata('error', 'Not allowed');
+                redirect($redirect);
+            }
+
+            $data = $this->input->post(null, true);
+            $days = $data['categoryTime'];
+
+            $this->shopcategorytime_model->categoryId = $this->shopcategory_model->id;
+            $this->shopcategorytime_model->deleteProductTimes();
+
+            foreach ($days as $day => $value) {
+                if (isset($value['day']) && $value['from'][0] && $value['to'][0]) {
+                    $count = count($value['from']);
+                    for ($i = 0; $i < $count; $i++) {
+                        $insert = [
+                            'day' => $day,
+                            'timeFrom' => $value['from'][$i],
+                            'timeTo' => $value['to'][$i],
+                        ];
+                        if (!$this->shopcategorytime_model->setObjectFromArray($insert)->create()) {
+                            $this->shopcategorytime_model->deleteProductTimes();
+                            $this->session->set_flashdata('error', 'Availability time(s) for category "' . $data['category'] . '" not inserted! Please try again');
+                            redirect($redirect);
+                        };
+                    }
+                }
+            }
+            $this->session->set_flashdata('success', 'Availability time(s) for category "' . $data['category'] . '" inserted.');
+
+            redirect($redirect);
+            return;
         }
 
         // PRODUCTS
@@ -424,7 +468,6 @@
             $countTypes = 0;
             $main = false;
             foreach($data['productTypes'] as $typeId => $typeValues) {
-                var_dump($typeValues);
                 if (isset($typeValues['check'])) {
                     $countTypes++;
                     $data['productExtended']['productId'] = $this->shopproduct_model->id;

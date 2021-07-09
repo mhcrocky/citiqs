@@ -60,10 +60,11 @@
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/nolabels.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/slidertogo.js"></script>
 <?php } elseif ($this->view === 'warehouse/productCategories') { ?>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/cdn/js/jquery-ui.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/productCategories.js"></script>
-	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>    
+	<script src="<?php echo $this->baseUrl; ?>assets/home/js/edit-grid-item.js"></script>
 <?php } elseif ($this->view === 'warehouse/products') { ?>	
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/js/jquery.datetimepicker.full.min.js"></script>

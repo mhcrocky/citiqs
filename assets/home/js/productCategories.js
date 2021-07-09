@@ -50,6 +50,30 @@ function displayOpenKey(className, response) {
     return;
 }
 
+function showDay(element, day) {
+    if (element.checked) {
+        document.getElementById(day).style.display = "initial";
+    } else {
+        document.getElementById(day).style.display = "none";
+    }
+}
+
+function addTimePeriod(timeDiv, day) {
+    let element = '';
+    element +=  '<div>';``
+    element +=      '<label>From: ';
+    element +=          '<input type="time" name="categoryTime[' + day + '][from][]" />';
+    element +=      '</label>';
+    element +=      '<label>To: ';
+    element +=          '<input type="time" name="categoryTime[' + day + '][to][]" />';
+    element +=      '</label>';
+    element +=      '<span class="fa-stack fa-2x" onclick="removeParent(this)">';
+    element +=          '<i class="fa fa-times"></i>';
+    element +=      '</span>';
+    element +=  '</div>';
+    $( "#" + timeDiv).append(element);
+}
+
 $(document).ready(function(){
     $('input.timepicker').timepicker({
         'timeFormat' : 'HH:mm',

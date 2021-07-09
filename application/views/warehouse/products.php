@@ -465,6 +465,7 @@
                                     <div class="modal-dialog">
                                         <!-- Modal content-->
                                         <form method="post" action="<?php echo $this->baseUrl . 'warehouse/addProductTimes/' . $product['productId']; ?>">
+                                            <input type="text" value="<?php echo $details['name']; ?>" name="productName"  hidden readonly />;
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>

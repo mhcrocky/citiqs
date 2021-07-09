@@ -217,4 +217,21 @@
 
             return $images;
         }
+
+        public function isVendorCategory(): bool
+        {
+            $id = $this->readImproved([
+                'what' => [
+                    $this->table . '.id'
+                ],
+                'where' => [
+                    $this->table . '.id' => $this->id,
+                    $this->table . '.userId' => $this->userId
+                ]
+
+            ]);
+
+            return !is_null($id);
+        }
+
     }

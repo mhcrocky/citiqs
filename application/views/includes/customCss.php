@@ -242,10 +242,15 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif ($this->view === 'warehouse/productCategories') { ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl; ?>assets/cdn/css/jquery-ui.min.css" />
 <style>
     .ui-timepicker-container {
         z-index:1151 !important;
     }
+    .listCategories:hover {
+		cursor: -webkit-grab;
+		cursor: grab;
+	}
 </style>
 <?php } elseif ($this->view === 'warehouse/spots') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
