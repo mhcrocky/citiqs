@@ -51,7 +51,7 @@
                         </label>
                         <div class="col-md-6">
 
-                            <select name="eventId"
+                            <select name="eventId" onchange="getPromoterAmount(this, 'promoterAmount')"
                                 class="form-control input-w" required>
                                 <option value="">Select option</option>
                                 <?php if(is_countable($events) && count($events) > 0): ?>
@@ -69,7 +69,8 @@
                             Amount
                         </label>
                         <div class="col-md-6">
-                            <input type="number" step="0.01" name="amount" class="form-control" required>
+                            <input type="text" class="promoterAmount form-control" disabled>
+                            <input type="hidden" class="promoterAmount" name="amount">
                         </div>
                     </div>
 
@@ -126,7 +127,7 @@
                         </label>
                         <div class="col-md-6">
 
-                            <select id="eventId" name="eventId"
+                            <select id="eventId" name="eventId" onchange="getPromoterAmount(this, 'amount')"
                                 class="form-control input-w" required>
                                 <option value="">Select option</option>
                                 <?php if(is_countable($events) && count($events) > 0): ?>
@@ -144,7 +145,8 @@
                             Amount
                         </label>
                         <div class="col-md-6">
-                            <input type="text" id="amount" name="amount" class="form-control" required>
+                            <input type="text" class="amount form-control" disabled>
+                            <input type="hidden" class="amount" name="amount">
                         </div>
                     </div>
 
@@ -169,3 +171,8 @@
     </div>
 </div>
 <!-- End Edit Event Clearings Modal -->
+
+<script>
+const promoterPaid = JSON.parse('<?php echo json_encode($promoterPaid); ?>');
+console.log(typeof promoterPaid[1222] !== 'undefined');
+</script>
