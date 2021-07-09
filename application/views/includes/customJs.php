@@ -341,7 +341,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
 	<script src="<?php echo $this->baseUrl; ?>assets/home/js/import_emails.js"></script>
     <script src="<?php echo $this->baseUrl; ?>assets/home/js/ticketingMarketingDataTable.js"></script>
-<?php  } elseif ($this->view === 'events/event_clearings') { ?>
+<?php  } elseif ($this->view === 'events/event_clearings' || $this->view === 'events/clearing_tickets') { ?>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 	<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>

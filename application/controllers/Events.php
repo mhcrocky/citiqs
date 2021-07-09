@@ -1331,8 +1331,8 @@ class Events extends BaseControllerWeb
         $data['event_stats'] = isset($events[0]) ? $this->get_clearing_stats($events[0]['id']) : [];
         $data['payment_stats'] = isset($events[0]) ? $this->event_model->get_payment_methods_stats($this->vendor_id, $events[0]['id']) : [];
         $data['events'] = $events;
+        $data['promoterPaid'] = $this->event_model->get_promoter_amount($this->vendor_id);
 
-        
         $this->loadViews('events/clearing_tickets', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
 
     }
