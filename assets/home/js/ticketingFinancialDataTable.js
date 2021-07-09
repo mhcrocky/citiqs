@@ -238,7 +238,7 @@ $(document).ready( function () {
     },
     {
       title: 'Number of scans',
-      data: 'numberofscans'
+      data: 'numberofpersons'
     },
     {
       title: 'NOPTI',
