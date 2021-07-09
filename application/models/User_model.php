@@ -1006,7 +1006,7 @@ class User_model extends CI_Model
         $confirmTiqsAccount = false;
 
         if (!$this->isDuplicate($buyer['email'])) {
-            $confirmTiqsAccount = ($buyer['buyerConfirmed'] === '1');
+            $confirmTiqsAccount = (!empty($buyer['buyerConfirmed']) && $buyer['buyerConfirmed'] === '1');
             $password = Utility_helper::shuffleString(12);
 
             $buyer['password'] = getHashedPassword($password);

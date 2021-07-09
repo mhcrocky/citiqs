@@ -14,6 +14,7 @@
 
             // models
             $this->load->model('user_model');
+            $this->load->model('userex_model');
 
             // helpers
             $this->load->helper('validate_data_helper');
@@ -90,6 +91,14 @@
                 ]
             ];
 
+            // get user extended
+            $user = $this->userex_model->setProperty('userId', $this->user_model->id)->getUserEx();
+            if ($user) {
+                unset($user['id']);
+                unset($user['userId']);
+                $response['data']['buyer']['buyerExtended'] = $user;
+            }
+
             $this->response($response, 200);
             return;
         }
@@ -112,6 +121,11 @@
             $requireMobile = intval($vendor['requireMobile']) ? true : false;
             $requireName = intval($vendor['requireMobile']) ? true : false;
 
+            if (!empty($buyer['buyerExtended'])) {
+                $buyerExtended = $buyer['buyerExtended'];
+                unset($buyer['buyerExtended']);
+            }
+
             if (!$this->checkBuyerData($buyer)) return;
             if (!$this->checkTrimBuyerData($buyer)) return;
             if (!$this->checkBuyerEmail($buyer)) return;
@@ -124,7 +138,7 @@
             if (is_null($this->user_model->id)) {
                 $response = Connections_helper::getFailedResponse(Error_messages_helper::$BUYER_INSERT_FAILED);
                 $this->response($response, 200);
-                return;                
+                return;
             }
 
             $response = [
@@ -134,6 +148,11 @@
                     'apiIdentifier' => $insertBuyer['apiIdentifier']
                 ]
             ];
+
+            if (isset($buyerExtended)) {
+                $buyerExtended['userId'] = $this->user_model->id;
+                $response['buyerExtended'] = ($this->userex_model->setObjectFromArray($buyerExtended)->create()) ? '1' : '0';
+            }
 
             $this->user_model->resendActivationLink($buyer['email']);
 
@@ -158,13 +177,7 @@
 
             $buyerData = Sanitize_helper::sanitizePhpInput();
 
-
-
-
             if (!$this->checkPutBuyerData($buyerData)) return;
-
-
-
 
             $updateBuyer = [];
             if (!$this->setUpdateBuyerData($buyerData, $updateBuyer)) return;

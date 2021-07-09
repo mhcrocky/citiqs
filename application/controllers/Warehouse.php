@@ -225,7 +225,12 @@
                     }
                 }
             }
-            $this->session->set_flashdata('success', 'Availability time(s) for category "' . $data['category'] . '" inserted.');
+
+            if (!empty($insert)) {
+                $this->session->set_flashdata('success', 'Availability time(s) for category "' . $data['category'] . '" inserted.');
+            } else {
+                $this->session->set_flashdata('success', 'Category is available from 00:00:00 to 23:59:59');
+            }
 
             redirect($redirect);
             return;
