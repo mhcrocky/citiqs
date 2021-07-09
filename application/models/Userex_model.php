@@ -81,4 +81,42 @@ Class Userex_model extends AbstractSet_model implements InterfaceCrud_model, Int
         return true;
     }
 
+    public function setIdFromUserId(): ?Userex_model
+    {
+        $id = $this->readImproved([
+            'what' => [$this->table . '.id'],
+            'where' => [
+                $this->table . '.userId' => $this->userId
+            ]
+        ]);
+
+        if (empty($id)) return null;
+
+        $this->id = intval($id[0]['id']);
+        return $this;
+    }
+
+    public function getUserEx(): ?array
+    {
+        if ($this->id) {
+            $where = [
+                $this->table . '.id' => $this->id
+            ];
+        } elseif ($this->userId)  {
+            $where = [
+                $this->table . '.userId' => $this->userId
+            ];
+        }
+
+        if (!isset($where)) return null;
+
+        $user = $this->readImproved([
+            'what' => [$this->table . '.*'],
+            'where' => $where
+        ]);
+
+        return is_null($user) ? null : reset($user);
+
+    }
+
 }
