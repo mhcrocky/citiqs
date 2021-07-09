@@ -2559,7 +2559,7 @@ class Ajax extends CI_Controller
                 'messages' => ['Time "from" cannot be after time "to"']
             ];
         } else {
-            $update = $this->shopproducttime_model->resetProductTimes($timeFrom, $timeTo, $venodrId);
+            $update = $this->shopproducttime_model->resetProductTimes($venodrId, $timeFrom, $timeTo);
             if ($update) {
                 $response = [
                     'status' => '1',

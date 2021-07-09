@@ -75,7 +75,7 @@
             return true;
         }
 
-        public function resetProductTimes(string $timeFrom = '', string $timeTo = '', int $venodrId): bool
+        public function resetProductTimes(int $venodrId, string $timeFrom = '', string $timeTo = ''): bool
         {
             if (!$timeFrom && !$timeFrom) return false;
             if ($timeFrom && $timeFrom && strtotime($timeFrom) > strtotime($timeTo)) return false;
