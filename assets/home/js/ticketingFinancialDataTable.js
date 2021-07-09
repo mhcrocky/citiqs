@@ -163,13 +163,38 @@ $(document).ready( function () {
     footerCallback: function( tfoot, data, start, end, display ) {
       var api = this.api(), data;
            
-      let amountTotalData = api.column( 8,{ search: 'applied' } ).cache('search');
-      let amountTotal = amountTotalData.length ? 
-         amountTotalData.reduce( function (a, b) {
+      let amountData = api.column( 5,{ search: 'applied' } ).cache('search');
+      let ticketFeeData = api.column( 6,{ search: 'applied' } ).cache('search');
+      let scansTotalData = api.column( 7,{ search: 'applied' } ).cache('search');
+      let amountIncFeeData = api.column( 9,{ search: 'applied' } ).cache('search');
+
+      let amount = amountData.length ? 
+         amountData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
+      let ticketFee = ticketFeeData.length ? 
+         ticketFeeData.reduce( function (a, b) {
+             return parseFloat(a) + parseFloat(b);
+           }) : 0;
+      let scansTotal = scansTotalData.length ? 
+         scansTotalData.reduce( function (a, b) {
+           if (!$.isNumeric(a)) {
+             a = 0;
+           }
+           if (!$.isNumeric(b)) {
+            b = 0;
+           }
+             return parseInt(a) + parseInt(b);
+           }) : 0;
+      let amountIncFee = amountIncFeeData.length ? 
+         amountIncFeeData.reduce( function (a, b) {
              return parseFloat(a) + parseFloat(b);
            }) : 0;
 
-      $(tfoot).find('th').eq(7).html(round_up(amountTotal));
+      $(tfoot).find('th').eq(4).html(round_up(amount));
+      $(tfoot).find('th').eq(5).html(round_up(ticketFee));
+      $(tfoot).find('th').eq(6).html(parseInt(scansTotal));
+      $(tfoot).find('th').eq(8).html(round_up(amountIncFee));
     },
     rowId: function(a) {
       return 'row_id_' + a.bookandpay_id;
@@ -197,15 +222,27 @@ $(document).ready( function () {
     },
     {
       title: 'Price',
-      data: 'price'
+      data: null,
+      "render": function (data, type, row) {
+        let price = parseFloat(data.price);
+        return price.toFixed(2);
+      }
     },
     {
       title: 'Ticket Fee',
-      data: 'ticketFee'
+      data: null,
+      "render": function (data, type, row) {
+        let ticketFee = parseFloat(data.ticketFee);
+        return ticketFee.toFixed(2);
+      }
     },
     {
-      title: 'Quantity',
-      data: 'numberofpersons'
+      title: 'Number of scans',
+      data: 'numberofscans'
+    },
+    {
+      title: 'NOPTI',
+      data: 'nopti'
     },
     {
       title: 'Total Amount',
@@ -276,7 +313,7 @@ $(document).ready( function () {
         var date = full_timestamp.split(" - ");
         var min = moment(date[0]);
         var max = moment(date[1]);
-        var startDate = moment(data[11]);
+        var startDate = moment(data[12]);
         if (min == '' && max == '') { min = todayDate; }
         if (min == '' && startDate <= max) { return true;}
         if(max == '' && startDate >= min) {return true;}
