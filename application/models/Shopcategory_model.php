@@ -74,11 +74,15 @@
 
         public function fetch(array $where): ?array
         {
+            $this->load->config('custom');
+            $concatSeparator = $this->config->item('concatSeparator');
+            $concatGroupSeparator = $this->config->item('contactGroupSeparator');
+
             $where['archived'] = '0';
             $where['isApi'] = '0';
 
-            return $this->read(
-                [
+            $categories = $this->readImproved([
+                'what' => [
                     $this->table . '.id AS categoryId',
                     $this->table . '.category',
                     $this->table . '.active',
@@ -93,12 +97,52 @@
                     $this->table . '.showImage',
                     $this->table . '.openTime',
                     $this->table . '.closedTime',
+                    'tblShopCategorsTimes.categoryTimes',
                 ],
-                $where,
-                [],
-                'order_by',
-                [$this->table . '.sortNumber', 'ASC']
-            );
+                'where' => $where,
+                'joins' => [
+                    [
+                        '(
+                            SELECT
+                            tbl_shop_categories_times.categoryId,
+                                GROUP_CONCAT(
+                                    tbl_shop_categories_times.categoryId,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories_times.day,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories_times.timeFrom,
+                                    \'' .  $concatSeparator . '\', tbl_shop_categories_times.timeTo
+                                    SEPARATOR "'. $concatGroupSeparator . '"
+                                ) AS categoryTimes
+                            FROM
+                                tbl_shop_categories_times
+                            GROUP BY tbl_shop_categories_times.categoryId
+                            ORDER BY tbl_shop_categories_times.timeFrom ASC
+                        ) tblShopCategorsTimes',
+                        'tblShopCategorsTimes.categoryId = ' . $this->table.'.id',
+                        'LEFT'
+                    ],
+                ],
+                'conditions' => [
+                    'order_by' => [$this->table . '.sortNumber', 'ASC']
+                ]
+            ]);
+
+            $this->prepareCategoryTimes($categories, $concatGroupSeparator,  $concatSeparator);
+            return $categories;
+        }
+
+        private function prepareCategoryTimes(array &$categories, string $separator, string $concatSeparator): void
+        {
+            foreach ($categories as $key => $category) {
+                if ($category['categoryTimes']) {
+                    $category['categoryTimes'] = explode($separator, $category['categoryTimes']);
+                    $categoryTimes = array_map(function($data) use($concatSeparator) {
+                        return explode($concatSeparator, $data);
+                    }, $category['categoryTimes']);
+                    $categories[$key]['categoryTimes'] = Utility_helper::resetArrayByKeyMultiple($categoryTimes, '1');
+                }
+            }
+
+            return;
         }
 
         public function fetcUserCategories(): ?array

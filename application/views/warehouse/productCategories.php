@@ -386,11 +386,11 @@
 																value="<?php echo $day; ?>"
 																onchange="showDay(this,'<?php echo $day . '_'.  $category['categoryId']; ?>')"
 																name="categoryTime[<?php echo $day; ?>][day][]"
-																<?php                                                                    
-																	// if (isset($product['productTimes'][$day])) {
-																	// 	$first = array_shift($product['productTimes'][$day]);                                                                        
-																	// 	echo 'checked';
-																	// }
+																<?php
+																	if (isset($category['categoryTimes'][$day])) {
+																		$first = array_shift($category['categoryTimes'][$day]);
+																		echo 'checked';
+																	}
 																?>
 															/>
 															<?php echo ucfirst($day); ?>
@@ -398,7 +398,7 @@
 														<br/>
 														<div
 															id="<?php echo $day . '_'.  $category['categoryId']; ?>"
-															<?php #if (!isset($first)) echo 'style="display:none"'; ?>
+															<?php if (!isset($first)) echo 'style="display:none"'; ?>
 														>
 															<label for="from<?php echo $day . $category['categoryId']; ?>">
 																From:
@@ -407,9 +407,9 @@
 																	id="from<?php echo $day . $category['categoryId']; ?>"
 																	name="categoryTime[<?php echo $day; ?>][from][]"
 																	<?php
-																		// if (isset($first[2])) {
-																		// 	echo 'value="' . date('H:i', strtotime($first[2])) . '"';
-																		// }
+																		if (isset($first[2])) {
+																			echo 'value="' . date('H:i', strtotime($first[2])) . '"';
+																		}
 																	?>
 																/>
 															</label>
@@ -419,10 +419,10 @@
 																	id="to<?php echo $day . $category['categoryId']; ?>"
 																	name="categoryTime[<?php echo $day; ?>][to][]"
 																	<?php
-																		// if (isset($first[3])) {
-																		// 	echo 'value="' . date('H:i', strtotime($first[3])) . '"';
-																		// }
-																		// unset($first);
+																		if (isset($first[3])) {
+																			echo 'value="' . date('H:i', strtotime($first[3])) . '"';
+																		}
+																		unset($first);
 																	?>
 																	/>
 															</label>
@@ -435,23 +435,23 @@
 															</button>
 															<div id="<?php echo $day . $category['categoryId']; ?>Times">
 																<?php
-																	#if (isset($product['productTimes'][$day]) && $product['productTimes'][$day]) {
-																	#	foreach($product['productTimes'][$day] as $dayData) {
+																	if (isset($category['categoryTimes'][$day]) && $category['categoryTimes'][$day]) {
+																		foreach($category['categoryTimes'][$day] as $dayData) {
 																			?>
-																				<!-- <div>
+																				<div>
 																					<label>From
-																						<input type="time" name="productTime[<?php #echo $day; ?>][from][]" value="<?php #echo date('H:i', strtotime($dayData[2])); ?>" />
+																						<input type="time" name="categoryTime[<?php echo $day; ?>][from][]" value="<?php echo date('H:i', strtotime($dayData[2])); ?>" />
 																					</label>
 																					<label>To:
-																						<input type="time" name="productTime[<?php #echo $day; ?>][to][]" value="<?php #echo date('H:i', strtotime($dayData[3])); ?>"/>
+																						<input type="time" name="categoryTime[<?php echo $day; ?>][to][]" value="<?php echo date('H:i', strtotime($dayData[3])); ?>"/>
 																					</label>
 																					<span class="fa-stack fa-2x" onclick="removeParent(this)">
 																						<i class="fa fa-times"></i>
 																					</span>
-																				</div>  -->
+																				</div>
 																			<?php
-																		#}
-																	#}
+																		}
+																	}
 																?>
 															</div>
 														</div>
