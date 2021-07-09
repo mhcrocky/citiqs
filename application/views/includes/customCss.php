@@ -365,6 +365,7 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     </style>
 <?php  } elseif ($this->view === 'events/clearing_tickets') { ?>
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <style>
     .b-top {
         border-top: 1px solid #dfdfdf;
