@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="row mb-2">
-                        <div class="col-md-3 text-dark">Number of persons</div>
+                        <div class="col-md-3 text-dark">Number of scans</div>
                         <div class="col-md-3">
                             <input type="number" id="numberofpersons" name="numberofpersons" class="form-control inp-height"
                                 min="1" value="1">
