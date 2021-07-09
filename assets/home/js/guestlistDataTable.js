@@ -36,6 +36,16 @@ $(document).ready(function () {
         data: "id",
       },
       {
+        title: 'Reservation Id',
+        data: null,
+        "render": function(data, type, row) {
+          if(data.bookandpay_id == null){
+            return '-';
+          }
+          return data.reservationId;
+        }
+      },
+      {
         title: "Guest Name",
         data: "guestName",
       },
@@ -63,6 +73,16 @@ $(document).ready(function () {
             return 'No';
           }
           return 'Yes';
+        }
+      },
+      {
+        title: 'Bookandpay Id',
+        data: null,
+        "render": function(data, type, row) {
+          if(data.bookandpay_id == null){
+            return '-';
+          }
+          return data.bookandpay_id;
         }
       },
       {
