@@ -1331,7 +1331,6 @@ class Events extends BaseControllerWeb
         $data['event_stats'] = isset($events[0]) ? $this->get_clearing_stats($events[0]['id']) : [];
         $data['payment_stats'] = isset($events[0]) ? $this->event_model->get_payment_methods_stats($this->vendor_id, $events[0]['id']) : [];
         $data['events'] = $events;
-        $data['promoterPaid'] = $this->event_model->get_promoter_amount($this->vendor_id);
 
         $this->loadViews('events/clearing_tickets', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
 
@@ -1371,19 +1370,26 @@ class Events extends BaseControllerWeb
 
     }
 
-    public function clearings()
-	{
-        $this->global['pageTitle'] = 'TIQS: Event Clearings';
-        $events = $this->event_model->get_all_events($this->vendor_id);
-        $data['events'] = $this->event_model->get_all_events($this->vendor_id);
-        $data['promoterPaid'] = $this->event_model->get_promoter_amount($this->vendor_id);
-        $this->loadViews('events/event_clearings', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
-
-    }
-
     public function get_event_clearings()
 	{
-        $data = $this->event_model->get_event_clearings($this->vendor_id);
+        $eventId = $this->input->post('eventId');
+        if($eventId == '0'){
+            echo json_encode([]);
+            return ;
+        }
+        $promoterPaid = $this->event_model->get_promoter_amount($this->vendor_id);
+        $insertData = [
+            'description' => 'promoter paid',
+            'amount' => isset($promoterPaid[$eventId]) ? $promoterPaid[$eventId] : '0.00',
+            'eventId' => $eventId,
+            'vendorId' => $this->vendor_id,
+            'date' => date('Y-m-d')
+        ];
+        $data = [];
+
+        if($this->event_model->save_event_clearings($insertData)){
+            $data = $this->event_model->get_event_clearings($this->vendor_id, $eventId);
+        }
         echo json_encode($data);
 
     }
