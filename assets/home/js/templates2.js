@@ -74,23 +74,20 @@ function saveTemplate(
       'unlayerDesign' : unlayerDesign
   };
 
-  sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse, [selectTemplate, customTemplateSubject, customTemplate]);
+  sendAjaxPostRequest(post, url, 'createEmailTemplate', createEmailTemplateResponse);
 }
 
-function createEmailTemplateResponse(selectTemplate, customTemplateSubject, customTemplate, response) {
+function createEmailTemplateResponse(response) {
     alertifyAjaxResponse(response);
 
     if (response['status'] === '1') {
-        selectTemplate.value = '';
-        customTemplateSubject.value = '';
-        customTemplate.value = '';
-        if (response.update === '0') {
-            tinymce.get(templateGlobals.templateHtmlId).setContent('');
-        } else {
-            setTimeout(() => {
-              window.location.reload();
-            }, 1500);
-        }
+      if (response.update === '0') {
+          redirectToNewLocation(response['location']);
+      } else {
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+      }
     }
 
     return;

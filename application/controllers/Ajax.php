@@ -2092,8 +2092,15 @@ class Ajax extends CI_Controller
             $response = [
                 'status' => '1',
             ];
-            $response['messages'] = $id ? ['Template updated'] : ['Template created'];
-            $response['update'] = $id ? '1' : '0';
+
+            if ($id) {
+                $response['messages'] =  ['Template updated'];
+                $response['update'] = '1';
+            } else {
+                $response['update'] = '0';
+                $response['location'] = 'update_template' . DIRECTORY_SEPARATOR . $this->shoptemplates_model->id;
+                $this->session->set_flashdata('success', 'Template created');
+            }
         } else {
             $response = [
                 'status' => '0',
