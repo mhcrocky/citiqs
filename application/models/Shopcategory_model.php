@@ -121,7 +121,10 @@
                 ]
             ]);
 
-            $this->prepareCategoryTimes($categories, $concatGroupSeparator,  $concatSeparator);
+            if ($categories) {
+                $this->prepareCategoryTimes($categories, $concatGroupSeparator,  $concatSeparator);
+            }
+
             return $categories;
         }
 
