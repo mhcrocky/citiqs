@@ -347,7 +347,7 @@ class Booking_events extends BaseControllerWeb
             'quantity' => $ticket['quantity'],
             'price' => $ticketInfo->ticketPrice,
             'maxTicketQuantity' => $ticketInfo->ticketQuantity,
-            'numberofpersons' => $ticketInfo->numberofpersons,
+            'numberofpersons' => $ticketInfo->numberofscans,
             'ticketType' => $ticketType,
             'ticketFee' => $ticketInfo->ticketFee,
             'ticketGroupId' => $ticketInfo->ticketGroupId,
