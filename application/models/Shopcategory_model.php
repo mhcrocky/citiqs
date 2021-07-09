@@ -24,8 +24,6 @@
         public $isApi;
         public $image;
         public $showImage;
-        public $openTime;
-        public $closedTime;
         private $table = 'tbl_shop_categories';
 
         protected function setValueType(string $property,  &$value): void
@@ -67,8 +65,7 @@
             if (isset($data['openKey']) && !Validate_data_helper::validateString($data['openKey'])) return false;
             if (isset($data['isApi']) && !($data['isApi'] === '1' || $data['isApi'] === '0')) return false;
             if (isset($data['showImage']) && !($data['showImage'] === '1' || $data['showImage'] === '0')) return false;
-            if (isset($data['openTime']) && !Validate_data_helper::validateDate($data['openTime'])) return false;
-            if (isset($data['closedTime']) && !Validate_data_helper::validateDate($data['closedTime'])) return false;
+
             return true;
         }
 
@@ -95,8 +92,6 @@
                     $this->table . '.openKey',
                     $this->table . '.image',
                     $this->table . '.showImage',
-                    $this->table . '.openTime',
-                    $this->table . '.closedTime',
                     'tblShopCategorsTimes.categoryTimes',
                 ],
                 'where' => $where,

@@ -81,4 +81,42 @@
             return true;
         }
 
+        private function isCategoryInserted(): bool
+        {
+            $id = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.categoryId' => $this->categoryId
+                ],
+                'conditions' => [
+                    'limit' => ['1']
+                ]
+            ]);
+
+            return !is_null($id);
+        }
+
+        public function isCategoryOpen(): bool
+        {
+            // category is open every day from 00:00:00 to 23:59:59 if no any records in table
+            if (!$this->isCategoryInserted()) return true;
+
+            $day = date('D');
+            $time = date('H:i:s');
+            $id = $this->readImproved([
+                'what' => [$this->table . '.id'],
+                'where' => [
+                    $this->table . '.categoryId' => $this->categoryId,
+                    $this->table . '.day' => $day,
+                    $this->table . '.timeFrom<=' => $time,
+                    $this->table . '.timeTo>' => $time
+                ],
+                'conditions' => [
+                    'limit' => ['1']
+                ]
+            ]);
+
+            return !is_null($id);
+        }
+
     }

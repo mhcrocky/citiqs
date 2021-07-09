@@ -39,6 +39,7 @@
             $this->load->model('shopprinters_model');
             $this->load->model('shopvendortemplate_model');
             $this->load->model('shoppaymentmethods_model');
+            $this->load->model('shopcategorytime_model');
 
             $this->load->config('custom');
 
@@ -135,11 +136,27 @@
 
             $preferedView = $this->getPreferedView($data, $spot, $vendor, $orderDataRandomKey);
 
+            // filter categories by time
+            // it is better TO DO here, not on querr to cover case when user (after som time) click back in browser
+            $this->chcekCategoriesTimes($data);
+
             if ($vendor['preferredView'] === $this->config->item('view2021')) {
                 $this->loadViews($preferedView, $this->global, $data, 'footer2021', 'header2021');
             } else {
                 $this->loadViews($preferedView, $this->global, $data, null, 'headerWarehousePublic', Language_helper::getLanguage($vendor['vendorId']));
             }
+            return;
+        }
+
+        private function chcekCategoriesTimes(array &$data): void
+        {
+            foreach ($data['mainProducts'] as $categoryName => $details) {
+                $categoryId = intval($details[0]['categoryId']);
+                if (!$this->shopcategorytime_model->setProperty('categoryId', $categoryId)->isCategoryOpen()) {
+                    unset($data['mainProducts'][$categoryName]);
+                }
+            }
+
             return;
         }
 
