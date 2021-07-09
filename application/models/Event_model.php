@@ -870,7 +870,38 @@ class Event_model extends CI_Model {
 		];
 
 		return $newData;
-	}  
+	}
+
+	public function get_promoter_amount($vendorId)
+	{
+		$query = $this->db->query("SELECT tbl_bookandpay.id, tbl_events.id as eventId, paymentMethod, tbl_bookandpay.price
+		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
+		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.id");
+		$results = $query->result_array();
+
+		$paymentEngineFee = 0;
+		$promoterPaid = 0;
+		$paymentMethods = $this->get_payment_methods($vendorId);
+		$newData = [];
+
+		if(is_array($results) && count($results)){
+			foreach($results as $result){
+				$eventId = $result['eventId'];
+				$paymentMethodFee = $this->get_payment_methods_fee($paymentMethods, $result['paymentMethod']);
+				$percentAmount = (floatval($paymentMethodFee['percent'])*floatval($result['price'])) / 100;
+
+				if($paymentMethodFee['vendorCost'] == '1'){
+					$promoterPaid += $percentAmount + floatval($paymentMethodFee['amount']);
+				}
+
+				$newData[$eventId] = number_format($promoterPaid, 2, '.', '');
+
+			}
+		}
+
+		return $newData;
+	} 
 
 	public function get_reservations_stats_by_tags($vendorId)
 	{
@@ -1793,10 +1824,31 @@ class Event_model extends CI_Model {
 	{
 		$this->db->select('tbl_event_clearings.*, eventname');
 		$this->db->from('tbl_event_clearings');
-		$this->db->join('tbl_events', 'tbl_event_clearings.eventId = tbl_events', 'left');
+		$this->db->join('tbl_events', 'tbl_event_clearings.eventId = tbl_events.id', 'left');
 		$query = $this->db->get();
 		return $query->result_array();
 
+	}
+
+	public function save_event_clearings($data) : bool
+	{
+		$this->db->insert('tbl_event_clearings',$data);
+		return $this->db->insert_id() ? true : false;
+	}
+
+	public function update_event_clearings($vendorId, $id, $data) : bool
+	{
+		$this->db->where("id", $id);
+		$this->db->where("vendorId", $vendorId);
+		$this->db->update('tbl_event_clearings', $data);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+	public function delete_event_clearings($vendorId, $id) : bool
+	{
+		$where = ['id' => $id, 'vendorId' => $vendorId];
+		$this->db->delete('tbl_event_clearings', $where);
+		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 
 	private function generateNewVoucher() : string
