@@ -1821,11 +1821,13 @@ class Event_model extends CI_Model {
 		
 	}
 
-	public function get_event_clearings()
+	public function get_event_clearings($vendorId, $eventId)
 	{
 		$this->db->select('tbl_event_clearings.*, eventname');
 		$this->db->from('tbl_event_clearings');
 		$this->db->join('tbl_events', 'tbl_event_clearings.eventId = tbl_events.id', 'left');
+		$this->db->where('tbl_event_clearings.vendorId', $vendorId);
+		$this->db->where('tbl_event_clearings.eventId', $eventId);
 		$query = $this->db->get();
 		return $query->result_array();
 
@@ -1833,16 +1835,28 @@ class Event_model extends CI_Model {
 
 	public function save_event_clearings($data) : bool
 	{
+		$vendorId = $data['vendorId'];
+		$eventId = $data['eventId'];
+		$event_clearings = $this->get_event_clearings($vendorId, $eventId);
+		if(is_countable($event_clearings) && count($event_clearings) > 0){
+			unset($data['vendorId']);
+			unset($data['eventId']);
+			return $this->update_event_clearings($vendorId, $eventId, $data);
+		}
+		return $this->add_event_clearings($data);
+	}
+
+	public function add_event_clearings($data) : bool
+	{
 		$this->db->insert('tbl_event_clearings',$data);
 		return $this->db->insert_id() ? true : false;
 	}
 
-	public function update_event_clearings($vendorId, $id, $data) : bool
+	public function update_event_clearings($vendorId, $eventId, $data) : bool
 	{
-		$this->db->where("id", $id);
+		$this->db->where("eventId", $eventId);
 		$this->db->where("vendorId", $vendorId);
-		$this->db->update('tbl_event_clearings', $data);
-		return ($this->db->affected_rows() > 0) ? true : false;
+		return $this->db->update('tbl_event_clearings', $data);
 	}
 
 	public function delete_event_clearings($vendorId, $id) : bool
