@@ -1376,6 +1376,7 @@ class Events extends BaseControllerWeb
         $this->global['pageTitle'] = 'TIQS: Event Clearings';
         $events = $this->event_model->get_all_events($this->vendor_id);
         $data['events'] = $this->event_model->get_all_events($this->vendor_id);
+        $data['promoterPaid'] = $this->event_model->get_promoter_amount($this->vendor_id);
         $this->loadViews('events/event_clearings', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
 
     }
