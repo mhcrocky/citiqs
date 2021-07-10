@@ -679,7 +679,7 @@ class Event_model extends CI_Model {
 
 	public function get_events_stats($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, (tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount, tbl_event_shop_tags.tag, paymentMethod, nopti
+		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, (tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount, tbl_event_shop_tags.tag, paymentMethod, tbl_bookandpay.numberofpersons as nopti
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
@@ -820,7 +820,7 @@ class Event_model extends CI_Model {
 
 	public function get_clearing_event_stats($vendorId, $eventId) : array
 	{
-		$query = $this->db->query("SELECT tbl_events.id, nopti, tbl_bookandpay.price, tbl_bookandpay.ticketFee
+		$query = $this->db->query("SELECT tbl_events.id, tbl_bookandpay.numberofpersons as nopti, tbl_bookandpay.price, tbl_bookandpay.ticketFee
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_ticket_options ON tbl_event_tickets.id = tbl_ticket_options.ticketId 
