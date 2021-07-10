@@ -657,7 +657,10 @@
 			</div>
 
 			<div class="w-100 pt-25 mb-2 ticket-info-card">
-				<div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
+				<div class="text-center "style="text-align:center">
+					<img src="<?php echo $this->baseUrl; ?>assets/home/images/ageiconsmale.png" alt="tiqs" width="100" height="auto" />
+				</div>
+				<div style="height: 100px" class="w-100 d-flex justify-content-center align-items-center">
 					AGE AVG: <?php echo isset($avg_age['male'][$key]) ? $avg_age['male'][$key] : '-'; ?>
 				</div>
 				<?php foreach($tickets as $ticket): ?>
@@ -665,6 +668,7 @@
 					<div class="w-100 f-12 pr-2 d-table-cell">
 						<?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
 					</div>
+
 					<div class="f-12 pr-2 d-table-cell text-right">
 						<?php echo intval($ticket['male']) ?>
 					</div>
@@ -689,21 +693,25 @@
 			</div>
 
 			<div class="w-100 pt-25 mb-2 ticket-info-card">
-			<div style="height: 200px" class="w-100 d-flex justify-content-center align-items-center">
-				AGE AVG: <?php echo isset($avg_age['female'][$key]) ? $avg_age['female'][$key] : '-'; ?>
+				<div class="text-center" style="text-align:center">
+					<img src="<?php echo $this->baseUrl; ?>assets/home/images/agefemale.png" alt="tiqs" width="100" height="auto" />
 				</div>
-				<?php foreach($tickets as $ticket): ?>
-				<div class="d-table">
-					<div class="w-100 f-12 pr-2 d-table-cell">
-						<?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
+				<div style="height: 100px" class="w-100 d-flex justify-content-center align-items-center">
+					AGE AVG: <?php echo isset($avg_age['female'][$key]) ? $avg_age['female'][$key] : '-'; ?>
 					</div>
-					<div class="f-12 pr-2 d-table-cell text-right">
-						<?php echo intval($ticket['female']); ?>
-					</div>
-				</div>
-				<?php endforeach; ?>
-			</div>
+					<?php foreach($tickets as $ticket): ?>
+					<div class="d-table">
+						<div class="w-100 f-12 pr-2 d-table-cell">
+							<?php echo $ticket['eventname']; ?> - <?php echo $ticket['ticketDescription']; ?>
+						</div>
 
+						<div class="f-12 pr-2 d-table-cell text-right">
+							<?php echo intval($ticket['female']); ?>
+						</div>
+					</div>
+					<?php endforeach; ?>
+				</div>
+<!--			</div>-->
 		</div>
 	</div>
 
