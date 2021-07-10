@@ -58,10 +58,10 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-3 text-dark">Min 0.00</div>
+                        <div class="col-md-3 text-dark">Fee to your customer</div>
                         <div class="col-md-3">
-                            <input type="number" id="nonSharedTicketFee" name="nonSharedTicketFee"
-                                class="form-control inp-height" min="0" step="0.01" value="1.00">
+                            <input type="text" id="nonSharedTicketFee" name="nonSharedTicketFee"
+                                class="form-control inp-height" min="0" step="0.01" value="<?php echo number_format(floatval($vendorTicketFee), 2); ?>" readonly>
                         </div>
                         <!--
                     <div class="col-md-3">Shared ( Min 0.00 )</div>

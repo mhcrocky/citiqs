@@ -787,7 +787,7 @@ class Event_model extends CI_Model {
 
 	public function get_financial_report($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_bookandpay.id as bookandpay_id, reservationId, reservationtime, price, numberofpersons, nopti, ticketFee, name, age, gender, mobilephone, email, tbl_event_tickets.ticketDescription, eventname, tbl_bookandpay.tag, tbl_event_shop_tags.tag as tagName
+		$query = $this->db->query("SELECT tbl_bookandpay.id as bookandpay_id, reservationId, reservationtime, price, tbl_bookandpay.numberofpersons, nopti, ticketFee, name, age, gender, mobilephone, email, tbl_event_tickets.ticketDescription, eventname, tbl_bookandpay.tag, tbl_event_shop_tags.tag as tagName
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_ticket_options ON tbl_event_tickets.id = tbl_ticket_options.ticketId
@@ -900,22 +900,20 @@ class Event_model extends CI_Model {
 		return $newData;
 	}
 
-	public function get_promoter_amount($vendorId)
+	public function get_promoter_amount($vendorId, $eventId)
 	{
-		$query = $this->db->query("SELECT tbl_bookandpay.id, tbl_events.id as eventId, paymentMethod, tbl_bookandpay.price
+		$query = $this->db->query("SELECT tbl_bookandpay.id, paymentMethod, tbl_bookandpay.price
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.id");
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_events.id='".$eventId."' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.id");
 		$results = $query->result_array();
 
-		$paymentEngineFee = 0;
 		$promoterPaid = 0;
 		$paymentMethods = $this->get_payment_methods($vendorId);
-		$newData = [];
 
 		if(is_array($results) && count($results)){
 			foreach($results as $result){
-				$eventId = $result['eventId'];
+
 				$paymentMethodFee = $this->get_payment_methods_fee($paymentMethods, $result['paymentMethod']);
 				$percentAmount = (floatval($paymentMethodFee['percent'])*floatval($result['price'])) / 100;
 
@@ -923,12 +921,12 @@ class Event_model extends CI_Model {
 					$promoterPaid += $percentAmount + floatval($paymentMethodFee['amount']);
 				}
 
-				$newData[$eventId] = number_format($promoterPaid, 2, '.', '');
-
 			}
+
+			
 		}
 
-		return $newData;
+		return $promoterPaid;
 	} 
 
 	public function get_reservations_stats_by_tags($vendorId)
@@ -1943,7 +1941,7 @@ class Event_model extends CI_Model {
 		return $paymentFee;
 	}
 
-	private function get_vendor_ticketfee($vendorId)
+	public function get_vendor_ticketfee($vendorId)
 	{
 		$this->db->select('ticketFee');
 		$this->db->from('tbl_shop_vendors');
