@@ -62,8 +62,8 @@
 				<li data-menuid="3.4"><a href="<?php echo $this->baseUrl; ?>invoices"><i class="ti-layout"></i> <span><?php echo $this->language->tLine('Invoices'); ?></span></a></li>
 
 				<li data-menuid="3.1.1"><a href="<?php echo $this->baseUrl; ?>clearing"><i class="ti-wallet"></i> <span><?php echo $this->language->tLine('PAY-OUT QR Menu'); ?></span></a></li>
-				<li data-menuid="3.1.2"><a href="<?php echo $this->baseUrl; ?>clearingreservations"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('PAY-OUT Reservations'); ?></span></a></li>
-				<li data-menuid="3.1.3"><a href="<?php echo $this->baseUrl; ?>clearingtickets"><i class="ti-layers-alt"></i> <span><?php echo $this->language->tLine('PAY-OUT E-Tickets'); ?></span></a></li>
+<!--				<li data-menuid="3.1.2"><a href="--><?php //echo $this->baseUrl; ?><!--clearingreservations"><i class="ti-layers-alt"></i> <span>--><?php //echo $this->language->tLine('PAY-OUT Reservations'); ?><!--</span></a></li>-->
+<!--				<li data-menuid="3.1.3"><a href="--><?php //echo $this->baseUrl; ?><!--clearingtickets"><i class="ti-layers-alt"></i> <span>--><?php //echo $this->language->tLine('PAY-OUT E-Tickets'); ?><!--</span></a></li>-->
 				<li><a href="<?php echo $this->baseUrl; ?>payment_methods"><i class="ti-credit-card"></i><span><?php echo $this->language->tLine('Payment methods'); ?></span></a></li>
 			</ul>
 

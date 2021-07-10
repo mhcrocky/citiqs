@@ -591,7 +591,7 @@ $config['reportPeriods'] = [$config['dayPeriod'],$config['weekPeriod'], $config[
 
 $config['messageToBuyerTags'] = ['{orderId}', '{buyerName}'];
 
-$config['testingIds'] = [417, 423, 422, 43533, 46244, 59413, 45960, 45846 ];
+$config['testingIds'] = [417, 423, 421, 422, 43533, 46244, 59413, 45960, 45846 ];
 
 $config['eventImagesFolder'] = 'assets/images/events/';
 

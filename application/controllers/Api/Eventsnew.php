@@ -103,9 +103,9 @@ class Eventsnew extends REST_Controller
 		$file = FCPATH . 'application/tiqs_logs/mobileemail.txt';
 		$errorMessage = 'email for tickets: ' . $email;
 		Utility_helper::logMessage($file, $errorMessage);
-		$result = [];
-		$this->response($result, 200);
-		Return;
+//		$result = [];
+//		$this->response($result, 200);
+//		Return;
 
 		$email = $this->security->xss_clean($this->input->post('email'));
 		$this->db->select('tbl_events.eventname, tbl_events.eventImage, tbl_bookandpay.*');
@@ -114,6 +114,51 @@ class Eventsnew extends REST_Controller
 		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'ínner');
 		$this->db->where('tbl_bookandpay.email', $email);
 		$this->db->where_in('tbl_bookandpay.paid', [1,3]);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		$this->response($result, 200);
+	}
+
+	public function SingleTickets_post()
+	{
+		$reservationId = $this->security->xss_clean($this->input->post('reservationId'));
+//		$email = $this->security->xss_clean($this->input->post('email'));
+		$file = FCPATH . 'application/tiqs_logs/mobileemail.txt';
+		$errorMessage = 'Single ticket: ' . $reservationId;
+		Utility_helper::logMessage($file, $errorMessage);
+//		$result = [];
+//		$this->response($result, 200);
+//		Return;
+
+//		$email = $this->security->xss_clean($this->input->post('email'));
+		$this->db->select('tbl_events.eventname, tbl_events.eventImage, tbl_bookandpay.*');
+		$this->db->from('tbl_bookandpay');
+		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'inner');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'ínner');
+		$this->db->where('tbl_bookandpay.reservationId', $reservationId);
+		$this->db->where_in('tbl_bookandpay.paid', [1,3]);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		$this->response($result, 200);
+	}
+
+	public function Ticketsevent_post()
+	{
+		$eventsId = $this->security->xss_clean($this->input->post('eventId'));
+		$file = FCPATH . 'application/tiqs_logs/mobileemail.txt';
+		$errorMessage = 'email for tickets: ' . $eventsId;
+		Utility_helper::logMessage($file, $errorMessage);
+//		$result = [];
+//		$this->response($result, 200);
+//		Return;
+
+		$email = $this->security->xss_clean($this->input->post('email'));
+		$this->db->select('tbl_events.eventname, tbl_events.eventImage, tbl_bookandpay.*');
+		$this->db->from('tbl_bookandpay');
+		$this->db->join('tbl_event_tickets', 'tbl_event_tickets.id = tbl_bookandpay.eventid', 'inner');
+		$this->db->join('tbl_events', 'tbl_events.id = tbl_event_tickets.eventId', 'ínner');
+		$this->db->where('tbl_events.id', $eventsId);
+//		$this->db->where_in('tbl_bookandpay.paid', [1,3]);
 		$query = $this->db->get();
 		$result = $query->result_array();
 		$this->response($result, 200);
