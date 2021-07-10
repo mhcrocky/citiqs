@@ -91,8 +91,10 @@ class Events extends BaseControllerWeb
             'vouchers' => $this->shopvoucher_model->read($what,$where,$join, 'group_by', ['tbl_shop_voucher.id']),
             'groups' => $this->event_model->get_ticket_groups($eventId),
             'guests' => $this->event_model->get_guestlist($eventId, $this->vendor_id),
-            'tickets' => $this->event_model->get_tickets($this->vendor_id, $eventId)
+            'tickets' => $this->event_model->get_tickets($this->vendor_id, $eventId),
+            'vendorTicketFee' => $this->event_model->get_vendor_ticketfee($this->vendor_id)
         ];
+        
         $this->loadViews("events/step-two", $this->global, $data, 'footerbusiness', 'headerbusiness');
 
     }
