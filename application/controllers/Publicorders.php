@@ -150,10 +150,12 @@
 
         private function chcekCategoriesTimes(array &$data): void
         {
-            foreach ($data['mainProducts'] as $categoryName => $details) {
-                $categoryId = intval($details[0]['categoryId']);
-                if (!$this->shopcategorytime_model->setProperty('categoryId', $categoryId)->isCategoryOpen()) {
-                    unset($data['mainProducts'][$categoryName]);
+            if (!empty($data['mainProducts'])) {
+                foreach ($data['mainProducts'] as $categoryName => $details) {
+                    $categoryId = intval($details[0]['categoryId']);
+                    if (!$this->shopcategorytime_model->setProperty('categoryId', $categoryId)->isCategoryOpen()) {
+                        unset($data['mainProducts'][$categoryName]);
+                    }
                 }
             }
 
