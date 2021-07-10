@@ -64,14 +64,15 @@
             $reportsData = $this->shoporder_model->fetchReportDetails($userId, $data['from'], $data['to']);
 
             if ($reportsData) {
-                $data['reports'] = [
-                    'orders' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'orderId'),
-                    'categories' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'category'),
-                    'spots' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'spotId'),
-                    'buyers' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'buyerId'),
-                    'products' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'productId'),
-                ];
-            } 
+                // $data['reports'] = [
+                //     'orders' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'orderId'),
+                //     'categories' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'category'),
+                //     'spots' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'spotId'),
+                //     'buyers' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'buyerId'),
+                //     'products' => Utility_helper::resetArrayByKeyMultiple($reportsData, 'productId'),
+                // ];
+                $data['reports'] = Shoporder_model::prepareReportes($reportsData);
+            }
 
             $this->loadViews('warehouse/warehouse', $this->global, $data, 'footerbusiness', 'headerbusiness');
         }
@@ -302,7 +303,6 @@
             return;
         }
 
-        // PRODUCTS
         /**
          * Return json data for datatables
          *

@@ -1856,4 +1856,45 @@
                 ]
             ]);
         }
+
+
+        public static function prepareReportes(array $data): array
+        {
+            $reportes = [
+                'orders' => [],
+                'categories' => [],
+                'spots' => [],
+                'buyers' => [],
+                'products' => [],
+            ];
+
+            foreach($data as $array) {
+                if (!isset($reportes['orders'][$array['orderId']])) {
+                    $reportes['orders'][$array['orderId']] = [];
+                }
+                array_push($reportes['orders'][$array['orderId']], $array);
+
+                if (!isset($reportes['categories'][$array['category']])) {
+                    $reportes['categories'][$array['category']] = [];
+                }
+                array_push($reportes['categories'][$array['category']], $array);
+
+                if (!isset($reportes['spots'][$array['spotId']])) {
+                    $reportes['spots'][$array['spotId']] = [];
+                }
+                array_push($reportes['spots'][$array['spotId']], $array);
+
+                if (!isset($reportes['buyers'][$array['buyerId']])) {
+                    $reportes['buyers'][$array['buyerId']] = [];
+                }
+                array_push($reportes['buyers'][$array['buyerId']], $array);
+
+                if (!isset($reportes['products'][$array['productId']])) {
+                    $reportes['products'][$array['productId']] = [];
+                }
+                array_push($reportes['products'][$array['productId']], $array);
+            }
+
+            return $reportes;
+        }
     }
