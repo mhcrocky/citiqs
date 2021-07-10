@@ -12,7 +12,7 @@ $("#editEventClearing-form").validate({
     let data = new FormData(form);
     updateEventClearing(serializeData(data))
   }
-});
+}); 
 
 $(document).ready(function () {
 
@@ -24,8 +24,13 @@ $(document).ready(function () {
     ],
     pageLength: 5,
     ajax: {
-      type: "get",
+      type: "post",
       url: globalVariables.baseUrl + "events/get_event_clearings",
+      data: function(data) {
+        let eventId = $('#eventId').val();
+        data.eventId = eventId;
+
+      },
       dataSrc: "",
     },
 
@@ -49,22 +54,6 @@ $(document).ready(function () {
       {
         title: 'Date',
         data: 'date'
-      },
-      {
-        title: 'Edit',
-        data: null,
-        render: function (data, type, row) {
-          let html = '<input id="eventClearingData_'+ data.id + '" type="hidden" value="'+data.description+'" data-amount="'+data.amount+'" data-eventId="'+data.eventId+'"  data-date="'+data.date+'">'
-          html += '<button class="btn btn-primary" onclick="editEventClearing('+ data.id + ')">Edit</button>';
-          return html;
-        }
-      },
-      {
-        title: 'Delete',
-        data: null,
-        render: function (data, type, row) {
-          return '<button class="btn btn-danger" onclick="confirmDelete('+ data.id + ')">Delete</button>';
-        }
       }
     ],
     createdRow: function(row, data, dataIndex){

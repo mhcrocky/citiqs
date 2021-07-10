@@ -268,8 +268,7 @@ $(document).ready( function () {
       title: "",
       data: null,
       render: function (data, type, row) {
-        let amount = parseFloat(data.price) + parseFloat(data.ticketFee);
-        let total_amount = parseFloat(amount) * parseFloat(data.numberofpersons);
+        let total_amount = parseFloat(data.price) + parseFloat(data.ticketFee);
         let html =
           '<input type="hidden" id="' +
           data.reservationId +
