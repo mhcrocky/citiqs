@@ -708,7 +708,7 @@ class Event_model extends CI_Model {
 				$tickets['booking_number'][$ticketId] += $result['nopti'];
 				$tickets['amount'][$ticketId] += floatval($result['amount']);
 			} else {
-				$tickets['booking_number'][$ticketId] = 1;
+				$tickets['booking_number'][$ticketId] = $result['nopti'];
 				$tickets['amount'][$ticketId] = floatval($result['amount']);
 	
 			}
