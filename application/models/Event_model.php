@@ -679,10 +679,11 @@ class Event_model extends CI_Model {
 
 	public function get_events_stats($vendorId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, (tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount, tbl_event_shop_tags.tag, paymentMethod
+		$query = $this->db->query("SELECT tbl_events.id as eventId, tbl_event_tickets.id, eventname, tbl_event_tickets.ticketDescription, (tbl_bookandpay.price+tbl_bookandpay.ticketFee) as amount, tbl_event_shop_tags.tag, paymentMethod, nopti
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		LEFT JOIN tbl_event_shop_tags ON tbl_bookandpay.tag = tbl_event_shop_tags.id
+		LEFT JOIN tbl_ticket_options ON tbl_event_tickets.id = tbl_ticket_options.ticketId 
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendorId." $sql");
 		$results = $query->result_array();
 		
@@ -694,7 +695,7 @@ class Event_model extends CI_Model {
 			$paymentMethod = empty($result['paymentMethod']) ? 'not saved' : $result['paymentMethod'];
 			
 			if(isset($tickets[$eventId])){
-				$tickets[$eventId]['booking_number'] += 1;
+				$tickets[$eventId]['booking_number'] += $result['nopti'];
 				$tickets[$eventId]['amount'] += floatval($result['amount']);
 			} else {
 				$tickets[$eventId]['booking_number'] = 1;
@@ -704,7 +705,7 @@ class Event_model extends CI_Model {
 
 			
 			if(isset($tickets['booking_number'][$ticketId])){
-				$tickets['booking_number'][$ticketId] += 1;
+				$tickets['booking_number'][$ticketId] += $result['nopti'];
 				$tickets['amount'][$ticketId] += floatval($result['amount']);
 			} else {
 				$tickets['booking_number'][$ticketId] = 1;
@@ -819,13 +820,39 @@ class Event_model extends CI_Model {
 
 	public function get_clearing_event_stats($vendorId, $eventId) : array
 	{
-		$query = $this->db->query("SELECT tbl_events.id, COUNT(tbl_bookandpay.id) AS tickets_sold, SUM(tbl_bookandpay.price) as amount, SUM(tbl_bookandpay.ticketFee) as totalTicketFee, SUM(tbl_bookandpay.price+tbl_bookandpay.ticketFee) as totalAmount
+		$query = $this->db->query("SELECT tbl_events.id, nopti, tbl_bookandpay.price, tbl_bookandpay.ticketFee
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
+		LEFT JOIN tbl_ticket_options ON tbl_event_tickets.id = tbl_ticket_options.ticketId 
 		WHERE tbl_bookandpay.customer = ".$vendorId." AND tbl_bookandpay.ticketDescription <> '' AND SpotId = '0' AND paid='1' AND tbl_events.id = ".$eventId."
-		GROUP BY tbl_events.id");
-		$stats = (array) $query->first_row();
-		$stats['totalOrders'] = $this->get_total_event_orders($vendorId, $eventId);
+		GROUP BY tbl_bookandpay.id");
+		$results = $query->result_array();
+		$stats = [];
+		$amount = 0;
+		$tickets_sold = 0;
+		$totalTicketFee = 0;
+		$totalAmount = 0;
+		$vendorTicketFee = $this->get_vendor_ticketfee($vendorId);
+
+		if($query->num_rows() > 0){
+			foreach($results as $result){
+				$nopti = is_numeric($result['nopti']) ? intval($result['nopti']) : 1;
+				$tickets_sold += $nopti;
+				$amount += floatval($result['price']);
+				$totalTicketFee += $nopti * floatval($vendorTicketFee);
+				$totalAmount += floatval($result['price']) + floatval($result['ticketFee']);
+
+			}
+		}
+
+		$stats = [
+			'amount' => $amount,
+			'tickets_sold' => $tickets_sold,
+			'totalTicketFee' => $totalTicketFee,
+			'totalAmount' => $totalAmount,
+			'totalOrders' => $this->get_total_event_orders($vendorId, $eventId)
+		];
+
 		return $stats;
 
 	} 
@@ -1914,6 +1941,20 @@ class Event_model extends CI_Model {
 		];
 
 		return $paymentFee;
+	}
+
+	private function get_vendor_ticketfee($vendorId)
+	{
+		$this->db->select('ticketFee');
+		$this->db->from('tbl_shop_vendors');
+		$this->db->where('vendorId', $vendorId);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result = $query->first_row();
+			return $result->ticketFee;
+		}
+		return 0;
+		
 	}
 	
 
