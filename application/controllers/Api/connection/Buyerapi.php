@@ -196,6 +196,61 @@
             return;
         }
 
+        /**
+         * buyerex_put
+         *
+         * Update buyer extended data
+         *
+         * @see Authentication::vendorAuthentication()
+         * @return void
+         */
+        public function buyerex_put($apiIdentifier): void
+        {
+            $vendor = $this->vendorAuthentication();
+
+            if (is_null($vendor)) return;
+
+            $buyerExData = Sanitize_helper::sanitizePhpInput();
+            if (empty($buyerExData)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_SENT);
+                $this->response($response, 200);
+                return;
+            };
+            $buyerExData = reset($buyerExData);
+
+            if (!$this->checkApiIdentifier($apiIdentifier)) return;
+
+            $update = $this->userex_model
+                                        ->setProperty('userId', $this->user_model->id)
+                                        ->setIdFromUserId()
+                                        ->setObjectFromArray($buyerExData)
+                                        ->update();
+
+            if (!$update) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$BUYER_EX_UPDATE_FAILED);
+                $this->response($response, 200);
+                return;
+            };
+
+            $response = [
+                'status' => Connections_helper::$SUCCESS_STATUS,
+                'message' => 'Buyer extended updated'
+            ];
+            $this->response($response, 200);
+            return;
+        }
+
+        private function getUpdateBuyerExData()
+        {
+            $buyerExData = Sanitize_helper::sanitizePhpInput();
+            if (empty($buyerExData)) {
+                $response = Connections_helper::getFailedResponse(Error_messages_helper::$NO_DATA_SENT);
+                $this->response($response, 200);
+                exit;
+            };
+            return reset($buyerExData);
+        }
+
         private function checkBuyerData(?array $buyer): bool
         {
             if (empty($buyer)) {

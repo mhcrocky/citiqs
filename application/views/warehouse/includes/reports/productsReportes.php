@@ -14,15 +14,6 @@
     </div>
 </div>
 <div class="table-responsive col-sm-12 pb-2" style="margin-top:20px">
-    <!-- <div class="w-100 mb-3">
-        <div class="col-md-3 ml-auto" style="padding-right: 0px !important;">
-            <select id="selectProducts" class="form-control" onchange="visibleDatatableCol('reportesProducts','selectProducts', 3, 4)" style="padding-top: 0px !important;padding-bottom: 0px !important;">
-                <option value="">All types</option>
-                <option value="3" selected>Paid</option>
-                <option value="4">Unpaid</option>
-            </select>
-        </div>
-    </div> -->
     <table id="reportesProducts" class="table table-hover table-striped display" style="width:100%">
         <thead>
             <tr>
@@ -30,7 +21,6 @@
                 <th style="text-align:center">Number of orders</th>
                 <th style="text-align:center">Quantity</th>
                 <th style="text-align:center">Paid</th>
-                <!-- <th style="text-align:center">Unpaid</th> -->
                 <th style="text-align:center">Total with VAT</th>
                 <th style="text-align:center">VAT</th>
                 <th style="text-align:center">Net amount</th>
@@ -38,9 +28,7 @@
         </thead>
         <tbody>
             <?php
-                // $total = 0;
-                // $unpaid = 0;
-                foreach ($values as $buyer => $details) {
+                foreach ($values as $product => $details) {
                     $productMin = $details[count($details) - 1];
                     $paidProducts = 0;
                     $unpaidProducts = 0;
@@ -76,15 +64,6 @@
                     <td style="text-align:center">
                         <?php echo '&euro;&nbsp;' . number_format($paidProducts, 2, ',', '.'); ?>
                     </td>
-                    <!-- <td style="text-align:center; color:#ff3333;">
-                        <?php
-                            // if ($unpaidProducts) {
-                            //     echo $unpaidProducts . '&nbsp(' . round(($unpaidProducts / (($totalProducts != 0) ? $totalProducts * 100 : 1)), 2)  . '&nbsp;%)';
-                            // } else {
-                            //     echo '0.00';
-                            // }
-                        ?>
-                    </td> -->
                     <td style="text-align:center"><?php echo number_format($totalProducts, 2, ',', '.'); ?></td>
                     <td style="text-align:center"><?php echo number_format($vat, 2, ',', '.'); ?></td>
                     <td style="text-align:center"><?php echo number_format($netAmount, 2, ',', '.'); ?></td>
@@ -99,14 +78,13 @@
                 <th style="text-align:center">Number of orders</th>
                 <th style="text-align:center">Quantity</th>
                 <th style="text-align:center">Paid</th>
-                <th style="text-align:center">Unpaid</th>
-                <th style="text-align:center">Total</th>
+                <th style="text-align:center">Total with VAT</th>
+                <th style="text-align:center">VAT</th>
+                <th style="text-align:center">Net amount</th>                
             </tr>
         </tfoot>
     </table>
 </div>
 <script>
-    // document.getElementById('totalProducts').innerHTML = '<?php #echo number_format($total, 2, ',', '.'); ?>';
-    // document.getElementById('unpaidProducts').innerHTML = '<?php #echo number_format($unpaid, 2, ',', '.');?>';
     document.getElementById('paidProducts').innerHTML = '<?php echo '&euro;&nbsp;' . number_format((floatval($total) - floatval($unpaid)), 2, ',', '.');?>';
 </script>

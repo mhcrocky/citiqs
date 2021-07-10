@@ -727,6 +727,7 @@ $route['edit_floorplan/(:num)'] = 'Floorplans/editFloorplan/$1';
 $route['api/connection/buyer']['get'] = 'Api/connection/Buyerapi/buyer';
 $route['api/connection/buyer']['post'] = 'Api/connection/Buyerapi/buyer';
 $route['api/connection/buyer/(:any)']['put'] = 'Api/connection/Buyerapi/buyer/$1';
+$route['api/connection/buyer_extended/(:any)']['put'] = 'Api/connection/Buyerapi/buyerex/$1';
 
 
 

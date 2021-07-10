@@ -30,6 +30,7 @@
         public static $NOT_EXISTING_BUYER_API_IDENTIFIER = 111;
         public static $BUYER_UPDATE_NOT_ALLOWED = 112;
         public static $BUYER_UPDATE_FAILED = 113;
+        public static $BUYER_EX_UPDATE_FAILED = 114;
 
         // ORDER ERROR CODES
         public static $NO_ORDER_DATA = 200;
@@ -151,6 +152,10 @@
 
             if ($errorCode === self::$BUYER_UPDATE_FAILED) {
                 return 'Buyer update failed';
+            }
+
+            if ($errorCode === self::$BUYER_EX_UPDATE_FAILED) {
+                return 'Buyer extended update failed';
             }
 
             if ($errorCode === self::$NO_ORDER_DATA) {
