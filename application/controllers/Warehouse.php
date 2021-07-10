@@ -47,6 +47,21 @@
             $this->isLoggedIn();
         }
 
+        private function prepareRerpotesDates(): array
+        {
+            $post = [];;
+
+            if(!empty($_POST)) {
+                $datetimes = $this->input->post('datetimes', true);
+                $datetimes = explode(' - ', $datetimes);
+                $post['from'] = $datetimes[0];
+                $post['to'] = $datetimes[1];
+            }
+
+            return $post;
+
+        }
+
         /**
          * Reports
          *
@@ -58,9 +73,9 @@
 
             $data = [];
             $userId = intval($_SESSION['userId']);
-            $post = (!empty($_POST)) ? $this->input->post(null, true) : [];
-            $data['from'] = empty($post['from']) ? date('Y-m-d H:i:s', strtotime('-2 days')) : $post['from'];
-            $data['to'] = empty($post['to']) ? date('Y-m-d H:i:s') : $post['to'];
+            $post = $this->prepareRerpotesDates();
+            $data['from'] = empty($post['from']) ? date('Y-m-d 00:00:00', strtotime('-2 days')) : $post['from'];
+            $data['to'] = empty($post['to']) ? date('Y-m-d 23:59:59') : $post['to'];
             $reportsData = $this->shoporder_model->fetchReportDetails($userId, $data['from'], $data['to']);
 
             if ($reportsData) {

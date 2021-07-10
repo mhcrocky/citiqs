@@ -90,6 +90,11 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php } elseif ($this->view === 'warehouse/warehouse') { ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/jquery.datetimepicker.min.css">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css">
+
 <?php } elseif ($this->view === 'warehouse/products' || $this->view === 'productsonoff/index') { ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/jquery.datetimepicker.min.css">
@@ -462,10 +467,10 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
 <?php  } elseif ($this->view === 'pos/pos_login') { ?>
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/posLogin.css">
 <?php  } elseif ($this->view === 'businessreport/index' || $this->view === 'businessreport/reports' || $this->view === 'finance/reports' || $this->view === 'finance/clearing' || $this->view === 'marketing/targeting') { ?>
-<?php   if($this->view === 'marketing/targeting'): ?>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/targetingstyle.css">
-<?php endif; ?>
+    <?php if($this->view === 'marketing/targeting'): ?>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/targetingstyle.css">
+    <?php endif; ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />

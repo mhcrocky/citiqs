@@ -1857,7 +1857,6 @@
             ]);
         }
 
-
         public static function prepareReportes(array $data): array
         {
             $reportes = [

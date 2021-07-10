@@ -2,31 +2,19 @@
 <main class="row" style="margin:70px 0px 20px 0px">
         <div class="col-sm-12" style="margin:20px 0px;">
             <form method="post" action="<?php echo base_url() ?>warehouse">
-                <div class="col-lg-2 col-sm-12">
-                    <label for="from">From: </label>
-                    <input
-                        type="text"
-                        id="from"
-                        name="from"
-                        class="form-control timePickers"
-                        requried
-                        value="<?php if (isset($from)) {echo $from;} ?>"
-                    />
-                </div>
-                <div class="col-lg-2 col-sm-12">
-                    <label for="to">To: </label>
-                    <input
-                        type="text"
-                        id="to"
-                        name="to"
-                        class="form-control timePickers"
-                        requried
-                        value="<?php if (isset($to)) {echo $to;} ?>"
-                    />
-                </div>
-                <div class="col-lg-1 col-sm-12">
-                    <br/>
-                    <input type="submit" value="Filter" class="btn btn-primary" />
+                <div class="float-right text-center pl-3">
+                    <div class="form-group">
+                        <input
+                            style="width: 330px;"
+                            class="date form-control-sm mb-2"
+                            type="text"
+                            name="datetimes"
+                            id="timePeriod"
+                        />
+                    </div>
+                    <div class="col-lg-1 offset-lg-9 col-sm-12">
+                        <input type="submit" value="Filter" class="btn btn-primary" />
+                    </div>
                 </div>
             </form>             
         </div>
@@ -62,8 +50,7 @@
                                 include_once FCPATH . 'application/views/warehouse/includes/reports/productsReportes.php';
                             }
                         ?>
-                  
-                        
+
                     </div>
                     <?php } ?>
                 </div>
@@ -72,3 +59,13 @@
         ?>
     </div>
 </main>
+<script>
+    const warehouseGlobals = (function(){
+        let globals = {
+            'from' : '<?php echo $from; ?>',
+            'to' : '<?php echo $to; ?>'
+        }
+        Object.freeze(globals);
+        return globals;
+    })();
+</script>

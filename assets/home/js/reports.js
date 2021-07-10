@@ -144,16 +144,16 @@ $(document).ready(function() {
         }
     });
 
-    paidDatatable('reportesOrders');
-    visibleDatatableCol('reportesProducts','selectProducts', 3, 4);
+    // paidDatatable('reportesOrders');
     visibleDatatableCol('reportesCategories','selectCategories', 2, 3);
     visibleDatatableCol('reportesBuyers','selectBuyers', 4, 5);
     visibleDatatableCol('reportesSpots','selectSpots', 2, 3);
 
+    showDateTimePicker('timePeriod', warehouseGlobals.from, warehouseGlobals.to);
     // date time picker
-    $('.timePickers').datetimepicker({
-        dayOfWeekStart : 1,
-    });
+    // $('.timePickers').datetimepicker({
+    //     dayOfWeekStart : 1,
+    // });
 });
 
 function paidDatatable(tableId){
@@ -202,4 +202,29 @@ function visibleDatatableCol(tableId, selectId, col1, col2){
     .visible(true);
         
     return ;
+}
+
+
+function showDateTimePicker(elementId, fromDate, toDate) {
+    $('#' + elementId).daterangepicker({
+        timePicker: true,
+        timePicker24Hour: true,
+        startDate: fromDate,
+        endDate: toDate,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm:ss'
+        },
+        ranges: {
+            'Today': [moment().startOf("day"), moment()],
+            'Yesterday': [moment().startOf("day").subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().startOf("day").subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().startOf("day").subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf("day").startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().startOf("day").subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+            'This Quarter': [moment().startOf("day").subtract(1, 'quarter'), moment()],
+            'Last Quarter': [moment().startOf("day").subtract(2, 'quarter'), moment().subtract(1, 'quarter')],
+            'This Year': [moment().startOf("day").startOf('year'), moment().endOf('year')],
+            'Last Year': [moment().startOf("day").subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+       }
+    });
 }
