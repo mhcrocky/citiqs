@@ -1943,7 +1943,7 @@ class Event_model extends CI_Model {
 		return $paymentFee;
 	}
 
-	private function get_vendor_ticketfee($vendorId)
+	public function get_vendor_ticketfee($vendorId)
 	{
 		$this->db->select('ticketFee');
 		$this->db->from('tbl_shop_vendors');
