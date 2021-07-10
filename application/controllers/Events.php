@@ -1379,10 +1379,10 @@ class Events extends BaseControllerWeb
             echo json_encode([]);
             return ;
         }
-        $promoterPaid = $this->event_model->get_promoter_amount($this->vendor_id);
+        $promoterPaid = $this->event_model->get_promoter_amount($this->vendor_id, $eventId);
         $insertData = [
             'description' => 'promoter paid',
-            'amount' => isset($promoterPaid[$eventId]) ? $promoterPaid[$eventId] : '0.00',
+            'amount' => ($promoterPaid > 0) ? $promoterPaid : '0.00',
             'eventId' => $eventId,
             'vendorId' => $this->vendor_id,
             'date' => date('Y-m-d')

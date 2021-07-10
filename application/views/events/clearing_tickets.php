@@ -239,7 +239,7 @@
 
                                     <div class="font-weight-bold">
                                     € <span class="promoterPaid"><?php echo isset($event_stats['promoterPaid']) ? number_format($event_stats['promoterPaid'], 2) : '0.00'; ?></span>
-                                    <input type="hidden" class="promoterPaid" id="promoterPaid" value="<?php echo isset($event_stats['promoterPaid']) ? number_format($event_stats['promoterPaid'], 2) : '0.00'; ?>">
+                                   
                                     </div>
 
                                 </div>
