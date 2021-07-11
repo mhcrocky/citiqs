@@ -1334,6 +1334,7 @@ class Events extends BaseControllerWeb
         $data['payment_stats'] = isset($events[0]) ? $this->event_model->get_payment_methods_stats($this->vendor_id, $events[0]['id']) : [];
         $data['events'] = $events;
 
+
         $this->loadViews('events/clearing_tickets', $this->global, $data, 'footerbusiness', 'headerbusiness' );  
 
     }
@@ -1368,6 +1369,17 @@ class Events extends BaseControllerWeb
         $id = ($eventId !== false) ? $eventId : $this->input->post('eventId');
         $event_stats = $this->event_model->get_clearing_event_stats($this->vendor_id, $id);
         $payment_stats = $this->event_model->get_payment_methods_stats($this->vendor_id, $id);
+        $promoterPaid = 0;
+        $event_clearing = $this->event_model->get_event_clearings($this->vendor_id, $id);
+
+        if(is_countable($event_clearing) && count($event_clearing) > 0) {
+            foreach($event_clearing as $clearing){
+                $promoterPaid += floatval($clearing['amount']);
+            }
+        }
+
+        $payment_stats['promoterPaid'] = $promoterPaid;
+
         $stats = array_merge($event_stats, $payment_stats);
         
         
