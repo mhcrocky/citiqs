@@ -251,7 +251,11 @@
                                     </div>
 
                                     <div class="font-weight-bold">
-                                    € 0.00
+                                    € <?php
+                                    $promoterPaid = isset($event_stats['promoterPaid']) ? floatval($event_stats['promoterPaid']) : 0;
+                                    $remaining = floatval($totalPayout) - $promoterPaid;
+                                    echo number_format($remaining, 2)
+                                    ?>
                                     </div>
 
                                 </div>

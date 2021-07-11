@@ -54,8 +54,31 @@ $(document).ready(function () {
       {
         title: 'Date',
         data: 'date'
+      },
+      {
+        title: 'Edit',
+        data: null,
+        "render": function(data, type, row) {
+          let html = '<input type="hidden" id="eventClearingData_'+data.id+'" value="'+data.description+'" data-eventId="'+data.eventId+'" data-date="'+data.date+'" data-amount="'+data.amount+'">';
+          html += '<button type="button" class="btn btn-primary" onclick="editEventClearing('+data.id+')">Edit</button>';
+          return html;
+        } 
+      },
+      {
+        title: 'Delete',
+        data: null,
+        "render": function(data, type, row) {
+          return '<button type="button" class="btn btn-danger" onclick="confirmDelete('+data.id+')">Delete</button>';
+        } 
       }
     ],
+    drawCallback: function(settings){
+      let eventId = $('#eventId').val();
+      if(eventId != '0'){
+        $("#eventClearings").DataTable().column( 5 ).visible( false );
+        $("#eventClearings").DataTable().column( 6 ).visible( false );
+      }
+    },
     createdRow: function(row, data, dataIndex){
       $(row).attr('id', 'row-' + data.id);
       $(row).addClass('row-' + data.id);
@@ -96,7 +119,7 @@ function editEventClearing(id){
   let description = el.val();
 
   $('#clearingId').val(id);
-  $('#eventId').val(eventId);
+  $('#selectEventId').val(eventId);
   $('.amount').val(amount);
   $('#description').val(description);
   $('#date').val(date);
@@ -151,13 +174,12 @@ function deleteEventClearing(id) {
   );
 }
 
-function getPromoterAmount(el, amountId) {
-  let val = $(el).children('option:selected').val();
-  if(typeof promoterPaid[val] !== 'undefined'){
-    $('.'+amountId).val(promoterPaid[val].replaceAll(',', '.'));
-    return;
-  }
+function getPromoterAmount(el, tagId) {
+  let id = $(el).children('option:selected').val();
+  $.post(globalVariables.baseUrl + "events/get_promoter_paid",{id: id},
+    function (data) {
+      $('#'+tagId).val(parseFloat(data).toFixed(2));
+    }
+  );
 
-  $('.'+amountId).val('0.00');
-  
 }

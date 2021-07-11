@@ -872,7 +872,8 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_bookandpay.id, paymentMethod, tbl_bookandpay.price
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_events.id='".$eventId."' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.id");
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_events.id='".$eventId."' AND tbl_bookandpay.ticketDescription <> '' 
+		GROUP BY tbl_bookandpay.id");
 		$results = $query->result_array();
 
 		$paymentEngineFee = 0;
@@ -1852,7 +1853,11 @@ class Event_model extends CI_Model {
 		$this->db->from('tbl_event_clearings');
 		$this->db->join('tbl_events', 'tbl_event_clearings.eventId = tbl_events.id', 'left');
 		$this->db->where('tbl_event_clearings.vendorId', $vendorId);
-		$this->db->where('tbl_event_clearings.eventId', $eventId);
+
+		if($eventId != 0){
+			$this->db->where('tbl_event_clearings.eventId', $eventId);
+		}
+		
 		$query = $this->db->get();
 		return $query->result_array();
 
@@ -1866,7 +1871,7 @@ class Event_model extends CI_Model {
 		if(is_countable($event_clearings) && count($event_clearings) > 0){
 			unset($data['vendorId']);
 			unset($data['eventId']);
-			return $this->update_event_clearings($vendorId, $eventId, $data);
+			return $this->update_event_clearings_by_eventId($vendorId, $eventId, $data);
 		}
 		return $this->add_event_clearings($data);
 	}
@@ -1877,9 +1882,16 @@ class Event_model extends CI_Model {
 		return $this->db->insert_id() ? true : false;
 	}
 
-	public function update_event_clearings($vendorId, $eventId, $data) : bool
+	public function update_event_clearings_by_eventId($vendorId, $eventId, $data) : bool
 	{
 		$this->db->where("eventId", $eventId);
+		$this->db->where("vendorId", $vendorId);
+		return $this->db->update('tbl_event_clearings', $data);
+	}
+
+	public function update_event_clearings($vendorId, $id, $data) : bool
+	{
+		$this->db->where("id", $id);
 		$this->db->where("vendorId", $vendorId);
 		return $this->db->update('tbl_event_clearings', $data);
 	}
