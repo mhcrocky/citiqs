@@ -695,7 +695,7 @@ class Event_model extends CI_Model {
 			$paymentMethod = empty($result['paymentMethod']) ? 'not saved' : $result['paymentMethod'];
 			
 			if(isset($tickets[$eventId])){
-				$tickets[$eventId]['booking_number'] += $result['nopti'];
+				$tickets[$eventId]['booking_number'] += 1;
 				$tickets[$eventId]['amount'] += floatval($result['amount']);
 			} else {
 				$tickets[$eventId]['booking_number'] = 1;
@@ -705,10 +705,10 @@ class Event_model extends CI_Model {
 
 			
 			if(isset($tickets['booking_number'][$ticketId])){
-				$tickets['booking_number'][$ticketId] += $result['nopti'];
+				$tickets['booking_number'][$ticketId] += 1;
 				$tickets['amount'][$ticketId] += floatval($result['amount']);
 			} else {
-				$tickets['booking_number'][$ticketId] = $result['nopti'];
+				$tickets['booking_number'][$ticketId] = 1;
 				$tickets['amount'][$ticketId] = floatval($result['amount']);
 	
 			}
