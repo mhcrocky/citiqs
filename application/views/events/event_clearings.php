@@ -18,6 +18,7 @@
     <table id="eventClearings" class="table table-striped table-bordered text-center" cellspacing="0" width="100%">
     </table>
 </div>
+<input type="hidden" id="eventId" value="0">
 
 
 
@@ -51,7 +52,7 @@
                         </label>
                         <div class="col-md-6">
 
-                            <select name="eventId" onchange="getPromoterAmount(this, 'promoterAmount')"
+                            <select name="eventId" onchange="getPromoterAmount(this, 'addAmount')"
                                 class="form-control input-w" required>
                                 <option value="">Select option</option>
                                 <?php if(is_countable($events) && count($events) > 0): ?>
@@ -69,8 +70,7 @@
                             Amount
                         </label>
                         <div class="col-md-6">
-                            <input type="text" class="promoterAmount form-control" disabled>
-                            <input type="hidden" class="promoterAmount" name="amount">
+                            <input type="text" class="promoterAmount form-control" name="amount" id="addAmount">
                         </div>
                     </div>
 
@@ -122,12 +122,12 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="eventId" class="col-md-4 col-form-label text-md-left">
+                        <label for="selectEventId" class="col-md-4 col-form-label text-md-left">
                             Event
                         </label>
                         <div class="col-md-6">
 
-                            <select id="eventId" name="eventId" onchange="getPromoterAmount(this, 'amount')"
+                            <select id="selectEventId" name="eventId" onchange="getPromoterAmount(this, 'amount')"
                                 class="form-control input-w" required>
                                 <option value="">Select option</option>
                                 <?php if(is_countable($events) && count($events) > 0): ?>
@@ -145,8 +145,7 @@
                             Amount
                         </label>
                         <div class="col-md-6">
-                            <input type="text" class="amount form-control" disabled>
-                            <input type="hidden" class="amount" name="amount">
+                            <input type="text" class="amount form-control" name="amount" id="amount">
                         </div>
                     </div>
 
@@ -171,8 +170,3 @@
     </div>
 </div>
 <!-- End Edit Event Clearings Modal -->
-
-<script>
-const promoterPaid = JSON.parse('<?php echo json_encode($promoterPaid); ?>');
-console.log(typeof promoterPaid[1222] !== 'undefined');
-</script>
