@@ -251,11 +251,13 @@
                                     </div>
 
                                     <div class="font-weight-bold">
-                                    € <?php
-                                    $promoterPaid = isset($event_stats['promoterPaid']) ? floatval($event_stats['promoterPaid']) : 0;
-                                    $remaining = floatval($totalPayout) - $promoterPaid;
-                                    echo number_format($remaining, 2)
-                                    ?>
+                                    € <span id="remaining">
+                                        <?php
+                                            $promoterPaid = isset($event_stats['promoterPaid']) ? floatval($event_stats['promoterPaid']) : 0;
+                                            $remaining = floatval($totalPayout) - $promoterPaid;
+                                            echo number_format($remaining, 2)
+                                       ?>
+                                      </span>
                                     </div>
 
                                 </div>
@@ -314,6 +316,9 @@ function getEventStats(){
         let totalPayout = parseFloat(totalAmount.replaceAll(',', '')) - (parseFloat(totalTicketFee.replaceAll(',', '')) + parseFloat(paymentEngineFee.replaceAll(',', '')));
         totalPayout = number_format(totalPayout, 2);
 
+        let remaining = parseFloat(totalPayout.replaceAll(',', '')) - parseFloat(promoterPaid.replaceAll(',', ''));
+        remaining = number_format(remaining, 2);
+
         $('#tickets-sold').text(ticketsSold);
         $('#totalAmount').text(totalAmount);
         $('#totalTicketFee').text(totalTicketFee);
@@ -322,6 +327,7 @@ function getEventStats(){
         $('#totalOrders').text(totalOrders);
         $('#totalReceived').text(totalAmount);
         $('#totalPayout').text(totalPayout);
+        $('#remaining').text(remaining);
 
         $("#eventClearings").DataTable().ajax.reload();
 
