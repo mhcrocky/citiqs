@@ -219,8 +219,8 @@
                                             $totalAmount = isset($event_stats['totalAmount']) ? floatval($event_stats['totalAmount']) : 0;
                                             $totalTicketFee = isset($event_stats['totalTicketFee']) ? floatval($event_stats['totalTicketFee']) : 0;
                                             $paymentEngineFee = isset($event_stats['paymentEngineFee']) ? floatval($event_stats['paymentEngineFee']) : 0;
-                                            $totalPayout = $totalAmount - $totalTicketFee - $paymentEngineFee;
-                                            $totalPayout = number_format($totalPayout, 2);
+                                            $totalPayoutFloat = $totalAmount - $totalTicketFee - $paymentEngineFee;
+                                            $totalPayout = number_format($totalPayoutFloat, 2);
 
                                             echo $totalPayout;
 
@@ -256,7 +256,7 @@
                                     € <span id="remaining">
                                         <?php
                                             $promoterPaid = isset($event_stats['promoterPaid']) ? floatval($event_stats['promoterPaid']) : 0;
-                                            $remaining = floatval($totalPayout) - $promoterPaid;
+                                            $remaining = floatval($totalPayoutFloat) - $promoterPaid;
                                             echo number_format($remaining, 2)
                                        ?>
                                       </span>
