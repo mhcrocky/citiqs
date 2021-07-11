@@ -84,12 +84,13 @@
 
         public function setVoucher(): Shopvoucher_model
         {
-            if ($this->id) {
-                $where[$this->table . '.id'] = $this->id;
-            }
 
             if ($this->code) {
                 $where[$this->table . '.code'] = $this->code;
+            }
+
+            if ($this->id) {
+                $where[$this->table . '.id'] = $this->id;
             }
 
             $voucher = $this->readImproved([
@@ -131,7 +132,6 @@
 
         private function updateVoucher(): bool
         {
-            if ($this->vendorId == VENDOR_NO_UPDATE) return true;
             if ($this->amount == 0 && ($this->percent === 0 || $this->percentUsed === '1')) {
                 $this->active = '0';
             }
@@ -196,15 +196,28 @@
         {
             $order = $orderObject->setProperty('voucherId', $this->id)->getLastVoucherOrder();
 
-            if ($order['paid'] === '1') return false;
-
             if (is_null($order) || $order['paid'] === '1') return false;
 
             $this->active = '1';
             ($this->percent) ? $this->percentUsed = '0' : $this->amount += floatval($order['voucherAmount']);
             ($this->productId) ? intval($this->productId) : $this->productId = null;
 
-            return $this->update();
+            if ($this->update()) {
+                $this->logRollback($order);
+                return true;
+            }
+
+            return false;
+        }
+
+        private function logRollback(array $order): void
+        {
+            $this->load->helper('utility_helper');
+            $file = APPPATH . 'tiqs_logs/voucher_rollback.txt';
+            $message  = 'Voucher id = "' .  $this->id . '", ';
+            $message .= 'refund from order id = "' . $order['id'] . '", ';
+            $message .= 'refund amount id = "' . $order['voucherAmount'] . '"';
+            Utility_helper::logMessage($file, $message);
         }
 
         public function getReservationVoucherId(object $data): ?int
