@@ -872,8 +872,11 @@ class Event_model extends CI_Model {
 		$query = $this->db->query("SELECT tbl_bookandpay.id, paymentMethod, tbl_bookandpay.price
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
-		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_events.id='".$eventId."' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.id");
+		WHERE tbl_bookandpay.customer ='".$vendorId."' AND paymentMethod <> '' AND paid='1' AND tbl_events.id='".$eventId."' AND tbl_bookandpay.ticketDescription <> '' GROUP BY tbl_bookandpay.TransactionID");
 		$results = $query->result_array();
+
+//		var_dump($results);
+//		die();
 
 		$paymentEngineFee = 0;
 		$promoterPaid = 0;
