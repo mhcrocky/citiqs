@@ -213,7 +213,7 @@
                                     </div>
 
                                     <div class="font-weight-bold">
-                                    € <span id="totalPayout">
+                                    € <span class="totalPayout">
                                         <?php 
 
                                             $totalAmount = isset($event_stats['totalAmount']) ? floatval($event_stats['totalAmount']) : 0;
@@ -227,7 +227,9 @@
                                         ?>
 
                                     </span>
-                                    </div>
+                                    <input type="hidden" id="totalPayout" class="totalPayout" value="<?php echo $totalPayout; ?>">
+                                    
+                                   </div>
 
                                 </div>
 
@@ -316,8 +318,7 @@ function getEventStats(){
         let totalPayout = parseFloat(totalAmount.replaceAll(',', '')) - (parseFloat(totalTicketFee.replaceAll(',', '')) + parseFloat(paymentEngineFee.replaceAll(',', '')));
         totalPayout = number_format(totalPayout, 2);
 
-        let remaining = parseFloat(totalPayout.replaceAll(',', '')) - parseFloat(promoterPaid.replaceAll(',', ''));
-        remaining = number_format(remaining, 2);
+        
 
         $('#tickets-sold').text(ticketsSold);
         $('#totalAmount').text(totalAmount);
@@ -326,7 +327,14 @@ function getEventStats(){
         $('.promoterPaid').text(promoterPaid);
         $('#totalOrders').text(totalOrders);
         $('#totalReceived').text(totalAmount);
-        $('#totalPayout').text(totalPayout);
+        $('.totalPayout').text(totalPayout);
+        $('#totalPayout').val(totalPayout);
+
+        let total = $('#totalPayout').val().replaceAll(',', '');
+
+        let remaining = parseFloat(total) - parseFloat(data.promoterPaid);
+        remaining = number_format(remaining, 2);
+
         $('#remaining').text(remaining);
 
         $("#eventClearings").DataTable().ajax.reload();
