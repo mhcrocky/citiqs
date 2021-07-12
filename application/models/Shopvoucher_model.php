@@ -28,6 +28,7 @@
         public $emailId;
         public $productGroup;
         public $created;
+        public $startAmount;
 
         private $table = 'tbl_shop_voucher';
 
@@ -40,7 +41,7 @@
                 $value = intval($value);
             }
 
-            if ($property === 'amount') {
+            if ($property === 'amount' || $property === 'startAmount') {
                 $value = floatval($value);
             }
             return;
@@ -78,6 +79,7 @@
             if (isset($data['productId']) && !Validate_data_helper::validateInteger($data['productId'])) return false;
             if (isset($data['emailId']) && !Validate_data_helper::validateInteger($data['emailId'])) return false;
             if (isset($data['productGroup']) && !in_array($data['productGroup'], $this->config->item('productGroups'))) return false;
+            if (isset($data['startAmount']) && !Validate_data_helper::validateFloat($data['startAmount'])) return false;
 
             return true;
         }
