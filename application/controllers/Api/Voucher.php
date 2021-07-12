@@ -61,12 +61,13 @@ class Voucher extends REST_Controller
         }
 
         $fileRelaitvePath = 'assets/csv/' . $data['vendorId'] . '_' . time() . '.csv';
-        $fileLocation = base_url() . $fileRelaitvePath;
+        // $fileLocation = base_url() . $fileRelaitvePath;
         $csvFile = FCPATH . $fileRelaitvePath;
         $csvFile = fopen($csvFile, 'w');
         $firstLine = null;       
         $data['numberOfTimes'] = $numOfCodes;
-        $dataMultiple = [];
+        $data['startAmount'] = $data['amount'];
+        // $dataMultiple = [];
         if($status != 'unique'){
             
             if ($this->shopvoucher_model->setObjectFromArray($data)->create()) {

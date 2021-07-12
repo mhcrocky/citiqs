@@ -59,25 +59,25 @@
             // print finance report
             $this->printFinanceReport($mac);
 
-            if (Utility_helper::testingVendors($this->shopprinters_model->userId)) {
+            // if (Utility_helper::testingVendors($this->shopprinters_model->userId)) {
                 $this->setVendorInfo();
                 $this->printReceipt();
                 $this->printOrder();
-            } else {
-                //get order to print
-                $order = $this->getOrder();
+            // } else {
+            //     //get order to print
+            //     $order = $this->getOrder();
 
-                // get utility data
-                list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
+            //     // get utility data
+            //     list($fodUser, $orderExtendedIds, $printOnlyReceipt) = $this->getRequiredInfo($order);
 
-                // send message
-                $this->sendMessages($order);
+            //     // send message
+            //     $this->sendMessages($order);
 
-                // do printing job
-                $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
+            //     // do printing job
+            //     $this->printOrderAndReceipts($order, $fodUser, $orderExtendedIds, $printOnlyReceipt);
 
-                $this->doFinalUpdates($order, $orderExtendedIds);
-            }
+            //     $this->doFinalUpdates($order, $orderExtendedIds);
+            // }
 
             return;
             // $this->callOrderCopy($order, $fodUser);

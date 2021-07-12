@@ -14,6 +14,7 @@ $config['tiqsId'] = TIQS_ID;
 // TIQS email
 $config['tiqsEmail'] = (ENVIRONMENT === 'development') ? 'antevidovic@gmail.com' : 'ceo@tiqs.com';
 $config['petersEmail'] = MIGRATION_EMAIL;
+$config['dev01'] = 'antevidovic@gmail.com';
 
 // business types ids => Id is id value of business type in tbl_business_types
 $config['Airbnb']= '1';

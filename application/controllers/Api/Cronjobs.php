@@ -183,4 +183,22 @@
 
             return $alfredNameMethod;
         }
+
+        public function sendLogFile_get(): void
+        {
+            $yesterday =  date('Y-m-d', strtotime('-1 day'));
+            $logFileName = 'log-' . $yesterday . '.php';
+            $logFile = FCPATH . 'application/logs/' . $logFileName;
+
+            if (file_exists($logFile)) {
+                $subject = 'Log file for ' . $yesterday;
+                $emails = [$this->config->item('tiqsEmail'), $this->config->item('dev01')];
+
+                foreach($emails as $email) {
+                    Email_helper::sendEmail($email, $subject, '', false, $logFile);
+                }
+            }
+
+            return;
+        }
     }

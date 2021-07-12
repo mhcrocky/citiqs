@@ -758,6 +758,7 @@ $route['fetch_order/(:num)'] = 'Ajaxbuyer/fetchOrder/$1';
 
 
 
+$route['send_log_file'] = 'Api/Cronjobs/sendLogFile';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
