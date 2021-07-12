@@ -33,7 +33,7 @@
                                     <td><?php echo $template['template_name']; ?></td>
                                     <td><?php echo $template['template_type']; ?></td>
                                     <td>
-                                        <a href="<?php echo $updateTemplate . $template['id']; ?>">Update</a>
+                                        <a href="<?php echo $updateTemplate . $template['id']; ?>">Edit</a>
                                     </td>
                                 </tr>
                             <?php } ?>

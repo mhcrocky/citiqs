@@ -15,7 +15,7 @@
                 onclick="customUpdateEmailTemplate('selectTemplateName', 'customTemplateName', 'customTemplateSubject', 'templateType', '<?php echo $templateId; ?>', true)"
             <?php } ?>
         >
-            <?php echo empty($templateId) ? 'Create new template' : 'Update'; ?>
+            <?php echo empty($templateId) ? 'Save' : 'Update'; ?>
         </button>
     </div>
 <?php } ?>
