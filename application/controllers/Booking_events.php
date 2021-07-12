@@ -476,7 +476,12 @@ class Booking_events extends BaseControllerWeb
     {
         
         $buyerInfo = $this->input->post(null, true);
-        
+
+        if(isset($buyerInfo['additionalInfo'])){
+            $additional_info = $buyerInfo['additionalInfo'];
+            $buyerInfo['additionalInfo'] = serialize($additional_info);
+        }
+                
         $orderRandomKey = isset($buyerInfo['orderRandomKey']) ? $buyerInfo['orderRandomKey'] : false;
 
         if(!$orderRandomKey){

@@ -580,7 +580,7 @@ class Event_model extends CI_Model {
 		return false;
 	}
 
-	function save_event_reservations($userInfo, $tickets = array(), $customer, $tag)
+	function save_event_reservations($userInfo, $tickets, $customer, $tag)
 	{
 		if(!isset($userInfo['email'])){ return; }
 
@@ -617,6 +617,11 @@ class Event_model extends CI_Model {
 					'isTicket' => '1'
 					
 				];
+
+				if(isset($userInfo['additionalInfo'])){
+					$insert['additionalInfo'] = $userInfo['additionalInfo'];
+				}
+				
 				
 
 				if(!$this->validateInsertArray($insert)){

@@ -157,11 +157,18 @@
                                             placeholder="Phone Number">
                                         <span class="focus-input100"></span>
                                     </div>
+                                    <?php //var_dump($inputs);  ?>
                                     <?php if(isset($inputs) && !empty($inputs)): ?>
-                                    <?php foreach($inputs as $input): ?>
+
+                                    <?php foreach($inputs as $input): 
+                                            $input_name = ucfirst(str_replace(' ', '', $input['fieldLabel']));
+                                            $input_name = preg_replace("/[^a-zA-Z0-9]+/", "", $input_name);
+                                        
+                                    ?>
+                                    
                                     <div id="<?php echo $input['fieldLabel']; ?>" class="wrap-input100 validate-input m-b-18">
                                         <span class="label-input100"><?php echo ucwords($input['fieldLabel']); ?></span>
-                                        <input class="input100" type="<?php echo $input['fieldType']; ?>" name="<?php echo lcfirst(str_replace(' ', '', $input['fieldLabel'])); ?>"
+                                        <input class="input100" type="<?php echo $input['fieldType']; ?>" name="additionalInfo[<?php echo $input_name; ?>]"
                                             placeholder="<?php echo ucwords($input['fieldLabel']); ?>" 
                                             <?php if($input['requiredField'] == 1){ ?>
                                                 required
