@@ -99,3 +99,50 @@
         </div>
     </div>
 </div>
+
+
+
+
+<!-- Additional Information Modal -->
+<div class="modal fade" id="additionalInfoModal" tabindex="-1" role="dialog" aria-labelledby="additionalInfoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+    <form id="additional-form" method="POST">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold text-dark" id="additionalInfotModalLabel"><?php echo $this->language->tLine('Create List'); ?></h5>
+                <button type="button" class="close" id="closeModal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <input type="hidden" name="id" id="bookandpay_id" class="form-control">
+                <?php if(isset($inputs) && !empty($inputs)): ?>
+                <?php foreach($inputs as $input): 
+                    $input_name = ucfirst(str_replace(' ', '', $input['fieldLabel']));
+                    $input_name = preg_replace("/[^a-zA-Z0-9]+/", "", $input_name);
+                ?>
+
+
+                    <div class="form-group row">
+                        <label for="<?php echo $input_name; ?>" class="col-md-4 col-form-label text-md-left m">
+                            <?php echo ucwords($input['fieldLabel']); ?>
+                        </label>
+                        <div class="col-md-6">
+                            <input type="<?php echo $input['fieldType']; ?>" id="<?php echo $input_name; ?>" name="additionalInfo[<?php echo $input_name; ?>]" class="form-control" required>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeEmailModal" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>

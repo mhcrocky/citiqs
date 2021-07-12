@@ -902,8 +902,14 @@ class Events extends BaseControllerWeb
     public function report($eventId)
     {
         $this->global['pageTitle'] = 'TIQS : EVENT REPORT';
+        $where = [
+            'vendorId' => $this->vendor_id,
+            'eventId' => $eventId
+        ];
+
+		$data['inputs'] = $this->event_model->get_event_inputs($where);
         $data['eventId'] = $eventId;
-        $data['event'] = $this->event_model->get_event($this->vendor_id,$eventId);
+        $data['event'] = $this->event_model->get_event($this->vendor_id, $eventId);
         $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');
     }
 
@@ -1785,6 +1791,30 @@ class Events extends BaseControllerWeb
         $transactionId .= intval(microtime(true));
         $transactionId .= strtoupper(substr(str_shuffle($set), 0, 10));
         return $transactionId;
+    }
+
+    public function add_additional_info()
+	{
+        $id = $this->input->post('id');
+        $additionalInfo = $this->input->post('additionalInfo');
+        //var_dump($additionalInfo);
+        //exit();
+        if($this->event_model->add_additional_info($this->vendor_id, $id, $additionalInfo)){
+            $response = [
+                'status' => 'success',
+                'message' => 'Additional info is added successfully!'
+            ];
+
+            echo json_encode($response);
+            return ;
+        }
+
+        $response = [
+            'status' => 'error',
+            'message' => 'Additional info is not added successfully!'
+        ];
+
+        echo json_encode($response);
     }
     
 
