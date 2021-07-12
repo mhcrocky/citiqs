@@ -2099,6 +2099,7 @@ class Ajax extends CI_Controller
             } else {
                 $response['update'] = '0';
                 $response['location'] = 'update_template' . DIRECTORY_SEPARATOR . $this->shoptemplates_model->id;
+                $response['messages'] =  ['Template created'];
                 $this->session->set_flashdata('success', 'Template created');
             }
         } else {
