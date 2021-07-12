@@ -1,12 +1,4 @@
 <!-- HERO SECTION -->
-<?php if($this->session->flashdata('expired')): ?>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong><?php echo ucfirst($this->session->flashdata('expired')); ?></strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<?php endif; ?>
 
 <input type="hidden" id="shop" value="shop">
 
@@ -71,7 +63,7 @@
                 data-isShowed="<?php echo $event['showBackgroundImage']; ?>"
                 data-isSquared="<?php echo $event['isSquared']; ?>" value="<?php echo $event['backgroundImage']; ?>">
             <div style="display: grid !important;" id="event_<?php echo $event['id']; ?>"
-                class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4 d-table-cell">
+                class="col-12 col-sm-6 col-md-3 single-item mb-4 mb-md-0 bg-white p-4 m-2 d-table-cell event-card">
                 <a href="#tickets" onclick="getTicketsView('<?php echo $event['id']; ?>')"
                     class="single-item btn-ticket">
                     <div class="single-item__image">
@@ -91,7 +83,7 @@
                         <p class='mb-0'><?php echo $event['eventname']; ?></p>
                         <div class="scroll-descript">
                             <span class='single-item__price'>
-                                <?php echo (strlen($event['eventdescript']) > 57) ? substr($event['eventdescript'], 0, 54) . '...' : $event['eventdescript']; ?>
+                                <?php //echo (strlen($event['eventdescript']) > 57) ? substr($event['eventdescript'], 0, 54) . '...' : $event['eventdescript']; ?>
 
                             </span>
                         </div>
@@ -262,6 +254,9 @@
     </section>
 </form>
 
+
+<button type="button" id="backToTop"></button>
+
 <!-- END TICKETS -->
 <?php endif; ?>
 
@@ -269,4 +264,21 @@
 (function() {
     changeTextContent();
 }());
+
+var btn = $('#backToTop');
+
+$(window).scroll(function() {
+  if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.4) {
+    btn.addClass('show');
+  } else {
+    btn.removeClass('show');
+  }
+});
+
+btn.on('click', function(e) {
+  e.preventDefault();
+  $('html, body').animate({scrollTop:0}, '300');
+});
+
+
 </script>
