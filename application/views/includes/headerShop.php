@@ -54,18 +54,21 @@
         }
 
         @media only screen and (max-width: 750px) {
-            .single-item.bg-light {
-                box-shadow: 0 0 12px 2px #00000014 !important;
-            }
+
 
             .single-item__grid {
                 box-shadow: none !important;
-                background: #fff !important;
-                padding: 20px 10px !important;
+                background: transparent !important;
+                
+            }
+
+            .event-card {
+                margin-right: 0px !important;
+                margin-left: 0px !important;
             }
 
             .h-div {
-                display: block;
+                display: none;
             }
         }
 
