@@ -415,41 +415,22 @@ table.dataTable thead .sorting_desc::after, table.dataTable thead .sorting_asc::
     }
 
 
-
+ 
     </style>
 <?php } elseif ($this->view === 'events/reports') { ?>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/events.css">
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/css/query-builder.default.css" id="qb-theme"/>
     <link rel="stylesheet" href="<?php echo $this->baseUrl; ?>assets/home/styles/dashboard.css">
     <style>
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        padding: 0px !important;
-    }
-    input[type="search"]{
-        width: auto !important;
-    }
-    tr td {
-        text-align: left !important;
-        vertical-align: middle !important;
-    }
-    .dataTables_empty {
-        text-align: center !important; 
-    }
-
-    .btn, .btn-success, .btn-primary, .btn-danger, .paginate_button{
-        border-radius: 0px !important;
-    }
-    .form-control {
-        height: 30px !important;
-    }
-    label {
-        display: inline-flex;
-        align-items: center;
-    }
-    .modal-body {
-        overflow: hidden !important;
-    }
+        td.details-control {
+		  background: url("<?php echo base_url('assets/images/datatables/details_open.png') ?>") no-repeat center center;
+		  cursor: pointer;
+	    }
+        
+        tr.shown td.details-control {
+		  background: url("<?php echo base_url('assets/images/datatables/details_close.png') ?>") no-repeat center center;
+        }
 
     </style>
 <?php  } elseif ($this->view === 'customer_panel/time_slots') { ?>

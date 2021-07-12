@@ -1,3 +1,11 @@
+$("#additional-form").validate({
+  errorClass: "text-danger border-danger",
+  submitHandler: function(form) {
+    let data = new FormData(form);
+    saveAdditionalInfo(serializeData(data))
+  }
+ });
+
 $(document).ready(function () {
   var options = {
     allow_empty: true,
@@ -137,6 +145,16 @@ $(document).ready(function () {
 
     columns: [
       {
+        "className":      'details-control',
+        "orderable":      false,
+        "data":           null,
+        "defaultContent": ''
+    },
+      {
+        title: "ID",
+        data: "id",
+      },
+      {
         title: "Buyer Name",
         data: "name",
       },
@@ -230,8 +248,36 @@ $(document).ready(function () {
           );
         },
       },
+      {
+        title: "Additional Info",
+        data: null,
+        render: function (data, type, row) {
+          if(data.extra.length < 1){
+            return '<button type="button" class="btn btn-primary" onclick="additionalInfoModal('+data.id+')">Add additional info</button>';
+          }
+          return '-';
+        },
+      },
     ],
   });
+
+
+  $('#report tbody').on('click', 'td.details-control', function () {
+    var tr = $(this).closest('tr');
+    var row = table.row( tr );
+
+    if ( row.child.isShown() ) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+    }
+    else {
+        // Open this row
+        row.child( format(row.data()) ).show();
+        tr.addClass('shown');
+    }
+} );
+
 
 });
 
@@ -413,4 +459,56 @@ function resendTicket(reservationId, email = '', sendTo = 0) {
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+}
+
+function format ( d ) {
+  // `d` is the original data object for the row
+  //console.log(d);
+  let extra = d.extra;
+  if(extra.length < 1){
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;"></table>';
+  }
+
+  let rows = '<tr>'+
+            '<th>Field</th>'+
+            '<th>Value</th>'+
+            '</tr>'
+  $.each(extra, function(index, col) {
+    rows += '<tr>'+
+            '<td>' + col.field + '</td>'+
+            '<td>' + col.value + '</td>'+
+            '</tr>';
+  });
+  return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+ rows +'</table>';
+}
+
+function additionalInfoModal(id) {
+  $('#bookandpay_id').val(id);
+  $('#additionalInfoModal').modal('show');
+}
+
+function saveAdditionalInfo(data){
+
+  $.post(globalVariables.baseUrl + "events/add_additional_info", data, function(data){
+      $('#additionalInfoModal').modal('hide');
+      $("#report").DataTable().ajax.reload();
+      data = JSON.parse(data);
+      alertify[data.status](data.message);
+  });
+
+}
+
+function serializeData (data) {
+	let obj = {};
+	for (let [key, value] of data) {
+		if (obj[key] !== undefined) {
+			if (!Array.isArray(obj[key])) {
+				obj[key] = [obj[key]];
+			}
+			obj[key].push(value);
+		} else {
+			obj[key] = value;
+		}
+	}
+	return obj;
 }

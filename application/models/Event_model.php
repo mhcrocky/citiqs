@@ -664,12 +664,48 @@ class Event_model extends CI_Model {
 
 	public function get_event_report($vendorId, $eventId, $sql='')
 	{
-		$query = $this->db->query("SELECT tbl_bookandpay.id, reservationId, reservationtime, price,numberofpersons,price as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, ticketQuantity, TransactionID, tag
+		$query = $this->db->query("SELECT tbl_bookandpay.id, reservationId, reservationtime, price,numberofpersons,price as amount, name, age, gender, mobilephone, email, tbl_bookandpay.ticketDescription, ticketQuantity, TransactionID, tag, additionalInfo
 		FROM tbl_bookandpay INNER JOIN tbl_event_tickets ON tbl_bookandpay.eventid = tbl_event_tickets.id 
 		INNER JOIN tbl_events ON tbl_event_tickets.eventId = tbl_events.id
 		WHERE tbl_bookandpay.paid = '1' AND tbl_bookandpay.ticketDescription <> '' AND tbl_bookandpay.customer = ".$vendorId." AND tbl_events.id = ".$eventId." $sql
 		ORDER BY reservationtime DESC");
-		return $query->result_array();
+
+		$results = $query->result_array();
+		if(!is_countable($results) || count($results) < 0){
+			return [];
+		}
+
+		$where = [
+			'vendorId' => $vendorId,
+			'eventId' => $eventId
+		];
+
+		$inputs = $this->get_event_inputs($where);
+
+		$stats = [];
+
+		foreach($results as $key => $result){
+			$additionals = unserialize($result['additionalInfo']);
+			$extra = [];
+			if(is_countable($inputs) && count($inputs) > 0){
+				foreach($inputs as $input){
+					$input_name = ucfirst(str_replace(' ', '', $input['fieldLabel']));
+                    $input_name = preg_replace("/[^a-zA-Z0-9]+/", "", $input_name);
+					if(isset($additionals[$input_name])){
+						$extra[] = [
+							'field' => $input['fieldLabel'],
+							'value' => $additionals[$input_name]
+						];
+					}
+				}
+			}
+
+			$stats[$key] = $result;
+			$stats[$key]['extra'] = $extra;
+			
+		}
+
+		return $stats;
 	}
 
 	public function get_events_report($vendorId, $sql='')
@@ -1972,6 +2008,16 @@ class Event_model extends CI_Model {
 		}
 		return 0;
 		
+	}
+
+	public function add_additional_info($vendorId, $id, $additionalInfo)
+	{
+		$additionalInfo = serialize($additionalInfo);
+		//var_dump($additionalInfo);
+		$this->db->where("id", $id);
+		$this->db->where("customer", $vendorId);
+		$this->db->update('tbl_bookandpay', ['additionalInfo' => $additionalInfo]);
+		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 	
 
