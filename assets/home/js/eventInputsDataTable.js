@@ -94,7 +94,7 @@ function saveInput(el){
     return ;
   }
 
-  if(!isFieldNameValid(data.fieldName)){
+  if(!isFieldNameValid(data.fieldName.toLowerCase())){
     alertify['error']("Please don't use special characters or space for input name!");
     return ;
   }
@@ -127,7 +127,7 @@ function updateInput(el){
     return ;
   }
 
-  if(!isFieldNameValid(data.fieldName)){
+  if(!isFieldNameValid(data.fieldName.toLowerCase())){
     alertify['error']("Please don't use special characters or space for input name!");
     return ;
   }
