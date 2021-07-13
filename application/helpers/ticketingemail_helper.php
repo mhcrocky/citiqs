@@ -85,23 +85,12 @@
 								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
 								break;
 							default:
+                                $SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
                         }
 
                         $emailId =  ($templateId !== false) ?  $templateId : $record->emailId ;
                         
-                        
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
- 
                         
 						if($emailId) {
                             $emailTemplate = $CI->email_templates_model->get_emails_by_id($emailId);
@@ -263,22 +252,11 @@
 								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
 								break;
 							default:
+                                $SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
 								break;
                         }
 
                         $emailId = $record->emailId ;
-                        
-                        
-						switch (strtolower($_SERVER['HTTP_HOST'])) {
-							case 'tiqs.com':
-								$SERVERFILEPATH = 'https://tiqs.com/alfred/uploads/qrcodes/';
-								break;
-							case '127.0.0.1':
-								$SERVERFILEPATH = 'http://127.0.0.1/alfred/alfred/uploads/qrcodes/';
-								break;
-							default:
-								break;
-                        }
  
                         
 						if($emailId) {
