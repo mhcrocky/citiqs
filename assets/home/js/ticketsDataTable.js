@@ -103,7 +103,8 @@ $(document).ready(function () {
   });
 
   $("#automatically").on("change", function () {
-    $('.timestamp').prop("disabled", true);
+    // hide the element with dates
+    // $('.timestamp').prop("disabled", true);
   });
 
   $("#manually").on("change", function () {
