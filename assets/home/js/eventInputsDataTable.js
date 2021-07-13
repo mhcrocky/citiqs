@@ -81,6 +81,10 @@ function get_input(id){
 }
 
 function saveInput(el){
+  if(!isFieldNameValid($('#fieldName').val().toLowerCase())){
+    alertify['error']("Please don't use special characters or space for input name!");
+    return ;
+  }
   $(el).prop('disabled', true);
   let data = {
     fieldName: $('#fieldName').val(),
@@ -94,10 +98,6 @@ function saveInput(el){
     return ;
   }
 
-  if(!isFieldNameValid(data.fieldName.toLowerCase())){
-    alertify['error']("Please don't use special characters or space for input name!");
-    return ;
-  }
 
   $.post(globalVariables.baseUrl + 'events/save_event_inputs', data, function(data) {
     $(el).prop('disabled', false);
@@ -113,6 +113,10 @@ function saveInput(el){
 
 
 function updateInput(el){
+  if(!isFieldNameValid($('#editFieldName').val().toLowerCase())){
+    alertify['error']("Please don't use special characters or space for input name!");
+    return ;
+  }
   $(el).prop('disabled', true);
   let data = {
     id: $('#id').val(),
@@ -127,10 +131,7 @@ function updateInput(el){
     return ;
   }
 
-  if(!isFieldNameValid(data.fieldName.toLowerCase())){
-    alertify['error']("Please don't use special characters or space for input name!");
-    return ;
-  }
+  
 
   $.post(globalVariables.baseUrl + 'events/update_event_inputs', data, function(data) {
     $(el).prop('disabled', false);
