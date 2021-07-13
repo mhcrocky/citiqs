@@ -131,6 +131,17 @@
                         </div>
                     </div>
 
+                    <div class="row mb-2">
+                        <div class="col-md-3 d-flex align-items-center text-dark">Required Extra Info</div>
+                        <div class="col-md-3">
+                            <select id="requiredInfo" name="requiredInfo" style="height: 35px !important;padding-top: 6px;"
+                                class="form-control input-w mt-2">
+                                <option value="1" selected>Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <hr class="w-100 mt-3 mb-3">
                     <h3 class="font-weight-bold text-dark">Ticket sales</h3>
                     <div style="flex-wrap: nowrap" class="row">
@@ -184,7 +195,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-3 timestamp-row">
                         <div class="col-md-3 mt-1">
                             From Date
                         </div>
@@ -209,7 +220,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-3 timestamp-row">
                         <div class="col-md-3 mt-1">
                             To Date
                         </div>
@@ -238,7 +249,7 @@
 
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-3 timestamp-row">
                         <div class="col col-md-3">
                             Sold out when expired
                         </div>

@@ -105,6 +105,10 @@ $(document).ready(function () {
   $("#automatically").on("change", function () {
     // hide the element with dates
     // $('.timestamp').prop("disabled", true);
+    $('.timestamp-row').fadeOut( "fast", function() {
+      $('.timestamp-row').hide();
+    });
+    
   });
 
   $("#manually").on("change", function () {
@@ -113,10 +117,15 @@ $(document).ready(function () {
     let time = dayjs().format('HH:mm:ss');
     let endDate = $('#eventEndDate').attr('data-endDate');
     let endTime = $('#eventEndTime').attr('data-endTime');
+    endDate = endDate.split('-');
     $('#startDate').val(today);
     $('#startTime').val(time);
-    $('#endDate').val(endDate);
+    $('#endDate').val(endDate[2] + '-' + endDate[1] + '-' + endDate[0]);
     $('#endTime').val(endTime);
+
+    $('.timestamp-row').fadeIn( "fast", function() {
+      $('.timestamp-row').show();
+    });
 
     let input = document.getElementById('endDate');
     //input.select();
@@ -535,6 +544,14 @@ function getTicketOptions(ticketId, ticketDescription) {
         if (index == "guestTicket") {
           let checked = (value == 1) ? true : false;
           $("#guestTicketCheck").prop("checked", checked);
+        }
+
+        if (index == "ticketExpired") {
+          if(value == 'manually'){
+            $('.timestamp-row').show();
+          } else {
+            $('.timestamp-row').hide();
+          }
         }
         //$('.ql-editor').html('test')
         $("#" + index).val(value);

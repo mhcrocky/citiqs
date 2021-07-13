@@ -482,6 +482,14 @@ function addTicket(id, limit, price, ticketfee, totalClass, bundleMax) {
             return ;
         }
 
+        if(data['requiredInfo'] == '1'){
+            $('.additionalInfo').each(function(index) {
+                let required = $(this).attr('data-required');
+                if(required == '1'){
+                    $(this).prop('required', true);
+                }
+            })
+        }
         
         var descript_data = data['descript'];
         var price_data = data['price'];

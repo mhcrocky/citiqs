@@ -200,7 +200,7 @@ class Booking_events extends BaseControllerWeb
             $eventStartDate = date_format($event_start, "d/m/Y");
             $eventEndDate = date_format($event_end, "d/m/Y");
             $eventDescription = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $event->eventdescript);
-            
+
             $data = [
                 'tickets' => $this->event_model->get_event_tickets($vendorId, $eventId),
                 'checkout_tickets' => $orderData['tickets'],
@@ -393,7 +393,8 @@ class Booking_events extends BaseControllerWeb
             'groupId' => $ticketInfo->ticketGroupId,
             'bundleMax' => $bundleMax,
             'first_ticket' => $first_ticket,
-            'eventName' => $eventInfo->eventname
+            'eventName' => $eventInfo->eventname,
+            'requiredInfo' => $ticketInfo->requiredInfo
         ];
         echo json_encode($response);
     }

@@ -167,8 +167,9 @@
                                     
                                     <div id="<?php echo $input['fieldLabel']; ?>" class="wrap-input100 validate-input m-b-18">
                                         <span class="label-input100"><?php echo ucwords($input['fieldLabel']); ?></span>
-                                        <input class="input100" type="<?php echo $input['fieldType']; ?>" name="additionalInfo[<?php echo $input_name; ?>]"
+                                        <input class="input100 additionalInfo" type="<?php echo $input['fieldType']; ?>" name="additionalInfo[<?php echo $input_name; ?>]"
                                             placeholder="<?php echo ucwords($input['fieldLabel']); ?>" 
+                                            data-required="<?php echo $input['requiredField']; ?>"
                                             <?php if($input['requiredField'] == 1){ ?>
                                                 required
                                             <?php } ?>
@@ -270,6 +271,8 @@
                     if(shopsettings.showAge == "1") { $('#age').closest('div').removeClass('d-none'); $('#age').prop('required', true); }
                     if(shopsettings.labels == "0") { $('.label-input100').hide(); $('.login100-form').attr('style','padding: 10px 1px 1px 0px !important;'); }
                 }
+                $('.additionalInfo').prop('required', false);
+                
             }());
         </script>
         <?php
