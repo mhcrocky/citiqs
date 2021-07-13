@@ -916,9 +916,11 @@ class Events extends BaseControllerWeb
         $eventInputs = $this->event_model->get_event_inputs($second_where);
         $shopInputs = is_array($shopInputs) ? $shopInputs : [];
 		$eventInputs = is_array($eventInputs) ? $eventInputs : [];
+        $inputs = array_merge($shopInputs, $eventInputs);
+        $inputs = $this->event_model->unique_multidim_array($inputs, 'fieldName');
 
 
-		$data['inputs'] = array_merge($shopInputs, $eventInputs);
+		$data['inputs'] = $inputs;
         $data['eventId'] = $eventId;
         $data['event'] = $this->event_model->get_event($this->vendor_id, $eventId);
         $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');

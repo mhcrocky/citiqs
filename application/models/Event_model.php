@@ -691,6 +691,7 @@ class Event_model extends CI_Model {
 		$eventInputs = is_array($eventInputs) ? $eventInputs : [];
 
 		$inputs = array_merge($shopInputs, $eventInputs);
+		$inputs = $this->unique_multidim_array($inputs, 'fieldName');
 
 		$stats = [];
 
@@ -2019,7 +2020,7 @@ class Event_model extends CI_Model {
 		
 	}
 
-	public function add_additional_info($vendorId, $id, $additionalInfo)
+	public function add_additional_info($vendorId, $id, $additionalInfo) : bool
 	{
 		$additionalInfo = serialize($additionalInfo);
 		//var_dump($additionalInfo);
@@ -2027,6 +2028,23 @@ class Event_model extends CI_Model {
 		$this->db->where("customer", $vendorId);
 		$this->db->update('tbl_bookandpay', ['additionalInfo' => $additionalInfo]);
 		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
+
+	public function unique_multidim_array(array $array, string $key): array
+	{
+		$temp_array = [];
+		$key_array = [];
+		$i = 0;
+
+		foreach($array as $val){
+			if(!in_array($val[$key], $key_array)){
+				$key_array[$i] = $val[$key];
+				$temp_array[$i] = $val;
+			}
+			$i++;
+		}
+		return $temp_array;
 	}
 	
 
