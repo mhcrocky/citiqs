@@ -19,7 +19,7 @@
 </div>
 
 
-<!-- Add App Settings Modal -->
+<!-- Add Event Input Modal -->
 <div class="modal fade" id="addEventInputModal" tabindex="-1" role="dialog" aria-labelledby="addEventInputModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
@@ -39,7 +39,19 @@
                     <input type="hidden" id="eventId" value="<?php echo $eventId; ?>">
 
                     <div class="form-group row">
-                        <label for="tag" class="col-md-4 col-form-label text-md-left">
+                        <label for="fieldName" class="col-md-4 col-form-label text-md-left">
+                        Input Name
+                        </label>
+                        <div class="col-md-6">
+
+                            <input style="border-radius: 0px;" type="text" id="fieldName" class="input-w border-50 form-control" name="fieldName"
+                                required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="fieldLabel" class="col-md-4 col-form-label text-md-left">
                         Input Label
                         </label>
                         <div class="col-md-6">
@@ -51,7 +63,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="userId" class="col-md-4 col-form-label text-md-left">
+                        <label for="fieldType" class="col-md-4 col-form-label text-md-left">
                         Input Type
                         </label>
                         <div class="col-md-6">
@@ -68,7 +80,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="userId" class="col-md-4 col-form-label text-md-left">
+                        <label for="requiredField" class="col-md-4 col-form-label text-md-left">
                         Required
                         </label>
                         <div class="col-md-6">
@@ -113,6 +125,18 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group row">
+                        <label for="editFieldName" class="col-md-4 col-form-label text-md-left">
+                        Input Name
+                        </label>
+                        <div class="col-md-6">
+
+                            <input style="border-radius: 0px !important;" type="text" id="editFieldName" class="input-w border-50 form-control" name="editFieldName"
+                                required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="editFieldLabel" class="col-md-4 col-form-label text-md-left">
                         Input Label
                         </label>
@@ -142,7 +166,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="userId" class="col-md-4 col-form-label text-md-left">
+                        <label for="editRequiredField" class="col-md-4 col-form-label text-md-left">
                         Required
                         </label>
                         <div class="col-md-6">

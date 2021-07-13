@@ -161,8 +161,7 @@
                                     <?php if(isset($inputs) && !empty($inputs)): ?>
 
                                     <?php foreach($inputs as $input): 
-                                            $input_name = ucfirst(str_replace(' ', '', $input['fieldLabel']));
-                                            $input_name = preg_replace("/[^a-zA-Z0-9]+/", "", $input_name);
+                                            $input_name = $input['fieldName'];
                                         
                                     ?>
                                     

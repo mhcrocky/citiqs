@@ -23,6 +23,10 @@ $(document).ready(function () {
         data: "id",
       },
       {
+        title: "Name",
+        data: "fieldName",
+      },
+      {
         title: "Label",
         data: "fieldLabel",
       },
@@ -44,7 +48,9 @@ $(document).ready(function () {
         title: "Edit",
         data: null,
         "render": function (data, type, row) {
-          return '<button class="btn btn-primary" onclick="get_input(\''+data.id+'\', \''+data.fieldLabel+'\', \''+data.fieldType+'\', \''+data.requiredField+'\')" data-toggle="modal" data-target="#editEventTagModal">Edit Input</button>';
+          let html = '<input type="hidden" id="inputData_'+data.id+'" value="'+data.fieldLabel+'" data-label="'+data.fieldLabel+'" data-name="'+data.fieldName+'" data-type="'+data.fieldType+'" data-required="'+data.requiredField+'">';
+          html += '<button class="btn btn-primary" onclick="get_input(\''+data.id+'\')" data-toggle="modal" data-target="#editEventTagModal">Edit Input</button>';
+          return html;
         }
       },
       {
@@ -64,17 +70,20 @@ $(document).ready(function () {
 });
 
 
-function get_input(id, fieldLabel, fieldType, requiredField){
+function get_input(id){
+  let el = $('#inputData_'+id);
   $('#id').val(id);
-  $('#editFieldLabel').val(fieldLabel);
-  $('#editFieldType').val(fieldType);
-  $('#editRequiredField').val(requiredField);
+  $('#editFieldName').val(el.attr('data-name'));
+  $('#editFieldLabel').val(el.attr('data-label'));
+  $('#editFieldType').val(el.attr('data-type'));
+  $('#editRequiredField').val(el.attr('data-required'));
   return ;
 }
 
 function saveInput(el){
   $(el).prop('disabled', true);
   let data = {
+    fieldName: $('#fieldName').val(),
     fieldLabel: $('#fieldLabel').val(),
     fieldType: $('#fieldType option:selected').val(),
     requiredField: $('#requiredField option:selected').val(),
@@ -85,9 +94,15 @@ function saveInput(el){
     return ;
   }
 
+  if(!isFieldNameValid(data.fieldName)){
+    alertify['error']("Please don't use special characters or space for input name!");
+    return ;
+  }
+
   $.post(globalVariables.baseUrl + 'events/save_event_inputs', data, function(data) {
     $(el).prop('disabled', false);
     $('#fieldLabel').val('');
+    $('#fieldName').val('');
     $('#requiredField option:selected').val(0);
     $("#inputs").DataTable().ajax.reload();
     $('#closeTagModal').click();
@@ -101,6 +116,7 @@ function updateInput(el){
   $(el).prop('disabled', true);
   let data = {
     id: $('#id').val(),
+    fieldName: $('#editFieldName').val(),
     fieldLabel: $('#editFieldLabel').val(),
     fieldType: $('#editFieldType option:selected').val(),
     requiredField: $('#editRequiredField option:selected').val(),
@@ -108,6 +124,11 @@ function updateInput(el){
   }
   if(data.fieldLabel == ''){
     if(data.fieldLabel == '') { $('#editTag').attr('style', '1px solid red'); }
+    return ;
+  }
+
+  if(!isFieldNameValid(data.fieldName)){
+    alertify['error']("Please don't use special characters or space for input name!");
     return ;
   }
 
@@ -130,5 +151,13 @@ function deleteInput(id){
     let response = JSON.parse(data);
     alertify[response.status](response.message);
   });
+}
+
+
+function isFieldNameValid(name) {
+
+  const res = /^[a-z0-9_]+$/.exec(name);
+  const valid = !!res;
+  return valid;
 }
 

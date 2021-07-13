@@ -266,7 +266,7 @@ class Event_model extends CI_Model {
 				$result['bundleMax'] = 999;
 			}
 
-			if(isset($checkBundleMax) && $checkBundleMax[$groupId]){
+			if(isset($checkBundleMax[$groupId]) && $checkBundleMax[$groupId]){
 				$sold_out = true;
 				$result['soldOutWhenExpired'] = 'Sold Out';
 			}
@@ -675,12 +675,22 @@ class Event_model extends CI_Model {
 			return [];
 		}
 
-		$where = [
+		$first_where = [
+			'vendorId' => $vendorId,
+			'eventId' => '0'
+		];
+
+		$second_where = [
 			'vendorId' => $vendorId,
 			'eventId' => $eventId
 		];
 
-		$inputs = $this->get_event_inputs($where);
+		$shopInputs =$this->get_event_inputs($first_where);
+		$eventInputs = $this->get_event_inputs($second_where);
+		$shopInputs = is_array($shopInputs) ? $shopInputs : [];
+		$eventInputs = is_array($eventInputs) ? $eventInputs : [];
+
+		$inputs = array_merge($shopInputs, $eventInputs);
 
 		$stats = [];
 
@@ -689,8 +699,7 @@ class Event_model extends CI_Model {
 			$extra = [];
 			if(is_countable($inputs) && count($inputs) > 0){
 				foreach($inputs as $input){
-					$input_name = ucfirst(str_replace(' ', '', $input['fieldLabel']));
-                    $input_name = preg_replace("/[^a-zA-Z0-9]+/", "", $input_name);
+					$input_name = $input['fieldName'];
 					if(isset($additionals[$input_name])){
 						$extra[] = [
 							'field' => $input['fieldLabel'],

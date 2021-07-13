@@ -902,12 +902,23 @@ class Events extends BaseControllerWeb
     public function report($eventId)
     {
         $this->global['pageTitle'] = 'TIQS : EVENT REPORT';
-        $where = [
+        $first_where = [
+            'vendorId' => $this->vendor_id,
+            'eventId' => '0'
+        ];
+
+        $second_where = [
             'vendorId' => $this->vendor_id,
             'eventId' => $eventId
         ];
 
-		$data['inputs'] = $this->event_model->get_event_inputs($where);
+        $shopInputs = $this->event_model->get_event_inputs($first_where);
+        $eventInputs = $this->event_model->get_event_inputs($second_where);
+        $shopInputs = is_array($shopInputs) ? $shopInputs : [];
+		$eventInputs = is_array($eventInputs) ? $eventInputs : [];
+
+
+		$data['inputs'] = array_merge($shopInputs, $eventInputs);
         $data['eventId'] = $eventId;
         $data['event'] = $this->event_model->get_event($this->vendor_id, $eventId);
         $this->loadViews('events/reports', $this->global, $data, 'footerbusiness', 'headerbusiness');
@@ -1048,6 +1059,7 @@ class Events extends BaseControllerWeb
 		];
 
 		$data = [
+            'fieldName' => $this->input->post('fieldName'),
 			'fieldLabel' => $this->input->post('fieldLabel'),
 			'fieldType' => $this->input->post('fieldType'),
             'requiredField' => $this->input->post('requiredField')
