@@ -1,10 +1,10 @@
 <div style="margin-top: 10%" class="col-sm-12">
 	<div style="margin-left: 8%">
 		<h1 class="heading" id="backOfficeMainH1">
-				OPTIMISING
+				REALISE
 		</h1>
 		<h3 class="heading" style="color:#717171">
-				VALUE FOR YOUR CUSTOMERS, IS BETTER BUSINESS
+				MAKE EACH DAY YOUR MASTERPIECE
 		</h3>
 		<h4 class="heading" style="font-size: 75%; color:#717171">
 			RESERVATION, TICKETING, DIGITAL MENU, DELIVERY, PICKUP, LOST & FOUND, FLIRT, BUY ME A DRINK, MARKETING & TARGETING

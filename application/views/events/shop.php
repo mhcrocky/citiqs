@@ -195,8 +195,8 @@
                                     &nbsp
                                 </div>
 
-                                <b
-                                    class="menu-list__price--discount excluding_fee excluding_fee_text text-danger"><?php echo ($ticket['soldOutWhenExpired'] == '') ? $this->language->tLine('SOLD OUT') : $this->language->tLine($ticket['soldOutWhenExpired']); ?></b>
+									<!--<b class="menu-list__price--discount excluding_fee excluding_fee_text text-danger">--><?php //echo ($ticket['soldOutWhenExpired'] == '') ? $this->language->tLine('SOLD OUT') : $this->language->tLine($ticket['soldOutWhenExpired']); ?><!--</b>-->
+									<b class="menu-list__price--discount excluding_fee excluding_fee_text text-danger"><?php echo ($ticket['soldOutWhenExpired'] == '') ? $this->language->tLine('SOLD OUT') : $ticket['soldOutWhenExpired']; ?></b>
                                 <?php else: ?>
                                 <div class="menu-list__price">
                                     <b

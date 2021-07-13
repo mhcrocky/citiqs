@@ -213,8 +213,8 @@
 			<li data-menuid="6.1"><a href="<?php echo $this->baseUrl;?>events/create"><i class="ti-agenda"></i> <span><?php echo $this->language->tLine('Create your event'); ?></span></a></li>
             <li data-menuid="6.2"><a href="<?php echo $this->baseUrl;?>events"><i class="ti-ticket"></i> <span><?php echo $this->language->tLine('Your Events'); ?></span></a></li>
 			<li data-menuid="5.3"><a href="<?php echo $this->baseUrl;?>events/tags_stats"><i class="ti-stats-up"></i> <span><?php echo $this->language->tLine('Statistics'); ?></span></a></li>
-			<li data-menuid="6.3"><a href="<?php echo $this->baseUrl;?>events/marketing"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email marketing'); ?></span></a></li>
-            <li data-menuid="6.3"><a href="<?php echo $this->baseUrl;?>events/emaildesigner"><i class="ti-email"></i> <span><?php echo $this->language->tLine('Email Designer'); ?></span></a></li>
+<!--			<li data-menuid="6.3"><a href="--><?php //echo $this->baseUrl;?><!--events/marketing"><i class="ti-email"></i> <span>--><?php //echo $this->language->tLine('Email marketing'); ?><!--</span></a></li>-->
+<!--            <li data-menuid="6.3"><a href="--><?php //echo $this->baseUrl;?><!--events/emaildesigner"><i class="ti-email"></i> <span>--><?php //echo $this->language->tLine('Email Designer'); ?><!--</span></a></li>-->
             <li data-menuid="6.4"><a href="<?php echo $this->baseUrl;?>events/tags"><i class="ti-email"></i> <span>tags and pixels</span></a></li>
 			<li data-menuid="6.5"><a href="<?php echo $this->baseUrl;?>events/scannedin"><i class="ti-email"></i> <span>scanner results</span></a></li>
             <li data-menuid="6.6"><a href="<?php echo $this->baseUrl;?>events/viewdesign"><i class="ti-ticket"></i> <span><?php echo $this->language->tLine('Shop settings'); ?></span></a></li>
